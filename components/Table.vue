@@ -3,7 +3,6 @@
 </template>
 
 <script>
-  import {moveAndZoom} from "../logic/canvas/moveAndZoom";
   import {main} from "../logic/canvas/main";
 
   export default {
@@ -13,11 +12,11 @@
       }
     },
     mounted() {
-      let screen = document.getElementById("screen");
-      let ctx = screen.getContext("2d");
+      let canvas = document.getElementById("screen");
+      let ctx = canvas.getContext("2d");
       this.screenContext = ctx;
 
-      main(this, screen);
+      main(this, canvas, ctx);
     },
     methods: {
 
