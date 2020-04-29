@@ -1,6 +1,11 @@
 import {draw as drawLayers} from "./layers/layerManager";
 import {ctx, canvas as screen} from "./main";
 
+export let absPos = {
+  x: 0,
+  y: 0
+};
+
 export function moveAndZoom() {
 
   trackTransforms();
@@ -11,6 +16,10 @@ export function moveAndZoom() {
   let dragStart, dragged;
 
   screen.addEventListener('mousedown', function (evt) {
+
+    absPos.x = Math.round(evt.clientX - ctx.getTransform().e);
+    absPos.y = Math.round(evt.clientY - ctx.getTransform().f);
+
     document.body.style.mozUserSelect = document.body.style.webkitUserSelect = document.body.style.userSelect = 'none';
     lastX = evt.offsetX || (evt.pageX - screen.offsetLeft);
     lastY = evt.offsetY || (evt.pageY - screen.offsetTop);
@@ -31,7 +40,7 @@ export function moveAndZoom() {
 
   screen.addEventListener('mouseup', function (evt) {
     dragStart = null;
-    if (!dragged) zoom(evt.shiftKey ? -1 : 1);
+    //if (!dragged) zoom(evt.shiftKey ? -1 : 1);
   }, false);
 
   let scaleFactor = 1.01;
@@ -92,7 +101,6 @@ function trackTransforms() {
     xform = xform.translate(dx, dy);
     return translate.call(ctx, dx, dy);
   };
-
   let transform = ctx.transform;
   ctx.transform = function (a, b, c, d, e, f) {
     let m2 = svg.createSVGMatrix();

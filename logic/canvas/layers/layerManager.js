@@ -1,11 +1,9 @@
 import {backgroundLayer} from "./background/main";
 import {gridLayer} from "./grid/main";
-import {canvas as screen, ctx} from "../main";
 
-let layers = [backgroundLayer]
+let layers = [backgroundLayer, gridLayer]
 
 export function draw() {
-  //ctx.clearRect(0, 0, screen.width, screen.height);
   for (let layer of layers) {
     layer.draw();
   }

@@ -1,4 +1,4 @@
-import {images} from "./images";
+import {images} from "../background/images";
 import {onAllLoaded} from "../../images";
 import {ctx} from "../../main";
 

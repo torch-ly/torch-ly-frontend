@@ -1,14 +1,22 @@
 import {canvas, ctx} from "../../main";
 
 function draw() {
-  for (let i = 0; i < Math.ceil(canvas.width / 100); i++) {
-    ctx.moveTo(i * 100, 0);
-    ctx.lineTo(i * 100, canvas.height);
+  let horizontalMin = -1000;
+  let horizontalMax = canvas.width + 1000;
+  let verticalMin = -1000;
+  let verticalMax = canvas.height + 1000;
+  let pixelPerSquare = 100;
+
+  for (let i = horizontalMin; i < horizontalMax; i += pixelPerSquare) {
+    ctx.beginPath();
+    ctx.moveTo(i, verticalMin);
+    ctx.lineTo(i, verticalMax);
     ctx.stroke();
   }
-  for (let i = 0; i < Math.ceil(canvas.height / 100); i++) {
-    ctx.moveTo(0, i * 100);
-    ctx.lineTo(canvas.width, i * 100);
+  for (let i = verticalMin; i < verticalMax; i += pixelPerSquare) {
+    ctx.beginPath();
+    ctx.moveTo(horizontalMin, i);
+    ctx.lineTo(horizontalMax, i);
     ctx.stroke();
   }
 }
