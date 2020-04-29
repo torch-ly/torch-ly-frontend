@@ -3,7 +3,7 @@ let backgroundImage = {
   y: 20,
   img: new Image()
 }
-backgroundImage.img.src = "https://d2cllxsgumox12.cloudfront.net/b6edd94f-ef3d-4222-9f30-2c26acb580a7/images/event-placeholder.jpg";
+backgroundImage.img.src = "https://frontend.somigo.de/images/event-placeholder.jpg";
 
 let backgroundImage2 = {
   x: 100,
