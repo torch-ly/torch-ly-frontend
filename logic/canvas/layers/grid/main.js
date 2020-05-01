@@ -25,7 +25,12 @@ function init() {
   return new Promise((resolve, rejekt) => {resolve()});
 }
 
+function mouseMove() {
+  return null;
+}
+
 export let gridLayer = {
   draw: draw,
-  init: init
+  init: init,
+  mouseMove: mouseMove
 }

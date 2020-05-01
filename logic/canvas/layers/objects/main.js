@@ -13,7 +13,12 @@ function init() {
   return onAllLoaded(out);
 }
 
+function mouseMove() {
+  return null;
+}
+
 export let backgroundLayer = {
   draw: draw,
-  init: init
+  init: init,
+  mouseMove: mouseMove
 }

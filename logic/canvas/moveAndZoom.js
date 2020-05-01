@@ -1,10 +1,16 @@
-import {draw as drawLayers} from "./layers/layerManager";
+import {draw as drawLayers, mouseMove} from "./layers/layerManager";
 import {ctx, canvas as screen} from "./main";
+import _ from "lodash"
 
-export let absPos = {
-  x: 0,
-  y: 0
-};
+export let absPos = {};
+
+function updateAbsMousePos(evt) {
+
+  absPos.x = Math.round((evt.clientX - ctx.getTransform().e) / ctx.getTransform().a);
+  absPos.y = Math.round((evt.clientY - ctx.getTransform().f) / ctx.getTransform().a);
+
+  mouseMove(evt);
+}
 
 export function moveAndZoom() {
 
@@ -17,9 +23,6 @@ export function moveAndZoom() {
 
   screen.addEventListener('mousedown', function (evt) {
 
-    absPos.x = Math.round(evt.clientX - ctx.getTransform().e);
-    absPos.y = Math.round(evt.clientY - ctx.getTransform().f);
-
     document.body.style.mozUserSelect = document.body.style.webkitUserSelect = document.body.style.userSelect = 'none';
     lastX = evt.offsetX || (evt.pageX - screen.offsetLeft);
     lastY = evt.offsetY || (evt.pageY - screen.offsetTop);
@@ -27,7 +30,10 @@ export function moveAndZoom() {
     dragged = false;
   }, false);
 
-  screen.addEventListener('mousemove', async function (evt) {
+  screen.addEventListener('mousedown', _.throttle(updateAbsMousePos, 10));
+
+  screen.addEventListener('mousemove', function (evt) {
+
     lastX = evt.offsetX || (evt.pageX - screen.offsetLeft);
     lastY = evt.offsetY || (evt.pageY - screen.offsetTop);
     dragged = true;

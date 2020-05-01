@@ -1,12 +1,13 @@
 import {backgroundLayer} from "./background/main";
 import {gridLayer} from "./grid/main";
+import {absPos} from "../moveAndZoom";
 
 let layers = [backgroundLayer, gridLayer]
+let event = null;
 
 export function draw() {
-  for (let layer of layers) {
-    layer.draw();
-  }
+  layers.map((item) => item.draw(event));
+  //TODO if selected -> move picture different
 }
 
 export function init() {
@@ -15,4 +16,26 @@ export function init() {
     console.log("init Successful")
     draw();
   })
+}
+
+export function mouseMove(evt) {
+  // check if any mouseMove function returns true
+  /*if (layers.map((item) => item.mouseMove(coordinates)).some((item) => item)) {
+    draw();
+  }*/
+  event = evt;
+  if (evt.button == 0) {
+    let topPicture = null;
+
+    for (let layer of layers) {
+      if (layer.mouseMove() != null) {
+        topPicture = layer.mouseMove();
+      }
+    }
+    if (topPicture != null) {
+      topPicture.selected = true;
+    }
+  } else if (evt.button == 2) {
+    //TODO relese picture
+  }
 }
