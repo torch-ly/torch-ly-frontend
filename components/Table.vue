@@ -1,9 +1,10 @@
 <template>
-  <canvas id="screen"></canvas>
+  <div id="container"></div>
 </template>
 
 <script>
-  import {main} from "../logic/canvas/main";
+  import Konva from "konva";
+  import {main} from "../logic/stage/main";
 
   export default {
     data: {
@@ -12,11 +13,13 @@
       }
     },
     mounted() {
-      let canvas = document.getElementById("screen");
-      let ctx = canvas.getContext("2d");
-      this.screenContext = ctx;
-
-      main(this, canvas, ctx);
+      let stage = new Konva.Stage({
+        container: 'container',   // id of container <div>
+        width: window.innerWidth,
+        height: window.innerHeight,
+        draggable:true
+      });
+      main(stage);
     },
     methods: {
 
