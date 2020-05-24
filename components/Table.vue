@@ -14,10 +14,10 @@
     },
     mounted() {
       let stage = new Konva.Stage({
-        container: 'container',   // id of container <div>
+        container: 'container',
         width: window.innerWidth,
         height: window.innerHeight,
-        draggable:true
+        draggable: true
       });
       main(stage);
     },

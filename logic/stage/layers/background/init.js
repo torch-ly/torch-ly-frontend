@@ -35,18 +35,10 @@ export function init() {
   tr2.nodes([rect2]);
   rect2.tr = tr2;
 
-  /*rect1.on('click', (e) => {
-    tr.visible(true);
-    console.log("true")
-  })*/
-
   out.push(rect1, rect2);
-
-  console.log(out);
 
   stage.on('click', function (e) {
     function disableAll() {
-      console.log("clear")
       for (let object of out) {
         object.tr.visible(false);
         object.draggable(false);
@@ -57,17 +49,12 @@ export function init() {
     } else {
       for (let object of out) {
         if (e.target == object) {
-          console.log("te")
           object.tr.visible(true);
           object.draggable(true);
         }
       }
     }
   })
-
-  //out.push(tr, tr2);
-
-
 
   return out;
 }
