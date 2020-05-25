@@ -4,7 +4,10 @@
     <div id="menu">
       <div>
         <button id="pulse-button">Pulse</button>
+
+        <!--TODO change initial text-->
         <button id="snap-to-grid-button">Snap to Grid</button>
+
         <button id="delete-button">Delete</button>
       </div>
     </div>

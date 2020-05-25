@@ -48,7 +48,7 @@ function addObjects() {
     tr: null
   });
   rect2.snapToGrid = true;
-  rect2.hasMenu = false;
+  rect2.hasMenu = true;
 
 
   /*loadImages({pic1: 'https://frontend.somigo.de/images/event-placeholder.jpg'}, function () {
