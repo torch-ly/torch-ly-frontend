@@ -1,11 +1,10 @@
 import Konva from "konva";
 import {stage} from "../../main";
+import {blockSnapSize} from "../grid/main";
 
 let out = [];
 
 export function init() {
-
-  //TODO snap to grid: https://codepen.io/pierrebleroux/pen/gGpvxJ?editors=1010
 
   //create Rects
   addObjects();
@@ -16,6 +15,9 @@ export function init() {
   //adds clicklistener to enable transformer
   addTransformerClickListener(out);
 
+  //if snapToGrid == true -> object will snap to grid
+  addSnapToGrid(out);
+
   return out;
 }
 
@@ -23,24 +25,31 @@ function addObjects() {
   let rect1 = new Konva.Rect({
     x: 50,
     y: 20,
-    width: 100,
-    height: 500,
+    width: 120,
+    height: 600,
     fill: 'green',
     stroke: 'black',
     strokeWidth: 4,
-    draggable: true
+    draggable: false,
+    snapToGrid: true,
+    tr: null
   });
+  rect1.snapToGrid = true;
+
   let rect2 = new Konva.Rect({
     x: 80,
     y: 20,
-    width: 100,
-    height: 500,
+    width: 120,
+    height: 600,
     fill: 'red',
     stroke: 'black',
     strokeWidth: 4,
     draggable: false,
+    snapToGrid: true,
     tr: null
   });
+
+  rect2.snapToGrid = true;
 
   out.push(rect1, rect2);
 }
@@ -78,4 +87,20 @@ function addTransformerClickListener(toListen) {
       }
     }
   });
+}
+
+function addSnapToGrid(objects) {
+  for (let object of objects) {
+    object.on('dragend', (e) => {
+      console.log("1", object, object.snapToGrid)
+      if (object.snapToGrid) {
+        console.log("2")
+        object.position({
+          x: Math.round(object.x() / blockSnapSize) * blockSnapSize,
+          y: Math.round(object.y() / blockSnapSize) * blockSnapSize
+        });
+        stage.batchDraw();
+      }
+    });
+  }
 }

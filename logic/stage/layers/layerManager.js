@@ -1,16 +1,15 @@
 import Konva from "konva";
 import {stage} from "../main";
-import {draw} from "./background/main";
+import {draw as drawBackground} from "./background/main";
+import {draw as drawGrid} from "./grid/main";
 
 export function init() {
   let background = new Konva.Layer();
+  let grid = new Konva.Layer();
 
-  let layers = [
-    background
-  ]
+  drawGrid(grid);
+  stage.add(grid);
 
-  for (let layer of layers) {
-    draw(layer);
-    stage.add(layer);
-  }
+  drawBackground(background);
+  stage.add(background);
 }
