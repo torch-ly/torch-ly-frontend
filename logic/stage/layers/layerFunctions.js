@@ -2,20 +2,22 @@ import {blockSnapSize} from "./grid/main";
 import {stage} from "../main";
 import Konva from "konva";
 
-export function addSnapToGrid(objects) {
+export function addSnapToGridListener(objects) {
   for (let object of objects) {
     object.on('dragend', (e) => {
-      console.log("1", object, object.snapToGrid)
       if (object.snapToGrid) {
-        console.log("2")
-        object.position({
-          x: Math.round(object.x() / blockSnapSize) * blockSnapSize,
-          y: Math.round(object.y() / blockSnapSize) * blockSnapSize
-        });
-        stage.batchDraw();
+        snapToGrid(object);
       }
     });
   }
+}
+
+export function snapToGrid(object) {
+  object.position({
+    x: Math.round(object.x() / blockSnapSize) * blockSnapSize,
+    y: Math.round(object.y() / blockSnapSize) * blockSnapSize
+  });
+  stage.batchDraw();
 }
 
 export function addTransformer(toAdd) {
@@ -51,4 +53,19 @@ export function addTransformerClickListener(toListen) {
     }
     stage.batchDraw();
   });
+}
+
+export function addImageToLayer(layer, src) {
+  let imageObject = new Image();
+  imageObject.onload = function () {
+    let yoda = new Konva.Image({
+      x: 50,
+      y: 50,
+      image: imageObject
+    });
+
+    layer.add(yoda);
+    layer.batchDraw();
+  };
+  imageObject.src = src;
 }
