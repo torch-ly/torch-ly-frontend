@@ -1,9 +1,25 @@
 import Konva from "konva";
 import {stage} from "../../main";
 
-export function init() {
-  let out = [];
+let out = [];
 
+export function init() {
+
+  //TODO snap to grid: https://codepen.io/pierrebleroux/pen/gGpvxJ?editors=1010
+
+  //create Rects
+  addObjects();
+
+  //adds invisible Transformer to all objekts in out
+  addTransformer(out);
+
+  //adds clicklistener to enable transformer
+  addTransformerClickListener(out);
+
+  return out;
+}
+
+function addObjects() {
   let rect1 = new Konva.Rect({
     x: 50,
     y: 20,
@@ -27,8 +43,10 @@ export function init() {
   });
 
   out.push(rect1, rect2);
+}
 
-  for (let object of out) {
+function addTransformer(toAdd) {
+  for (let object of toAdd) {
     let tr = new Konva.Transformer({
       nodes: [object],
       visible: false,
@@ -36,14 +54,14 @@ export function init() {
     });
     object.tr = tr;
   }
+}
 
-  //TODO snap to grid: https://codepen.io/pierrebleroux/pen/gGpvxJ?editors=1010
-
+function addTransformerClickListener(toListen) {
   stage.on('click', function (e) {
     //TODO solve double click problem
     // tr.forceUpdate() ??
     function disableAll() {
-      for (let object of out) {
+      for (let object of toListen) {
         object.tr.visible(false);
         object.draggable(false);
       }
@@ -52,14 +70,12 @@ export function init() {
     if (e.target == stage) {
       disableAll();
     } else {
-      for (let object of out) {
+      for (let object of toListen) {
         if (e.target == object) {
           object.tr.visible(true);
           object.draggable(true);
         }
       }
     }
-  })
-
-  return out;
+  });
 }
