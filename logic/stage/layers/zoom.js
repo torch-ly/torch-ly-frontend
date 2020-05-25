@@ -8,7 +8,10 @@ export function enableZoom() {
 
     let newScale = e.evt.deltaY > 0 ? oldScale * scaleBy : oldScale / scaleBy;
 
-    stage.scale({ x: newScale, y: newScale });
+    stage.scale({
+      x: newScale,
+      y: newScale
+    });
     stage.batchDraw();
   });
 }

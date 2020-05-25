@@ -13,16 +13,15 @@
       }
     },
     mounted() {
+      let width = window.innerWidth;
+      let height = window.innerHeight;
       let stage = new Konva.Stage({
         container: 'container',
-        width: window.innerWidth,
-        height: window.innerHeight,
+        width: width,
+        height: height,
         draggable: true
       });
-      main(stage);
-    },
-    methods: {
-
+      main(stage, width, height);
     }
   }
 </script>

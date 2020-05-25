@@ -1,10 +1,11 @@
 import Konva from "konva";
 import {blockSnapSize} from "./main";
+import {stageHeight, stageWidth} from "../../main";
 
 export function init() {
   let out = [];
-  let width = window.innerWidth;
-  let height = window.innerHeight;
+  let width = Math.floor((stageWidth * 2) / blockSnapSize) * blockSnapSize + 1;
+  let height = Math.floor((stageHeight * 2) / blockSnapSize) * blockSnapSize + 1;
 
 
   for (let i = 0; i < width / blockSnapSize; i++) {
