@@ -66,6 +66,7 @@ function loadImage(src) {
       image: imageObj
     });
     image.snapToGrid = true;
+    image.hasMenu = true;
 
     addTransformer([image]);
     addTransformerClickListener([image]);

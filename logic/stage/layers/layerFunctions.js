@@ -13,7 +13,6 @@ export function addSnapToGridListener(objects) {
 }
 //TODO Array To VarArgs
 export function snapToGrid(object) {
-  console.log(object)
   let x = object.hasOwnProperty("attrs") ? object.attrs.x : object.x();
   let y = object.hasOwnProperty("attrs") ? object.attrs.y : object.y();
 
