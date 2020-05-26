@@ -1,32 +1,23 @@
 import {stage} from "../main";
-
-export let buttonStates = {};
+import {useHand, usePen} from "../layers/freeDrawing/main";
 
 export function enableMenuButton() {
   let dragAndDropButton = document.getElementById("drag-and-drop-button");
   let paintButton = document.getElementById("paint-button");
 
-  buttonStates.dragAndDrop = true;
-  buttonStates.paint = false;
-
   dragAndDropButton.addEventListener('click', () => {
-    disableAllButtonStates();
-    buttonStates.dragAndDrop = true;
     setDragAndDrop(true);
-    console.log(buttonStates);
+
+    useHand();
   });
 
   paintButton.addEventListener('click', () => {
-    disableAllButtonStates();
-    buttonStates.paint = true;
-    console.log(buttonStates)
     setDragAndDrop(false);
+
+    usePen();
   });
 }
 
-function disableAllButtonStates() {
-  buttonStates = {};
-}
 
 function setDragAndDrop(enable) {
   if (enable) {
