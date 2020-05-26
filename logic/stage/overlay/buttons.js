@@ -1,3 +1,5 @@
+import {stage} from "../main";
+
 export let buttonStates = {};
 
 export function enableMenuButton() {
@@ -10,6 +12,7 @@ export function enableMenuButton() {
   dragAndDropButton.addEventListener('click', () => {
     disableAllButtonStates();
     buttonStates.dragAndDrop = true;
+    setDragAndDrop(true);
     console.log(buttonStates);
   });
 
@@ -17,6 +20,7 @@ export function enableMenuButton() {
     disableAllButtonStates();
     buttonStates.paint = true;
     console.log(buttonStates)
+    setDragAndDrop(false);
   });
 }
 
@@ -24,6 +28,31 @@ function disableAllButtonStates() {
   buttonStates = {};
 }
 
-function setDragAndDrop() {
+function setDragAndDrop(enable) {
+  if (enable) {
+    //Activate DragAndDrop
+    stage.draggable(true);
+    for (let layer of stage.children) {
+      for (let object of layer.children) {
+        if (object.draggableIfEnabled != null) {
+          object.draggable = object.draggableIfEnabled;
+        }
+        if (object.hasMenuIfEnabled != null) {
+          object.hasMenu = object.hasMenuIfEnabled;
+        }
+      }
+    }
+  } else {
+    //Deactivate DragAndDrop
+    stage.draggable(false);
+    for (let layer of stage.children) {
+      for (let object of layer.children) {
+        object.draggableIfEnabled = object.draggable;
+        object.draggable = false;
 
+        object.hasMenuIfEnabled = object.hasMenu;
+        object.hasMenu = false;
+      }
+    }
+  }
 }
