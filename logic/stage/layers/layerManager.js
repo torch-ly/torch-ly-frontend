@@ -1,6 +1,6 @@
 import Konva from "konva";
 import {stage} from "../main";
-import {draw as drawBackground} from "./background/main";
+import {setLayer as drawBackground} from "./background/main";
 import {draw as drawGrid} from "./grid/main";
 import {draw as drawMenu} from "./menu/main";
 

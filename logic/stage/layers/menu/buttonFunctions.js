@@ -2,9 +2,9 @@ import {snapToGrid} from "../layerFunctions";
 import {menuShape} from "./main";
 
 
-export function installButtons() {
+export function installButtons(layer) {
   pulseButton();
-  deleteButton();
+  deleteButton(layer);
   snapToGridButton();
 }
 
@@ -20,7 +20,7 @@ function pulseButton() {
   });
 }
 
-function deleteButton() {
+function deleteButton(layer) {
   document.getElementById('delete-button').addEventListener('click', () => {
     menuShape.destroy();
     layer.draw();

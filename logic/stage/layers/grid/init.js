@@ -21,7 +21,7 @@ export function init() {
     out.push(new Konva.Line({
       points: [0, Math.round(j * blockSnapSize), width, Math.round(j * blockSnapSize)],
       stroke: '#ddd',
-      strokeWidth: 0.5,
+      strokeWidth: 1,
     }));
   }
 

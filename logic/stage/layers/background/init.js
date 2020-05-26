@@ -1,5 +1,7 @@
 import Konva from "konva";
 import {addSnapToGridListener, addTransformer, addTransformerClickListener} from "../layerFunctions";
+import {draw} from "./main";
+import {stage} from "../../main";
 
 let out = [];
 
@@ -7,6 +9,7 @@ export function init() {
 
   //create Rects
   addObjects();
+  loadImage("https://media.macphun.com/img/uploads/customer/how-to/579/15531840725c93b5489d84e9.43781620.jpg?q=85&w=1340");
 
   //adds invisible Transformer to all objekts in out
   addTransformer(out);
@@ -17,7 +20,8 @@ export function init() {
   //if snapToGrid == true -> object will snap to grid
   addSnapToGridListener(out);
 
-  return out;
+  draw(out);
+  //return out;
 }
 
 function addObjects() {
@@ -50,26 +54,26 @@ function addObjects() {
   rect2.snapToGrid = true;
   rect2.hasMenu = true;
 
-
-  /*loadImages({pic1: 'https://frontend.somigo.de/images/event-placeholder.jpg'}, function () {
-    console.log(images)
-    let pic = new Konva.Image({
-      image: images.pic1,
-      x: 120,
-      y: 50,
-    });
-    out.push(pic)
-  })*/
-
-  /*Konva.Image.fromURL('/picture.jpg', function (darthNode) {
-    darthNode.setAttrs({
-      x: 200,
-      y: 50,
-      scaleX: 0.5,
-      scaleY: 0.5,
-    });
-    out.push(darthNode)
-  });*/
-
   out.push(rect1, rect2);
+}
+
+function loadImage(src) {
+  let imageObj = new Image();
+  imageObj.onload = function () {
+    let image = new Konva.Image({
+      x: 50,
+      y: 50,
+      image: imageObj
+    });
+    image.snapToGrid = true;
+
+    addTransformer([image]);
+    addTransformerClickListener([image]);
+    addSnapToGridListener([image]);
+
+    out.push(image)
+    draw(out);
+    stage.batchDraw();
+  };
+  imageObj.src = src;
 }

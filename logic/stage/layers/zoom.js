@@ -2,9 +2,16 @@ import {stage} from "../main";
 
 export function enableZoom() {
   stage.on('wheel', (e) => {
-    let scaleBy = 0.99;
+    let scaleBy = 0.95;
     e.evt.preventDefault();
     let oldScale = stage.scaleX();
+
+    let pointer = stage.getPointerPosition();
+
+    let mousePointTo = {
+      x: (pointer.x - stage.x()) / oldScale,
+      y: (pointer.y - stage.y()) / oldScale,
+    };
 
     let newScale = e.evt.deltaY > 0 ? oldScale * scaleBy : oldScale / scaleBy;
 
@@ -12,6 +19,13 @@ export function enableZoom() {
       x: newScale,
       y: newScale
     });
+
+    let newPos = {
+      x: pointer.x - mousePointTo.x * newScale,
+      y: pointer.y - mousePointTo.y * newScale,
+    };
+    stage.position(newPos);
+
     stage.batchDraw();
   });
 }

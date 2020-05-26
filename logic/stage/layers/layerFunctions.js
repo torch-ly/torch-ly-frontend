@@ -11,11 +11,15 @@ export function addSnapToGridListener(objects) {
     });
   }
 }
-
+//TODO Array To VarArgs
 export function snapToGrid(object) {
+  console.log(object)
+  let x = object.hasOwnProperty("attrs") ? object.attrs.x : object.x();
+  let y = object.hasOwnProperty("attrs") ? object.attrs.y : object.y();
+
   object.position({
-    x: Math.round(object.x() / blockSnapSize) * blockSnapSize,
-    y: Math.round(object.y() / blockSnapSize) * blockSnapSize
+    x: Math.round(x / blockSnapSize) * blockSnapSize,
+    y: Math.round(y / blockSnapSize) * blockSnapSize
   });
   stage.batchDraw();
 }
@@ -53,7 +57,7 @@ export function addTransformerClickListener(toListen) {
     }
     stage.batchDraw();
   });
-}
+}/*
 
 export function addImageToLayer(layer, src) {
   let imageObject = new Image();
@@ -69,3 +73,4 @@ export function addImageToLayer(layer, src) {
   };
   imageObject.src = src;
 }
+*/

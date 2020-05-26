@@ -9,7 +9,7 @@ export function draw(layer) {
 
   menuNode = document.getElementById('menu');
 
-  installButtons();
+  installButtons(layer);
 
   addDisableListener();
 
