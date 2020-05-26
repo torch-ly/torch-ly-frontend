@@ -35,10 +35,12 @@ export function addTransformer(toAdd) {
 }
 
 export function addTransformerClickListener(toListen) {
+  //TODO fix error "object is not a funktion" if active layer != background
   stage.on('click', function (e) {
     function disableAll() {
       for (let object of toListen) {
         object.tr.visible(false);
+        console.log(object)
         object.draggable(false);
       }
     }
@@ -56,20 +58,23 @@ export function addTransformerClickListener(toListen) {
     }
     stage.batchDraw();
   });
-}/*
-
-export function addImageToLayer(layer, src) {
-  let imageObject = new Image();
-  imageObject.onload = function () {
-    let yoda = new Konva.Image({
-      x: 50,
-      y: 50,
-      image: imageObject
-    });
-
-    layer.add(yoda);
-    layer.batchDraw();
-  };
-  imageObject.src = src;
 }
-*/
+
+export function setLayerDragAndDrop(layer, enable) {
+  for (let object of layer.children) {
+    if (enable) {
+      if (object.draggableIfEnabled != null) {
+        object.draggable = object.draggableIfEnabled;
+      }
+      if (object.hasMenuIfEnabled != null) {
+        object.hasMenu = object.hasMenuIfEnabled;
+      }
+    } else {
+      object.draggableIfEnabled = object.draggable;
+      object.draggable = false;
+
+      object.hasMenuIfEnabled = object.hasMenu;
+      object.hasMenu = false;
+    }
+  }
+}
