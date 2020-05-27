@@ -5,11 +5,14 @@ import {draw as drawGrid} from "./grid/main";
 import {draw as drawMenu} from "./menu/main";
 import {draw as drawFree} from "./freeDrawing/main";
 
+export let activeLayer;
+
 export function init() {
   let grid = new Konva.Layer();
   let background = new Konva.Layer();
   let token = new Konva.Layer();
   let freeDrawing = new Konva.Layer();
+  let measure = new Konva.Layer();
   let menu = new Konva.Layer();
 
   //if change of oder happens -> correct setActiveLayer in overlay.vue
@@ -26,6 +29,11 @@ export function init() {
   drawFree(freeDrawing);
   stage.add(freeDrawing);
 
+  //drawMeasure(measure);
+  //stage.add(measure);
+
   drawMenu(menu);
   stage.add(menu);
+
+  activeLayer = background;
 }

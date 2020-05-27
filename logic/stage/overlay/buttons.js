@@ -5,6 +5,7 @@ import {stage} from "../main";
 export function enableMenuButton() {
   let dragAndDropButton = document.getElementById("drag-and-drop-button");
   let paintButton = document.getElementById("paint-button");
+  let measureButton = document.getElementById("measure-button");
 
   dragAndDropButton.addEventListener('click', () => {
     setStageDragAndDrop(true);
@@ -17,6 +18,11 @@ export function enableMenuButton() {
 
     usePen();
   });
+
+  measureButton.addEventListener('click', () => {
+    setStageDragAndDrop(false);
+
+  })
 }
 
 function setStageDragAndDrop(enable) {

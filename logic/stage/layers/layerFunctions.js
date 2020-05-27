@@ -31,7 +31,42 @@ export function addTransformer(toAdd) {
       rotationSnaps: [0, 90, 180, 270]
     });
     object.tr = tr;
+    //TODO Fix scaleToGrid
+    //addScaleToGrid(object);
   }
+}
+
+export let activeScaleToGridTransformerObject;
+
+function addScaleToGrid(object) {
+  object.tr.on("mousedown", function () {
+    activeScaleToGridTransformerObject = object;
+  })
+  stage.on("mouseup", function () {
+    if (activeScaleToGridTransformerObject != null) {
+      console.log("End", activeScaleToGridTransformerObject);
+      scaleToGrid(activeScaleToGridTransformerObject);
+      activeScaleToGridTransformerObject = null;
+    }
+  })
+}
+
+function scaleToGrid(object) {
+  snapToGrid(object);
+  let newScale = {
+    x: 0,
+    y: 0
+  }
+  if (Math.abs(object.attrs.scaleX - Math.round(object.attrs.scaleX)) < 0.25) {
+    newScale.x = Math.round(object.attrs.width / blockSnapSize) * Math.round(object.attrs.scaleX);
+  } else if (Math.round(object.attrs.scaleX) < object.attrs.scaleX) {
+    newScale.x = Math.round(object.attrs.width / blockSnapSize) * (Math.round(object.attrs.scaleX) + 0.5);
+  } else {
+    newScale.x = Math.round(object.attrs.width / blockSnapSize) * (Math.round(object.attrs.scaleX) - 0.5);
+  }
+
+  object.attrs.scaleX = newScale.x;
+  stage.batchDraw();
 }
 
 export function addTransformerClickListener(toListen) {
@@ -40,7 +75,6 @@ export function addTransformerClickListener(toListen) {
     function disableAll() {
       for (let object of toListen) {
         object.tr.visible(false);
-        console.log(object)
         object.draggable(false);
       }
     }
@@ -77,4 +111,17 @@ export function setLayerDragAndDrop(layer, enable) {
       object.hasMenu = false;
     }
   }
+}
+
+export function getRelativePointerPosition(node) {
+  // the function will return pointer position relative to the passed node
+  let transform = node.getAbsoluteTransform().copy();
+  // to detect relative position we need to invert transform
+  transform.invert();
+
+  // get pointer (say mouse or touch) position
+  let pos = node.getStage().getPointerPosition();
+
+  // now we find relative point
+  return transform.point(pos);
 }

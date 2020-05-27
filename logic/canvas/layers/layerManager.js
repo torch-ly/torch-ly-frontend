@@ -1,13 +1,11 @@
 import {backgroundLayer} from "./background/main";
 import {gridLayer} from "./grid/main";
-import {absPos} from "../moveAndZoom";
 
 let layers = [backgroundLayer, gridLayer]
 let event = null;
 
 export function draw() {
   layers.map((item) => item.draw(event));
-  //TODO if selected -> move picture different
 }
 
 export function init() {

@@ -15,12 +15,14 @@
         </li>
       </ul>
     </div>
+    <button id="measure-button" class="menu-button">Measure</button>
   </div>
 </template>
 <script>
   import ButtonMenu from "./ButtonMenu";
   import {setLayerDragAndDrop} from "../logic/stage/layers/layerFunctions";
   import {stage} from "../logic/stage/main";
+  import {activeLayer} from "../logic/stage/layers/layerManager";
 
   export default {
     components: {ButtonMenu},
@@ -36,17 +38,25 @@
       },
       setActiveLayer: function (layer) {
         this.layerButtonAcive = false;
+
+        let background = stage.children[1]; //backgroundlayer: stage.children[1]
+        let token = stage.children[2];      //tokelayer: stage.children[2]
+
         if (layer == "background") {
 
-          setLayerDragAndDrop(stage.children[1], true);   //backgroundlayer: stage.children[1]
+          setLayerDragAndDrop(background, true);
 
-          setLayerDragAndDrop(stage.children[2], false);  //tokelayer: stage.children[2]
+          setLayerDragAndDrop(token, false);
+
+          activeLayer = background;
 
         } else if (layer == "token") {
 
-          setLayerDragAndDrop(stage.children[1], false);  //backgroundlayer: stage.children[1]
+          setLayerDragAndDrop(background, false);
 
-          setLayerDragAndDrop(stage.children[2], true);   //tokelayer: stage.children[2]
+          setLayerDragAndDrop(token, true);
+
+          activeLayer = token;
 
         }
       }
@@ -110,6 +120,10 @@
 
   #layer-list {
     width: 100px;
+  }
+
+  #measure-button {
+    top: 260px;
   }
 
 </style>
