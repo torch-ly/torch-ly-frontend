@@ -1,6 +1,5 @@
 <template>
   <div>
-    <BrushSelector id="brushSelector" v-if="this.drawing"></BrushSelector>
     <div id="container"></div>
     <div id="menu">
       <div>
@@ -32,18 +31,12 @@
         draggable: true
       });
       main(stage, width, height);
-    },
-    computed: {
-      drawing() {
-        console.info(this.$store);
-        return this.$store.state.manu.drawable;
-      }
     }
   }
 
-  export function upDateColorSelecter(enable) {
-    this.drawing = enable;
-  }
+  // export function upDateColorSelecter(enable) {
+  //   this.drawing = enable;
+  // }
 </script>
 
 <style scoped>
