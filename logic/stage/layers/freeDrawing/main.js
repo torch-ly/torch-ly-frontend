@@ -1,5 +1,6 @@
 import {stage} from "../../main";
 import {enableZoom} from "../zoom";
+import {setLayerDragAndDrop} from "../layerFunctions";
 
 let layer;
 
@@ -18,6 +19,10 @@ export function useHand() {
 }
 
 export function usePen() {
+  for (let layer of stage.children) {
+    setLayerDragAndDrop(layer, false);
+  }
+
   endHand();
   let isDrawing = false;
   let currentLine;
@@ -71,6 +76,9 @@ export function endHand() {
 }
 
 export function endPen() {
+  for (let label of stage.children) {
+    setLayerDragAndDrop(layer, true);
+  }
   stage.off('mousedown');
   stage.off('mousemove');
   stage.off('mouseup');
