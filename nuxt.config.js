@@ -28,6 +28,7 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    'logic/stage/main.js'
   ],
   /*
   ** Nuxt.js dev-modules

@@ -1,8 +1,9 @@
-import {stage} from "../../main";
+import {stage, store} from "../../main";
 import {enableZoom} from "../zoom";
 import {setLayerDragAndDrop} from "../layerFunctions";
 
 let layer;
+let currentDrawColor = "#000000";
 
 export function draw(pLayer) {
   layer = pLayer;
@@ -24,6 +25,16 @@ export function usePen() {
   }
 
   endHand();
+  for (let layer of stage.children) {
+    setLayerDragAndDrop(layer, false);
+    for (let object of layer.children) {
+      if (object.tr != null) {
+        object.tr.visible(false);
+      }
+    }
+  }
+  stage.batchDraw();
+
   let isDrawing = false;
   let currentLine;
   stage.on('mousedown', (evt) => {
@@ -32,7 +43,7 @@ export function usePen() {
     // Create new line object
     let pos = getRelativePointerPosition(stage);
     currentLine = new Konva.Line({
-      stroke: 'black',
+      stroke: currentDrawColor,
       strokeWidth: 3,
       points: [pos.x, pos.y]
     });
@@ -82,4 +93,8 @@ export function endPen() {
   stage.off('mousedown');
   stage.off('mousemove');
   stage.off('mouseup');
+}
+
+export function setColor(rgb) {
+  currentDrawColor = rgb;
 }

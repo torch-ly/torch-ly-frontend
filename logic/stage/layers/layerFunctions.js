@@ -1,6 +1,6 @@
 import {blockSnapSize} from "./grid/main";
 import {stage} from "../main";
-import Konva from "konva";
+import Konva, {Stage} from "konva";
 
 export function addSnapToGridListener(objects) {
   for (let object of objects) {
@@ -35,13 +35,12 @@ export function addTransformer(toAdd) {
 }
 
 export function addTransformerClickListener(toListen) {
-  //TODO fix error "object is not a funktion" if active layer != background
   stage.on('click', function (e) {
     function disableAll() {
       for (let object of toListen) {
         object.tr.visible(false);
-        console.log(object)
-        object.draggable(false);
+        if (typeof object === Stage)
+          object.draggable(false);
       }
     }
 
