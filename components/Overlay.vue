@@ -13,7 +13,7 @@
           <option>Token</option>
         </select>
 
-        <BrushSelector id="brushSelector" v-if="drawing"></BrushSelector>
+        <BrushSelector id="brushSelector" v-show="drawing"></BrushSelector>
 
       </div>
 
