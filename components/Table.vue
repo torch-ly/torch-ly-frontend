@@ -22,15 +22,7 @@
 
   export default {
     components: {BrushSelector},
-    data: {
-      return: {
-        drawing: false
-      }
-    },
     mounted() {
-      window.drawing = this.drawing;
-
-
       let width = window.innerWidth;
       let height = window.innerHeight;
       let stage = new Konva.Stage({
@@ -40,6 +32,12 @@
         draggable: true
       });
       main(stage, width, height);
+    },
+    computed: {
+      drawing() {
+        console.info(this.$store);
+        return this.$store.state.manu.drawable;
+      }
     }
   }
 

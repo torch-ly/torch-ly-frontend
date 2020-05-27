@@ -1,5 +1,6 @@
 import {stage} from "../../main";
 import {enableZoom} from "../zoom";
+import {setLayerDragAndDrop} from "../layerFunctions";
 
 let layer;
 let currentDrawColor = "#000000";
@@ -12,7 +13,6 @@ export function draw(pLayer) {
 }
 
 export function useHand() {
-  window.drawing = false;
   endPen();
   // Make stage draggable
   stage.draggable(true);
@@ -20,8 +20,17 @@ export function useHand() {
 }
 
 export function usePen() {
-  window.drawing = true;
   endHand();
+  for (let layer of stage.children) {
+    setLayerDragAndDrop(layer, false);
+    for (let object of layer.children) {
+      if (object.tr != null) {
+        object.tr.visible(false);
+      }
+    }
+  }
+  stage.batchDraw();
+
   let isDrawing = false;
   let currentLine;
   stage.on('mousedown', (evt) => {
