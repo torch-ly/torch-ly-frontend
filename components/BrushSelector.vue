@@ -17,8 +17,8 @@
     },
     methods: {
       onChange(e) {
-        setColor(e.value);
-        this.hex = e.value;
+        setColor(e.target.value);
+        this.hex = e.target.value;
       }
     }
   }
