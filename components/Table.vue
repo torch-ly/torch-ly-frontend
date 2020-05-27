@@ -1,5 +1,6 @@
 <template>
   <div>
+    <BrushSelector></BrushSelector>
     <div id="container"></div>
     <div id="menu">
       <div>
@@ -17,8 +18,10 @@
 <script>
   import Konva from "konva";
   import {main} from "../logic/stage/main";
+  import BrushSelector from "./BrushSelector"
 
   export default {
+    components: {BrushSelector},
     data: {
       return: {
         screenContext: null
