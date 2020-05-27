@@ -1,6 +1,6 @@
 <template>
   <div>
-    <BrushSelector></BrushSelector>
+    <BrushSelector id="brushSelector" v-if="this.drawing"></BrushSelector>
     <div id="container"></div>
     <div id="menu">
       <div>
@@ -24,10 +24,12 @@
     components: {BrushSelector},
     data: {
       return: {
-        screenContext: null
+        drawing: false
       }
     },
     mounted() {
+      window.drawing = this.drawing;
+
 
       let width = window.innerWidth;
       let height = window.innerHeight;
@@ -39,6 +41,10 @@
       });
       main(stage, width, height);
     }
+  }
+
+  export function upDateColorSelecter(enable) {
+    this.drawing = enable;
   }
 </script>
 
@@ -63,4 +69,10 @@
   #menu button:hover {
     background-color: lightgray;
   }
+
+  #brushSelector {
+    position: absolute;
+
+  }
+
 </style>

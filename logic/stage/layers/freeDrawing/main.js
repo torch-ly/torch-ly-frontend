@@ -2,6 +2,7 @@ import {stage} from "../../main";
 import {enableZoom} from "../zoom";
 
 let layer;
+let currentDrawColor = "#000000";
 
 export function draw(pLayer) {
   layer = pLayer;
@@ -11,6 +12,7 @@ export function draw(pLayer) {
 }
 
 export function useHand() {
+  window.drawing = false;
   endPen();
   // Make stage draggable
   stage.draggable(true);
@@ -18,6 +20,7 @@ export function useHand() {
 }
 
 export function usePen() {
+  window.drawing = true;
   endHand();
   let isDrawing = false;
   let currentLine;
@@ -27,7 +30,7 @@ export function usePen() {
     // Create new line object
     let pos = getRelativePointerPosition(stage);
     currentLine = new Konva.Line({
-      stroke: 'black',
+      stroke: currentDrawColor,
       strokeWidth: 3,
       points: [pos.x, pos.y]
     });
@@ -74,4 +77,8 @@ export function endPen() {
   stage.off('mousedown');
   stage.off('mousemove');
   stage.off('mouseup');
+}
+
+export function setColor(rgb) {
+  currentDrawColor = rgb;
 }
