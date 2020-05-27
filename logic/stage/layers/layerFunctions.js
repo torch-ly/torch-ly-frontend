@@ -52,6 +52,7 @@ export function addTransformerClickListener(toListen) {
           disableAll();
           object.tr.visible(true);
           object.draggable(true);
+          object.moveToTop();
         }
       }
     }
