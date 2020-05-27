@@ -1,4 +1,4 @@
-import {stage, store} from "../../main";
+import {stage} from "../../main";
 import {enableZoom} from "../zoom";
 import {setLayerDragAndDrop} from "../layerFunctions";
 

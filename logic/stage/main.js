@@ -17,4 +17,15 @@ export function main(pStage, width, height) {
   stageHeight = height;
   init();
   enableZoom();
+  resize();
+}
+
+function resize() {
+  window.addEventListener("resize", () => {
+    stage.width(window.innerWidth);
+    stage.height(window.innerHeight);
+    stageWidth = window.innerWidth;
+    stageHeight = window.innerHeight;
+    stage.draw();
+  });
 }
