@@ -1,4 +1,4 @@
-import {stage} from "../../main";
+import {stage, store} from "../../main";
 import {enableZoom} from "../zoom";
 import {setLayerDragAndDrop} from "../layerFunctions";
 
@@ -20,6 +20,9 @@ export function useHand() {
 }
 
 export function usePen() {
+  store.commit("manu/setDrawing", true);
+
+
   endHand();
   for (let layer of stage.children) {
     setLayerDragAndDrop(layer, false);
