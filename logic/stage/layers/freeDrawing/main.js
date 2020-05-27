@@ -20,8 +20,9 @@ export function useHand() {
 }
 
 export function usePen() {
-  store.commit("manu/setDrawing", true);
-
+  for (let layer of stage.children) {
+    setLayerDragAndDrop(layer, false);
+  }
 
   endHand();
   for (let layer of stage.children) {
@@ -86,6 +87,9 @@ export function endHand() {
 }
 
 export function endPen() {
+  for (let label of stage.children) {
+    setLayerDragAndDrop(layer, true);
+  }
   stage.off('mousedown');
   stage.off('mousemove');
   stage.off('mouseup');

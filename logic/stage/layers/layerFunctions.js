@@ -69,6 +69,10 @@ export function setLayerDragAndDrop(layer, enable) {
         object.hasMenu = object.hasMenuIfEnabled;
       }
     } else {
+      if (object.tr != null) {
+        object.tr.visible(false);
+      }
+
       object.draggableIfEnabled = object.draggable;
       object.draggable = false;
 
@@ -76,4 +80,5 @@ export function setLayerDragAndDrop(layer, enable) {
       object.hasMenu = false;
     }
   }
+  stage.batchDraw();
 }
