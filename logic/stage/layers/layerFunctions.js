@@ -59,6 +59,14 @@ export function addTransformerClickListener(toListen) {
   });
 }
 
+export function setStageDragAndDrop(enable) {
+  enable ? stage.draggable(true) : stage.draggable(false);
+
+  for (let layer of stage.children) {
+    setLayerDragAndDrop(layer, enable);
+  }
+}
+
 export function setLayerDragAndDrop(layer, enable) {
   for (let object of layer.children) {
     if (enable) {

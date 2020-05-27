@@ -5,21 +5,13 @@
       <h1 class="text-xl my-10 p-2 border-b-2 border-accent font-bold text-center">RPG Online Tool</h1>
 
       <div class="mx-4">
-        <button id="drag-and-drop-button" class="button">Hand</button>
-        <button id="paint-button" class="button">Paint</button>
-        <button id="layer-button" v-on:click="switchLayerMenu" class="button">Layer</button>
-        <div v-if="layerButtonAcive">
-          <ul id="layer-list">
-            <li>
-              <button id="layer-button-background" class="sub-menu-button" v-on:click="setActiveLayer('background')">
-                Background
-              </button>
-            </li>
-            <li>
-              <button id="layer-button-token" class="sub-menu-button" v-on:click="setActiveLayer('token')">Token</button>
-            </li>
-          </ul>
-        </div>
+        <button @click="handClick" class="button">Hand</button>
+        <button @click="paintClick" class="button">Paint</button>
+
+        <select required v-value="$store.state.manu.layer" @input="dropdownChange" class="w-full mt-4 text-black p-2 rounded-full">
+          <option>Background</option>
+          <option>Token</option>
+        </select>
 
         <BrushSelector id="brushSelector" v-if="drawing"></BrushSelector>
 
@@ -30,9 +22,10 @@
   </div>
 </template>
 <script>
-  import {setLayerDragAndDrop} from "../logic/stage/layers/layerFunctions";
+  import {setStageDragAndDrop} from "../logic/stage/layers/layerFunctions";
   import {stage} from "../logic/stage/main";
   import BrushSelector from "./BrushSelector";
+  import {useHand, usePen} from "../logic/stage/layers/freeDrawing/main";
 
   export default {
     data() {
@@ -48,21 +41,18 @@
         this.layerButtonAcive = !this.layerButtonAcive;
         console.log(stage)
       },
-      setActiveLayer: function (layer) {
-        this.layerButtonAcive = false;
-        if (layer == "background") {
-
-          setLayerDragAndDrop(stage.children[1], true);   //backgroundlayer: stage.children[1]
-
-          setLayerDragAndDrop(stage.children[2], false);  //tokelayer: stage.children[2]
-
-        } else if (layer == "token") {
-
-          setLayerDragAndDrop(stage.children[1], false);  //backgroundlayer: stage.children[1]
-
-          setLayerDragAndDrop(stage.children[2], true);   //tokelayer: stage.children[2]
-
-        }
+      dropdownChange(e) {
+        this.$store.commit("manu/setLayer", e.target.value)
+      },
+      handClick() {
+        this.$store.commit("manu/setHand");
+        setStageDragAndDrop(true);
+        useHand();
+      },
+      paintClick() {
+        this.$store.commit("manu/setDrawing");
+        setStageDragAndDrop(false);
+        usePen();
       }
     },
     computed: {
