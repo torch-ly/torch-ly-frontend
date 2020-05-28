@@ -53,6 +53,7 @@ export function addTransformerClickListener(toListen) {
           object.tr.visible(true);
           object.draggable(true);
           object.moveToTop();
+          object.tr.moveToTop();
         }
       }
     }
