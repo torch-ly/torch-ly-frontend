@@ -1,5 +1,4 @@
 import {stage, store} from "../../main";
-import {enableZoom} from "../zoom";
 import {setLayerDragAndDrop} from "../layerFunctions";
 
 let layer;
@@ -27,7 +26,6 @@ export function useHand() {
   endPen();
   // Make stage draggable
   stage.draggable(true);
-  enableZoom();
 }
 
 export function usePen() {
@@ -97,7 +95,6 @@ function getRelativePointerPosition(node) {
 export function endHand() {
   stage.draw();
   stage.draggable(false);
-  stage.off('wheel');
 }
 
 export function endPen() {
