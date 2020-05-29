@@ -21,49 +21,46 @@ export function useHand() {
 }
 
 export function usePen() {
-  for (let layer of stage.children) {
-    setLayerDragAndDrop(layer, false);
-  }
-
   endHand();
+
   for (let layer of stage.children) {
     setLayerDragAndDrop(layer, false);
-    for (let object of layer.children) {
-      if (object.tr != null) {
-        object.tr.visible(false);
-      }
-    }
   }
-  stage.batchDraw();
 
-  let isDrawing = false;
-  let currentLine;
-  stage.on('mousedown', (evt) => {
+  let isDrawing = false; // currently drawing a line
+  let currentLine; // currently drawn line
+
+  stage.on('mousedown', () => {
+
     // Start drawing
     isDrawing = true;
+
     // Create new line object
     let pos = getRelativePointerPosition(stage);
+
     currentLine = new Konva.Line({
       stroke: currentDrawColor,
       strokeWidth: 3,
       points: [pos.x, pos.y]
     });
+
     layer.add(currentLine);
   });
 
-  stage.on('mousemove', (evt) => {
-    if (!isDrawing) {
+  stage.on('mousemove', () => {
+    if (!isDrawing)
       return;
-    }
 
     // If drawing, add new point to the current line object
     let pos = getRelativePointerPosition(stage);
     let newPoints = currentLine.points().concat([pos.x, pos.y]);
+
     currentLine.points(newPoints);
+
     layer.batchDraw();
   });
 
-  stage.on('mouseup', (evt) => {
+  stage.on('mouseup', () => {
     // End drawing
     isDrawing = false;
   });
@@ -129,7 +126,7 @@ export function endHand() {
 }
 
 export function endPen() {
-  for (let label of stage.children) {
+  for (let layer of stage.children) {
     setLayerDragAndDrop(layer, true);
   }
   stage.off('mousedown');
