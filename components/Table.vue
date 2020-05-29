@@ -61,9 +61,4 @@
     background-color: lightgray;
   }
 
-  #brushSelector {
-    position: absolute;
-
-  }
-
 </style>

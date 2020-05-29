@@ -1,6 +1,7 @@
 
 export default {
   mode: 'spa',
+
   /*
   ** Headers of the page
   */
@@ -15,21 +16,26 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
+
   /*
   ** Customize the progress-bar color
   */
   loading: { color: '#fff' },
+
   /*
   ** Global CSS
   */
   css: [
+    "animate.css/animate.min.css"
   ],
+
   /*
   ** Plugins to load before mounting the App
   */
   plugins: [
     'logic/stage/main.js'
   ],
+
   /*
   ** Nuxt.js dev-modules
   */
@@ -37,6 +43,7 @@ export default {
     // Doc: https://github.com/nuxt-community/nuxt-tailwindcss
     '@nuxtjs/tailwindcss',
   ],
+
   /*
   ** Nuxt.js modules
   */
@@ -44,6 +51,7 @@ export default {
     // Doc: https://github.com/nuxt-community/dotenv-module
     '@nuxtjs/dotenv',
   ],
+
   /*
   ** Build configuration
   */
