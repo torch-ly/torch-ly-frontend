@@ -1,7 +1,6 @@
 import {blockSnapSize} from "./grid/main";
-import {stage} from "../main";
+import {stage, store} from "../main";
 import Konva from "konva";
-import {store} from "../main";
 
 export function addSnapToGridListener(objects) {
   for (let object of objects) {
@@ -75,17 +74,10 @@ export function addTransformerClickListener(toListen) {
   });
 }
 
-export function setStageDragAndDrop(enable) {
-  stage.draggable(enable);
+export function setStageDragAndDrop(enable, stagedrag) {
+  stage.draggable(stagedrag);
 
-  for (let layer of stage.children) {
-    setLayerDragAndDrop(layer, enable);
-  }
-}
-
-
-export function setLayerDragAndDrop(layer, enable) {
-  for (let object of layer.children) {
+  for (let object of stage.find('.draggable')) {
     try {
       object.draggable(enable);
       if (enable)
@@ -93,8 +85,7 @@ export function setLayerDragAndDrop(layer, enable) {
       if (object.tr != null) {
         object.tr.visible(false);
       }
-    } catch (e) { }
+    } catch (e) {
+    }
   }
-
-  stage.batchDraw();
 }

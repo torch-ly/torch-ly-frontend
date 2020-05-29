@@ -1,5 +1,5 @@
 import {stage, store} from "../../main";
-import {setLayerDragAndDrop} from "../layerFunctions";
+import {setStageDragAndDrop} from "../layerFunctions";
 
 let layer;
 let currentDrawColor = "#000000";
@@ -31,9 +31,7 @@ export function useHand() {
 export function usePen() {
   endHand();
 
-  for (let layer of stage.children) {
-    setLayerDragAndDrop(layer, false);
-  }
+  setStageDragAndDrop(false, false);
 
   let isDrawing = false; // currently drawing a line
   let currentLine; // currently drawn line
@@ -98,9 +96,7 @@ export function endHand() {
 }
 
 export function endPen() {
-  for (let layer of stage.children) {
-    setLayerDragAndDrop(layer, true);
-  }
+  setStageDragAndDrop(true, true);
   stage.off('mousedown');
   stage.off('mousemove');
   stage.off('mouseup');
