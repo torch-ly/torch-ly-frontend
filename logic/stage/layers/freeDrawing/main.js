@@ -1,9 +1,11 @@
 import {stage, store} from "../../main";
 import {setLayerDragAndDrop} from "../layerFunctions";
+import Konva from "konva";
 
 let layer;
 let currentDrawColor = "#000000";
 let eraser;
+let paintObject;
 
 export function draw(pLayer) {
   layer = pLayer;
@@ -35,8 +37,24 @@ export function usePen() {
     setLayerDragAndDrop(layer, false);
   }
 
+  paintObject = new Konva.Rect({
+    x: stage.getPointerPosition().x - 15,
+    y: stage.getPointerPosition().y - 15,
+    width: 31,
+    height: 31,
+    stroke: "black",
+    strokeWidth: "1",
+    draggable: false,
+  });
+
+  paintObject.visible(false);
+
+  layer.add(paintObject);
+
   let isDrawing = false; // currently drawing a line
   let currentLine; // currently drawn line
+
+  stage.batchDraw();
 
   stage.on('mousedown', () => {
     // Start drawing
@@ -53,6 +71,10 @@ export function usePen() {
     });
 
     layer.add(currentLine);
+
+    paintObject.moveToTop();
+
+    stage.batchDraw();
   });
 
   stage.on('mousemove', () => {
@@ -60,6 +82,13 @@ export function usePen() {
       eraser.x = stage.getPointerPosition().x;
       eraser.y = stage.getPointerPosition().y;
     }
+
+    paintObject.x(stage.getPointerPosition().x - 15);
+    paintObject.y(stage.getPointerPosition().y - 15);
+
+    paintObject.visible(store.state.manu.erase);
+
+    stage.batchDraw();
 
     if (!isDrawing)
       return;
