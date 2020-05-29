@@ -90,6 +90,9 @@ export function setLayerDragAndDrop(layer, enable) {
       object.draggable(enable);
       if (enable)
         object.tr.visible(true);
+      if (object.tr != null) {
+        object.tr.visible(false);
+      }
     } catch (e) { }
   }
 
