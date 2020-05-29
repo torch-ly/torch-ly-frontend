@@ -1,6 +1,6 @@
 import {blockSnapSize} from "./grid/main";
 import {stage} from "../main";
-import Konva, {Stage} from "konva";
+import Konva from "konva";
 
 export function addSnapToGridListener(objects) {
   for (let object of objects) {
@@ -34,24 +34,41 @@ export function addTransformer(toAdd) {
   }
 }
 
+export function disableAll(objects) {
+  for (let object of objects) {
+    try {
+      if (object.hasOwnProperty("tr")) {
+        object.tr.visible(false);
+      }
+      object.draggable(false);
+    } catch (e) {
+    }
+  }
+}
+
+export function removeTransformer(objects) {
+  for (let object of objects) {
+    object.draggable = false;
+    object.attrs.draggable = false;
+    console.log(object)
+    object.stopDrag();
+  }
+}
+
 export function addTransformerClickListener(toListen) {
   stage.on('click', function (e) {
-    function disableAll() {
-      for (let object of toListen) {
-        object.tr.visible(false);
-        if (typeof object === Stage)
-          object.draggable(false);
-      }
-    }
-
     if (e.target == stage) {
-      disableAll();
+      disableAll(toListen);
     } else {
       for (let object of toListen) {
         if (e.target == object) {
-          disableAll();
+          disableAll(toListen);
           object.tr.visible(true);
-          object.draggable(true);
+          try {
+            object.draggable(true);
+          } catch (e) {
+
+          }
           object.moveToTop();
           object.tr.moveToTop();
         }
@@ -70,24 +87,23 @@ export function setStageDragAndDrop(enable) {
 }
 
 export function setLayerDragAndDrop(layer, enable) {
+  if (layer != stage.children[1]) {
+    return;
+  }
   for (let object of layer.children) {
     if (enable) {
-      if (object.draggableIfEnabled != null) {
-        object.draggable = object.draggableIfEnabled;
-      }
-      if (object.hasMenuIfEnabled != null) {
-        object.hasMenu = object.hasMenuIfEnabled;
+      try {
+        object.draggable(true);
+      } catch (e) {
       }
     } else {
       if (object.tr != null) {
         object.tr.visible(false);
       }
-
-      object.draggableIfEnabled = object.draggable;
-      object.draggable = false;
-
-      object.hasMenuIfEnabled = object.hasMenu;
-      object.hasMenu = false;
+      try {
+        object.draggable(false);
+      } catch (e) {
+      }
     }
   }
   stage.batchDraw();

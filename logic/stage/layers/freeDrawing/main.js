@@ -82,6 +82,7 @@ function getRelativePointerPosition(node) {
 }
 
 export function endHand() {
+  stage.draw();
   stage.draggable(false);
   stage.off('wheel');
 }
