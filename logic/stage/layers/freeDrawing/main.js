@@ -4,6 +4,7 @@ import {setLayerDragAndDrop} from "../layerFunctions";
 
 let layer;
 let currentDrawColor = "#000000";
+let eraser;
 
 export function draw(pLayer) {
   layer = pLayer;
@@ -66,6 +67,46 @@ export function usePen() {
     // End drawing
     isDrawing = false;
   });
+}
+
+function erase() {
+  let eraserSize = 100;
+
+  eraser = new Konva.Rect({
+    x: 0,
+    y: 0,
+    width: eraserSize,
+    height: eraserSize,
+    visible: false
+  });
+
+  layer.add(eraser);
+
+  stage.on('mousedown', () => {
+    eraser.visible(true);
+  })
+
+  stage.on('mouseup', () => {
+    eraser.visible(false);
+  });
+
+  stage.on('mousemove', () => {
+
+    if (eraser.visible && true /*geterasing*/) {
+      let position = stage.getPointerPosition()
+      layer.clear({
+        x: position.x - Math.floor(eraserSize / 2),
+        y: position.y - Math.floor(eraserSize / 2),
+        width: 100 - Math.floor(eraserSize / 2),
+        height: 100 - Math.floor(eraserSize / 2)
+      });
+    }
+  });
+}
+
+function endErase() {
+  //end erase is equal to end pen
+  endPen();
 }
 
 function getRelativePointerPosition(node) {
