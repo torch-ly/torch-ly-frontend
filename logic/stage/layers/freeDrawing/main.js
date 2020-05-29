@@ -66,7 +66,7 @@ export function usePen() {
   });
 }
 
-function erase() {
+export function erase() {
   let eraserSize = 100;
 
   eraser = new Konva.Rect({
@@ -89,7 +89,7 @@ function erase() {
 
   stage.on('mousemove', () => {
 
-    if (eraser.visible && true /*geterasing*/) {
+    if (eraser.visible) {
       let position = stage.getPointerPosition()
       layer.clear({
         x: position.x - Math.floor(eraserSize / 2),
@@ -101,7 +101,7 @@ function erase() {
   });
 }
 
-function endErase() {
+export function endErase() {
   //end erase is equal to end pen
   endPen();
 }
