@@ -1,4 +1,4 @@
-import {stage} from "../../main";
+import {stage, store} from "../../main";
 import {enableZoom} from "../zoom";
 import {setLayerDragAndDrop} from "../layerFunctions";
 
@@ -8,6 +8,16 @@ let eraser;
 
 export function draw(pLayer) {
   layer = pLayer;
+
+  eraser = new Konva.Rect({
+    x: 0,
+    y: 0,
+    width: 30,
+    height: 30,
+    visible: true
+  });
+
+  layer.add(eraser);
 
   /* ---- Init ---- */
   useHand();
@@ -31,7 +41,6 @@ export function usePen() {
   let currentLine; // currently drawn line
 
   stage.on('mousedown', () => {
-
     // Start drawing
     isDrawing = true;
 
@@ -40,14 +49,20 @@ export function usePen() {
 
     currentLine = new Konva.Line({
       stroke: currentDrawColor,
-      strokeWidth: 3,
-      points: [pos.x, pos.y]
+      strokeWidth: store.state.manu.erase ? 30 : 3,
+      points: [pos.x, pos.y],
+      globalCompositeOperation: store.state.manu.erase ? 'destination-out' : 'source-over',
     });
 
     layer.add(currentLine);
   });
 
   stage.on('mousemove', () => {
+    if (eraser != null) {
+      eraser.x = stage.getPointerPosition().x;
+      eraser.y = stage.getPointerPosition().y;
+    }
+
     if (!isDrawing)
       return;
 
@@ -64,46 +79,6 @@ export function usePen() {
     // End drawing
     isDrawing = false;
   });
-}
-
-export function erase() {
-  let eraserSize = 100;
-
-  eraser = new Konva.Rect({
-    x: 0,
-    y: 0,
-    width: eraserSize,
-    height: eraserSize,
-    visible: false
-  });
-
-  layer.add(eraser);
-
-  stage.on('mousedown', () => {
-    eraser.visible(true);
-  })
-
-  stage.on('mouseup', () => {
-    eraser.visible(false);
-  });
-
-  stage.on('mousemove', () => {
-
-    if (eraser.visible) {
-      let position = stage.getPointerPosition()
-      layer.clear({
-        x: position.x - Math.floor(eraserSize / 2),
-        y: position.y - Math.floor(eraserSize / 2),
-        width: 100 - Math.floor(eraserSize / 2),
-        height: 100 - Math.floor(eraserSize / 2)
-      });
-    }
-  });
-}
-
-export function endErase() {
-  //end erase is equal to end pen
-  endPen();
 }
 
 function getRelativePointerPosition(node) {

@@ -20,7 +20,6 @@
 </template>
 <script>
   import BrushSelector from "./BrushSelector";
-  import {endErase, erase} from "../logic/stage/layers/freeDrawing/main";
 
   export default {
     data() {
@@ -38,10 +37,6 @@
       },
       clickErase() {
         this.$store.commit("manu/setErase");
-        if (this.$store.state.manu.erase)
-          erase();
-        else
-          endErase();
       }
     },
     computed: {
