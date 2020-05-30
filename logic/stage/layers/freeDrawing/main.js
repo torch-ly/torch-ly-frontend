@@ -62,7 +62,7 @@ export function usePen() {
 
     currentLine = new Konva.Line({
       stroke: currentDrawColor,
-      strokeWidth: store.state.manu.erase ? store.state.manu.drawFree.strokeWidth * 10 : store.state.manu.drawFree.strokeWidth,
+      strokeWidth: store.state.manu.erase ? store.state.manu.freeDrawing.strokeWidth * 10 : store.state.manu.freeDrawing.strokeWidth,
       points: [pos.x, pos.y],
       globalCompositeOperation: store.state.manu.erase ? 'destination-out' : 'source-over',
     });
