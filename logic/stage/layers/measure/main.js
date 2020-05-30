@@ -6,6 +6,7 @@ import {endPen} from "../freeDrawing/main";
 let arrow;
 let start = {x: 0, y: 0};
 let layer;
+let lengthSoFar = 0;
 
 export function draw(pLayer) {
   layer = pLayer;
