@@ -1,129 +1,53 @@
 <template>
-  <div>
-    <button id="drag-and-drop-button" class="menu-button">Hand</button>
-    <button id="paint-button" class="menu-button">Paint</button>
-    <button id="layer-button" class="menu-button" v-on:click="switchLayerMenu">Layer</button>
-    <div v-if="layerButtonAcive">
-      <ul id="layer-list">
-        <li>
-          <button id="layer-button-background" class="sub-menu-button" v-on:click="setActiveLayer('background')">
-            Background
-          </button>
-        </li>
-        <li>
-          <button id="layer-button-token" class="sub-menu-button" v-on:click="setActiveLayer('token')">Token</button>
-        </li>
-      </ul>
+  <div class="fixed h-screen w-64 top-0 right-0 bg-gray-700 animate__animated animate__fadeInRight text-white" :class="{'hidden' : !$store.state.manu.drawing}">
+    <div class="relative w-full h-full">
+
+      <div class="m-6 animate__animated animate__fadeInRight">
+        <select required v-bind:value="$store.state.manu.layer" @input="dropdownChange" class="hidden w-full text-black p-2 rounded-full">
+          <option>Background</option>
+          <option>Token</option>
+        </select>
+
+        <BrushSelector v-show="drawing"></BrushSelector>
+
+        <button :class="{'bg-red-300' : !$store.state.manu.erase , 'bg-red-400' : $store.state.manu.erase}" class="w-full outline-none rounded-full p-2 mt-4" @click="clickErase">
+          Radierer
+        </button>
+      </div>
+
     </div>
-    <button id="measure-button" class="menu-button">Measure</button>
   </div>
 </template>
 <script>
-  import ButtonMenu from "./ButtonMenu";
-  import {setLayerDragAndDrop} from "../logic/stage/layers/layerFunctions";
-  import {stage} from "../logic/stage/main";
-  import {activeLayer} from "../logic/stage/layers/layerManager";
+  import BrushSelector from "./BrushSelector";
 
   export default {
-    components: {ButtonMenu},
     data() {
       return {
         layerButtonAcive: false
       }
     },
+    components: {
+      BrushSelector
+    },
     methods: {
-      switchLayerMenu: function () {
-        this.layerButtonAcive = !this.layerButtonAcive;
-        console.log(stage)
+      dropdownChange(e) {
+        console.log(e)
+        this.$store.commit("manu/setLayer", e.target.value)
       },
-      setActiveLayer: function (layer) {
-        this.layerButtonAcive = false;
-
-        let background = stage.children[1]; //backgroundlayer: stage.children[1]
-        let token = stage.children[2];      //tokelayer: stage.children[2]
-
-        if (layer == "background") {
-
-          setLayerDragAndDrop(background, true);
-
-          setLayerDragAndDrop(token, false);
-
-          activeLayer = background;
-
-        } else if (layer == "token") {
-
-          setLayerDragAndDrop(background, false);
-
-          setLayerDragAndDrop(token, true);
-
-          activeLayer = token;
-
-        }
+      clickErase() {
+        this.$store.commit("manu/setErase");
+      }
+    },
+    computed: {
+      drawing() {
+        return this.$store.state["manu"]["drawing"];
       }
     }
   }
 </script>
-
-<style scoped>
-  .menu-button {
-    background-color: #e7e7e7;
-    color: black;
-    border-radius: 8px;
-    border: 2px solid gray;
-
-    position: absolute;
-    width: 100px;
-    height: 50px;
-    left: 5px;
-
-
-    transition-duration: 0.4s;
+<style>
+  button {
+    outline: none !important;
   }
-
-  .sub-menu-button {
-    position: absolute;
-    width: 150px;
-    height: 50px;
-    left: 110px;
-    border: 2px solid gray;
-    background-color: #e7e7e7;
-    color: black;
-  }
-
-  .menu-button:hover {
-    background-color: white;
-  }
-
-  .sub-menu-button:hover {
-    background-color: white;
-  }
-
-  #drag-and-drop-button {
-    top: 80px;
-  }
-
-  #paint-button {
-    top: 140px;
-  }
-
-  #layer-button {
-    top: 200px;
-  }
-
-  #layer-button-background {
-    top: 170px;
-  }
-
-  #layer-button-token {
-    top: 220px;
-  }
-
-  #layer-list {
-    width: 100px;
-  }
-
-  #measure-button {
-    top: 260px;
-  }
-
 </style>

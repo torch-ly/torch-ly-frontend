@@ -17,15 +17,11 @@
 <script>
   import Konva from "konva";
   import {main} from "../logic/stage/main";
+  import BrushSelector from "./BrushSelector"
 
   export default {
-    data: {
-      return: {
-        screenContext: null
-      }
-    },
+    components: {BrushSelector},
     mounted() {
-
       let width = window.innerWidth;
       let height = window.innerHeight;
       let stage = new Konva.Stage({
@@ -37,6 +33,10 @@
       main(stage, width, height);
     }
   }
+
+  // export function upDateColorSelecter(enable) {
+  //   this.drawing = enable;
+  // }
 </script>
 
 <style scoped>
@@ -60,4 +60,5 @@
   #menu button:hover {
     background-color: lightgray;
   }
+
 </style>

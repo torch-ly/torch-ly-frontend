@@ -39,6 +39,7 @@ function addObjects() {
 
   rect1.snapToGrid = true;
   rect1.hasMenu = true;
+  rect1.name('draggable');
 
   let rect2 = new Konva.Rect({
     x: 80,
@@ -53,6 +54,7 @@ function addObjects() {
   });
   rect2.snapToGrid = true;
   rect2.hasMenu = true;
+  rect2.name('draggable');
 
   out.push(rect1, rect2);
 }
@@ -67,6 +69,7 @@ function loadImage(src) {
     });
     image.snapToGrid = true;
     image.hasMenu = true;
+    image.name('draggable');
 
     addTransformer([image]);
     addTransformerClickListener([image]);
