@@ -2,7 +2,11 @@ export const state = () => ({
   drawing: false,
   move: true,
   layer: "Background",
-  erase: false
+  erase: false,
+  freeDrawing: {
+    color: "#000000",
+    strokeWidth: 3
+  }
 })
 
 export const mutations = {
