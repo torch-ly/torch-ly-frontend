@@ -1,9 +1,16 @@
 export const state = () => ({
-  drawing: false,
   move: true,
   layer: "Background",
+
+  drawing: false,
   erase: false,
-  measure: false
+
+  measure: false,
+  measureDetails: {
+    length: 0,
+    unitEnding: "ft",
+    boxSize: "5"
+  }
 })
 
 export const mutations = {
@@ -30,5 +37,8 @@ export const mutations = {
     state.move = false;
     state.drawing = false;
     state.measure = true;
+  },
+  setMeasureLength(state, length) {
+    state.measureDetails.length = length;
   }
 }
