@@ -1,5 +1,5 @@
 import {stage, store} from "../../main";
-import {setStageDragAndDrop} from "../layerFunctions";
+import {getRelativePointerPosition, setStageDragAndDrop} from "../layerFunctions";
 import Konva from "konva";
 
 let layer;
@@ -106,19 +106,6 @@ export function usePen() {
     // End drawing
     isDrawing = false;
   });
-}
-
-function getRelativePointerPosition(node) {
-  // the function will return pointer position relative to the passed node
-  let transform = node.getAbsoluteTransform().copy();
-  // to detect relative position we need to invert transform
-  transform.invert();
-
-  // get pointer (say mouse or touch) position
-  let pos = node.getStage().getPointerPosition();
-
-  // now we find relative point
-  return transform.point(pos);
 }
 
 export function endHand() {

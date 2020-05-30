@@ -3,8 +3,9 @@
     <div class="relative m-6 flex flex-col justify-center items-center">
       <img src="/move.svg" @click="handClick" :class="{'button-selected' : handSelected}" class="button"/>
       <img src="/pen.svg" @click="paintClick" :class="{'button-selected' : paintSelected}" class="button"/>
-      <img src="/arrow.svg" class="button"/>
+      <img src="/arrow.svg" @click="measureClick" :class="{'button-selected' : measureSelected}" class="button"/>
     </div>
+    :
   </div>
 </template>
 <script>
@@ -15,13 +16,17 @@
     methods: {
       handClick() {
         this.$store.commit("manu/setHand");
-        setStageDragAndDrop(true);
+        setStageDragAndDrop(true, true);
         useHand();
       },
       paintClick() {
         this.$store.commit("manu/setDrawing");
-        setStageDragAndDrop(false);
+        setStageDragAndDrop(false, false);
         usePen();
+      },
+      measureClick() {
+        this.$store.commit("manu/setMeasure");
+        setStageDragAndDrop(false, false);
       }
     },
     computed: {
@@ -30,6 +35,9 @@
       },
       paintSelected() {
         return this.$store.state.manu.drawing;
+      },
+      measureSelected() {
+        return this.$store.state.manu.measure;
       }
     }
   }

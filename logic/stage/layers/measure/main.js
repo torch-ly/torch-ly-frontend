@@ -1,4 +1,4 @@
-import {stage} from "../../main";
+import {stage, store} from "../../main";
 import {getRelativePointerPosition} from "../layerFunctions";
 
 let arrow;
@@ -7,9 +7,9 @@ export function draw(layer) {
 
   let start = {x: 0, y: 0};
 
-  stage.on("mousedown", (e) => {/*
-    start = getRelativePointerPosition(stage);
-    console.log(stage.getPointerPosition(), getRelativePointerPosition(stage));*/
+  stage.on("mousedown", (e) => {
+    if (!store.state.manu.measure)
+      return;
 
     start = getRelativePointerPosition(stage);
 
@@ -27,10 +27,21 @@ export function draw(layer) {
   })
 
   stage.on("mousemove", (e) => {
-    if (arrow != null && arrow.currentlyDrawing) {
+    if (!store.state.manu.measure || arrow == null)
+      return;
+
+    if (arrow.currentlyDrawing) {
       arrow.points([start.x, start.y, getRelativePointerPosition(stage).x, getRelativePointerPosition(stage).y])
     }
     layer.batchDraw();
-    console.log(stage.getPointerPosition(), getRelativePointerPosition(stage));
+  })
+
+  stage.on("mouseup", (e) => {
+    if (e.evt.button === 2)
+      return true;
+
+    arrow = null;
+    layer.destroyChildren();
+    layer.batchDraw();
   })
 }

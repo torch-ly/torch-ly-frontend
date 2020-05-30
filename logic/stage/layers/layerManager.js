@@ -2,7 +2,6 @@ import Konva from "konva";
 import {stage} from "../main";
 import {setLayer as drawBackground} from "./background/main";
 import {draw as drawGrid} from "./grid/main";
-import {draw as drawMenu} from "./menu/main";
 import {draw as drawFree} from "./freeDrawing/main";
 import {draw as drawMeasure} from "./measure/main";
 
@@ -33,8 +32,8 @@ export function init() {
   drawMeasure(measure);
   stage.add(measure);
 
-  drawMenu(menu);
-  stage.add(menu);
+  /*drawMenu(menu);
+  stage.add(menu);*/
 
   activeLayer = background;
 }
