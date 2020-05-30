@@ -7,7 +7,16 @@
 
     <BrushSelector v-show="drawing"></BrushSelector>
 
-    <button :class="{'bg-red-300' : !$store.state.manu.erase , 'bg-red-400' : $store.state.manu.erase}" class="w-full outline-none rounded-full p-2 mt-4" @click="clickErase">
+    <hr class="my-4">
+
+    <span class="block">
+      Stiftbreite:
+      <input type="range" min="1" max="50" value="3" class="w-full" :value="$store.state.manu.">
+    </span>
+
+    <hr class="my-4">
+
+    <button :class="{'bg-red-300' : !$store.state.manu.erase , 'bg-red-400' : $store.state.manu.erase}" class="w-full outline-none rounded-full p-2" @click="clickErase">
       Radierer
     </button>
   </div>

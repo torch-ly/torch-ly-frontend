@@ -1,8 +1,8 @@
 <template>
   <div class="mt-4">
-    <label for="kb_selected_color">Bitte Farbe wählen: </label>
-    <input type="color" id="kb_selected_color" @input="onChange">
-    <span v-text="hex">(#000000)</span>
+    <label for="kb_selected_color">Farbe: </label>
+    <input type="color" id="kb_selected_color" class="ml-2" @input="onChange">
+    <!--span v-text="hex">(#000000)</span-->
   </div>
 </template>
 

@@ -5,7 +5,6 @@
       <img src="/pen.svg" @click="paintClick" :class="{'button-selected' : paintSelected}" class="button"/>
       <img src="/arrow.svg" @click="measureClick" :class="{'button-selected' : measureSelected}" class="button"/>
     </div>
-    :
   </div>
 </template>
 <script>
