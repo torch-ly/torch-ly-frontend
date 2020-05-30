@@ -1,6 +1,6 @@
 import {init} from "../grid/init";
 
-export let blockSnapSize = 60;
+export let blockSnapSize = 120;
 
 export function draw(layer) {
   let drawables = init();

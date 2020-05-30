@@ -4,6 +4,7 @@ import {setLayer as drawBackground} from "./background/main";
 import {draw as drawGrid} from "./grid/main";
 import {draw as drawMenu} from "./menu/main";
 import {draw as drawFree} from "./freeDrawing/main";
+import {setLayer as drawToken} from "./token/main";
 
 export function init() {
   let grid = new Konva.Layer();
@@ -20,7 +21,7 @@ export function init() {
   drawBackground(background);
   stage.add(background);
 
-
+  drawToken(token);
   stage.add(token);
 
   drawFree(freeDrawing);
