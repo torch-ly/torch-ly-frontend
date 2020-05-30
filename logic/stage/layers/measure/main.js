@@ -1,5 +1,6 @@
 import {stage, store} from "../../main";
 import {getRelativePointerPosition} from "../layerFunctions";
+import {blockSnapSize} from "../grid/main";
 
 let arrow;
 
@@ -11,9 +12,8 @@ export function draw(layer) {
     if (!store.state.manu.measure)
       return;
 
-    start = getRelativePointerPosition(stage);
+    start = calculateSnapToGrid(getRelativePointerPosition(stage));
 
-    console.log("234")
     arrow = new Konva.Arrow({
       points: [start.x, start.y, start.x, start.y],
       pointerLength: 20,
@@ -30,8 +30,13 @@ export function draw(layer) {
     if (!store.state.manu.measure || arrow == null)
       return;
 
+    let eins = Math.abs((calculateSnapToGrid(start).x - calculateSnapToGrid(getRelativePointerPosition(stage)).x) / blockSnapSize);
+    let zwei = Math.abs((calculateSnapToGrid(start).y - calculateSnapToGrid(getRelativePointerPosition(stage)).y) / blockSnapSize);
+
+    console.log(Math.max(eins, zwei))
+
     if (arrow.currentlyDrawing) {
-      arrow.points([start.x, start.y, getRelativePointerPosition(stage).x, getRelativePointerPosition(stage).y])
+      arrow.points([start.x, start.y, calculateSnapToGrid(getRelativePointerPosition(stage)).x, calculateSnapToGrid(getRelativePointerPosition(stage)).y])
     }
     layer.batchDraw();
   })
@@ -44,4 +49,11 @@ export function draw(layer) {
     layer.destroyChildren();
     layer.batchDraw();
   })
+}
+
+function calculateSnapToGrid(pos) {
+  return {
+    x: Math.floor(pos.x / blockSnapSize) * blockSnapSize + blockSnapSize / 2,
+    y: Math.floor(pos.y / blockSnapSize) * blockSnapSize + blockSnapSize / 2
+  };
 }
