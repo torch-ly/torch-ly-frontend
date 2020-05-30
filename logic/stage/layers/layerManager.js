@@ -4,6 +4,7 @@ import {setLayer as drawBackground} from "./background/main";
 import {draw as drawGrid} from "./grid/main";
 import {draw as drawMenu} from "./menu/main";
 import {draw as drawFree} from "./freeDrawing/main";
+import {draw as drawMeasure} from "./measure/main";
 
 export let activeLayer;
 
@@ -29,8 +30,8 @@ export function init() {
   drawFree(freeDrawing);
   stage.add(freeDrawing);
 
-  //drawMeasure(measure);
-  //stage.add(measure);
+  drawMeasure(measure);
+  stage.add(measure);
 
   drawMenu(menu);
   stage.add(menu);
