@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed h-screen w-64 top-0 right-0 bg-gray-700 animate__animated animate__fadeInRight text-white flex justify-center items-center flex-col" :class="{'hidden' : !visible}">
+  <div class="fixed md:h-screen w-full md:w-64 bottom-0 md:top-0 right-0 bg-gray-700 animate__animated animate__fadeInRight text-white flex justify-center items-center flex-col" :class="{'hidden' : !visible}">
 
     <PaintOverlay class="animate__animated animate__fadeInRight" v-if="$store.state.manu.drawing" />
     <MeasureOverlay class="animate__animated animate__fadeInRight" v-if="$store.state.manu.measure" />

@@ -29,8 +29,8 @@ export function startDraw() {
       points: [start.x, start.y, start.x, start.y],
       pointerLength: 20,
       pointerWidth: 20,
-      fill: 'black',
-      stroke: 'black',
+      fill: '#4a5568',
+      stroke: '#4a5568',
       strokeWidth: 4,
     });
     arrow.currentlyDrawing = true;
