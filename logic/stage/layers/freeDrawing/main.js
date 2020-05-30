@@ -3,7 +3,6 @@ import {getRelativePointerPosition, setStageDragAndDrop} from "../layerFunctions
 import Konva from "konva";
 
 let layer;
-let currentDrawColor = "#000000";
 let eraser;
 let paintObject;
 
@@ -61,7 +60,7 @@ export function usePen() {
     let pos = getRelativePointerPosition(stage);
 
     currentLine = new Konva.Line({
-      stroke: currentDrawColor,
+      stroke: store.state.manu.freeDrawing.color,
       strokeWidth: store.state.manu.erase ? store.state.manu.freeDrawing.strokeWidth * 10 : store.state.manu.freeDrawing.strokeWidth,
       points: [pos.x, pos.y],
       globalCompositeOperation: store.state.manu.erase ? 'destination-out' : 'source-over',
@@ -108,19 +107,6 @@ export function usePen() {
   });
 }
 
-function getRelativePointerPosition(node) {
-  // the function will return pointer position relative to the passed node
-  let transform = node.getAbsoluteTransform().copy();
-  // to detect relative position we need to invert transform
-  transform.invert();
-
-  // get pointer (say mouse or touch) position
-  let pos = node.getStage().getPointerPosition();
-
-  // now we find relative point
-  return transform.point(pos);
-}
-
 export function endHand() {
   stage.draw();
   stage.draggable(false);
@@ -137,8 +123,4 @@ export function endPen() {
   stage.off('mousedown');
   stage.off('mousemove');
   stage.off('mouseup');
-}
-
-export function setColor(rgb) {
-  currentDrawColor = rgb;
 }

@@ -1,11 +1,9 @@
 <template>
-  <div class="fixed h-screen w-64 top-0 right-0 bg-gray-700 animate__animated animate__fadeInRight text-white" :class="{'hidden' : !visible}">
-    <div class="relative w-full h-full">
+  <div class="fixed h-screen w-64 top-0 right-0 bg-gray-700 animate__animated animate__fadeInRight text-white flex justify-center items-center flex-col" :class="{'hidden' : !visible}">
 
-      <PaintOverlay class="animate__animated animate__fadeInRight" v-if="$store.state.manu.drawing" />
-      <MeasureOverlay class="animate__animated animate__fadeInRight" v-if="$store.state.manu.measure" />
+    <PaintOverlay class="animate__animated animate__fadeInRight" v-if="$store.state.manu.drawing" />
+    <MeasureOverlay class="animate__animated animate__fadeInRight" v-if="$store.state.manu.measure" />
 
-    </div>
   </div>
 </template>
 <script>

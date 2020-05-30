@@ -44,5 +44,11 @@ export const mutations = {
   },
   setMeasureLength(state, length) {
     state.measureDetails.length = length;
+  },
+  setDrawingColor(state, color) {
+    state.freeDrawing.color = color;
+  },
+  setDrawingStrokeWidth(state, width) {
+    state.freeDrawing.strokeWidth = width;
   }
 }

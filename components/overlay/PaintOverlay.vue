@@ -11,7 +11,7 @@
 
     <span class="block">
       Stiftbreite:
-      <input type="range" min="1" max="50" value="3" class="w-full" :value="$store.state.manu.">
+      <input type="range" min="1" max="50" value="3" class="w-full" @change="widthChange" :value="$store.state.manu.freeDrawing.strokeWidth">
     </span>
 
     <hr class="my-4">
@@ -35,6 +35,9 @@
       },
       clickErase() {
         this.$store.commit("manu/setErase");
+      },
+      widthChange(e) {
+        this.$store.commit("manu/setDrawingStrokeWidth", e.target.value)
       }
     },
     computed: {

@@ -26,13 +26,13 @@ export function init() {
 
 function addObjects() {
   let rect1 = new Konva.Rect({
-    x: 50,
-    y: 20,
+    x: 100,
+    y: 250,
     width: 120,
     height: 600,
     fill: 'green',
-    stroke: 'black',
-    strokeWidth: 4,
+    // stroke: 'black',
+    // strokeWidth: 4,
     draggable: false,
     tr: null
   });
@@ -41,30 +41,17 @@ function addObjects() {
   rect1.hasMenu = true;
   rect1.name('draggable');
 
-  let rect2 = new Konva.Rect({
-    x: 80,
-    y: 20,
-    width: 120,
-    height: 600,
-    fill: 'red',
-    stroke: 'black',
-    strokeWidth: 4,
-    draggable: false,
-    tr: null
-  });
-  rect2.snapToGrid = true;
-  rect2.hasMenu = true;
-  rect2.name('draggable');
-
-  out.push(rect1, rect2);
+  out.push(rect1);
 }
 
 function loadImage(src) {
   let imageObj = new Image();
   imageObj.onload = function () {
     let image = new Konva.Image({
-      x: 50,
-      y: 50,
+      x: 700,
+      y: 200,
+      width: 300,
+      height: 400,
       image: imageObj
     });
     image.snapToGrid = true;
