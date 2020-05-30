@@ -26,8 +26,7 @@ export function draw(pLayer) {
 
 export function useHand() {
   endPen();
-  // Make stage draggable
-  stage.draggable(true);
+  setStageDragAndDrop(true, true);
 }
 
 export function usePen() {
@@ -81,8 +80,11 @@ export function usePen() {
       eraser.y = stage.getPointerPosition().y;
     }
 
-    paintObject.x(stage.getPointerPosition().x - 15);
-    paintObject.y(stage.getPointerPosition().y - 15);
+    /*paintObject.x(stage.getPointerPosition().x - 15);
+    paintObject.y(stage.getPointerPosition().y - 15);*/
+
+    paintObject.x(getRelativePointerPosition(stage).x - 15);
+    paintObject.y(getRelativePointerPosition(stage).y - 15);
 
     paintObject.visible(store.state.manu.erase);
 
@@ -125,7 +127,13 @@ export function endHand() {
 }
 
 export function endPen() {
-  setStageDragAndDrop(true, true);
+  if (paintObject != null) {
+    paintObject.visible(false);
+    layer.batchDraw();
+  }
+  if (store.state.manu.erase) {
+    store.commit("manu/setErase");
+  }
   stage.off('mousedown');
   stage.off('mousemove');
   stage.off('mouseup');
