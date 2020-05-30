@@ -1,5 +1,5 @@
 import {stage, store} from "../../main";
-import {setStageDragAndDrop} from "../layerFunctions";
+import {getRelativePointerPosition, setStageDragAndDrop} from "../layerFunctions";
 import Konva from "konva";
 
 let layer;
