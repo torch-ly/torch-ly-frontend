@@ -11,6 +11,7 @@
 <script>
   import {setStageDragAndDrop} from "../logic/stage/layers/layerFunctions";
   import {useHand, usePen} from "../logic/stage/layers/freeDrawing/main";
+  import {startDraw} from "../logic/stage/layers/measure/main";
 
   export default {
     methods: {
@@ -27,6 +28,7 @@
       measureClick() {
         this.$store.commit("manu/setMeasure");
         setStageDragAndDrop(false, false);
+        startDraw();
       }
     },
     computed: {

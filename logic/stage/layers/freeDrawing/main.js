@@ -60,12 +60,15 @@ export function usePen() {
     // Create new line object
     let pos = getRelativePointerPosition(stage);
 
-    currentLine = new Konva.Line({
-      stroke: currentDrawColor,
-      strokeWidth: store.state.manu.erase ? 30 : 3,
-      points: [pos.x, pos.y],
-      globalCompositeOperation: store.state.manu.erase ? 'destination-out' : 'source-over',
-    });
+    try {
+      currentLine = new Konva.Line({
+        stroke: currentDrawColor,
+        strokeWidth: store.state.manu.erase ? 30 : 3,
+        points: [pos.x, pos.y],
+        globalCompositeOperation: store.state.manu.erase ? 'destination-out' : 'source-over',
+      });
+    } catch (e) {
+    }
 
     layer.add(currentLine);
 

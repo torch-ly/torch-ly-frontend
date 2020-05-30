@@ -1,12 +1,25 @@
 import {stage, store} from "../../main";
 import {getRelativePointerPosition} from "../layerFunctions";
 import {blockSnapSize} from "../grid/main";
+import {endPen} from "../freeDrawing/main";
 
 let arrow;
+let start = {x: 0, y: 0};
+let layer;
 
-export function draw(layer) {
+export function draw(pLayer) {
+  layer = pLayer;
+}
 
-  let start = {x: 0, y: 0};
+function calculateSnapToGrid(pos) {
+  return {
+    x: Math.floor(pos.x / blockSnapSize) * blockSnapSize + blockSnapSize / 2,
+    y: Math.floor(pos.y / blockSnapSize) * blockSnapSize + blockSnapSize / 2
+  };
+}
+
+export function startDraw() {
+  endPen();
 
   stage.on("mousedown", (e) => {
     if (!store.state.manu.measure)
@@ -49,11 +62,4 @@ export function draw(layer) {
     layer.destroyChildren();
     layer.batchDraw();
   })
-}
-
-function calculateSnapToGrid(pos) {
-  return {
-    x: Math.floor(pos.x / blockSnapSize) * blockSnapSize + blockSnapSize / 2,
-    y: Math.floor(pos.y / blockSnapSize) * blockSnapSize + blockSnapSize / 2
-  };
 }
