@@ -5,7 +5,8 @@ export const state = () => ({
   erase: false,
   freeDrawing: {
     color: "#000000",
-    strokeWidth: 3
+    strokeWidth: 3,
+    drawingObject: ""
   }
 })
 

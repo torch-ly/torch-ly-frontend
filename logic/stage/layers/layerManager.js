@@ -1,7 +1,10 @@
 import Konva from "konva";
 import {stage} from "../main";
 import {draw as drawGrid} from "./grid/main";
-import {createRect} from "./freeDrawing/selectionRect";
+import {draw as drawMenu} from "./menu/main";
+import {setLayer as drawToken} from "./token/main";
+import {setLayer as drawBackground} from "./background/main";
+import {draw as drawFree} from "./freeDrawing/main"
 
 export function init() {
   let grid = new Konva.Layer();
@@ -15,7 +18,7 @@ export function init() {
   drawGrid(grid);
   stage.add(grid);
 
-  /*drawBackground(background);
+  drawBackground(background);
   stage.add(background);
 
   drawToken(token);
@@ -25,8 +28,5 @@ export function init() {
   stage.add(freeDrawing);
 
   drawMenu(menu);
-  stage.add(menu);*/
-
-  createRect(freeDrawing, true);
-  stage.add(freeDrawing);
+  stage.add(menu);
 }

@@ -1,6 +1,7 @@
 import {stage, store} from "../../main";
 import {setStageDragAndDrop} from "../layerFunctions";
 import Konva from "konva";
+import {createCircle, createRect} from "./drawShapes";
 
 let layer;
 let currentDrawColor = "#000000";
@@ -33,6 +34,9 @@ export function usePen() {
   endHand();
 
   setStageDragAndDrop(false, false);
+
+  createCircle(layer);
+  createRect(layer);
 
   paintObject = new Konva.Rect({
     x: stage.getPointerPosition().x - 15,
