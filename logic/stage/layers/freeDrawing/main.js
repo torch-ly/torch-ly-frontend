@@ -26,7 +26,7 @@ export function draw(pLayer) {
 
 export function useHand() {
   endPen();
-  setStageDragAndDrop(true, true);
+  //setStageDragAndDrop(true, true);
 }
 
 export function usePen() {
@@ -108,7 +108,7 @@ export function usePen() {
   });
 }
 
-function getRelativePointerPosition(node) {
+export function getRelativePointerPosition(node) {
   // the function will return pointer position relative to the passed node
   let transform = node.getAbsoluteTransform().copy();
   // to detect relative position we need to invert transform
