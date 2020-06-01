@@ -1,7 +1,8 @@
 import Konva from "konva";
-import {addSnapToGridListener, addTransformer, addTransformerClickListener} from "../layerFunctions";
+import {addSnapToGridListener} from "../layerFunctions";
 import {draw} from "./main";
 import {stage} from "../../main";
+import {addTransformerClickListener} from "../transformer";
 
 let out = [];
 
@@ -12,10 +13,14 @@ export function init() {
   loadImage("https://media.macphun.com/img/uploads/customer/how-to/579/15531840725c93b5489d84e9.43781620.jpg?q=85&w=1340");
 
   //adds invisible Transformer to all objekts in out
-  addTransformer(out);
+  //addOldTransformer(out);
 
   //adds clicklistener to enable transformer
-  addTransformerClickListener(out);
+  //addTransformerClickListener(out);
+
+  for (let object of out) {
+    addTransformerClickListener(object);
+  }
 
   //if snapToGrid == true -> object will snap to grid
   addSnapToGridListener(out);
@@ -39,7 +44,7 @@ function addObjects() {
 
   rect1.snapToGrid = true;
   rect1.hasMenu = true;
-  rect1.name('draggable');
+  //rect1.name('draggable');
 
   out.push(rect1);
 }
@@ -58,9 +63,10 @@ function loadImage(src) {
     image.hasMenu = true;
     image.name('draggable');
 
-    addTransformer([image]);
-    addTransformerClickListener([image]);
+    //addOldTransformer([image]);
+    //addTransformerClickListener([image]);
     addSnapToGridListener([image]);
+    addTransformerClickListener(image);
 
     out.push(image)
     draw(out);

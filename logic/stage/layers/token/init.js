@@ -1,8 +1,9 @@
 import Konva from "konva";
-import {addSnapToGridListener, addTransformer, addTransformerClickListener} from "../layerFunctions";
+import {addSnapToGridListener} from "../layerFunctions";
 import {stage} from "../../main";
 import {blockSnapSize} from "../grid/main";
 import {draw} from "./main";
+import {addTransformerClickListener} from "../transformer";
 
 let out = [];
 
@@ -28,9 +29,11 @@ function loadImage(src, imageSize) {
     image.snapToGrid = true;
     image.hasMenu = true;
     image.name('draggable');
+    /*
+        addOldTransformer([image]);
+        addTransformerClickListener([image]);*/
+    addTransformerClickListener(image);
 
-    addTransformer([image]);
-    addTransformerClickListener([image]);
     addSnapToGridListener([image]);
 
     out.push(image)

@@ -1,6 +1,5 @@
 import {blockSnapSize} from "./grid/main";
-import {stage, store} from "../main";
-import Konva from "konva";
+import {stage} from "../main";
 
 export function addSnapToGridListener(objects) {
   for (let object of objects) {
@@ -24,7 +23,7 @@ export function snapToGrid(object) {
   stage.batchDraw();
 }
 
-export function addTransformer(toAdd) {
+/*export function addOldTransformer(toAdd) {
   for (let object of toAdd) {
     let tr = new Konva.Transformer({
       nodes: [object],
@@ -33,7 +32,7 @@ export function addTransformer(toAdd) {
     });
     object.tr = tr;
   }
-}
+}*/
 
 function disableAll(objects) {
   for (let object of objects) {
@@ -47,7 +46,7 @@ function disableAll(objects) {
   }
 }
 
-export function addTransformerClickListener(toListen) {
+/*export function addTransformerClickListener(toListen) {
   stage.on('click', function (e) {
 
     // return if not im move mode as no dragging should be disabled
@@ -72,10 +71,12 @@ export function addTransformerClickListener(toListen) {
 
     stage.batchDraw();
   });
-}
+}*/
 
 export function setStageDragAndDrop(enable, stagedrag) {
+  console.log("gejhljad")
   stage.draggable(stagedrag);
+  return;
 
   for (let object of stage.find('.draggable')) {
     try {

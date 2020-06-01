@@ -1,5 +1,5 @@
 import {stage, store} from "../../main";
-import {getRelativePointerPosition, setStageDragAndDrop} from "../layerFunctions";
+import {getRelativePointerPosition} from "../layerFunctions";
 import Konva from "konva";
 
 let layer;
@@ -25,13 +25,10 @@ export function draw(pLayer) {
 
 export function useHand() {
   endPen();
-  setStageDragAndDrop(true, true);
 }
 
 export function usePen() {
   endHand();
-
-  setStageDragAndDrop(false, false);
 
   paintObject = new Konva.Rect({
     x: stage.getPointerPosition().x - 15,

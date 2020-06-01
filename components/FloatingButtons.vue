@@ -8,29 +8,31 @@
   </div>
 </template>
 <script>
-  import {setStageDragAndDrop} from "../logic/stage/layers/layerFunctions";
   import {useHand, usePen} from "../logic/stage/layers/freeDrawing/main";
   import {startDraw} from "../logic/stage/layers/measure/main";
+  import {clearTransformerNodes} from "../logic/stage/layers/transformer";
+  import {stage} from "../logic/stage/main";
 
   export default {
     methods: {
       handClick() {
         this.$store.commit("manu/setHand");
-        setStageDragAndDrop(true, true);
+        stage.draggable(true);
         useHand();
       },
       paintClick() {
-        if(this.$store.state.manu.drawing)
+        if (this.$store.state.manu.drawing)
           this.$store.commit("manu/setErase")
         else {
           this.$store.commit("manu/setDrawing");
-          setStageDragAndDrop(false, false);
+          stage.draggable(false);
           usePen();
         }
+        clearTransformerNodes();
       },
       measureClick() {
         this.$store.commit("manu/setMeasure");
-        setStageDragAndDrop(false, false);
+        stage.draggable(false);
         startDraw();
       }
     },
