@@ -17,6 +17,10 @@ export const mutations = {
   },
   setErase(state) {
     state.erase = !state.erase;
+    state.freeDrawing.drawingObject = "";
+  },
+  setDrawingColor(state, color) {
+    state.freeDrawing.color = color;
   },
   setLayer(state, layer) {
     state.drawing = false;
@@ -26,5 +30,10 @@ export const mutations = {
   setHand(state) {
     state.move = true;
     state.drawing = false
+  },
+  setDrawingObject(state, object) {
+    state.erase = false;
+    state.freeDrawing.drawingObject = object;
   }
+
 }

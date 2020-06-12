@@ -13,6 +13,8 @@
         <button :class="{'bg-red-300' : !$store.state.manu.erase , 'bg-red-400' : $store.state.manu.erase}" class="w-full outline-none rounded-full p-2 mt-4" @click="clickErase">
           Radierer
         </button>
+
+        <button :class="{'bg-red-300' : !$store.state.manu.erase , 'bg-red-400' : $store.state.manu.erase}" class="w-full outline-none rounded-full p-2 mt-4" @click="clearDrawingLayer">Clear all</button>
       </div>
 
     </div>
@@ -20,6 +22,7 @@
 </template>
 <script>
   import BrushSelector from "./BrushSelector";
+  import {clearDrawing} from "../logic/stage/layers/freeDrawing/main";
 
   export default {
     data() {
@@ -33,10 +36,13 @@
     methods: {
       dropdownChange(e) {
         console.log(e)
-        this.$store.commit("manu/setLayer", e.target.value)
+        this.$store.commit("manu/setLayer", e.target.value);
       },
       clickErase() {
         this.$store.commit("manu/setErase");
+      },
+      clearDrawingLayer() {
+        clearDrawing();
       }
     },
     computed: {

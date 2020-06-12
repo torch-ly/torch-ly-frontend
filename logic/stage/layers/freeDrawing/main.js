@@ -4,7 +4,6 @@ import Konva from "konva";
 import {createCircle, createRect} from "./drawShapes";
 
 let layer;
-let currentDrawColor = "#000000";
 let eraser;
 let paintObject;
 
@@ -35,6 +34,7 @@ export function usePen() {
 
   setStageDragAndDrop(false, false);
 
+  //TODO set Snap To Grid flag
   createCircle(layer);
   createRect(layer);
 
@@ -58,6 +58,10 @@ export function usePen() {
   stage.batchDraw();
 
   stage.on('mousedown', () => {
+    if (store.state.manu.freeDrawing.drawingObject != "") {
+      return;
+    }
+
     // Start drawing
     isDrawing = true;
 
@@ -65,7 +69,7 @@ export function usePen() {
     let pos = getRelativePointerPosition(stage);
 
     currentLine = new Konva.Line({
-      stroke: currentDrawColor,
+      stroke: store.state.manu.freeDrawing.color,
       strokeWidth: store.state.manu.erase ? store.state.manu.freeDrawing.strokeWidth * 10 : store.state.manu.freeDrawing.strokeWidth,
       points: [pos.x, pos.y],
       globalCompositeOperation: store.state.manu.erase ? 'destination-out' : 'source-over',
@@ -143,6 +147,8 @@ export function endPen() {
   stage.off('mouseup');
 }
 
-export function setColor(rgb) {
-  currentDrawColor = rgb;
+export function clearDrawing() {
+  console.log("clear")
+  layer.destroyChildren();
+  layer.batchDraw();
 }
