@@ -76,9 +76,6 @@ export function usePen() {
       eraser.y = stage.getPointerPosition().y;
     }
 
-    /*paintObject.x(stage.getPointerPosition().x - 15);
-    paintObject.y(stage.getPointerPosition().y - 15);*/
-
     paintObject.x(getRelativePointerPosition(stage).x - 15);
     paintObject.y(getRelativePointerPosition(stage).y - 15);
 

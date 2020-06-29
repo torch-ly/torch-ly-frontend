@@ -12,12 +12,6 @@ export function init() {
   addObjects();
   loadImage("https://media.macphun.com/img/uploads/customer/how-to/579/15531840725c93b5489d84e9.43781620.jpg?q=85&w=1340");
 
-  //adds invisible Transformer to all objekts in out
-  //addOldTransformer(out);
-
-  //adds clicklistener to enable transformer
-  //addTransformerClickListener(out);
-
   for (let object of out) {
     addTransformerClickListener(object);
   }
@@ -36,15 +30,12 @@ function addObjects() {
     width: 120,
     height: 600,
     fill: 'green',
-    // stroke: 'black',
-    // strokeWidth: 4,
     draggable: false,
     tr: null
   });
 
   rect1.snapToGrid = true;
   rect1.hasMenu = true;
-  //rect1.name('draggable');
 
   out.push(rect1);
 }
@@ -63,8 +54,6 @@ function loadImage(src) {
     image.hasMenu = true;
     image.name('draggable');
 
-    //addOldTransformer([image]);
-    //addTransformerClickListener([image]);
     addSnapToGridListener([image]);
     addTransformerClickListener(image);
 

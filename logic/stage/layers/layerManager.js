@@ -5,7 +5,7 @@ import {draw as drawGrid} from "./grid/main";
 import {draw as drawFree} from "./freeDrawing/main";
 import {setLayer as drawToken} from "./token/main";
 import {draw as drawMeasure} from "./measure/main";
-import {addTransformerToLayer, createTransformer} from "./transformer";
+import {addSelectionListener, addTransformerToLayer, createTransformer, setSelectionLayer} from "./transformer";
 
 let grid;
 let background;
@@ -24,6 +24,7 @@ export function init() {
 
   createTransformer();
   manageTransformerLayer();
+  setSelectionLayer(menu);
 
   drawGrid(grid);
   stage.add(grid);
@@ -40,8 +41,8 @@ export function init() {
   drawMeasure(measure);
   stage.add(measure);
 
-  /*drawMenu(menu);
-  stage.add(menu);*/
+  addSelectionListener();
+  stage.add(menu);
 }
 
 function manageTransformerLayer() {
