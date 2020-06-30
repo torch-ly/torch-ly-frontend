@@ -99,36 +99,22 @@ export function addSelectionListener() {
       return;
     }
     // update visibility in timeout, so we can check it in click event
-    selectionRect.visible(false);
-    selectionLayer.batchDraw();
+    setTimeout(() => {
+      selectionRect.visible(false);
+      selectionLayer.batchDraw();
+    });
 
-    let objectsInLayer = Array.from(transformerLayer.children);
-    let objectsInSelection = [];
-
-    for (let object of objectsInLayer) {
-      console.log(object, haveIntersection(object, selectionRect))
-      if (object instanceof Transformer) {
-        continue;
-      }
-      if (haveIntersection(object, selectionRect)) {
-        objectsInSelection.push(object);
-      }
-    }
-    console.log(objectsInLayer, objectsInSelection)
+    let shapes = Array.from(transformerLayer.children).filter(object =>
+      !(object instanceof Transformer)
+    );
+    let box = selectionRect.getClientRect();
+    let selected = shapes.filter((shape) =>
+      Konva.Util.haveIntersection(box, shape.getClientRect())
+    );
     clearTransformerNodes();
-    setNodesToTransformer(objectsInSelection);
+    setNodesToTransformer(selected);
     transformerLayer.batchDraw();
     selectionLayer.batchDraw();
   })
-}
-
-function haveIntersection(r1, r2) {
-  console.log(r2.x(), r2.y(), r2.width(), r2.height())
-  return !(
-    r2.x() > r1.x() + r1.width() ||
-    r2.x() + r2.width() < r1.x() ||
-    r2.y() > r1.y() + r1.height() ||
-    r2.y() + r2.height() < r1.y()
-  );
 }
 
