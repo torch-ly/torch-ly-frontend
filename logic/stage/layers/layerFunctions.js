@@ -1,6 +1,5 @@
 import {blockSnapSize} from "./grid/main";
-import {stage, store} from "../main";
-import Konva from "konva";
+import {stage} from "../main";
 
 export function addSnapToGridListener(objects) {
   for (let object of objects) {
@@ -22,72 +21,6 @@ export function snapToGrid(object) {
     y: Math.round(y / blockSnapSize) * blockSnapSize
   });
   stage.batchDraw();
-}
-
-export function addTransformer(toAdd) {
-  for (let object of toAdd) {
-    let tr = new Konva.Transformer({
-      nodes: [object],
-      visible: false,
-      rotationSnaps: [0, 90, 180, 270]
-    });
-    object.tr = tr;
-  }
-}
-
-function disableAll(objects) {
-  for (let object of objects) {
-    try {
-      if (object.hasOwnProperty("tr")) {
-        object.tr.visible(false);
-      }
-      object.draggable(false);
-    } catch (e) {
-    }
-  }
-}
-
-export function addTransformerClickListener(toListen) {
-  stage.on('click', function (e) {
-
-    // return if not im move mode as no dragging should be disabled
-    if (!store.state.manu.move)
-      return;
-
-    disableAll(toListen);
-
-    for (let object of toListen) {
-
-      if (e.target !== object)
-        continue;
-
-      object.tr.visible(true);
-      try {
-        object.draggable(true);
-      } catch (e) { }
-
-      object.moveToTop();
-      object.tr.moveToTop();
-    }
-
-    stage.batchDraw();
-  });
-}
-
-export function setStageDragAndDrop(enable, stagedrag) {
-  stage.draggable(stagedrag);
-
-  for (let object of stage.find('.draggable')) {
-    try {
-      object.draggable(enable);
-      if (enable)
-        object.tr.visible(true);
-      if (object.tr != null) {
-        object.tr.visible(false);
-      }
-    } catch (e) {
-    }
-  }
 }
 
 export function getRelativePointerPosition(node) {
