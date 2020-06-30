@@ -17,12 +17,24 @@ export function createRect(layer) {
     if (store.state.manu.freeDrawing.drawingObject != "rect")
       return;
 
-    x1 = getRelativePointerPosition(stage).x;
-    y1 = getRelativePointerPosition(stage).y;
-    x2 = getRelativePointerPosition(stage).x;
-    y2 = getRelativePointerPosition(stage).y;
+    if (store.state.manu.freeDrawing.snapToGrid) {
+      x1 = calculateSnapToGrid(getRelativePointerPosition(stage)).x;
+      y1 = calculateSnapToGrid(getRelativePointerPosition(stage)).y;
+      x2 = calculateSnapToGrid(getRelativePointerPosition(stage)).x;
+      y2 = calculateSnapToGrid(getRelativePointerPosition(stage)).y;
+    } else {
+      x1 = getRelativePointerPosition(stage).x;
+      y1 = getRelativePointerPosition(stage).y;
+      x2 = getRelativePointerPosition(stage).x;
+      y2 = getRelativePointerPosition(stage).y;
+    }
 
-    start = getRelativePointerPosition(stage);
+
+    if (store.state.manu.freeDrawing.snapToGrid) {
+      start = calculateSnapToGrid(getRelativePointerPosition(stage));
+    } else {
+      start = getRelativePointerPosition(stage);
+    }
 
     selectionRectangle.visible(true);
     selectionRectangle.width(0);
@@ -36,8 +48,14 @@ export function createRect(layer) {
     if (!selectionRectangle.visible()) {
       return;
     }
-    x2 = getRelativePointerPosition(stage).x;
-    y2 = getRelativePointerPosition(stage).y;
+
+    if (store.state.manu.freeDrawing.snapToGrid) {
+      x2 = calculateSnapToGrid(getRelativePointerPosition(stage)).x;
+      y2 = calculateSnapToGrid(getRelativePointerPosition(stage)).y;
+    } else {
+      x2 = getRelativePointerPosition(stage).x;
+      y2 = getRelativePointerPosition(stage).y;
+    }
 
     selectionRectangle.setAttrs({
       x: Math.min(x1, x2),
@@ -54,15 +72,29 @@ export function createRect(layer) {
       return;
     }
 
-    let newRect = new Konva.Rect({
-      x: start.x,
-      y: start.y,
-      width: getRelativePointerPosition(stage).x - start.x,
-      height: getRelativePointerPosition(stage).y - start.y,
-      stroke: store.state.manu.freeDrawing.color,
-      strokeWidth: store.state.manu.freeDrawing.strokeWidth
-    });
-    layer.add(newRect);
+    let newRect;
+    if (store.state.manu.freeDrawing.snapToGrid) {
+      newRect = new Konva.Rect({
+        x: start.x,
+        y: start.y,
+        width: calculateSnapToGrid(getRelativePointerPosition(stage)).x - start.x,
+        height: calculateSnapToGrid(getRelativePointerPosition(stage)).y - start.y,
+        stroke: store.state.manu.freeDrawing.color,
+        strokeWidth: store.state.manu.freeDrawing.strokeWidth
+      });
+      layer.add(newRect);
+    } else {
+      newRect = new Konva.Rect({
+        x: start.x,
+        y: start.y,
+        width: getRelativePointerPosition(stage).x - start.x,
+        height: getRelativePointerPosition(stage).y - start.y,
+        stroke: store.state.manu.freeDrawing.color,
+        strokeWidth: store.state.manu.freeDrawing.strokeWidth
+      });
+      layer.add(newRect);
+    }
+
 
     //setStageDragAndDrop(true, true);
     // update visibility in timeout, so we can check it in click event
@@ -75,7 +107,7 @@ export function createRect(layer) {
   });
 }
 
-export function createCircle(layer, snapToGrid) {
+export function createCircle(layer) {
   let start = {x: 0, y: 0};
 
   let selectionArrow = new Konva.Arrow({
@@ -94,7 +126,7 @@ export function createCircle(layer, snapToGrid) {
     if (store.state.manu.freeDrawing.drawingObject != "circle")
       return;
 
-    if (snapToGrid) {
+    if (store.state.manu.freeDrawing.snapToGrid) {
       start = calculateSnapToGrid(getRelativePointerPosition(stage));
     } else {
       start = getRelativePointerPosition(stage);
@@ -112,7 +144,7 @@ export function createCircle(layer, snapToGrid) {
     }
 
     let end = {};
-    if (snapToGrid) {
+    if (store.state.manu.freeDrawing.snapToGrid) {
       end = calculateSnapToGrid(getRelativePointerPosition(stage));
     } else {
       end = getRelativePointerPosition(stage);
@@ -129,7 +161,7 @@ export function createCircle(layer, snapToGrid) {
     }
 
     let end = {};
-    if (snapToGrid) {
+    if (store.state.manu.freeDrawing.snapToGrid) {
       end = calculateSnapToGrid(getRelativePointerPosition(stage));
     } else {
       end = getRelativePointerPosition(stage);

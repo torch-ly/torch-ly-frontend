@@ -6,7 +6,8 @@ export const state = () => ({
   freeDrawing: {
     color: "#000000",
     strokeWidth: 3,
-    drawingObject: ""
+    drawingObject: "",
+    snapToGrid: false
   }
 })
 
@@ -34,6 +35,9 @@ export const mutations = {
   setDrawingObject(state, object) {
     state.erase = false;
     state.freeDrawing.drawingObject = object;
+  },
+  setDrawingObjectSnapToGrid(state) {
+    state.freeDrawing.snapToGrid = !state.freeDrawing.snapToGrid;
   }
 
 }

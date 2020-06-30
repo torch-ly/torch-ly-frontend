@@ -135,6 +135,7 @@ export function endHand() {
 }
 
 export function endPen() {
+  stage.draggable(true);
   if (paintObject != null) {
     paintObject.visible(false);
     layer.batchDraw();
@@ -148,7 +149,8 @@ export function endPen() {
 }
 
 export function clearDrawing() {
-  console.log("clear")
   layer.destroyChildren();
+  createRect(layer);
+  createCircle(layer);
   layer.batchDraw();
 }
