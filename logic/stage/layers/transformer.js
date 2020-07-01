@@ -1,6 +1,7 @@
 import Konva, {Transformer} from "konva";
 import {stage, store} from "../main";
 import {getRelativePointerPosition} from "./layerFunctions";
+import {setMoveObjectByArrow} from "./objectFunctions";
 
 let transformer;
 let transformerLayer;
@@ -16,11 +17,13 @@ export function createTransformer() {
 }
 
 export function setNodesToTransformer(nodes) {
+  clearTransformerNodes();
   transformer.nodes(nodes);
   for (let object of transformer.nodes()) {
     object.draggable(true);
   }
   transformer.moveToTop();
+  setMoveObjectByArrow(nodes[0]);
 }
 
 export function clearTransformerNodes() {
@@ -28,6 +31,7 @@ export function clearTransformerNodes() {
     object.draggable(false);
   }
   transformer.nodes([]);
+  setMoveObjectByArrow(null);
 }
 
 export function addTransformerToLayer(layer) {
@@ -59,8 +63,6 @@ export function addSelectionListener() {
     visible: false
   });
   selectionLayer.add(selectionRect);
-
-  console.log("2", 2)
 
   let x1, y1, x2, y2;
   stage.on('mousedown', (e) => {

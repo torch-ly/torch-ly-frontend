@@ -1,5 +1,6 @@
 import {init} from "./layers/layerManager";
 import {enableZoom} from "./layers/zoom";
+import {moveTokenByArrows} from "./layers/objectFunctions";
 
 export let stage = null;
 export let stageWidth = 0;
@@ -18,6 +19,7 @@ export function main(pStage, width, height) {
   init();
   enableZoom();
   resize();
+  moveTokenByArrows();
 }
 
 function resize() {

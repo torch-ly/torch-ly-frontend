@@ -22,16 +22,13 @@ function loadImage(src, imageSize) {
   let imageObj = new Image(imageSize.x, imageSize.y);
   imageObj.onload = function () {
     let image = new Konva.Image({
-      x: 50,
-      y: 50,
+      x: 0,
+      y: 0,
       image: imageObj
     });
     image.snapToGrid = true;
     image.hasMenu = true;
-    image.name('draggable');
-    /*
-        addOldTransformer([image]);
-        addTransformerClickListener([image]);*/
+
     addTransformerClickListener(image);
 
     addSnapToGridListener([image]);

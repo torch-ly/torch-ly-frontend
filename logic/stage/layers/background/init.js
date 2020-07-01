@@ -52,7 +52,6 @@ function loadImage(src) {
     });
     image.snapToGrid = true;
     image.hasMenu = true;
-    image.name('draggable');
 
     addSnapToGridListener([image]);
     addTransformerClickListener(image);

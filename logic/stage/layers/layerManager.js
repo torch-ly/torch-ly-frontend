@@ -9,7 +9,7 @@ import {addSelectionListener, addTransformerToLayer, createTransformer, setSelec
 
 let grid;
 let background;
-let token;
+export let token;
 let freeDrawing;
 let measure;
 let menu;
