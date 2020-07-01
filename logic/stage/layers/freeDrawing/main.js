@@ -132,5 +132,7 @@ export function clearDrawing() {
   layer.destroyChildren();
   createRect(layer);
   createCircle(layer);
+  draw(layer);
+  usePen();
   layer.batchDraw();
 }

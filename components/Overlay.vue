@@ -3,21 +3,12 @@
 
     <PaintOverlay class="animate__animated animate__fadeInRight" v-if="$store.state.manu.drawing" />
     <MeasureOverlay class="animate__animated animate__fadeInRight" v-if="$store.state.manu.measure" />
-        <BrushSelector v-show="drawing"></BrushSelector>
+    <BrushSelector v-show="drawing"></BrushSelector>
 
-        <button :class="{'bg-red-300' : !$store.state.manu.erase , 'bg-red-400' : $store.state.manu.erase}" class="w-full outline-none rounded-full p-2 mt-4" @click="clickErase">
-          Radierer
-        </button>
-
-        <button :class="{'bg-red-300' : !$store.state.manu.erase , 'bg-red-400' : $store.state.manu.erase}" class="w-full outline-none rounded-full p-2 mt-4" @click="clearDrawingLayer">Clear all</button>
-      </div>
-
-    </div>
   </div>
 </template>
 <script>
   import BrushSelector from "./BrushSelector";
-  import {clearDrawing} from "../logic/stage/layers/freeDrawing/main";
   import PaintOverlay from "~/components/overlay/PaintOverlay"
   import MeasureOverlay from "./overlay/MeasureOverlay";
 
@@ -39,9 +30,6 @@
       },
       clickErase() {
         this.$store.commit("manu/setErase");
-      },
-      clearDrawingLayer() {
-        clearDrawing();
       }
     },
     computed: {

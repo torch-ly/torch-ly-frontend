@@ -1,6 +1,6 @@
 import {stage, store} from "../../main";
 import Konva from "konva";
-import {getRelativePointerPosition} from "./main";
+import {getRelativePointerPosition} from "../layerFunctions";
 import {blockSnapSize} from "../grid/main";
 
 export function createRect(layer) {
@@ -16,6 +16,8 @@ export function createRect(layer) {
   stage.on('mousedown touchstart', (e) => {
     if (store.state.manu.freeDrawing.drawingObject != "rect")
       return;
+
+    console.log("rect")
 
     if (store.state.manu.freeDrawing.snapToGrid) {
       x1 = calculateSnapToGrid(getRelativePointerPosition(stage)).x;

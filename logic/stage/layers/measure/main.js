@@ -19,6 +19,8 @@ export function startDraw() {
     if (!store.state.manu.measure)
       return;
 
+    stage.draggable(false);
+
     lengthSoFar = length();
 
     lengthSoFar = arrow == null ? 0 : lengthSoFar;

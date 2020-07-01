@@ -9,7 +9,6 @@ export const state = () => ({
     strokeWidth: 3,
     drawingObject: "",
     snapToGrid: false
-    strokeWidth: 3
   },
   measure: false,
   measureDetails: {
@@ -40,7 +39,8 @@ export const mutations = {
   },
   setHand(state) {
     state.move = true;
-    state.drawing = false
+    state.drawing = false;
+    state.measure = false;
   },
   setDrawingObject(state, object) {
     state.erase = false;
