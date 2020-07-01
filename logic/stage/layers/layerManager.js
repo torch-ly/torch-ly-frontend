@@ -45,7 +45,7 @@ export function init() {
   stage.add(menu);
 }
 
-function manageTransformerLayer() {
+export function manageTransformerLayer() {
   if (store.state.manu.layer == "Background") {
     addTransformerToLayer(background);
   } else if (store.state.manu.layer == "Token") {

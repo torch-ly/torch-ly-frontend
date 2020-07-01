@@ -1,6 +1,7 @@
 <template>
   <div class="m-6">
-    <select required v-bind:value="$store.state.manu.layer" @input="dropdownChange" class="hidden w-full text-black p-2 rounded-full">
+    <select required v-bind:value="$store.state.manu.layer" @input="dropdownChange"
+            class="w-full text-black p-2 rounded-full">
       <option>Background</option>
       <option>Token</option>
     </select>

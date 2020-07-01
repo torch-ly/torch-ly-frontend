@@ -2,6 +2,7 @@ import Konva, {Transformer} from "konva";
 import {stage, store} from "../main";
 import {getRelativePointerPosition} from "./layerFunctions";
 import {setMoveObjectByArrow} from "./objectFunctions";
+import {manageTransformerLayer} from "./layerManager";
 
 let transformer;
 let transformerLayer;
@@ -45,6 +46,7 @@ export function addTransformerClickListener(object) {
     if (!store.state.manu.move) {
       return;
     }
+    manageTransformerLayer();
     if (e.target == stage) {
       clearTransformerNodes();
     } else if (e.target == object && Array.from(transformerLayer.children).includes(object)) { //is this object the target && is the object in the current layer of selection
