@@ -48,17 +48,25 @@ export function setMoveObjectByArrow(object) {
 function moveToken(ptoken, moveTo) {
   switch (moveTo) {
     case 'L':
-      ptoken.x(ptoken.x() - blockSnapSize)
+      ptoken.x(calculateSnapToGrid(ptoken.x()) - blockSnapSize);
+      ptoken.y(calculateSnapToGrid(ptoken.y()));
       break;
     case 'R':
-      ptoken.x(ptoken.x() + blockSnapSize)
+      ptoken.x(calculateSnapToGrid(ptoken.x()) + blockSnapSize);
+      ptoken.y(calculateSnapToGrid(ptoken.y()));
       break;
     case 'U':
-      ptoken.y(ptoken.y() - blockSnapSize)
+      ptoken.y(calculateSnapToGrid(ptoken.y()) - blockSnapSize);
+      ptoken.x(calculateSnapToGrid(ptoken.x()));
       break;
     case 'D':
-      ptoken.y(ptoken.y() + blockSnapSize)
+      ptoken.y(calculateSnapToGrid(ptoken.y()) + blockSnapSize);
+      ptoken.x(calculateSnapToGrid(ptoken.x()));
       break;
   }
   token.batchDraw();
+}
+
+function calculateSnapToGrid(value) {
+  return Math.round(value / blockSnapSize) * blockSnapSize;
 }
