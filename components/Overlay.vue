@@ -3,7 +3,6 @@
 
     <PaintOverlay class="animate__animated animate__fadeInRight" v-if="$store.state.manu.drawing" />
     <MeasureOverlay class="animate__animated animate__fadeInRight" v-if="$store.state.manu.measure" />
-    <BrushSelector v-show="drawing"></BrushSelector>
 
   </div>
 </template>

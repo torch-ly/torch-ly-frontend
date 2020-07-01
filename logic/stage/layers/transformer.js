@@ -21,6 +21,7 @@ export function setNodesToTransformer(nodes) {
   transformer.nodes(nodes);
   for (let object of transformer.nodes()) {
     object.draggable(true);
+    object.moveToTop();
   }
   transformer.moveToTop();
   setMoveObjectByArrow(nodes[0]);

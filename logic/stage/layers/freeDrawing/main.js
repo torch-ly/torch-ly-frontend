@@ -40,7 +40,7 @@ export function usePen() {
     width: 31,
     height: 31,
     stroke: "black",
-    strokeWidth: "1",
+    strokeWidth: 1,
     draggable: false,
   });
 

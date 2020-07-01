@@ -32,10 +32,7 @@ export const mutations = {
     state.freeDrawing.color = color;
   },
   setLayer(state, layer) {
-    state.drawing = false;
     state.layer = layer;
-    state.move = true;
-    state.measure = false;
   },
   setHand(state) {
     state.move = true;
