@@ -1,11 +1,5 @@
 <template>
   <div class="m-6">
-    <select required v-bind:value="$store.state.manu.layer" @input="dropdownChange"
-            class="w-full text-black p-2 rounded-full">
-      <option>Background</option>
-      <option>Token</option>
-    </select>
-
     <BrushSelector v-show="drawing"></BrushSelector>
 
     <hr class="my-4">
@@ -37,9 +31,6 @@
       BrushSelector
     },
     methods: {
-      dropdownChange(e) {
-        this.$store.commit("manu/setLayer", e.target.value)
-      },
       clickErase() {
         this.$store.commit("manu/setErase");
       },
