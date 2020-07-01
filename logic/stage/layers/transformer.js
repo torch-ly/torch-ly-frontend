@@ -13,6 +13,7 @@ export function createTransformer() {
     nodes: [],
     visible: true,
     rotationSnaps: [0, 90, 180, 270],
+    rotationSnapTolerance: 10,
     name: "transformer"
   });
 }
