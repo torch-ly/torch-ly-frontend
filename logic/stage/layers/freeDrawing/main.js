@@ -1,5 +1,5 @@
 import {stage, store} from "../../main";
-import {setStageDragAndDrop} from "../layerFunctions";
+import {getRelativePointerPosition} from "../layerFunctions";
 import Konva from "konva";
 import {createCircle, createRect} from "./drawShapes";
 
@@ -26,15 +26,11 @@ export function draw(pLayer) {
 
 export function useHand() {
   endPen();
-  //setStageDragAndDrop(true, true);
 }
 
 export function usePen() {
   endHand();
 
-  setStageDragAndDrop(false, false);
-
-  //TODO set Snap To Grid flag
   createCircle(layer);
   createRect(layer);
 
@@ -88,9 +84,6 @@ export function usePen() {
       eraser.y = stage.getPointerPosition().y;
     }
 
-    /*paintObject.x(stage.getPointerPosition().x - 15);
-    paintObject.y(stage.getPointerPosition().y - 15);*/
-
     paintObject.x(getRelativePointerPosition(stage).x - 15);
     paintObject.y(getRelativePointerPosition(stage).y - 15);
 
@@ -114,19 +107,6 @@ export function usePen() {
     // End drawing
     isDrawing = false;
   });
-}
-
-export function getRelativePointerPosition(node) {
-  // the function will return pointer position relative to the passed node
-  let transform = node.getAbsoluteTransform().copy();
-  // to detect relative position we need to invert transform
-  transform.invert();
-
-  // get pointer (say mouse or touch) position
-  let pos = node.getStage().getPointerPosition();
-
-  // now we find relative point
-  return transform.point(pos);
 }
 
 export function endHand() {

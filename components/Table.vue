@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div id="container"></div>
+    <div id="container" @contextmenu="$event.preventDefault()"></div>
     <div id="menu">
       <div>
         <button id="pulse-button">Pulse</button>
