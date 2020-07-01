@@ -37,7 +37,6 @@
     },
     methods: {
       dropdownChange(e) {
-        console.log(e)
         this.$store.commit("manu/setLayer", e.target.value)
       },
       clickErase() {

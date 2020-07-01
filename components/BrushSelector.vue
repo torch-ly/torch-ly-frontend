@@ -34,7 +34,6 @@
         this.$store.commit("manu/setDrawingColor", e.target.value);
       },
       onShapeDrawingClick(object) {
-        console.log(object)
         if (store.state.manu.freeDrawing.drawingObject == '') {
           this.$store.commit("manu/setDrawingObject", object);
         } else {

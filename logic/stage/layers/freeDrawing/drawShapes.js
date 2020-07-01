@@ -17,8 +17,6 @@ export function createRect(layer) {
     if (store.state.manu.freeDrawing.drawingObject != "rect")
       return;
 
-    console.log("rect")
-
     if (store.state.manu.freeDrawing.snapToGrid) {
       x1 = calculateSnapToGrid(getRelativePointerPosition(stage)).x;
       y1 = calculateSnapToGrid(getRelativePointerPosition(stage)).y;
