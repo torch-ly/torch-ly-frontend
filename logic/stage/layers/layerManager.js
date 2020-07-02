@@ -52,3 +52,7 @@ export function manageTransformerLayer() {
     addTransformerToLayer(token);
   }
 }
+
+export function getTokenLayer() {
+  return token;
+}

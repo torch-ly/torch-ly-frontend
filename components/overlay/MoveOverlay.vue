@@ -5,6 +5,9 @@
       <option>Background</option>
       <option>Token</option>
     </select>
+
+    <ul id="tokenList"></ul>
+
   </div>
 </template>
 
@@ -13,12 +16,19 @@
   import {stage} from "../../logic/stage/main";
 
   export default {
+    data() {
+      return {
+        tokens: []
+      }
+    },
     methods: {
       dropdownChange(e) {
         clearTransformerNodes();
         stage.batchDraw();
         this.$store.commit("manu/setLayer", e.target.value)
       }
+    },
+    mounted() {
     }
   }
 </script>

@@ -1,4 +1,4 @@
-import Konva from "konva";
+import Konva, {Image, Rect} from "konva";
 import {addSnapToGridListener} from "../layerFunctions";
 import {draw} from "./main";
 import {drawingObjects} from "../../main";
@@ -31,6 +31,42 @@ export function init() {
 
   draw(out);
   //return out;
+}
+
+function updateJSON() {
+  drawingObjects.BackgroundLayer
+  let newJSON = [];
+  for (let object of out) {
+    if (object instanceof Rect) {
+      newJSON.push({
+        "pos": {
+          "x": object.x(),
+          "y": object.y(),
+          "width": object.width(),
+          "height": object.height()
+        },
+        "draggable": object.draggable(),
+        "snapToGrid": object.snapToGrid,
+        "type": "rect",
+        "color": object.fill(),
+        "rotation": object.rotation()
+      });
+    } else if (object instanceof Image) {
+      newJSON.push({
+        "pos": {
+          "x": object.x(),
+          "y": object.y(),
+          "width": object.width(),
+          "height": object.height()
+        },
+        "draggable": object.draggable(),
+        "snapToGrid": object.snapToGrid,
+        "type": "img",
+        "src": object.image().src,
+        "rotation": 100
+      })
+    }
+  }
 }
 
 function loadImage(drawing) {

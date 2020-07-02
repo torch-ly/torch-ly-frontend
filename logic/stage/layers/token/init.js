@@ -36,3 +36,38 @@ function loadImage(token) {
   };
   imageObj.src = token.src;
 }
+
+function updateJSON() {
+  let newJSON = [];
+  for (let object of out) {
+    newJSON.push({
+      "size": object.width / blockSnapSize,
+      "src": object.image().src,
+      "pos": {
+        "x": object.x(),
+        "y": object.y()
+      },
+      "rotation": object.rotation(),
+      "snapToGrid": object.snapToGrid,
+      "controllingPlayer": null
+    })
+  }
+
+  drawingObjects.TokenLayer = newJSON;
+}
+
+/*let tokens = out;
+    console.log(tokens);
+    //tokens = ["Hallo", "ich", "bin", "ein", "Test"];
+    let list = document.getElementById("tokenList");
+    list.innerHTML = '';
+    for (let token of tokens) {
+      let tag = document.createElement("li");
+      let img = document.createElement("IMG");
+      img.setAttribute("src", token.attrs.image.src);
+      img.setAttribute("width", "100");
+      img.setAttribute("height", "100");
+
+      tag.appendChild(img);
+      list.appendChild(tag);
+    }*/
