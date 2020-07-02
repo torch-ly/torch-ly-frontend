@@ -1,6 +1,6 @@
 import Konva from "konva";
 import {addSnapToGridListener} from "../layerFunctions";
-import {stage} from "../../main";
+import {drawingObjects} from "../../main";
 import {blockSnapSize} from "../grid/main";
 import {draw} from "./main";
 import {addTransformerClickListener} from "../transformer";
@@ -8,26 +8,24 @@ import {addTransformerClickListener} from "../transformer";
 let out = [];
 
 export function init() {
-  let tokens = [{
-    size: 1,
-    imgSrc: "https://5e.tools/img/MM/Aarakocra.png?v=1.105.3"
-  }]
+
+  let tokens = drawingObjects.TokenLayer;
 
   for (let token of tokens) {
-    loadImage(token.imgSrc, {x: token.size * blockSnapSize, y: token.size * blockSnapSize});
+    loadImage(token);
   }
 }
 
-function loadImage(src, imageSize) {
-  let imageObj = new Image(imageSize.x, imageSize.y);
+function loadImage(token) {
+  let imageObj = new Image(token.size * blockSnapSize, token.size * blockSnapSize);
   imageObj.onload = function () {
     let image = new Konva.Image({
-      x: 0,
-      y: 0,
-      image: imageObj
+      x: token.pos.x,
+      y: token.pos.y,
+      image: imageObj,
+      rotation: token.rotation
     });
-    image.snapToGrid = true;
-    image.hasMenu = true;
+    image.snapToGrid = token.snapToGrid;
 
     addTransformerClickListener(image);
 
@@ -35,7 +33,6 @@ function loadImage(src, imageSize) {
 
     out.push(image)
     draw(out);
-    stage.batchDraw();
   };
-  imageObj.src = src;
+  imageObj.src = token.src;
 }

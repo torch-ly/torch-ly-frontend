@@ -7,6 +7,7 @@ export function draw(drawables) {
   for (let drawable of drawables) {
     layer.add(drawable);
   }
+  layer.batchDraw();
 }
 
 export function setLayer(pLayer) {
