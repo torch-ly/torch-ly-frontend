@@ -12,15 +12,10 @@
         </tr>
       </table>
       <div class="grid gap-6 grid-cols-3 text-center mt-3">
-        <div class="hover:bg-gray-300 rounded-lg h-12">&nwarr;</div>
-        <div class="hover:bg-gray-300 rounded-lg h-12">&uarr;</div>
-        <div class="hover:bg-gray-300 rounded-lg h-12">&nearr;</div>
-        <div class="hover:bg-gray-300 rounded-lg h-12">&larr;</div>
-        <div class="hover:bg-gray-300 rounded-lg h-12">o</div>
-        <div class="hover:bg-gray-300 rounded-lg h-12">&rarr;</div>
-        <div class="hover:bg-gray-300 rounded-lg h-12">&LowerLeftArrow;</div>
-        <div class="hover:bg-gray-300 rounded-lg h-12">&darr;</div>
-        <div class="hover:bg-gray-300 rounded-lg h-12">&LowerRightArrow;</div>
+        <!--Create arrows for movement-controll-->
+        <div v-for="arrow in arrows">
+          <div class="hover:bg-gray-300 rounded-lg h-12" v-html="arrow"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -34,7 +29,8 @@ export default {
   components: {Table},
   data() {
     return {
-      characters: null
+      characters: null,
+      arrows: ["&nwarr;", "&uarr;", "&nearr;", "&larr;", "o", "&rarr;", "&LowerLeftArrow;", "&darr;", "&LowerRightArrow;"]
     }
   },
   methods: {
