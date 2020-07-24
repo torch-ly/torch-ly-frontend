@@ -25,6 +25,14 @@ export function main(pStage, width, height) {
   enableZoom();
   resize();
   moveTokenByArrows();
+
+  /*setInterval(function () {
+    //updateJSON();
+    //console.log(drawingObjects)
+    //let fs = require('./drawing.json');
+    //fs.writeFile('drawing.json', drawingObjects, 'utf8')
+  }, 5000)*/
+
 }
 
 function resize() {

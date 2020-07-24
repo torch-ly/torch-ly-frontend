@@ -8,6 +8,7 @@ import {addTransformerClickListener} from "../transformer";
 let out = [];
 
 export function init() {
+  out = [];
 
   let tokens = drawingObjects.TokenLayer;
 

@@ -104,11 +104,9 @@ export function addSelectionListener() {
     if (!selectionRect.visible()) {
       return;
     }
-    // update visibility in timeout, so we can check it in click event
-    setTimeout(() => {
-      selectionRect.visible(false);
-      selectionLayer.batchDraw();
-    });
+
+    selectionRect.visible(false);
+    selectionLayer.batchDraw();
 
     let shapes = Array.from(transformerLayer.children).filter(object =>
       !(object instanceof Transformer)
@@ -121,6 +119,7 @@ export function addSelectionListener() {
     setNodesToTransformer(selected);
     transformerLayer.batchDraw();
     selectionLayer.batchDraw();
+    console.log(transformer.nodes, transformer.isTransforming(), transformer)
   })
 }
 

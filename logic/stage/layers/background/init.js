@@ -33,8 +33,7 @@ export function init() {
   //return out;
 }
 
-function updateJSON() {
-  drawingObjects.BackgroundLayer
+export function updateJSON() {
   let newJSON = [];
   for (let object of out) {
     if (object instanceof Rect) {
@@ -67,6 +66,8 @@ function updateJSON() {
       })
     }
   }
+
+  drawingObjects.BackgroundLayer = newJSON;
 }
 
 function loadImage(drawing) {
