@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed top-0 left-0">
+  <div class="hidden md:block fixed top-0 left-0">
     <div class="relative m-6 flex flex-col justify-center items-center">
       <img src="/move.svg" @click="handClick" :class="{'button-selected' : handSelected}" class="button"/>
       <img :src="$store.state.manu.erase ? '/trash.svg' : '/pen.svg'" @click="paintClick" :class="{'button-selected' : paintSelected}" class="button"/>
