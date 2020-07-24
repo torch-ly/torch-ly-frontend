@@ -28,21 +28,13 @@
 
 <script>
 import Table from "~/components/Table";
+import {store} from "~/logic/stage/main";
 
 export default {
   components: {Table},
   data() {
     return {
-      characters: [
-        {
-          name: "Aracokra",
-          img: "https://5e.tools/img/MM/Aarakocra.png?v=1.108.1"
-        },
-        {
-          name: "Ervin",
-          img: "https://5e.tools/img/MM/Adult%20Blue%20Dracolich.png?v=1.108.1"
-        }
-      ]
+      characters: null
     }
   },
   methods: {
@@ -50,14 +42,19 @@ export default {
       return [
         {
           name: "Aracokra",
-          img: "https://5e.tools/img/MM/Aarakocra.png?v=1.108.1"
+          img: "https://5e.tools/img/MM/Aarakocra.png?v=1.108.1",
+          id: 1
         },
         {
           name: "Ervin",
-          img: "https://5e.tools/img/MM/Adult%20Blue%20Dracolich.png?v=1.108.1"
+          img: "https://5e.tools/img/MM/Adult%20Blue%20Dracolich.png?v=1.108.1",
+          id: 1
         }
       ]
     }
+  },
+  created() {
+    this.characters = this.getAllCharacter().filter(character => character.id == store.state.authentication.playerID);
   }
 }
 </script>
