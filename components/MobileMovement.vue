@@ -14,7 +14,7 @@
       <div class="grid gap-6 grid-cols-3 text-center mt-3">
         <!--Create arrows for movement-controll-->
         <div v-for="arrow in arrows">
-          <div class="hover:bg-gray-300 rounded-lg h-12" v-html="arrow"></div>
+          <div class="hover:bg-gray-300 rounded-lg h-12 select-none" v-html="arrow"></div>
         </div>
       </div>
     </div>
