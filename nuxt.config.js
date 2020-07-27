@@ -26,14 +26,15 @@ export default {
   ** Global CSS
   */
   css: [
-    "animate.css/animate.min.css"
+    "animate.css/animate.min.css",
   ],
 
   /*
   ** Plugins to load before mounting the App
   */
   plugins: [
-    'logic/stage/main.js'
+    'logic/stage/main.js',
+    'plugins/backendComunication.js',
   ],
 
   /*
@@ -50,7 +51,20 @@ export default {
   modules: [
     // Doc: https://github.com/nuxt-community/dotenv-module
     '@nuxtjs/dotenv',
+    ['nuxt-fontawesome', {
+      component: 'fa',
+      imports: [
+        {
+          set: '@fortawesome/free-solid-svg-icons',
+          icons: ['fas']
+        },
+      ]
+    }]
   ],
+
+  server: {
+    host: '0.0.0.0',
+  },
 
   /*
   ** Build configuration
@@ -59,7 +73,7 @@ export default {
     /*
     ** You can extend webpack config here
     */
-    extend (config, ctx) {
+    extend(config, ctx) {
     }
   }
 }

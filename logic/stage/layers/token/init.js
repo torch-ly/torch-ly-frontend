@@ -10,7 +10,7 @@ let out = [];
 export function init() {
   out = [];
 
-  let tokens = drawingObjects.TokenLayer;
+  let tokens = store.state.character.characters;
 
   for (let token of tokens) {
     loadImage(token);
