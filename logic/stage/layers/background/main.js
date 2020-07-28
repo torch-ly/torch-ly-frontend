@@ -2,11 +2,12 @@ import {init} from "./init";
 
 let layer;
 
-export function draw(drawables) {
-  layer.clear();
-  for (let drawable of drawables) {
-    layer.add(drawable);
-  }
+export function draw(drawable) {
+  layer.add(drawable);
+  layer.batchDraw();
+}
+
+export function updateDraw(){
   layer.batchDraw();
 }
 
