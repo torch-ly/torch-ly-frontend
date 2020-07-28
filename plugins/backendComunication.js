@@ -4,7 +4,7 @@ import gql from "graphql-tag";
 import {WebSocketLink} from "apollo-link-ws";
 import {InMemoryCache} from "apollo-cache-inmemory";
 import {init as tokenInit} from "../logic/stage/layers/token/init";
-import {init as backgroundInit} from "../logic/stage/layers/background/init";
+import {setBackgroundObjects} from "../logic/stage/layers/background/init";
 
 const GRAPHQL_ENDPOINT = "ws://" + process.env.BACKEND + "/graphql";
 
@@ -104,8 +104,7 @@ function loadCharacters() {
 function loadBackground() {
   apolloClient.query({query: getBackgroundLayer})
     .then(({data}) => {
-      store.commit("background/setBackgroundLayer", JSON.parse(data.getBackgroundLayer.layer));
-      backgroundInit();
+      setBackgroundObjects(data.getBackgroundLayer.layer);
     })
     .catch(console.error);
 }

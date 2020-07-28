@@ -1,16 +1,15 @@
 import Konva, {Image, Rect} from "konva";
 import {addSnapToGridListener} from "../layerFunctions";
 import {draw} from "./main";
-import {drawingObjects, store} from "../../main";
 import {addTransformerClickListener} from "../transformer";
 
 let out = [];
 
+export let backgroundObject = [];
+
 export function init() {
 
-  let drawings = store.state.background.layer; //TODO remove drawing.json and variable
-
-  for (let drawing of drawings) {
+  for (let drawing of backgroundObject) {
     if (drawing.type == 'rect') {
       loadRect(drawing);
     } else if (drawing.type == 'img') {
@@ -67,7 +66,7 @@ export function updateJSON() {
     }
   }
 
-  drawingObjects.BackgroundLayer = newJSON;
+  backgroundObject.BackgroundLayer = newJSON;
 }
 
 function loadImage(drawing) {
@@ -106,3 +105,9 @@ function loadRect(drawing) {
 
   out.push(rect);
 }
+
+export function setBackgroundObjects(data) {
+  backgroundObject = JSON.parse(data);
+  init();
+}
+
