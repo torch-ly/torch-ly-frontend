@@ -10,7 +10,8 @@
       <div class="grid gap-3 grid-cols-3 text-center p-3">
         <!--Create arrows for movement-controll-->
         <div v-for="(arrow, index) in arrows"
-             class="flex justify-center items-center hover:bg-accent focus:bg-accent rounded-full h-12">
+             class="flex justify-center items-center hover:bg-accent focus:bg-accent rounded-full h-12"
+             @click="click(index, character)">
           <fa :icon="arrow" style="font-size: 1.8rem; color: white;" :class="{'rotate-45': [0,2,6,8].includes(index)}"/>
         </div>
       </div>
@@ -20,12 +21,51 @@
 
 <script>
   import Table from "~/components/Table";
+  import {moveToken} from "../logic/stage/layers/objectFunctions";
+  import {setCharacterPosition} from "../plugins/backendComunication";
 
   export default {
     components: {Table},
     data() {
       return {
         arrows: ["angle-left", "angle-up", "angle-up", "angle-left", "dot-circle", "angle-right", "angle-down", "angle-down", "angle-right"]
+      }
+    },
+    methods: {
+      click(index, character) {
+        window.navigator.vibrate(40);
+        console.log(index, character)
+        let pos = {
+          x: character.pos.point.x,
+          y: character.pos.point.y
+        }
+        switch (index) {
+          case 1:
+            setCharacterPosition(character.id, {
+              x: pos.x,
+              y: pos.y - 1
+            })
+            break;
+          case 3:
+            setCharacterPosition(character.id, {
+              x: pos.x - 1,
+              y: pos.y
+            })
+            break;
+          case 5:
+            setCharacterPosition(character.id, {
+              x: pos.x + 1,
+              y: pos.y
+            })
+            break;
+          case 7:
+            setCharacterPosition(character.id, {
+              x: pos.x,
+              y: pos.y + 1
+            })
+            break;
+        }
+        // ToDo: Handle click
       }
     }
   }

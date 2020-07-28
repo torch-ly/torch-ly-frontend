@@ -6,13 +6,17 @@ let layer;
 
 export function draw(drawables) {
   layer.clear();
-  for (let drawable of drawables) {
-    layer.add(drawable);
+  for (let children of layer.children) {
+    children.remove();
   }
-  layer.batchDraw();
+
+  console.log(layer)
+  drawables.forEach(drawable => layer.add(drawable));
+  layer.draw();
 }
 
 export function setLayer(pLayer) {
   layer = pLayer;
   init();
+  layer.clearBeforeDraw(true);
 }
