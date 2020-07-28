@@ -7,10 +7,10 @@ import {store} from "../../main";
 
 let out = new Map();
 
-export let backgroundObject = [];
-
 export function init() {
 
+  let drawings = drawingObjects.BackgroundLayer;
+  
   for (let drawing of drawings) {
     if (drawing.type === 'rect') {
       loadRect(drawing);
