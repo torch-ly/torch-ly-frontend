@@ -5,7 +5,7 @@
       <fa :icon="$store.state.manu.erase ? 'trash' : 'pen'" @click="paintClick"
           :class="{'button-selected' : paintSelected}" class="button"/>
       <fa icon="ruler-combined" @click="measureClick" :class="{'button-selected' : measureSelected}" class="button"/>
-      <fa icon="save" @click="saveClick" class="button"/>
+      <fa icon="save" @click="saveClick" class="button active:border-2"/>
     </div>
   </div>
 </template>
@@ -39,7 +39,9 @@
         startDraw();
       },
       saveClick() {
-        saveBackgroundLayer();
+        setTimeout(() => {
+          saveBackgroundLayer();
+        }, 0);
       }
     },
     computed: {
@@ -57,10 +59,10 @@
 </script>
 <style scoped lang="scss">
   .button {
-    @apply p-2 rounded m-0 bg-gray-700 mb-4 w-10 h-10 text-white;
+    @apply p-2 rounded m-0 bg-gray-700 mb-4 w-10 h-10 text-white border-red-400;
   }
 
   .button-selected {
-    @apply border-2 border-red-400;
+    @apply border-2 ;
   }
 </style>
