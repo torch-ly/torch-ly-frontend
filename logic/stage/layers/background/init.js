@@ -121,12 +121,12 @@ function loadRect(drawing) {
     fill: drawing.color,
     rotation: drawing.rotation
   });
-
+  
   loadObject(rect, drawing.snapToGrid);
 }
 
 export function setBackgroundObjects(data) {
-  backgroundObject = JSON.parse(data);
+  backgroundObject = data;
   init();
 }
 

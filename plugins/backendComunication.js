@@ -46,6 +46,12 @@ const updateCharacterSubscription = gql`
   }
 `
 
+const updateBackgroundLayerSubscription = gql`
+  subscription {
+    updateBackgroundLayer {layer}
+  }
+`
+
 const mutationBackgroundLayer = gql`
   mutation setBackgroundLayer($layer:JSON!){
     updateBackgroundLayer(layer:$layer) {layer}
@@ -56,9 +62,41 @@ export default async function (context) {
   store = context.store;
 
   loadCharacters();
-  subscribeCharacterUpdate();
-  //setBackgroundLayer({test: 1})
+  subscribeCharacter();
   loadBackground();
+  subscribeBackgroundLayer();
+
+  setTimeout(() => {
+    setBackgroundLayer([
+        {
+          "pos": {
+            "x": 100,
+            "y": 250,
+            "width": 120,
+            "height": 600
+          },
+          "draggable": false,
+          "snapToGrid": true,
+          "type": "rect",
+          "color": "red",
+          "rotation": 0
+        },
+        {
+          "pos": {
+            "x": 700,
+            "y": 200,
+            "width": 300,
+            "height": 400
+          },
+          "draggable": false,
+          "snapToGrid": true,
+          "type": "img",
+          "src": "https://media.macphun.com/img/uploads/customer/how-to/579/15531840725c93b5489d84e9.43781620.jpg?q=85&w=1340",
+          "rotation": 100
+        }
+      ]
+    );
+  }, 10000)
 }
 
 export function setCharacterPosition(charcterID, point) {
@@ -81,13 +119,23 @@ function setBackgroundLayer(layer) {
   }).catch(console.error);
 }
 
-function subscribeCharacterUpdate() {
+function subscribeCharacter() {
   apolloClient.subscribe({
     query: updateCharacterSubscription
   }).subscribe({
     next({data}) {
       store.commit("character/updateCharacter", data.updateCharacter);
       tokenInit();
+    }
+  });
+}
+
+function subscribeBackgroundLayer() {
+  apolloClient.subscribe({
+    query: updateBackgroundLayerSubscription
+  }).subscribe({
+    next({data}) {
+      setBackgroundObjects(data.updateBackgroundLayer.layer);
     }
   });
 }
