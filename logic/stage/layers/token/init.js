@@ -28,7 +28,6 @@ function loadImage(character) {
     image.snapToGrid = true;
     image.characterID = character.id;
     image.on('dragend', e => {
-      console.log(image.characterID, image.x(), image.y())
       setCharacterPosition(image.characterID, {
         x: Math.round(image.x() / blockSnapSize),
         y: Math.round(image.y() / blockSnapSize)

@@ -34,7 +34,6 @@
     methods: {
       click(index, character) {
         window.navigator.vibrate(40);
-        console.log(index, character)
         let pos = {
           x: character.pos.point.x,
           y: character.pos.point.y

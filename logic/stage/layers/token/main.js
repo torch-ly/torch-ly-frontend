@@ -10,7 +10,6 @@ export function draw(drawables) {
     children.remove();
   }
 
-  console.log(layer)
   drawables.forEach(drawable => layer.add(drawable));
   layer.draw();
 }

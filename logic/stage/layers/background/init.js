@@ -1,14 +1,14 @@
 import Konva, {Image, Rect} from "konva";
 import {addSnapToGridListener} from "../layerFunctions";
 import {draw} from "./main";
-import {drawingObjects} from "../../main";
+import {drawingObjects, store} from "../../main";
 import {addTransformerClickListener} from "../transformer";
 
 let out = [];
 
 export function init() {
 
-  let drawings = drawingObjects.BackgroundLayer;
+  let drawings = store.state.background.layer; //TODO remove drawing.json and variable
 
   for (let drawing of drawings) {
     if (drawing.type == 'rect') {

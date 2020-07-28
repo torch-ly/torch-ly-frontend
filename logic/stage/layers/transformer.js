@@ -119,7 +119,6 @@ export function addSelectionListener() {
     setNodesToTransformer(selected);
     transformerLayer.batchDraw();
     selectionLayer.batchDraw();
-    console.log(transformer.nodes, transformer.isTransforming(), transformer)
   })
 }
 
