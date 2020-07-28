@@ -3,3 +3,8 @@ $accent: #D62828;
 $color_1: #F77F00;
 $color_2: #FCBF49;
 $background: #EAE2B7;
+
+// horizontal divider
+.hr {
+  @apply h-px w-full bg-white;
+}

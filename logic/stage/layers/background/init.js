@@ -1,17 +1,17 @@
-import Konva from "konva";
+import Konva, {Image as KonvaImage, Rect} from "konva";
 import {addSnapToGridListener, snapToGrid} from "../layerFunctions";
 import {draw, updateDraw} from "./main";
-import {drawingObjects} from "../../main";
 import {addTransformerClickListener} from "../transformer";
 import {store} from "../../main";
+import {setBackgroundLayer} from "../../../../plugins/backendComunication";
 
 let out = new Map();
 
+let backgroundObject = [];
+
 export function init() {
 
-  let drawings = drawingObjects.BackgroundLayer;
-  
-  for (let drawing of drawings) {
+  for (let drawing of backgroundObject) {
     if (drawing.type === 'rect') {
       loadRect(drawing);
     } else if (drawing.type === 'img') {
@@ -37,6 +37,7 @@ export function updateBackgroundObject(hash, data){
 export function updateJSON() {
   let newJSON = [];
   for (let object of out) {
+    object = object[1];
     if (object instanceof Rect) {
       newJSON.push({
         "pos": {
@@ -50,7 +51,7 @@ export function updateJSON() {
         "color": object.fill(),
         "rotation": object.rotation()
       });
-    } else if (object instanceof Image) {
+    } else if (object instanceof KonvaImage) {
       newJSON.push({
         "pos": {
           "x": object.x(),
@@ -61,19 +62,20 @@ export function updateJSON() {
         "snapToGrid": object.snapToGrid,
         "type": "img",
         "src": object.image().src,
-        "rotation": 100
+        "rotation": object.rotation()
       })
     }
   }
-
-  backgroundObject.BackgroundLayer = newJSON;
+  console.log(newJSON)
+  backgroundObject = newJSON;
 }
 
-function loadObject(object, snapToGrid){
+function loadObject(object, snapToGrid) {
   let hash;
-  do{
-    hash = Math.floor(Math.random()*10000);
-  }while(out[hash] !== undefined);
+
+  do {
+    hash = Math.floor(Math.random() * 10000);
+  } while (out[hash] !== undefined);
 
   out.set(hash, object);
 
@@ -121,12 +123,17 @@ function loadRect(drawing) {
     fill: drawing.color,
     rotation: drawing.rotation
   });
-  
+
   loadObject(rect, drawing.snapToGrid);
 }
 
 export function setBackgroundObjects(data) {
   backgroundObject = data;
+  console.log(backgroundObject)
   init();
 }
 
+export function saveBackgroundLayer() {
+  updateJSON();
+  setBackgroundLayer(backgroundObject);
+}

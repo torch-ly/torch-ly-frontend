@@ -65,38 +65,6 @@ export default async function (context) {
   subscribeCharacter();
   loadBackground();
   subscribeBackgroundLayer();
-
-  setTimeout(() => {
-    setBackgroundLayer([
-        {
-          "pos": {
-            "x": 100,
-            "y": 250,
-            "width": 120,
-            "height": 600
-          },
-          "draggable": false,
-          "snapToGrid": true,
-          "type": "rect",
-          "color": "red",
-          "rotation": 0
-        },
-        {
-          "pos": {
-            "x": 700,
-            "y": 200,
-            "width": 300,
-            "height": 400
-          },
-          "draggable": false,
-          "snapToGrid": true,
-          "type": "img",
-          "src": "https://media.macphun.com/img/uploads/customer/how-to/579/15531840725c93b5489d84e9.43781620.jpg?q=85&w=1340",
-          "rotation": 100
-        }
-      ]
-    );
-  }, 10000)
 }
 
 export function setCharacterPosition(charcterID, point) {
@@ -110,7 +78,7 @@ export function setCharacterPosition(charcterID, point) {
   }).catch(console.error);
 }
 
-function setBackgroundLayer(layer) {
+export function setBackgroundLayer(layer) {
   apolloClient.mutate({
     mutation: mutationBackgroundLayer,
     variables: {
