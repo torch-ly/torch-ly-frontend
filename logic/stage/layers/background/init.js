@@ -100,14 +100,14 @@ function loadRect(drawing) {
     draggable: drawing.draggable,
     rotation: drawing.rotation
   });
-
+3
   rect.snapToGrid = drawing.snapToGrid;
 
   out.push(rect);
 }
 
 export function setBackgroundObjects(data) {
-  backgroundObject = JSON.parse(data);
+  backgroundObject = data;
   init();
 }
 
