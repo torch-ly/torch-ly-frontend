@@ -7,9 +7,9 @@ import {store} from "../../main";
 
 let out = new Map();
 
-export function init() {
+export let backgroundObject = [];
 
-  let drawings = drawingObjects.BackgroundLayer;
+export function init() {
 
   for (let drawing of drawings) {
     if (drawing.type === 'rect') {
@@ -66,7 +66,7 @@ export function updateJSON() {
     }
   }
 
-  drawingObjects.BackgroundLayer = newJSON;
+  backgroundObject.BackgroundLayer = newJSON;
 }
 
 function loadObject(object, snapToGrid){
@@ -124,3 +124,9 @@ function loadRect(drawing) {
 
   loadObject(rect, drawing.snapToGrid);
 }
+
+export function setBackgroundObjects(data) {
+  backgroundObject = JSON.parse(data);
+  init();
+}
+

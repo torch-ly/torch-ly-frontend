@@ -8,8 +8,6 @@ export let stageHeight = 0;
 
 export let store = {};
 
-export let drawingObjects = {};
-
 export default function (context) {
   store = context.store;
 }
@@ -19,19 +17,10 @@ export function main(pStage, width, height) {
   stageWidth = width;
   stageHeight = height;
 
-  drawingObjects = require('./drawing.json');
-
   init();
   enableZoom();
   resize();
   moveTokenByArrows();
-
-  /*setInterval(function () {
-    //updateJSON();
-    //console.log(drawingObjects)
-    //let fs = require('./drawing.json');
-    //fs.writeFile('drawing.json', drawingObjects, 'utf8')
-  }, 5000)*/
 
 }
 
