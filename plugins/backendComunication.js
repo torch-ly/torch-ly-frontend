@@ -22,30 +22,12 @@ const apolloClient = new ApolloClient({
   link
 });
 
-
-const updateCharacterSubscription = gql`
-  subscription {
-    updateCharacter {pos{point{x y} rot size} name token players {id} id}
-  }
-`
-
-const updateBackgroundLayerSubscription = gql`
-  subscription {
-    updateBackgroundLayer {layer}
-  }
-`
-
-const mutationBackgroundLayer = gql`
-  mutation setBackgroundLayer($layer:JSON!){
-    updateBackgroundLayer(layer:$layer) {layer}
-  }
-`
-
 export default async function (context) {
   store = context.store;
 
   loadCharacters();
   subscribeCharacter();
+
   loadBackground();
   subscribeBackgroundLayer();
 }
@@ -67,7 +49,11 @@ export function setCharacterPosition(charcterID, point) {
 
 export function setBackgroundLayer(layer) {
   apolloClient.mutate({
-    mutation: mutationBackgroundLayer,
+    mutation: gql`
+      mutation setBackgroundLayer($layer:JSON!){
+        updateBackgroundLayer(layer:$layer) {layer}
+      }
+    `,
     variables: {
       layer: layer
     }
@@ -76,7 +62,11 @@ export function setBackgroundLayer(layer) {
 
 function subscribeCharacter() {
   apolloClient.subscribe({
-    query: updateCharacterSubscription
+    query: gql`
+      subscription {
+        updateCharacter {pos{point{x y} rot size} name token players {id} id}
+      }
+    `
   }).subscribe({
     next({data}) {
       store.commit("character/updateCharacter", data.updateCharacter);
@@ -87,7 +77,11 @@ function subscribeCharacter() {
 
 function subscribeBackgroundLayer() {
   apolloClient.subscribe({
-    query: updateBackgroundLayerSubscription
+    query: gql`
+      subscription {
+        updateBackgroundLayer {layer}
+      }
+    `
   }).subscribe({
     next({data}) {
       setBackgroundObjects(data.updateBackgroundLayer.layer);
