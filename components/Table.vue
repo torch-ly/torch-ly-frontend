@@ -1,5 +1,6 @@
 <template>
   <div>
+    <AddCharacter/>
     <MobileMovement class="md:hidden"></MobileMovement>
 
     <div class="hidden md:block">
@@ -18,23 +19,24 @@
 </template>
 
 <script>
-import Konva from "konva";
-import {main} from "../logic/stage/main";
-import BrushSelector from "./BrushSelector";
-import MobileMovement from "./MobileMovement";
+  import Konva from "konva";
+  import {main} from "../logic/stage/main";
+  import BrushSelector from "./BrushSelector";
+  import MobileMovement from "./MobileMovement";
+  import AddCharacter from "./popups/AddCharacter";
 
-export default {
-  components: {BrushSelector, MobileMovement},
-  mounted() {
-    let width = window.innerWidth;
-    let height = window.innerHeight;
-    let stage = new Konva.Stage({
-      container: 'container',
-      width: width,
-      height: height,
-      draggable: true
-    });
-    main(stage, width, height);
+  export default {
+    components: {AddCharacter, BrushSelector, MobileMovement},
+    mounted() {
+      let width = window.innerWidth;
+      let height = window.innerHeight;
+      let stage = new Konva.Stage({
+        container: 'container',
+        width: width,
+        height: height,
+        draggable: true
+      });
+      main(stage, width, height);
   }
 }
 
