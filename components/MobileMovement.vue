@@ -64,7 +64,6 @@
             })
             break;
         }
-        // ToDo: Handle click
       }
     }
   }

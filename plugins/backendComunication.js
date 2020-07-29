@@ -22,23 +22,6 @@ const apolloClient = new ApolloClient({
   link
 });
 
-const allCharacters = gql`
-  {
-    allCharacters{pos{point{x y} rot size} name token players {id} id}
-  }
-`
-
-const getBackgroundLayer = gql`
-  {
-    getBackgroundLayer {layer}
-  }
-`
-
-const mutationCharacterPosition = gql`
-  mutation setCharacterPosition($id:String!, $x:Int!, $y:Int!){
-    updateCharacterPosition(id:$id, x:$x, y:$y) {pos{point{x y} rot size} name token players {id} id}
-  }
-`
 
 const updateCharacterSubscription = gql`
   subscription {
@@ -69,7 +52,11 @@ export default async function (context) {
 
 export function setCharacterPosition(charcterID, point) {
   apolloClient.mutate({
-    mutation: mutationCharacterPosition,
+    mutation: gql`
+      mutation setCharacterPosition($id:String!, $x:Int!, $y:Int!){
+        updateCharacterPosition(id:$id, x:$x, y:$y) {pos{point{x y} rot size} name token players {id} id}
+      }
+    `,
     variables: {
       id: charcterID,
       x: point.x,
@@ -109,18 +96,30 @@ function subscribeBackgroundLayer() {
 }
 
 function loadCharacters() {
-  apolloClient.query({query: allCharacters})
-    .then(({data}) => {
-      store.commit("character/loadCharacters", data.allCharacters);
-      tokenInit();
-    })
-    .catch(console.error);
+  apolloClient.query({
+    query: gql`
+      {
+        allCharacters{pos{point{x y} rot size} name token players {id} id}
+      }
+    `
+  })
+  .then(({data}) => {
+    store.commit("character/loadCharacters", data.allCharacters);
+    tokenInit();
+  })
+  .catch(console.error);
 }
 
 function loadBackground() {
-  apolloClient.query({query: getBackgroundLayer})
-    .then(({data}) => {
-      setBackgroundObjects(data.getBackgroundLayer.layer);
-    })
-    .catch(console.error);
+  apolloClient.query({
+    query: gql`
+      {
+        getBackgroundLayer {layer}
+      }
+    `
+  })
+  .then(({data}) => {
+    setBackgroundObjects(data.getBackgroundLayer.layer);
+  })
+  .catch(console.error);
 }

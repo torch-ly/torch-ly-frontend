@@ -1,6 +1,7 @@
 import {blockSnapSize} from "./grid/main";
 import {stage, store} from "../main";
 import {getTokenLayer} from "./layerManager";
+import {setCharacterPosition} from "../../../plugins/backendComunication";
 
 let objectToMove;
 
@@ -32,8 +33,8 @@ export function setMoveObjectByArrow(object) {
   objectToMove = object;
 }
 
-function moveToken(object, moveTo) {
-  switch (moveTo) {
+function moveToken(character, moveTo) {
+  /*switch (moveTo) {
     case 'L':
       object.x(calculateSnapToGrid(object.x()) - blockSnapSize);
       object.y(calculateSnapToGrid(object.y()));
@@ -50,8 +51,38 @@ function moveToken(object, moveTo) {
       object.y(calculateSnapToGrid(object.y()) + blockSnapSize);
       object.x(calculateSnapToGrid(object.x()));
       break;
+  }*/
+  console.log(character)
+  let pos = {
+    x: Math.floor(character.x() / blockSnapSize),
+    y: Math.floor(character.y() / blockSnapSize)
   }
-  //TODO only update current layer
+  switch (moveTo) {
+    case 'U':
+      setCharacterPosition(character.characterID, {
+        x: pos.x,
+        y: pos.y - 1
+      })
+      break;
+    case 'L':
+      setCharacterPosition(character.characterID, {
+        x: pos.x - 1,
+        y: pos.y
+      })
+      break;
+    case 'R':
+      setCharacterPosition(character.characterID, {
+        x: pos.x + 1,
+        y: pos.y
+      })
+      break;
+    case 'D':
+      setCharacterPosition(character.characterID, {
+        x: pos.x,
+        y: pos.y + 1
+      })
+      break;
+  }
   stage.batchDraw();
 }
 
