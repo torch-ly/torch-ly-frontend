@@ -1,6 +1,6 @@
 import Konva, {Image as KonvaImage, Rect} from "konva";
 import {addSnapToGridListener, snapToGrid} from "../layerFunctions";
-import {draw, updateDraw} from "./main";
+import {clearLayer, draw, updateDraw} from "./main";
 import {addTransformerClickListener} from "../transformer";
 import {store} from "../../main";
 import {setBackgroundLayer} from "../../../../plugins/backendComunication";
@@ -10,7 +10,7 @@ let out = new Map();
 let backgroundObject = [];
 
 export function init() {
-
+  clearLayer();
   for (let drawing of backgroundObject) {
     if (drawing.type === 'rect') {
       loadRect(drawing);
@@ -129,7 +129,6 @@ function loadRect(drawing) {
 
 export function setBackgroundObjects(data) {
   backgroundObject = data;
-  console.log(backgroundObject)
   init();
 }
 

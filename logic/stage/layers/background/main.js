@@ -15,3 +15,7 @@ export function setLayer(pLayer) {
   layer = pLayer;
   init();
 }
+
+export function clearLayer(){
+  layer.destroyChildren();
+}
