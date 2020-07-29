@@ -1,8 +1,8 @@
 <template>
   <div>
-    <Table></Table>
-    <Overlay></Overlay>
-    <FloatingButtons />
+    <Table/>
+    <Overlay/>
+    <FloatingButtons/>
   </div>
 </template>
 <script>

@@ -8,18 +8,24 @@
 
     <div class="hr"/>
 
+    <button class="submit-button active:submit-button-active mb-4 mt-4" @click="openPopup">Add Character</button>
+
+    <div class="hr"/>
+
     <form id="backgroud-pos" v-on:submit.prevent="updateBackgroundObject" class="mt-2">
-      X: <input ref="x" name="x" type="number" v-bind:value="$store.state.selectedBackgroundObject.x" class="input">
+      X: <input ref="x" name="x" type="number" v-bind:value="$store.state.selectedBackgroundObject.x"
+                class="input-field">
       <br>
-      Y: <input ref="y" name="y" type="number" v-bind:value="$store.state.selectedBackgroundObject.y" class="input">
+      Y: <input ref="y" name="y" type="number" v-bind:value="$store.state.selectedBackgroundObject.y"
+                class="input-field">
       <br>
       Rotation: <input ref="rotation" name="rotation" type="number"
-                       v-bind:value="$store.state.selectedBackgroundObject.rotation" class="input">
+                       v-bind:value="$store.state.selectedBackgroundObject.rotation" class="input-field">
       <br>
       SnapToGrid: <input ref="snapToGrid" name="snapToGrid" type="checkbox"
                          v-bind:checked="$store.state.selectedBackgroundObject.snapToGrid" class="input-narrow">
       <br>
-      <input type="submit" class="bg-accent-light p-2 font-bold mt-4 rounded w-full focus:bg-accent">
+      <input type="submit" class="submit-button active:submit-button-active mt-4">
     </form>
 
   </div>
@@ -28,6 +34,7 @@
 <script>
   import {clearTransformerNodes} from "../../logic/stage/layers/transformer";
   import {stage} from "../../logic/stage/main";
+  import LoadingSpinner from "../gui-components/LoadingSpinner";
 
   export default {
     data() {
@@ -35,6 +42,7 @@
         tokens: []
       }
     },
+    components: {LoadingSpinner},
     methods: {
       dropdownChange(e) {
         clearTransformerNodes();
@@ -42,8 +50,16 @@
         this.$store.commit("manu/setLayer", e.target.value);
       },
 
-      updateBackgroundObject(e){
-        this.$store.commit("selectedBackgroundObject/updateObject", {x: this.$refs.x.value, y: this.$refs.y.value, rotation: this.$refs.rotation.value, snapToGrid: this.$refs.snapToGrid.checked});
+      updateBackgroundObject(e) {
+        this.$store.commit("selectedBackgroundObject/updateObject", {
+          x: this.$refs.x.value,
+          y: this.$refs.y.value,
+          rotation: this.$refs.rotation.value,
+          snapToGrid: this.$refs.snapToGrid.checked
+        });
+      },
+      openPopup() {
+        this.$root.$emit("openCharacterPopup")
       }
     },
     mounted() {

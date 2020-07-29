@@ -117,3 +117,39 @@ function loadBackground() {
   })
   .catch(console.error);
 }
+
+export function addCharacter(character) {
+  if (character.pos.point.x == undefined) {
+    character.pos.point.x = 0;
+  } else {
+    character.pos.point.x = parseInt(character.pos.point.x);
+  }
+
+  if (character.pos.point.y == undefined) {
+    character.pos.point.y = 0;
+  } else {
+    character.pos.point.y = parseInt(character.pos.point.y);
+  }
+
+  if (character.pos.size == undefined) {
+  } else {
+    character.pos.size = parseInt(character.pos.size);
+  }
+
+
+  apolloClient.mutate({
+    mutation: gql`
+      mutation addNewCharacter($name: String, $token: URL!, $pos: PositionSquareInput!, $sheet: URL, $visible: Boolean, $players: [String!]!){
+        addCharacter(name:$name, token:$token, pos:$pos, sheet:$sheet, visible:$visible, players:$players) {id}
+      }
+    `,
+    variables: {
+      name: character.name,
+      token: character.token,
+      pos: character.pos,
+      sheet: character.sheet !== "" ? character.sheet : null,
+      visible: character.visible,
+      players: character.player
+    }
+  }).catch(console.error);
+}
