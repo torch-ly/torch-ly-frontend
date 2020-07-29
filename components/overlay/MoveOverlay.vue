@@ -28,6 +28,10 @@
       <input type="submit" class="submit-button active:submit-button-active mt-4">
     </form>
 
+    <div class="hr my-4"/>
+
+    <FileUpload class="font-lg" />
+
   </div>
 </template>
 
@@ -35,6 +39,7 @@
   import {clearTransformerNodes} from "../../logic/stage/layers/transformer";
   import {stage} from "../../logic/stage/main";
   import LoadingSpinner from "../gui-components/LoadingSpinner";
+  import FileUpload from "../gui-components/FileUpload";
 
   export default {
     data() {
@@ -42,7 +47,7 @@
         tokens: []
       }
     },
-    components: {LoadingSpinner},
+    components: {LoadingSpinner, FileUpload},
     methods: {
       dropdownChange(e) {
         clearTransformerNodes();
