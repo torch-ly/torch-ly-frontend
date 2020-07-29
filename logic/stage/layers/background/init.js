@@ -129,7 +129,6 @@ function loadRect(drawing) {
 
 export function setBackgroundObjects(data) {
   backgroundObject = data;
-  //console.log(backgroundObject)
   init();
 }
 
