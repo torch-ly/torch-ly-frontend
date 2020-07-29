@@ -1,22 +1,30 @@
 <template>
-  <div class="bg-background h-screen fixed top-0">
-    <div
-      v-for="character in $store.state.character.characters"
-      class="bg-primary text-white m-4 mb-0 rounded-lg shadow-lg">
-      <div class="w-full flex flex-column">
-        <img class="w-1/3 p-4 mr-0" v-bind:src="character.token">
-        <th class="w-2/3 p-4 flex text-lg items-center text-left">{{ character.name }}</th>
-      </div>
-      <div class="grid gap-3 grid-cols-3 text-center p-3">
-        <!--Create arrows for movement-controll-->
-        <div v-for="(arrow, index) in arrows"
-             class="flex justify-center items-center hover:bg-accent focus:bg-accent rounded-full h-12"
-             @click="click(index, character)">
-          <fa :icon="arrow" style="font-size: 1.8rem; color: white;" :class="{'rotate-45': [0,2,6,8].includes(index)}"/>
+  <div>
+    <div class="bg-background h-screen fixed top-0 overflow-auto">
+      <div
+        v-for="character in $store.state.character.characters"
+        class="bg-primary text-white m-4 mb-0 rounded-lg shadow-lg last:mb-4">
+        <div class="w-full flex flex-column">
+          <img class="w-1/3 p-4 mr-0" v-bind:src="character.token">
+          <th class="w-2/3 p-4 flex text-lg items-center text-left">{{ character.name }}</th>
+        </div>
+        <div class="grid gap-3 grid-cols-3 text-center p-3">
+          <!--Create arrows for movement-controll-->
+          <div v-for="(arrow, index) in arrows"
+               class="flex justify-center items-center hover:bg-accent focus:bg-accent rounded-full h-12"
+               @click="click(index, character)">
+            <fa :icon="arrow" style="font-size: 1.8rem; color: white;"
+                :class="{'rotate-45': [0,2,6,8].includes(index)}"/>
+          </div>
         </div>
       </div>
     </div>
+
+    <div v-if="$store.state.character.characters.length == 0" class="text-center text-xl m-10 font-bold">
+      No Characters Loaded
+    </div>
   </div>
+
 </template>
 
 <script>
