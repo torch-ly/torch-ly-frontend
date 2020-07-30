@@ -1,56 +1,84 @@
 <template>
   <div>
-    <div v-for="character in characters" class="ml-2 mr-2">
-      <table class="mt-8 mb-15">
-        <tr>
-          <th class="w-1/3">
-            <div class="w-2/3">
-              <img v-bind:src="character.img">
-            </div>
-          </th>
-          <th class="text-left">{{ character.name }}</th>
-        </tr>
-      </table>
-      <div class="grid gap-6 grid-cols-3 text-center mt-3">
-        <!--Create arrows for movement-controll-->
-        <div v-for="arrow in arrows">
-          <div class="hover:bg-gray-300 rounded-lg h-12 select-none" v-html="arrow"></div>
+    <div class="bg-background h-screen fixed top-0 overflow-auto">
+      <div
+        v-for="character in $store.state.character.characters"
+        class="bg-primary text-white m-4 mb-0 rounded-lg shadow-lg last:mb-4">
+        <div class="w-full flex flex-column">
+          <img class="w-1/3 p-4 mr-0" v-bind:src="character.token">
+          <th class="w-2/3 p-4 flex text-lg items-center text-left">{{ character.name }}</th>
+        </div>
+        <div class="grid gap-3 grid-cols-3 text-center p-3">
+          <!--Create arrows for movement-controll-->
+          <div v-for="(arrow, index) in arrows"
+               class="flex justify-center items-center hover:bg-accent focus:bg-accent rounded-full h-12"
+               @click="click(index, character)">
+            <fa :icon="arrow" style="font-size: 1.8rem; color: white;"
+                :class="{'rotate-45': [0,2,6,8].includes(index)}"/>
+          </div>
         </div>
       </div>
     </div>
+
+    <div v-if="$store.state.character.characters.length == 0" class="text-center text-xl m-10 font-bold">
+      No Characters Loaded
+    </div>
   </div>
+
 </template>
 
 <script>
-import Table from "~/components/Table";
-import {store} from "~/logic/stage/main";
+  import Table from "~/components/Table";
+  import {moveToken} from "../logic/stage/layers/objectFunctions";
+  import {setCharacterPosition} from "../plugins/backendComunication";
 
-export default {
-  components: {Table},
-  data() {
-    return {
-      characters: null,
-      arrows: ["&nwarr;", "&uarr;", "&nearr;", "&larr;", "o", "&rarr;", "&LowerLeftArrow;", "&darr;", "&LowerRightArrow;"]
-    }
-  },
-  methods: {
-    getAllCharacter() {
-      return [
-        {
-          name: "Aracokra",
-          img: "https://5e.tools/img/MM/Aarakocra.png?v=1.108.1",
-          id: 1
-        },
-        {
-          name: "Ervin",
-          img: "https://5e.tools/img/MM/Adult%20Blue%20Dracolich.png?v=1.108.1",
-          id: 1
+  export default {
+    components: {Table},
+    data() {
+      return {
+        arrows: ["angle-left", "angle-up", "angle-up", "angle-left", "dot-circle", "angle-right", "angle-down", "angle-down", "angle-right"]
+      }
+    },
+    methods: {
+      click(index, character) {
+        window.navigator.vibrate(40);
+        let pos = {
+          x: character.pos.point.x,
+          y: character.pos.point.y
         }
-      ]
+        switch (index) {
+          case 1:
+            setCharacterPosition(character.id, {
+              x: pos.x,
+              y: pos.y - 1
+            })
+            break;
+          case 3:
+            setCharacterPosition(character.id, {
+              x: pos.x - 1,
+              y: pos.y
+            })
+            break;
+          case 5:
+            setCharacterPosition(character.id, {
+              x: pos.x + 1,
+              y: pos.y
+            })
+            break;
+          case 7:
+            setCharacterPosition(character.id, {
+              x: pos.x,
+              y: pos.y + 1
+            })
+            break;
+        }
+      }
     }
-  },
-  created() {
-    this.characters = this.getAllCharacter().filter(character => character.id == store.state.authentication.playerID);
   }
-}
+  //.filter(character => character.players.includes($store.state.authentication.playerID))
 </script>
+<style scoped>
+  .rotate-45 {
+    transform: rotate(45deg);
+  }
+</style>

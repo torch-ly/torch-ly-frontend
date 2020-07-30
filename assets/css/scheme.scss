@@ -3,3 +3,26 @@ $accent: #D62828;
 $color_1: #F77F00;
 $color_2: #FCBF49;
 $background: #EAE2B7;
+
+// horizontal divider
+.hr {
+  @apply h-px w-full bg-white;
+}
+
+.header1 {
+  @apply text-2xl font-bold text-center text-white mb-6 select-none;
+}
+
+.submit-button {
+  @apply bg-accent-light p-2 font-bold rounded w-full text-white text-center select-none;
+}
+
+.input-field {
+  @apply text-black p-2 w-full rounded inline-block mb-4;
+}
+
+@variants active {
+  .submit-button-active {
+    @apply bg-accent;
+  }
+}

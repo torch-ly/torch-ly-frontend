@@ -1,6 +1,6 @@
 export const state = () => ({
   move: true,
-  layer: "Background",
+  layer: "Token",
 
   drawing: false,
   erase: false,

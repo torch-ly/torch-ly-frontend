@@ -1,41 +1,43 @@
-import Konva, {Image, Rect} from "konva";
-import {addSnapToGridListener} from "../layerFunctions";
-import {draw} from "./main";
-import {drawingObjects} from "../../main";
+import Konva, {Image as KonvaImage, Rect} from "konva";
+import {addSnapToGridListener, snapToGrid} from "../layerFunctions";
+import {clearLayer, draw, updateDraw} from "./main";
 import {addTransformerClickListener} from "../transformer";
+import {store} from "../../main";
+import {setBackgroundLayer} from "../../../../plugins/backendComunication";
 
-let out = [];
+let out = new Map();
+
+let backgroundObject = [];
 
 export function init() {
-
-  let drawings = drawingObjects.BackgroundLayer;
-
-  for (let drawing of drawings) {
-    if (drawing.type == 'rect') {
+  clearLayer();
+  for (let drawing of backgroundObject) {
+    if (drawing.type === 'rect') {
       loadRect(drawing);
-    } else if (drawing.type == 'img') {
+    } else if (drawing.type === 'img') {
       loadImage(drawing);
     }
   }
+}
 
-  //create Rects
-  //addObjects();
-  loadImage("https://media.macphun.com/img/uploads/customer/how-to/579/15531840725c93b5489d84e9.43781620.jpg?q=85&w=1340");
-
-  for (let object of out) {
-    addTransformerClickListener(object);
-  }
-
-  //if snapToGrid == true -> object will snap to grid
-  addSnapToGridListener(out);
-
-  draw(out);
-  //return out;
+export function updateBackgroundObject(hash, data){
+  let object = out.get(hash);
+  if(object === undefined)
+    return
+  object.x(data.x);
+  object.y(data.y);
+  object.snapToGrid = data.snapToGrid;
+  object.rotation(data.rotation);
+  if(data.snapToGrid)
+    snapToGrid(object);
+  updateDraw();
+  object.fire('click');
 }
 
 export function updateJSON() {
   let newJSON = [];
   for (let object of out) {
+    object = object[1];
     if (object instanceof Rect) {
       newJSON.push({
         "pos": {
@@ -44,13 +46,12 @@ export function updateJSON() {
           "width": object.width(),
           "height": object.height()
         },
-        "draggable": object.draggable(),
         "snapToGrid": object.snapToGrid,
         "type": "rect",
         "color": object.fill(),
         "rotation": object.rotation()
       });
-    } else if (object instanceof Image) {
+    } else if (object instanceof KonvaImage) {
       newJSON.push({
         "pos": {
           "x": object.x(),
@@ -58,35 +59,57 @@ export function updateJSON() {
           "width": object.width(),
           "height": object.height()
         },
-        "draggable": object.draggable(),
         "snapToGrid": object.snapToGrid,
         "type": "img",
         "src": object.image().src,
-        "rotation": 100
+        "rotation": object.rotation()
       })
     }
   }
+  console.log(newJSON)
+  backgroundObject = newJSON;
+}
 
-  drawingObjects.BackgroundLayer = newJSON;
+function loadObject(object, snapToGrid) {
+  let hash;
+
+  do {
+    hash = Math.floor(Math.random() * 10000);
+  } while (out[hash] !== undefined);
+
+  out.set(hash, object);
+
+  let updatesidebar = (e) => {
+    setTimeout(() => {
+      store.commit("selectedBackgroundObject/setDisplay", {object: object, hash: hash});
+    }, 10);
+  };
+
+  object.on("click", updatesidebar)
+  object.on("mouseup", updatesidebar)
+
+  object.snapToGrid = snapToGrid;
+
+  addTransformerClickListener(object);
+  addSnapToGridListener([object]);
+
+  draw(object);
 }
 
 function loadImage(drawing) {
-  let imageObj = new Image();
+  let imageObj = new Image(drawing.pos.width, drawing.pos.height);
   imageObj.onload = function () {
     let image = new Konva.Image({
       x: drawing.pos.x,
       y: drawing.pos.y,
       width: drawing.pos.width,
       height: drawing.pos.height,
-      image: imageObj
+      image: imageObj,
+      rotation: drawing.rotation
     });
-    image.snapToGrid = drawing.snapToGrid;
 
-    addSnapToGridListener([image]);
-    addTransformerClickListener(image);
+    loadObject(image, drawing.snapToGrid);
 
-    out.push(image)
-    draw(out);
   };
   imageObj.src = drawing.src;
 }
@@ -98,11 +121,18 @@ function loadRect(drawing) {
     width: drawing.pos.width,
     height: drawing.pos.height,
     fill: drawing.color,
-    draggable: drawing.draggable,
     rotation: drawing.rotation
   });
 
-  rect.snapToGrid = drawing.snapToGrid;
+  loadObject(rect, drawing.snapToGrid);
+}
 
-  out.push(rect);
+export function setBackgroundObjects(data) {
+  backgroundObject = data;
+  init();
+}
+
+export function saveBackgroundLayer() {
+  updateJSON();
+  setBackgroundLayer(backgroundObject);
 }
