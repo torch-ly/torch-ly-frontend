@@ -1,7 +1,14 @@
+import {getParameters} from "../plugins/utils/ParameterHelper";
+
 export const state = () => ({
-  authID: "0",
-  playerID: "5f1832bcca858f1b38cebf41"
+  authID: getParameters().authID,
+  playerID: null,
+  name: null
 })
 
 export const mutations = {
+  setPlayer(state, player) {
+    state.playerID = player.id;
+    state.name = player.name;
+  }
 }

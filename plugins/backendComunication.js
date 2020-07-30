@@ -5,17 +5,24 @@ import {WebSocketLink} from "apollo-link-ws";
 import {InMemoryCache} from "apollo-cache-inmemory";
 import {init as tokenInit} from "../logic/stage/layers/token/init";
 import {setBackgroundObjects} from "../logic/stage/layers/background/init";
+import {getParameters} from "./utils/ParameterHelper";
 
 const GRAPHQL_ENDPOINT = "ws://" + process.env.BACKEND + "/graphql";
 
+let store = {};
+let authID = getParameters().authID;
+
 const client = new SubscriptionClient(GRAPHQL_ENDPOINT, {
   reconnect: true,
+  connectionParams: {
+    authID: authID
+  },
+  connectionCallback: error => error && console.error("WS connection error: ", error.message) // ToDo: catch in snackbar
 });
 
 const cache = new InMemoryCache();
 const link = new WebSocketLink(client);
 
-let store = {};
 
 const apolloClient = new ApolloClient({
   cache,
@@ -25,11 +32,24 @@ const apolloClient = new ApolloClient({
 export default async function (context) {
   store = context.store;
 
+  getPlayer();
+
   loadCharacters();
   subscribeCharacter();
 
   loadBackground();
   subscribeBackgroundLayer();
+}
+
+export function getPlayer() {
+  apolloClient.query({
+    query: gql`
+    {
+      me {id name}
+    }`
+  })
+  .then(({data}) => store.commit("authentication/setPlayer", data.me))
+  .catch(console.error);
 }
 
 export function setCharacterPosition(charcterID, point) {
@@ -97,11 +117,11 @@ function loadCharacters() {
       }
     `
   })
-  .then(({data}) => {
-    store.commit("character/loadCharacters", data.allCharacters);
-    tokenInit();
-  })
-  .catch(console.error);
+    .then(({data}) => {
+      store.commit("character/loadCharacters", data.allCharacters);
+      tokenInit();
+    })
+    .catch(console.error);
 }
 
 function loadBackground() {
@@ -112,10 +132,10 @@ function loadBackground() {
       }
     `
   })
-  .then(({data}) => {
-    setBackgroundObjects(data.getBackgroundLayer.layer);
-  })
-  .catch(console.error);
+    .then(({data}) => {
+      setBackgroundObjects(data.getBackgroundLayer.layer);
+    })
+    .catch(console.error);
 }
 
 export function addCharacter(character) {
