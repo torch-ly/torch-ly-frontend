@@ -4,29 +4,31 @@
       <div
         v-for="character in getOwnCharacters()"
         class="bg-primary text-white m-4 mb-0 rounded-lg shadow-lg last:mb-4">
+
         <div class="w-full flex flex-column">
           <img class="w-1/3 p-4 mr-0" v-bind:src="character.token">
           <th class="w-2/3 p-4 flex text-lg items-center text-left">{{ character.name }}</th>
         </div>
+
         <div class="grid gap-3 grid-cols-3 text-center p-3">
-          <!--Create arrows for movement-controll-->
+          <!-- Create arrows for movement-control -->
           <div v-for="(arrow, index) in arrows"
                class="flex justify-center items-center hover:bg-accent focus:bg-accent rounded-full h-12"
                @click="click(index, character)">
-            <fa :icon="arrow" style="font-size: 1.8rem; color: white;"
+
+          <fa :icon="arrow" style="font-size: 1.8rem; color: white;"
                 :class="{'rotate-45': [0,2,6,8].includes(index)}"/>
+
           </div>
         </div>
+
       </div>
     </div>
-
     <div v-if="getOwnCharacters().length == 0" class="text-center text-xl m-10 font-bold">
       No Characters Loaded
     </div>
   </div>
-
 </template>
-
 <script>
   import Table from "~/components/Table";
   import {moveToken} from "../logic/stage/layers/objectFunctions";

@@ -1,29 +1,25 @@
 <template>
-  <PopupContainer v-show="active">
-    <form @submit.prevent="newCharacter" class="relative">
-      <h2 class="header1">Charakter hinzufügen</h2>
+  <PopupContainer ref="popupContainer" title="Add Character">
+    <form @submit.prevent="newCharacter">
 
-      <input type="text" name="name" class="input-field" placeholder="Name" v-model="character.name">
+      <input type="text" name="name" class="input-field mb-4" placeholder="Name" v-model="character.name">
+      <input type="text" name="token" class="input-field mb-4" placeholder="Token-URL" v-model="character.token">
 
-      <input type="text" name="token" class="input-field" placeholder="Token-URL" v-model="character.token">
 
       <AdvancedOptions>
-        <input type="text" name="sheet" class="input-field" placeholder="Character-Sheet-URL" v-model="character.sheet">
+        <input type="text" name="sheet" class="input-field mb-4" placeholder="Character-Sheet-URL"
+               v-model="character.sheet">
 
-        <input type="number" name="xValue" class="input-field" placeholder="X-Value"
+        <input type="number" name="xValue" class="input-field mb-4" placeholder="X-Value"
                v-model="character.pos.point.x">
 
-        <input type="number" name="yValue" class="input-field" placeholder="Y-Value"
+        <input type="number" name="yValue" class="input-field mb-4" placeholder="Y-Value"
                v-model="character.pos.point.y">
 
-        <input type="number" name="size" class="input-field" placeholder="Size" v-model="character.pos.size">
+        <input type="number" name="size" class="input-field mb-4" placeholder="Size" v-model="character.pos.size">
       </AdvancedOptions>
 
       <input type="submit" class="submit-button active:submit-button-active mt-2">
-
-      <div class="p-3 absolute top-0 right-0 -mt-2 -mr-2" @click="closePopup">
-        <fa icon="times" class="text-white text-xl"/>
-      </div>
     </form>
   </PopupContainer>
 </template>
@@ -37,8 +33,6 @@
     components: {PopupContainer, AdvancedOptions},
     data() {
       return {
-        active: false,
-        advanced: false,
         character: {
           name: "",
           token: "",
@@ -53,7 +47,7 @@
     },
     mounted() {
       this.$root.$on("openCharacterPopup", () => {
-        this.active = true;
+        this.$refs.popupContainer.active = true;
       });
     },
     methods: {
@@ -71,12 +65,6 @@
         });
         this.closePopup();
       },
-      closePopup() {
-        this.active = false;
-      },
-      toggleActive() {
-        this.advanced = !this.advanced;
-      }
     }
   }
 </script>

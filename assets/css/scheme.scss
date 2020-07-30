@@ -18,7 +18,11 @@ $background: #EAE2B7;
 }
 
 .input-field {
-  @apply text-black p-2 w-full rounded inline-block mb-4;
+  @apply text-black p-2 w-full rounded inline-block;
+}
+
+.dropdown {
+  @apply w-full text-black p-1 rounded mb-4;
 }
 
 @variants active {

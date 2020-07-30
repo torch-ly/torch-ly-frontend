@@ -1,8 +1,8 @@
 {
-  "name": "RPGOnlineTool",
+  "name": "torch.ly",
   "version": "1.0.0",
   "description": "My solid Nuxt.js project",
-  "author": "Caesar0815",
+  "author": "Caesar0815 + EricHier",
   "private": true,
   "scripts": {
     "dev": "nuxt",

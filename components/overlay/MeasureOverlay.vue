@@ -1,7 +1,10 @@
 <template>
-  <div class="m-6">
+  <div>
+
+    <!-- Shows length of last measurement -->
     <p class="text-lg font-bold mb-4">Length: {{getLength}} </p>
 
+    <!-- Options for changing units and size per square -->
     <AdvancedOptions>
       <input type="number" class="input-field" v-model="boxSize" @change="submitUnitChange">
 

@@ -1,9 +1,11 @@
 <template>
-  <div class="hidden md:block fixed w-full md:w-64 bottom-0 md:top-0 right-0 bg-gray-700 animate__animated animate__fadeInRight text-white flex justify-center items-center flex-col" :class="{'hidden' : !visible}">
+  <div
+    class="hidden md:block fixed w-full md:w-64 bottom-0 md:top-0 right-0 bg-gray-700 animate__animated animate__fadeInRight text-white flex justify-center items-center flex-col p-6"
+    :class="{'hidden' : !visible}">
 
     <MoveOverlay class="animate__animated animate__fadeInRight" v-if="$store.state.manu.move"/>
-    <PaintOverlay class="animate__animated animate__fadeInRight" v-if="$store.state.manu.drawing" />
-    <MeasureOverlay class="animate__animated animate__fadeInRight" v-if="$store.state.manu.measure" />
+    <PaintOverlay class="animate__animated animate__fadeInRight" v-if="$store.state.manu.drawing"/>
+    <MeasureOverlay class="animate__animated animate__fadeInRight" v-if="$store.state.manu.measure"/>
 
   </div>
 </template>

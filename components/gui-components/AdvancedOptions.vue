@@ -2,20 +2,18 @@
   <div>
     <div class="text-white select-none" @click="toggleActive">
 
+      <!-- title which uses default value when not provided -->
       <h3 class="text-lg text-bold mb-2 inline-block">{{title}}</h3>
 
-      <fa v-show="!active" icon="caret-right" class="advanced-icon"></fa>
-      <fa v-show="active" icon="caret-down" class="advanced-icon"></fa>
+      <fa v-if="!active" icon="caret-right" class="advanced-icon"></fa>
+      <fa v-else icon="caret-down" class="advanced-icon"></fa>
     </div>
 
-    <div v-show="active">
+    <!-- advanced options shown when active is true -->
+    <slot v-if="active"/>
 
-      <slot/>
-
-    </div>
   </div>
 </template>
-
 <script>
   export default {
     props: {
@@ -36,7 +34,6 @@
     }
   }
 </script>
-
 <style scoped lang="scss">
   .advanced-icon {
     @apply ml-2 text-xl;

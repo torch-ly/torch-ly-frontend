@@ -1,14 +1,14 @@
 <template>
-  <div class="m-6">
+  <div>
     <BrushSelector v-show="drawing"></BrushSelector>
 
     <hr class="my-4">
 
-    <span class="block">
+    <div class="block">
       Stiftbreite:
       <input type="range" min="1" max="50" value="3" class="w-full" @change="widthChange"
              :value="$store.state.manu.freeDrawing.strokeWidth">
-    </span>
+    </div>
 
     <hr class="my-4">
 

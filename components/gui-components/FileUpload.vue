@@ -1,10 +1,11 @@
 <template>
   <div>
-    <form @submit.prevent="submit" v-if="url.length === 0">
-      <input type="file" name="image" id="image-file">
-      <input type="submit" class="submit-button mt-4" :disabled="uploading" value="Upload Image">
+    <form @submit.prevent="submit" class="flex flex-row text-white" v-if="url.length === 0">
+      <input type="file" name="image" id="image-file" class="w-2/3 mt-1">
+      <input type="submit" class="bg-accent-light p-2 font-bold rounded text-center select-none w-1/3"
+             :disabled="uploading" value="Upload Image">
     </form>
-    <p class="text-lg text-white text-center font-bold" v-else>{{url}}</p>
+    <a :href="imageUrl" target="_blank" class="text-lg mx-auto block text-white text-center font-bold italic" v-else>{{url}}</a>
   </div>
 </template>
 <script>
@@ -34,6 +35,7 @@
             console.log(data);
             this.url = data;
             this.uploading = false;
+            this.$emit("uploadSuccess", this.imageUrl);
           })
           .catch(console.error);
       }
