@@ -2,7 +2,7 @@
   <div>
     <form @submit.prevent="submit" v-if="url.length === 0">
       <input type="file" name="image" id="image-file">
-      <input type="submit" class="submit-button mt-4" :disabled="uploading">
+      <input type="submit" class="submit-button mt-4" :disabled="uploading" value="Upload Image">
     </form>
     <p class="text-lg text-white text-center font-bold" v-else>{{url}}</p>
   </div>

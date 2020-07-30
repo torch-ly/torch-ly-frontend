@@ -1,6 +1,7 @@
 <template>
   <div>
     <AddCharacter/>
+    <AddImage/>
     <MobileMovement class="md:hidden"></MobileMovement>
 
     <div class="hidden md:block">
@@ -24,9 +25,10 @@
   import BrushSelector from "./BrushSelector";
   import MobileMovement from "./MobileMovement";
   import AddCharacter from "./popups/AddCharacter";
+  import AddImage from "./popups/AddImage";
 
   export default {
-    components: {AddCharacter, BrushSelector, MobileMovement},
+    components: {AddImage, AddCharacter, BrushSelector, MobileMovement},
     mounted() {
       let width = window.innerWidth;
       let height = window.innerHeight;
