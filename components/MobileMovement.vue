@@ -2,7 +2,7 @@
   <div>
     <div class="bg-background h-screen fixed top-0 overflow-auto">
       <div
-        v-for="character in $store.state.character.characters"
+        v-for="character in getOwnCharacters()"
         class="bg-primary text-white m-4 mb-0 rounded-lg shadow-lg last:mb-4">
         <div class="w-full flex flex-column">
           <img class="w-1/3 p-4 mr-0" v-bind:src="character.token">
@@ -20,7 +20,7 @@
       </div>
     </div>
 
-    <div v-if="$store.state.character.characters.length == 0" class="text-center text-xl m-10 font-bold">
+    <div v-if="getOwnCharacters().length == 0" class="text-center text-xl m-10 font-bold">
       No Characters Loaded
     </div>
   </div>
@@ -31,6 +31,7 @@
   import Table from "~/components/Table";
   import {moveToken} from "../logic/stage/layers/objectFunctions";
   import {setCharacterPosition} from "../plugins/backendComunication";
+  import {store} from "../logic/stage/main";
 
   export default {
     components: {Table},
@@ -72,10 +73,20 @@
             })
             break;
         }
+      },
+      getOwnCharacters() {
+        let ownCharacter = [];
+        for (let charater of store.state.character.characters) {
+          for (let player of charater.players) {
+            if (player.id == store.state.authentication.playerID) {
+              ownCharacter.push(charater);
+            }
+          }
+        }
+        return ownCharacter;
       }
     }
   }
-  //.filter(character => character.players.includes($store.state.authentication.playerID))
 </script>
 <style scoped>
   .rotate-45 {
