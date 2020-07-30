@@ -54,6 +54,10 @@ export const mutations = {
   setMeasureLength(state, length) {
     state.measureDetails.length = length;
   },
+  setMeasureDetails(state, detail) {
+    state.measureDetails.unitEnding = detail.unitEnding;
+    state.measureDetails.boxSize = detail.boxSize
+  },
   setDrawingStrokeWidth(state, width) {
     state.freeDrawing.strokeWidth = width;
   }

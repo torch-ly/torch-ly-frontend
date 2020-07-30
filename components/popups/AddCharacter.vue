@@ -3,29 +3,21 @@
     <form @submit.prevent="newCharacter" class="relative">
       <h2 class="header1">Charakter hinzufügen</h2>
 
-      <input type="text" name="name" class="input-field" placeholder="Name" v-model="character.name"><br>
+      <input type="text" name="name" class="input-field" placeholder="Name" v-model="character.name">
 
-      <input type="text" name="token" class="input-field" placeholder="Token-URL" v-model="character.token"><br>
+      <input type="text" name="token" class="input-field" placeholder="Token-URL" v-model="character.token">
 
-      <div class="text-white select-none" @click="toggleActive">
-        Advanced
-        <fa v-show="!advanced" icon="caret-right" class="advanced-icon"></fa>
-        <fa v-show="advanced" icon="caret-down" class="advanced-icon"></fa>
-      </div>
-
-      <br>
-
-      <div v-show="advanced">
-        <input type="text" name="sheet" class="input-field" placeholder="Character-Sheet-URL" v-model="character.sheet"><br>
+      <AdvancedOptions>
+        <input type="text" name="sheet" class="input-field" placeholder="Character-Sheet-URL" v-model="character.sheet">
 
         <input type="number" name="xValue" class="input-field" placeholder="X-Value"
-               v-model="character.pos.point.x"><br>
+               v-model="character.pos.point.x">
 
         <input type="number" name="yValue" class="input-field" placeholder="Y-Value"
-               v-model="character.pos.point.y"><br>
+               v-model="character.pos.point.y">
 
-        <input type="number" name="size" class="input-field" placeholder="Size" v-model="character.pos.size"><br>
-      </div>
+        <input type="number" name="size" class="input-field" placeholder="Size" v-model="character.pos.size">
+      </AdvancedOptions>
 
       <input type="submit" class="submit-button active:submit-button-active mt-2">
 
@@ -38,10 +30,11 @@
 
 <script>
   import PopupContainer from "../gui-components/PopupContainer";
+  import AdvancedOptions from "../gui-components/AdvancedOptions";
   import {addCharacter} from "../../plugins/backendComunication";
 
   export default {
-    components: {PopupContainer},
+    components: {PopupContainer, AdvancedOptions},
     data() {
       return {
         active: false,
