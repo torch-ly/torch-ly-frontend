@@ -8,6 +8,14 @@ let start = {x: 0, y: 0};
 let layer;
 let lengthSoFar = 0;
 
+let circle = new Konva.Circle({
+  x: 0,
+  y: 0,
+  visible: true,
+  radius: 20,
+  fill: '#4a5568'
+});
+
 export function draw(pLayer) {
   layer = pLayer;
 }
@@ -37,6 +45,7 @@ export function startDraw() {
     });
     arrow.currentlyDrawing = true;
     layer.add(arrow);
+    layer.add(circle)
   })
 
   stage.on("mousemove", (e) => {
@@ -45,8 +54,21 @@ export function startDraw() {
 
     length();
 
-    if (arrow.currentlyDrawing)
-      arrow.points([start.x, start.y, calculateSnapToGrid(getRelativePointerPosition(stage)).x, calculateSnapToGrid(getRelativePointerPosition(stage)).y])
+    if (arrow.currentlyDrawing) {
+      console.log(store.state.manu.measureDetails.length, circle)
+      if (store.state.manu.measureDetails.length === 0) {
+        arrow.visible(false);
+        circle.setAttrs({
+          x: calculateSnapToGrid(getRelativePointerPosition(stage)).x,
+          y: calculateSnapToGrid(getRelativePointerPosition(stage)).y,
+          visible: true
+        })
+      } else {
+        arrow.points([start.x, start.y, calculateSnapToGrid(getRelativePointerPosition(stage)).x, calculateSnapToGrid(getRelativePointerPosition(stage)).y]);
+        arrow.visible(true);
+        circle.visible(false);
+      }
+    }
 
     layer.batchDraw();
   })
@@ -56,7 +78,7 @@ export function startDraw() {
       return true;
 
     arrow = null;
-    layer.destroyChildren();
+    layer.removeChildren();
     layer.batchDraw();
   })
 }
