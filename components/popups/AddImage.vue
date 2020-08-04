@@ -1,6 +1,6 @@
 <template>
   <PopupContainer ref="popupContainer" title="Add Shape or Image">
-    <form class="flex flex-col text-white" @submit.prevent="addImage">
+    <form class="flex flex-col text-white" @submit.prevent="">
 
       <!-- shape kind -->
       <select required v-model="inputs.type" class="dropdown">
@@ -52,6 +52,7 @@
   import PopupContainer from "../gui-components/PopupContainer";
   import FileUpload from "../gui-components/FileUpload";
   import AdvancedOptions from "../gui-components/AdvancedOptions";
+  import {loadImage} from "../../logic/stage/layers/background/init";
 
   export default {
     components: {AdvancedOptions, PopupContainer, FileUpload},
@@ -81,7 +82,19 @@
     },
     methods: {
       addObject() {
-
+        loadImage({
+          "pos": {
+            "x": parseInt(this.inputs.x),
+            "y": parseInt(this.inputs.y),
+            "width": 300,
+            "height": 400
+          },
+          "draggable": true,
+          "snapToGrid": this.inputs.snapToGrid,
+          "type": "img",
+          "src": this.inputs.url,
+          "rotation": parseInt(this.inputs.rotation)
+        })
       },
     }
   }

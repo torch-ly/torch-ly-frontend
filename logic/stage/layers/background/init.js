@@ -70,7 +70,7 @@ export function updateJSON() {
   backgroundObject = newJSON;
 }
 
-function loadObject(object, snapToGrid) {
+export function loadObject(object, snapToGrid) {
   let hash;
 
   do {
@@ -96,7 +96,7 @@ function loadObject(object, snapToGrid) {
   draw(object);
 }
 
-function loadImage(drawing) {
+export function loadImage(drawing) {
   let imageObj = new Image(drawing.pos.width, drawing.pos.height);
   imageObj.onload = function () {
     let image = new Konva.Image({

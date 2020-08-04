@@ -28,6 +28,7 @@
   import PopupContainer from "../gui-components/PopupContainer";
   import AdvancedOptions from "../gui-components/AdvancedOptions";
   import {addCharacter} from "../../plugins/backendComunication";
+  import {store} from "../../logic/stage/main";
 
   export default {
     components: {PopupContainer, AdvancedOptions},
@@ -40,8 +41,7 @@
             point: {}
           },
           sheet: "",
-          visible: false,
-          player: ["5f1832bcca858f1b38cebf41"]
+          visible: false
         }
       }
     },
@@ -61,9 +61,8 @@
           pos: this.character.pos,
           sheet: this.character.sheet,
           visible: this.character.visible,
-          player: this.character.player
+          player: [store.state.authentication.playerID]
         });
-        this.closePopup();
       },
     }
   }

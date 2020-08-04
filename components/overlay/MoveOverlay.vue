@@ -41,6 +41,9 @@
         Image
       </button>
     </div>
+
+    <CharacterList/>
+
   </div>
 </template>
 <script>
@@ -48,6 +51,7 @@
   import {stage} from "../../logic/stage/main";
   import LoadingSpinner from "../gui-components/LoadingSpinner";
   import FileUpload from "../gui-components/FileUpload";
+  import CharacterList from "../CharacterList";
 
   export default {
     data() {
@@ -55,7 +59,7 @@
         tokens: []
       }
     },
-    components: {LoadingSpinner, FileUpload},
+    components: {LoadingSpinner, FileUpload, CharacterList},
     methods: {
       dropdownChange(e) {
         clearTransformerNodes();

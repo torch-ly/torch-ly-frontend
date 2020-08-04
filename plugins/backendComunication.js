@@ -84,7 +84,7 @@ function subscribeCharacter() {
   apolloClient.subscribe({
     query: gql`
       subscription {
-        updateCharacter {pos{point{x y} rot size} name token players {id} id}
+        updateCharacter {pos{point{x y} rot size} name token players {id name} id}
       }
     `
   }).subscribe({
@@ -113,7 +113,7 @@ function loadCharacters() {
   apolloClient.query({
     query: gql`
       {
-        allCharacters{pos{point{x y} rot size} name token players {id} id}
+        allCharacters{pos{point{x y} rot size} name token players {id name} id}
       }
     `
   })
