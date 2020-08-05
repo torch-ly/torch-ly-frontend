@@ -7,6 +7,7 @@ import {manageTransformerLayer} from "./layerManager";
 let transformer;
 let transformerLayer;
 let selectionLayer;
+let transformerNodes = [];
 
 export function createTransformer() {
   transformer = new Konva.Transformer({
@@ -22,6 +23,8 @@ export function setNodesToTransformer(nodes) {
   clearTransformerNodes();
   transformer.nodes(nodes);
   for (let object of transformer.nodes()) {
+    transformerNodes.push(object.id())
+    console.log(transformerNodes);
     object.draggable(true);
     object.moveToTop();
   }
@@ -34,6 +37,7 @@ export function clearTransformerNodes() {
     object.draggable(false);
   }
   transformer.nodes([]);
+  transformerNodes = [];
   setMoveObjectByArrow(null);
 }
 
@@ -44,17 +48,32 @@ export function addTransformerToLayer(layer) {
 
 export function addTransformerClickListener(object) {
   stage.on('click', (e) => {
-    if (!store.state.manu.move) {
-      return;
-    }
-    manageTransformerLayer();
-    if (e.target == stage) {
-      clearTransformerNodes();
-    } else if (e.target == object && Array.from(transformerLayer.children).includes(object)) { //is this object the target && is the object in the current layer of selection
-      setNodesToTransformer([object]);
-    }
-    transformerLayer.batchDraw();
+    selectTokensByClick(e, object)
   })
+}
+
+function selectTokensByClick(e, object, overwrite) {
+  if (!store.state.manu.move) {
+    return;
+  }
+  manageTransformerLayer();
+
+  if (e.target == stage) {
+    clearTransformerNodes();
+  } else if (overwrite || (e.target == object && Array.from(transformerLayer.children).includes(object))) { //is this object the target && is the object in the current layer of selection
+    setNodesToTransformer([object]);
+    console.log(object)
+  }
+  transformerLayer.batchDraw();
+}
+
+export function reselectTokens(tokens) {
+  if (tokens == null)
+    transformerNodes = tokens;
+
+  for (let node of transformerNodes) {
+    selectTokensByClick(null, stage.find('#' + node)[0], true);
+  }
 }
 
 export function setSelectionLayer(layer) {

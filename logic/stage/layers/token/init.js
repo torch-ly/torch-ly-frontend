@@ -23,7 +23,8 @@ function loadImage(character) {
       x: Math.floor(character.pos.point.x * blockSnapSize),
       y: Math.floor(character.pos.point.y * blockSnapSize),
       image: imageObj,
-      rotation: character.pos.rot
+      rotation: character.pos.rot,
+      id: String(character.id)
     });
     image.snapToGrid = true;
     image.characterID = character.id;
