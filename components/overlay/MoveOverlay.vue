@@ -73,6 +73,7 @@
       dropdownChange(e) {
         clearTransformerNodes();
         stage.batchDraw();
+        localStorage['selectionLayer'] = e.target.value;
         this.$store.commit("manu/setLayer", e.target.value);
       },
       updateBackgroundObject(e) {
