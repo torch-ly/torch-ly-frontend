@@ -1,7 +1,18 @@
 <template>
   <PopupContainer ref="popupContainer" title="Select Background Layer">
-    <div v-for="layer of layerNames" class="p-4 text-white text-lg hover:bg-primary-light rounded"
-         @click="layerSelection(layer)">{{layer}}
+    <div v-for="layer of layerNames"
+         class="p-4 text-white text-lg hover:bg-primary-light rounded flex justify-between flex-row"
+         @click="layerSelection(layer.name)">
+      {{layer.name}}
+      <div v-if="layer.selected">
+        <fa icon="check"/>
+      </div>
+    </div>
+    <div class="w-full flex flex-row justify-between items-center h-10 p-4 mt-4">
+      <div class="w-11/12 inline-block">
+        <input placeholder="Layer Name" class="input-field" v-model="newLayerName">
+      </div>
+      <fa icon="plus" @click="addLayer" class="text-white inline-block hover:text-accent"/>
     </div>
   </PopupContainer>
 </template>
@@ -9,10 +20,15 @@
 <script>
   import PopupContainer from "../gui-components/PopupContainer";
   import {store} from "../../logic/stage/main";
-  import {setBackgroundLayerName} from "../../plugins/backendComunication";
+  import {addMap, getBackgroundLayerNames, setBackgroundLayerName} from "../../plugins/backendComunication";
 
   export default {
     components: {PopupContainer},
+    data() {
+      return {
+        newLayerName: null
+      }
+    },
     mounted() {
       this.$root.$on("openBackgroundLayerPopup", () => {
         this.$refs.popupContainer.active = true;
@@ -21,6 +37,14 @@
     methods: {
       layerSelection(layer) {
         setBackgroundLayerName(layer);
+        getBackgroundLayerNames();
+      },
+      addLayer() {
+        if (this.newLayerName == null)
+          return;
+
+        addMap(this.newLayerName);
+        getBackgroundLayerNames();
       }
     },
     computed: {
@@ -30,3 +54,6 @@
     }
   }
 </script>
+<style scoped lang="scss">
+  @import "assets/css/scheme";
+</style>

@@ -24,10 +24,25 @@ const client = new SubscriptionClient(GRAPHQL_ENDPOINT, {
 const cache = new InMemoryCache();
 const link = new WebSocketLink(client);
 
+const defaultOptions = {
+  watchQuery: {
+    fetchPolicy: 'no-cache',
+    errorPolicy: 'ignore',
+  },
+  subscription: {
+    fetchPolicy: 'no-cache',
+    errorPolicy: 'all',
+  },
+  query: {
+    fetchPolicy: 'no-cache',
+    errorPolicy: 'all',
+  },
+}
 
 const apolloClient = new ApolloClient({
   cache,
-  link
+  link,
+  defaultOptions
 });
 
 export default async function (context) {
@@ -181,7 +196,7 @@ export function getBackgroundLayerNames() {
   apolloClient.query({
     query: gql`
       {
-        getMaps
+        getMaps { name selected }
       }`
   })
   .then(({data}) => store.commit("backgroundLayerNames/setLayers", data.getMaps))
@@ -197,6 +212,19 @@ export function setBackgroundLayerName(layer) {
     `,
     variables: {
       name: layer
+    }
+  }).catch(console.error);
+}
+
+export function addMap(name) {
+  apolloClient.mutate({
+    mutation: gql`
+      mutation setMap($name:String!){
+        createMap(name:$name) { name selected }
+      }
+    `,
+    variables: {
+      name: name
     }
   }).catch(console.error);
 }

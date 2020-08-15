@@ -18,4 +18,5 @@ export function setLayer(pLayer) {
 
 export function clearLayer(){
   layer.destroyChildren();
+  layer.batchDraw();
 }
