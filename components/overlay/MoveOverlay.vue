@@ -10,11 +10,14 @@
 
     <div class="hr"/>
 
-    <!-- Button for adding Character (only active if token layer is selected) -->
-    <button class="submit-button active:submit-button-active mb-4 mt-4" @click="openTokenPopup"
-            v-if="currentLayer === 'Token'">
-      Add Character
-    </button>
+    <div v-if="currentLayer === 'Token'">
+      <!-- Button for adding Character-->
+      <button class="submit-button active:submit-button-active mb-4 mt-4" @click="openTokenPopup">
+        Add Character
+      </button>
+
+      <CharacterList/>
+    </div>
 
     <!-- Input fields to change attributes of objects in background layer (only active if background layer is selected) -->
     <div v-if="currentLayer === 'Background'">
@@ -49,8 +52,6 @@
       </button>
 
     </div>
-
-    <CharacterList/>
 
   </div>
 </template>
