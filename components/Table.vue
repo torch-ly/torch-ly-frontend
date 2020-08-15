@@ -2,6 +2,8 @@
   <div>
     <AddCharacter/>
     <AddImage/>
+    <SelectBackgroundLayer/>
+
     <MobileMovement class="md:hidden"></MobileMovement>
 
     <div class="hidden md:block">
@@ -26,9 +28,10 @@
   import MobileMovement from "./MobileMovement";
   import AddCharacter from "./popups/AddCharacter";
   import AddImage from "./popups/AddImage";
+  import SelectBackgroundLayer from "./popups/SelectBackgroundLayer";
 
   export default {
-    components: {AddImage, AddCharacter, BrushSelector, MobileMovement},
+    components: {SelectBackgroundLayer, AddImage, AddCharacter, BrushSelector, MobileMovement},
     mounted() {
       let width = window.innerWidth;
       let height = window.innerHeight;

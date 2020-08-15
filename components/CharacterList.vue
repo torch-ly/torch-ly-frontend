@@ -3,8 +3,8 @@
 
     <div class="hr"/>
 
-    <div v-for="character in getOwnCharacters()">
-      <div class="w-full flex flex-column my-4 justify-center items-center">
+    <div v-for="(character, index) in getOwnCharacters()">
+      <div class="w-full flex flex-column my-4 justify-center items-center" @click="selectToken(character)">
         <img class="w-20 h-20 block" v-bind:src="character.token">
         <div class="w-2/3 flex-col ml-2 pl-2 border-l-2 text-lg py-2"><span
           class="font-bold block">{{ character.name }}</span> <span class="block">{{ getPlayerNames(character) }}</span>
@@ -15,7 +15,8 @@
 </template>
 
 <script>
-  import {store} from "../logic/stage/main";
+  import {stage, store} from "../logic/stage/main";
+  import {reselectTokens} from "../logic/stage/layers/transformer";
 
   export default {
     methods: {
@@ -42,6 +43,12 @@
         }
 
         return out;
+      },
+      selectToken(character) {
+        let temp = stage.find('#' + String(character.id));
+        console.log(temp, character)
+        reselectTokens(temp);
+        stage.batchDraw();
       }
     },
   }

@@ -12,7 +12,8 @@
 
     <!-- Button for adding Character (only active if token layer is selected) -->
     <button class="submit-button active:submit-button-active mb-4 mt-4" @click="openTokenPopup"
-            v-if="currentLayer === 'Token'">Add Character
+            v-if="currentLayer === 'Token'">
+      Add Character
     </button>
 
     <!-- Input fields to change attributes of objects in background layer (only active if background layer is selected) -->
@@ -37,9 +38,16 @@
 
       <div class="hr mt-4"/>
 
-      <button class="submit-button active:submit-button-active mb-4 mt-4" @click="openBackgroundPopup">Add Shape or
-        Image
+      <button class="submit-button active:submit-button-active mt-4" @click="openBackgroundPopup">
+        Add Shape or Image
       </button>
+
+      <div class="hr mt-4"/>
+
+      <button class="submit-button active:submit-button-active mb-4 mt-4" @click="openBackgroundLayerPopup">
+        Select Background Layer
+      </button>
+
     </div>
 
     <CharacterList/>
@@ -66,7 +74,6 @@
         stage.batchDraw();
         this.$store.commit("manu/setLayer", e.target.value);
       },
-
       updateBackgroundObject(e) {
         this.$store.commit("selectedBackgroundObject/updateObject", {
           x: this.$refs.x.value,
@@ -78,9 +85,11 @@
       openTokenPopup() {
         this.$root.$emit("openCharacterPopup");
       },
-
       openBackgroundPopup() {
         this.$root.$emit('openImagePopup');
+      },
+      openBackgroundLayerPopup() {
+        this.$root.$emit('openBackgroundLayerPopup');
       }
     },
     computed: {

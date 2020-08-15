@@ -40,6 +40,7 @@ export default async function (context) {
 
   loadBackground();
   subscribeBackgroundLayer();
+  getBackgroundLayerNames();
 }
 
 export function getPlayer() {
@@ -172,6 +173,30 @@ export function addCharacter(character) {
       sheet: character.sheet !== "" ? character.sheet : null,
       visible: character.visible,
       players: character.player
+    }
+  }).catch(console.error);
+}
+
+export function getBackgroundLayerNames() {
+  apolloClient.query({
+    query: gql`
+      {
+        getMaps
+      }`
+  })
+  .then(({data}) => store.commit("backgroundLayerNames/setLayers", data.getMaps))
+  .catch(console.error);
+}
+
+export function setBackgroundLayerName(layer) {
+  apolloClient.mutate({
+    mutation: gql`
+      mutation setMap($name:String!){
+        loadMap(name:$name) { layer }
+      }
+    `,
+    variables: {
+      name: layer
     }
   }).catch(console.error);
 }

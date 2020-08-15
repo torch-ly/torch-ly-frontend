@@ -58,7 +58,6 @@
     components: {AdvancedOptions, PopupContainer, FileUpload},
     data() {
       return {
-        active: false,
         inputs: {
           url: "",
           x: "",
