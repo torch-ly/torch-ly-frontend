@@ -21,6 +21,10 @@
   export default {
     methods: {
       getOwnCharacters() {
+        if (store.state.authentication.playerID == null) {
+          return store.state.character.characters;
+        }
+
         let ownCharacter = [];
         for (let charater of store.state.character.characters) {
           for (let player of charater.players) {
