@@ -103,8 +103,8 @@ function subscribeCharacter() {
   }).subscribe({
     next({data}) {
       store.commit("character/updateCharacter", data.updateCharacter);
-      reselectTokens();
       tokenInit();
+      reselectTokens();
     }
   });
 }

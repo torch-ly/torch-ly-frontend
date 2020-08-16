@@ -79,15 +79,6 @@ export function loadObject(object, snapToGrid) {
 
   out.set(hash, object);
 
-  /*let updatesidebar = (e) => {
-    setTimeout(() => {
-      store.commit("selectedBackgroundObject/setDisplay", {object: object, hash: hash});
-    }, 10);
-  };*/
-
-  // object.on("click", updatesidebar)
-  // object.on("mouseup", updatesidebar)
-
   object.snapToGrid = snapToGrid;
 
   addTransformerClickListener(object);

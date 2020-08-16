@@ -22,20 +22,28 @@ export function createTransformer() {
 export function setNodesToTransformer(nodes) {
   clearTransformerNodes();
   transformer.nodes(nodes);
+
   for (let object of transformer.nodes()) {
     transformerNodes.push(object.id())
-    console.log(transformerNodes);
+
+    console.log(object)
+
     object.draggable(true);
     object.moveToTop();
   }
+
+  console.log(transformerNodes)
+
   transformer.moveToTop();
   setMoveObjectByArrow(nodes[0]);
+
+  console.log(transformer.parent)
 }
 
 export function clearTransformerNodes() {
-  for (let object of transformer.nodes()) {
+  for (let object of transformer.nodes())
     object.draggable(false);
-  }
+
   transformer.nodes([]);
   transformerNodes = [];
   setMoveObjectByArrow(null);
@@ -53,22 +61,21 @@ export function addTransformerClickListener(object) {
 }
 
 function selectTokensByClick(e, object, overwrite) {
-  if (!store.state.manu.move) {
+  if (!store.state.manu.move)
     return;
-  }
+
   manageTransformerLayer();
 
-  if (e.target == stage) {
+  if (e && e.target === stage) {
     clearTransformerNodes();
-  } else if (overwrite || (e.target == object && Array.from(transformerLayer.children).includes(object))) { //is this object the target && is the object in the current layer of selection
+  } else if (overwrite || (e && e.target === object && Array.from(transformerLayer.children).includes(object))) { // is this object the target && is the object in the current layer of selection
     setNodesToTransformer([object]);
-    console.log(object)
   }
   transformerLayer.batchDraw();
 }
 
 export function reselectTokens(tokens) {
-  if (tokens == null)
+  if (tokens != null)
     transformerNodes = tokens;
 
   for (let node of transformerNodes) {

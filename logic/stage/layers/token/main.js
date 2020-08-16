@@ -1,6 +1,5 @@
-//TODO diplicate code
-
 import {init} from "./init";
+import {stage} from "../../main";
 
 let layer;
 
@@ -10,8 +9,10 @@ export function draw(drawables) {
     children.remove();
   }
 
+  //manageTransformerLayer();
+
   drawables.forEach(drawable => layer.add(drawable));
-  layer.draw();
+  stage.draw();
 }
 
 export function setLayer(pLayer) {
