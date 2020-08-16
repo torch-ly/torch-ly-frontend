@@ -7,6 +7,9 @@
       <div v-if="layer.selected">
         <fa icon="check"/>
       </div>
+      <div v-else @click.stop="removeLayer(layer)">
+        <fa icon="trash" :class="{'text-accent': layerToRemove === layer}"/>
+      </div>
     </div>
     <div class="w-full flex flex-row justify-between items-center h-10 p-4 mt-4">
       <div class="w-11/12 inline-block">
@@ -20,13 +23,14 @@
 <script>
   import PopupContainer from "../gui-components/PopupContainer";
   import {store} from "../../logic/stage/main";
-  import {addMap, getBackgroundLayerNames, setBackgroundLayerName} from "../../plugins/backendComunication";
+  import {addMap, getBackgroundLayerNames, removeMap, setBackgroundLayerName} from "../../plugins/backendComunication";
 
   export default {
     components: {PopupContainer},
     data() {
       return {
-        newLayerName: null
+        newLayerName: null,
+        layerToRemove: null
       }
     },
     mounted() {
@@ -45,6 +49,16 @@
 
         addMap(this.newLayerName);
         getBackgroundLayerNames();
+      },
+      removeLayer(layer) {
+        if (this.layerToRemove != layer) {
+          this.layerToRemove = layer;
+        } else {
+          console.log("tesm")
+          removeMap(this.layerToRemove.name);
+          getBackgroundLayerNames();
+        }
+        return true;
       }
     },
     computed: {

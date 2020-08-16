@@ -45,10 +45,6 @@
       main(stage, width, height);
   }
 }
-
-// export function upDateColorSelecter(enable) {
-//   this.drawing = enable;
-// }
 </script>
 
 <style scoped>

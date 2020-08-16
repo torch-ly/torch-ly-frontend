@@ -228,3 +228,16 @@ export function addMap(name) {
     }
   }).catch(console.error);
 }
+
+export function removeMap(name) {
+  apolloClient.mutate({
+    mutation: gql`
+      mutation destroyMap($name:String!){
+        deleteMap(name:$name) { name selected }
+      }
+    `,
+    variables: {
+      name: name
+    }
+  }).catch(console.error);
+}
