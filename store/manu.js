@@ -1,6 +1,6 @@
 export const state = () => ({
   move: true,
-  layer: localStorage['selectionLayer'] || "Token",
+  layer: "Token",
 
   drawing: false,
   erase: false,

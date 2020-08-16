@@ -83,8 +83,8 @@
       addObject() {
         loadImage({
           "pos": {
-            "x": parseInt(this.inputs.x),
-            "y": parseInt(this.inputs.y),
+            "x": parseInt(this.inputs.x || "0"),
+            "y": parseInt(this.inputs.y || "0"),
             "width": 300,
             "height": 400
           },
@@ -92,7 +92,7 @@
           "snapToGrid": this.inputs.snapToGrid,
           "type": "img",
           "src": this.inputs.url,
-          "rotation": parseInt(this.inputs.rotation)
+          "rotation": parseInt(this.inputs.rotation || "0")
         })
       },
     }

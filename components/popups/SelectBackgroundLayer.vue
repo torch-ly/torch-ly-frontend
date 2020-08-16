@@ -54,7 +54,6 @@
         if (this.layerToRemove != layer) {
           this.layerToRemove = layer;
         } else {
-          console.log("tesm")
           removeMap(this.layerToRemove.name);
           getBackgroundLayerNames();
         }

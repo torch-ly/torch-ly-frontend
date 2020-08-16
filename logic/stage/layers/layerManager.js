@@ -22,27 +22,28 @@ export function init() {
   measure = new Konva.Layer();
   menu = new Konva.Layer();
 
+  stage.add(grid);
+  stage.add(background);
+  stage.add(token);
+  stage.add(freeDrawing);
+  stage.add(measure)
+  stage.add(menu);
+
   createTransformer();
   manageTransformerLayer();
   setSelectionLayer(menu);
 
   drawGrid(grid);
-  stage.add(grid);
 
   drawBackground(background);
-  stage.add(background);
 
   drawToken(token);
-  stage.add(token);
 
   drawFree(freeDrawing);
-  stage.add(freeDrawing);
 
   drawMeasure(measure);
-  stage.add(measure);
 
   addSelectionListener();
-  stage.add(menu);
 }
 
 export function manageTransformerLayer() {

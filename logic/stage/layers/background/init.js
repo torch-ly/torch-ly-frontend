@@ -2,7 +2,6 @@ import Konva, {Image as KonvaImage, Rect} from "konva";
 import {addSnapToGridListener, snapToGrid} from "../layerFunctions";
 import {clearLayer, draw, updateDraw} from "./main";
 import {addTransformerClickListener} from "../transformer";
-import {store} from "../../main";
 import {setBackgroundLayer} from "../../../../plugins/backendComunication";
 
 let out = new Map();
@@ -11,6 +10,7 @@ let backgroundObject = [];
 
 export function init() {
   clearLayer();
+
   for (let drawing of backgroundObject) {
     if (drawing.type === 'rect') {
       loadRect(drawing);
@@ -79,14 +79,14 @@ export function loadObject(object, snapToGrid) {
 
   out.set(hash, object);
 
-  let updatesidebar = (e) => {
+  /*let updatesidebar = (e) => {
     setTimeout(() => {
       store.commit("selectedBackgroundObject/setDisplay", {object: object, hash: hash});
     }, 10);
-  };
+  };*/
 
-  object.on("click", updatesidebar)
-  object.on("mouseup", updatesidebar)
+  // object.on("click", updatesidebar)
+  // object.on("mouseup", updatesidebar)
 
   object.snapToGrid = snapToGrid;
 
@@ -108,8 +108,10 @@ export function loadImage(drawing) {
       rotation: drawing.rotation
     });
 
-    loadObject(image, drawing.snapToGrid);
+    console.log(3, image)
 
+    loadObject(image, drawing.snapToGrid);
+    console.log(1, image)
   };
   imageObj.src = drawing.src;
 }

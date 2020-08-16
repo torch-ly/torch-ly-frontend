@@ -29,10 +29,6 @@ const defaultOptions = {
     fetchPolicy: 'no-cache',
     errorPolicy: 'ignore',
   },
-  subscription: {
-    fetchPolicy: 'no-cache',
-    errorPolicy: 'all',
-  },
   query: {
     fetchPolicy: 'no-cache',
     errorPolicy: 'all',
@@ -94,7 +90,7 @@ export function setBackgroundLayer(layer) {
     variables: {
       layer: layer
     }
-  }).catch(console.error);
+  }).catch((e) => console.error("Custom", e));
 }
 
 function subscribeCharacter() {
