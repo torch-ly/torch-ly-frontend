@@ -28,9 +28,11 @@
   import MobileMovement from "./MobileMovement";
   import AddCharacter from "./popups/AddCharacter";
   import AddImage from "./popups/AddImage";
+  import Login from "./popups/Login";
+  import SelectBackgroundLayer from "./popups/SelectBackgroundLayer";
 
   export default {
-    components: {AddImage, AddCharacter, BrushSelector, MobileMovement},
+    components: {AddImage, AddCharacter, BrushSelector, MobileMovement, Login, SelectBackgroundLayer},
     mounted() {
       let width = window.innerWidth;
       let height = window.innerHeight;
