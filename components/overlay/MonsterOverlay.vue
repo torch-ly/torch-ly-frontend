@@ -5,7 +5,7 @@
 
     <div v-if="filteredMonsters.length > 0">
       <div v-for="monster in filteredMonsters" class="overflow-auto my-2 mx-1">
-        {{monster.name}}
+        <a :href="monsterUrl(monster.name)" target="_blank" :title="monster.name">{{monster.name}}</a>
       </div>
     </div>
 
@@ -36,6 +36,10 @@ export default {
       if (e.key.length > 1 && e.key !== "Backspace") return;
       this.spinner = true;
       this.debouncer();
+    },
+    monsterUrl(name) {
+      console.log(name)
+      return "https://www.dndbeyond.com/monsters/" + name.replace(/ /g, "-").replace(/"/g, "");
     }
   },
   async created() {
