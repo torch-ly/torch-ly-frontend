@@ -38,7 +38,6 @@ export default {
       this.debouncer();
     },
     monsterUrl(name) {
-      console.log(name)
       return "https://www.dndbeyond.com/monsters/" + name.replace(/ /g, "-").replace(/"/g, "");
     }
   },
