@@ -26,18 +26,12 @@ export function setNodesToTransformer(nodes) {
   for (let object of transformer.nodes()) {
     transformerNodes.push(object.id())
 
-    console.log(object)
-
     object.draggable(true);
     object.moveToTop();
   }
 
-  console.log(transformerNodes)
-
   transformer.moveToTop();
   setMoveObjectByArrow(nodes[0]);
-
-  console.log(transformer.parent)
 }
 
 export function clearTransformerNodes() {

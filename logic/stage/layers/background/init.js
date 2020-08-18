@@ -66,7 +66,6 @@ export function updateJSON() {
       })
     }
   }
-  console.log(newJSON)
   backgroundObject = newJSON;
 }
 
@@ -99,10 +98,7 @@ export function loadImage(drawing) {
       rotation: drawing.rotation
     });
 
-    console.log(3, image)
-
     loadObject(image, drawing.snapToGrid);
-    console.log(1, image)
   };
   imageObj.src = drawing.src;
 }
