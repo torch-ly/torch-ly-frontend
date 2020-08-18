@@ -6,14 +6,16 @@
     <MoveOverlay class="animate__animated animate__fadeInRight" v-if="$store.state.manu.move"/>
     <PaintOverlay class="animate__animated animate__fadeInRight" v-if="$store.state.manu.drawing"/>
     <MeasureOverlay class="animate__animated animate__fadeInRight" v-if="$store.state.manu.measure"/>
+    <FogOfWarOverlay class="animate__animated animate__fadeInRight" v-if="$store.state.manu.fogOfWar"/>
 
   </div>
 </template>
 <script>
   import BrushSelector from "./BrushSelector";
-  import PaintOverlay from "~/components/overlay/PaintOverlay"
+  import PaintOverlay from "~/components/overlay/PaintOverlay";
   import MeasureOverlay from "./overlay/MeasureOverlay";
   import MoveOverlay from "./overlay/MoveOverlay";
+  import FogOfWarOverlay from "./overlay/FogOfWarOverlay";
 
   export default {
     data() {
@@ -25,7 +27,8 @@
       MoveOverlay,
       BrushSelector,
       MeasureOverlay,
-      PaintOverlay
+      PaintOverlay,
+      FogOfWarOverlay
     },
     methods: {
       dropdownChange(e) {

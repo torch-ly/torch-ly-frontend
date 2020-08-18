@@ -1,11 +1,16 @@
 <template>
   <div class="hidden md:block fixed top-0 left-0">
     <div class="relative m-6 flex flex-col justify-center items-center">
-      <fa icon="arrows-alt" @click="handClick" :class="{'button-selected' : handSelected}" class="button"/>
-      <fa :icon="$store.state.manu.erase ? 'trash' : 'pen'" @click="paintClick"
-          :class="{'button-selected' : paintSelected}" class="button"/>
-      <fa icon="ruler-combined" @click="measureClick" :class="{'button-selected' : measureSelected}" class="button"/>
-      <fa icon="save" @click="saveClick" class="button active:border-2"/>
+      <fa icon="arrows-alt" @click="handClick" :class="{'button-selected' : state.move}" class="button"/>
+
+      <fa :icon="state.erase ? 'trash' : 'pen'" @click="paintClick"
+          :class="{'button-selected' : state.drawing}" class="button"/>
+
+      <fa icon="ruler-combined" @click="measureClick" :class="{'button-selected' : state.measure}" class="button"/>
+
+      <fa icon="cloud" @click="fogOfWarClick" :class="{'button-selected' : state.fogOfWar}" class="button"/>
+
+      <fa v-if="state.currentLayer == 'Background'" icon="save" @click="saveClick" class="button active:border-2"/>
     </div>
   </div>
 </template>
@@ -13,14 +18,12 @@
   import {useHand, usePen} from "../logic/stage/layers/freeDrawing/main";
   import {startDraw} from "../logic/stage/layers/measure/main";
   import {clearTransformerNodes} from "../logic/stage/layers/transformer";
-  import {stage} from "../logic/stage/main";
   import {saveBackgroundLayer} from "../logic/stage/layers/background/init";
 
   export default {
     methods: {
       handClick() {
         this.$store.commit("manu/setHand");
-        stage.draggable(true);
         useHand();
       },
       paintClick() {
@@ -28,15 +31,16 @@
           this.$store.commit("manu/setErase")
         else {
           this.$store.commit("manu/setDrawing");
-          stage.draggable(false);
           usePen();
         }
         clearTransformerNodes();
       },
       measureClick() {
         this.$store.commit("manu/setMeasure");
-        stage.draggable(false);
         startDraw();
+      },
+      fogOfWarClick() {
+        this.$store.commit("manu/setFogOfWar");
       },
       saveClick() {
         setTimeout(() => {
@@ -45,14 +49,8 @@
       }
     },
     computed: {
-      handSelected() {
-        return this.$store.state.manu.move;
-      },
-      paintSelected() {
-        return this.$store.state.manu.drawing;
-      },
-      measureSelected() {
-        return this.$store.state.manu.measure;
+      state() {
+        return this.$store.state.manu;
       }
     }
   }

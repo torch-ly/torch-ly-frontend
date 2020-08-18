@@ -1,6 +1,10 @@
+import {stage} from "../logic/stage/main";
+
 export const state = () => ({
   move: true,
   layer: "Token",
+
+  fogOfWar: false,
 
   drawing: false,
   erase: false,
@@ -23,6 +27,10 @@ export const mutations = {
     state.drawing = true;
     state.move = false;
     state.measure = false;
+    state.fogOfWar = false;
+
+    stage.draggable(false);
+    stage.draw();
   },
   setErase(state) {
     state.erase = !state.erase;
@@ -38,6 +46,10 @@ export const mutations = {
     state.move = true;
     state.drawing = false;
     state.measure = false;
+    state.fogOfWar = false;
+
+    stage.draggable(true);
+    stage.draw();
   },
   setDrawingObject(state, object) {
     state.erase = false;
@@ -50,6 +62,10 @@ export const mutations = {
     state.move = false;
     state.drawing = false;
     state.measure = true;
+    state.fogOfWar = false;
+
+    stage.draggable(false);
+    stage.draw();
   },
   setMeasureLength(state, length) {
     state.measureDetails.length = length;
@@ -60,6 +76,15 @@ export const mutations = {
   },
   setDrawingStrokeWidth(state, width) {
     state.freeDrawing.strokeWidth = width;
+  },
+  setFogOfWar(state) {
+    state.move = false;
+    state.drawing = false;
+    state.measure = false;
+    state.fogOfWar = true;
+
+    stage.draggable(true);
+    stage.draw();
   }
 
 }
