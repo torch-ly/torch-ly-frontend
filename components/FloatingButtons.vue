@@ -10,7 +10,9 @@
 
       <fa icon="cloud" @click="fogOfWarClick" :class="{'button-selected' : state.fogOfWar}" class="button"/>
 
-      <fa v-if="state.currentLayer == 'Background'" icon="save" @click="saveClick" class="button active:border-2"/>
+      <fa icon="book" @click="monstersClick" :class="{'button-selected' : state.monsters}" class="button"/>
+
+      <fa v-if="currentLayerIs('Background')" icon="save" @click="saveClick" class="button active:border-2"/>
     </div>
   </div>
 </template>
@@ -42,10 +44,16 @@
       fogOfWarClick() {
         this.$store.commit("manu/setFogOfWar");
       },
+      monstersClick() {
+        this.$store.commit("manu/setMonsters");
+      },
       saveClick() {
         setTimeout(() => {
           saveBackgroundLayer();
         }, 0);
+      },
+      currentLayerIs(layer) {
+        return this.$store.state.manu.currentLayer === layer;
       }
     },
     computed: {

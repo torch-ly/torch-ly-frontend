@@ -51,6 +51,7 @@ export default {
   modules: [
     // Doc: https://github.com/nuxt-community/dotenv-module
     '@nuxtjs/dotenv',
+    '@nuxtjs/axios',
     ['nuxt-fontawesome', {
       component: 'fa',
       imports: [

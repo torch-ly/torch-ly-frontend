@@ -1,12 +1,13 @@
 <template>
   <div
-    class="hidden md:block fixed w-full md:w-64 bottom-0 md:top-0 right-0 bg-gray-700 animate__animated animate__fadeInRight text-white flex justify-center items-center flex-col p-6"
+    class="hidden md:block fixed md:w-64 bottom-0 md:top-0 right-0 bg-gray-700 animate__animated animate__fadeInRight text-white flex justify-center items-center flex-col"
     :class="{'hidden' : !visible}">
 
-    <MoveOverlay class="animate__animated animate__fadeInRight" v-if="$store.state.manu.move"/>
-    <PaintOverlay class="animate__animated animate__fadeInRight" v-if="$store.state.manu.drawing"/>
-    <MeasureOverlay class="animate__animated animate__fadeInRight" v-if="$store.state.manu.measure"/>
-    <FogOfWarOverlay class="animate__animated animate__fadeInRight" v-if="$store.state.manu.fogOfWar"/>
+    <MoveOverlay class="animate__animated animate__fadeInRight p-6" v-show="$store.state.manu.move"/>
+    <PaintOverlay class="animate__animated animate__fadeInRight p-6" v-show="$store.state.manu.drawing"/>
+    <MeasureOverlay class="animate__animated animate__fadeInRight p-6" v-show="$store.state.manu.measure"/>
+    <FogOfWarOverlay class="animate__animated animate__fadeInRight p-6" v-show="$store.state.manu.fogOfWar"/>
+    <MonsterOverlay class="animate__animated animate__fadeInRight" v-show="$store.state.manu.monsters"/>
 
   </div>
 </template>
@@ -16,6 +17,7 @@
   import MeasureOverlay from "./overlay/MeasureOverlay";
   import MoveOverlay from "./overlay/MoveOverlay";
   import FogOfWarOverlay from "./overlay/FogOfWarOverlay";
+  import MonsterOverlay from "./overlay/MonsterOverlay"
 
   export default {
     data() {
@@ -28,7 +30,8 @@
       BrushSelector,
       MeasureOverlay,
       PaintOverlay,
-      FogOfWarOverlay
+      FogOfWarOverlay,
+      MonsterOverlay
     },
     methods: {
       dropdownChange(e) {
