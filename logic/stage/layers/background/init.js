@@ -43,8 +43,8 @@ export function updateJSON() {
         "pos": {
           "x": object.x(),
           "y": object.y(),
-          "width": object.width(),
-          "height": object.height()
+          "width": object.width() * object.getTransform().getMatrix()[0],
+          "height": object.height() * object.getTransform().getMatrix()[3]
         },
         "snapToGrid": object.snapToGrid,
         "type": "rect",
@@ -56,8 +56,8 @@ export function updateJSON() {
         "pos": {
           "x": object.x(),
           "y": object.y(),
-          "width": object.width(),
-          "height": object.height()
+          "width": object.width() * object.getTransform().getMatrix()[0],
+          "height": object.height() * object.getTransform().getMatrix()[3]
         },
         "snapToGrid": object.snapToGrid,
         "type": "img",
