@@ -32,8 +32,11 @@
       <AdvancedOptions class="mb-4 mt-2">
         <input v-model="inputs.x" type="number" ref="x" name="x" class="input-field mb-4" placeholder="X">
         <input v-model="inputs.y" type="number" ref="y" name="y" class="input-field mb-4" placeholder="Y">
-        <input v-model="inputs.rotation" type="number" ref="rotation" name="rotation" class="input-field mb-4"
-               placeholder="Rotation">
+        <input v-model="inputs.width" type="number" class="input-field mb-4" placeholder="Width">
+        <input v-model="inputs.height" type="number" class="input-field mb-4" placeholder="Height">
+        <!--input v-model="inputs.rotation" type="number" ref="rotation" name="rotation" class="input-field mb-4"
+               placeholder="Rotation"-->
+
 
         <!-- snap to grid checkbox -->
         <div class="pb-4">
@@ -52,7 +55,7 @@
   import PopupContainer from "../gui-components/PopupContainer";
   import FileUpload from "../gui-components/FileUpload";
   import AdvancedOptions from "../gui-components/AdvancedOptions";
-  import {loadImage} from "../../logic/stage/layers/background/init";
+  import {loadImage, loadRect} from "../../logic/stage/layers/background/init";
 
   export default {
     components: {AdvancedOptions, PopupContainer, FileUpload},
@@ -62,6 +65,8 @@
           url: "",
           x: "",
           y: "",
+          width: "",
+          height: "",
           rotation: "",
           snapToGrid: true,
           type: "Image",
@@ -78,22 +83,44 @@
       this.$root.$on("openImagePopup", () => {
         this.$refs.popupContainer.active = true;
       });
+      this.$root.$on("closeImagePopup", () => {
+        this.$refs.popupContainer.active = false;
+      });
     },
     methods: {
       addObject() {
-        loadImage({
-          "pos": {
-            "x": parseInt(this.inputs.x || "0"),
-            "y": parseInt(this.inputs.y || "0"),
-            "width": 300,
-            "height": 400
-          },
-          "draggable": true,
-          "snapToGrid": this.inputs.snapToGrid,
-          "type": "img",
-          "src": this.inputs.url,
-          "rotation": parseInt(this.inputs.rotation || "0")
-        })
+        if (this.inputs.type == "Image") {
+          loadImage({
+            "pos": {
+              "x": parseInt(this.inputs.x || "0"),
+              "y": parseInt(this.inputs.y || "0"),
+              "width": parseInt(this.inputs.width || "120"),
+              "height": parseInt(this.inputs.height || "120"),
+            },
+            "draggable": true,
+            "snapToGrid": this.inputs.snapToGrid,
+            "type": "rect",
+            "src": this.inputs.url,
+            "rotation": parseInt(this.inputs.rotation || "0"),
+            "color": this.inputs.color,
+          })
+        } else {
+          loadRect({
+            "pos": {
+              "x": parseInt(this.inputs.x || "0"),
+              "y": parseInt(this.inputs.y || "0"),
+              "width": parseInt(this.inputs.width || "120"),
+              "height": parseInt(this.inputs.height || "120"),
+            },
+            "draggable": true,
+            "snapToGrid": this.inputs.snapToGrid,
+            "type": "rect",
+            "src": this.inputs.url,
+            "rotation": parseInt(this.inputs.rotation || "0"),
+            "color": this.inputs.color,
+          })
+        }
+        this.$root.$emit('closeImagePopup');
       },
     }
   }
@@ -101,3 +128,15 @@
 <style scoped lang="scss">
   @import "assets/css/scheme";
 </style>
+{
+"pos": {
+"x": object.x(),
+"y": object.y(),
+"width": object.width() * object.getTransform().getMatrix()[0],
+"height": object.height() * object.getTransform().getMatrix()[3]
+},
+"snapToGrid": object.snapToGrid,
+"type": "rect",
+"color": object.fill(),
+"rotation": object.rotation()
+}

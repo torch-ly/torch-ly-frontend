@@ -115,7 +115,7 @@ export function loadImage(drawing) {
   imageObj.src = drawing.src;
 }
 
-function loadRect(drawing) {
+export function loadRect(drawing) {
   let rect = new Konva.Rect({
     x: drawing.pos.x,
     y: drawing.pos.y,
