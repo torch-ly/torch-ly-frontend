@@ -5,6 +5,7 @@ import {blockSnapSize} from "../grid/main";
 import {draw} from "./main";
 import {addTransformerClickListener} from "../transformer";
 import {setCharacterPosition} from "../../../../plugins/backendComunication";
+import {removeCharacter} from "@/plugins/backendComunication";
 
 let out = [];
 
@@ -35,7 +36,7 @@ function loadImage(character) {
       })
     });
     image.removeElement = () => {
-      //TODO call mutation
+      removeCharacter(image.characterID)
     }
 
     addTransformerClickListener(image);

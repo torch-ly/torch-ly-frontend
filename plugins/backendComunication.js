@@ -140,6 +140,19 @@ function loadCharacters() {
     .catch(console.error);
 }
 
+export function removeCharacter(charcterID) {
+  apolloClient.mutate({
+    mutation: gql`
+      mutation removeCharacter($id:String!){
+        removeCharacter(id:$id)
+      }
+    `,
+    variables: {
+      id: charcterID
+    }
+  }).catch(console.error);
+}
+
 function loadBackground() {
   apolloClient.query({
     query: gql`
