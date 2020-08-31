@@ -53,7 +53,7 @@
         }, 0);
       },
       currentLayerIs(layer) {
-        return this.$store.state.manu.currentLayer === layer;
+        return this.$store.state.manu.layer === layer;
       }
     },
     computed: {
