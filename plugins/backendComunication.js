@@ -214,6 +214,15 @@ export function getBackgroundLayerNames() {
   .catch(console.error);
 }
 
+export async function getMonsters() {
+  return await apolloClient.query({
+    query: gql`
+      {
+        getMonsters
+      }`
+  });
+}
+
 export function setBackgroundLayerName(layer) {
   apolloClient.mutate({
     mutation: gql`
