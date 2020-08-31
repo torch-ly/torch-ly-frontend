@@ -9,6 +9,7 @@ let out = new Map();
 let backgroundObject = [];
 
 export function init() {
+
   clearLayer();
 
   for (let drawing of backgroundObject) {
@@ -117,6 +118,7 @@ function loadRect(drawing) {
 }
 
 export function setBackgroundObjects(data) {
+  clearLayer();
   backgroundObject = data;
   init();
 }
