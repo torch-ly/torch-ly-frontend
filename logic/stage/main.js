@@ -1,6 +1,7 @@
 import {init} from "./layers/layerManager";
 import {enableZoom} from "./layers/zoom";
 import {moveTokenByArrows} from "./layers/objectFunctions";
+import {addDeletionKeyListener} from "@/logic/stage/layers/transformer";
 
 export let stage = null;
 export let stageWidth = 0;
@@ -21,6 +22,7 @@ export function main(pStage, width, height) {
   enableZoom();
   resize();
   moveTokenByArrows();
+  addDeletionKeyListener();
 
 }
 

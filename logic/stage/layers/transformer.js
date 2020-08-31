@@ -142,3 +142,16 @@ export function addSelectionListener() {
   })
 }
 
+export function addDeletionKeyListener() {
+  window.addEventListener("keyup", (e) => {
+    if (e.key != "Delete" && e.key != "Backspace")
+      return;
+
+    for (let object of transformer.nodes()) {
+      object.removeElement();
+      object.destroy();
+    }
+    clearTransformerNodes();
+    stage.batchDraw();
+  })
+}

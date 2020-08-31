@@ -34,6 +34,9 @@ function loadImage(character) {
         y: Math.round(image.y() / blockSnapSize)
       })
     });
+    image.removeElement = () => {
+      //TODO call mutation
+    }
 
     addTransformerClickListener(image);
 

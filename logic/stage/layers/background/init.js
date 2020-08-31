@@ -3,6 +3,7 @@ import {addSnapToGridListener, snapToGrid} from "../layerFunctions";
 import {clearLayer, draw, updateDraw} from "./main";
 import {addTransformerClickListener} from "../transformer";
 import {setBackgroundLayer} from "../../../../plugins/backendComunication";
+import {layer as backgroundLayer} from "@/logic/stage/layers/background/main";
 
 let out = new Map();
 
@@ -37,8 +38,11 @@ export function updateBackgroundObject(hash, data){
 
 export function updateJSON() {
   let newJSON = [];
-  for (let object of out) {
-    object = object[1];
+
+  console.log(backgroundLayer.children)
+
+  for (let object of backgroundLayer.children) {
+
     if (object instanceof Rect) {
       newJSON.push({
         "pos": {
@@ -52,7 +56,9 @@ export function updateJSON() {
         "color": object.fill(),
         "rotation": object.rotation()
       });
+
     } else if (object instanceof KonvaImage) {
+
       newJSON.push({
         "pos": {
           "x": object.x(),
@@ -64,7 +70,8 @@ export function updateJSON() {
         "type": "img",
         "src": object.image().src,
         "rotation": object.rotation()
-      })
+      });
+
     }
   }
   backgroundObject = newJSON;
@@ -83,6 +90,10 @@ export function loadObject(object, snapToGrid) {
 
   addTransformerClickListener(object);
   addSnapToGridListener([object]);
+
+  object.removeElement = () => {
+    object.destroy();
+  }
 
   draw(object);
 }

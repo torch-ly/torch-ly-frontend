@@ -1,7 +1,7 @@
 import {init} from "./init";
 import {manageTransformerLayer} from "../layerManager";
 
-let layer;
+export let layer;
 
 export function draw(drawable) {
   layer.add(drawable);
