@@ -5,26 +5,30 @@ import {draw as drawGrid} from "./grid/main";
 import {draw as drawFree} from "./freeDrawing/main";
 import {setLayer as drawToken} from "./token/main";
 import {draw as drawMeasure} from "./measure/main";
-import {addTransformerToLayer, createTransformer} from "./transformer";
+import {draw as drawFogOfWar} from "./fogofwar/main";
+import {addSelectionListener, addTransformerToLayer, createTransformer, setSelectionLayer} from "./transformer";
 
 let grid;
 let background;
 let token;
 let freeDrawing;
 let measure;
+let fogofwar;
 
 export function init() {
   grid = new Konva.Layer();
   background = new Konva.Layer();
   token = new Konva.Layer();
   freeDrawing = new Konva.Layer();
+  fogofwar = new Konva.Layer();
   measure = new Konva.Layer();
 
   stage.add(grid);
   stage.add(background);
   stage.add(token);
   stage.add(freeDrawing);
-  stage.add(measure);
+  stage.add(fogofwar);
+  stage.add(measure)
 
   createTransformer();
   manageTransformerLayer();
@@ -36,6 +40,8 @@ export function init() {
   drawToken(token);
 
   drawFree(freeDrawing);
+
+  drawFogOfWar(fogofwar);
 
   drawMeasure(measure);
 }
