@@ -129,6 +129,7 @@ export function addSelectionListener() {
 }
 
 export function selectToken(characterSelection) {
+  manageTransformerLayer();
   for (let character of transformerLayer.children.filter(char => char instanceof KonvaImage)) {
     if (character.characterID == characterSelection.id) {
       setNodesToTransformer([character]);
