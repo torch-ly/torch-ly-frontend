@@ -2,13 +2,13 @@
   <div>
 
     <!-- Drop down for layer selection -->
-    <select v-bind:value="currentLayer" @input="dropdownChange"
+    <select v-bind:value="currentLayer" @input="dropdownChange" v-if="gm"
             class="dropdown" ref="layerdropdown" @load="dropdownChange">
       <option>Background</option>
       <option>Token</option>
     </select>
 
-    <div class="hr"/>
+    <div class="hr" v-if="gm"/>
 
     <div v-if="currentLayer === 'Token'">
       <!-- Button for adding Character-->
@@ -66,9 +66,20 @@
         this.$root.$emit('openBackgroundLayerPopup');
       }
     },
+    watch: {
+      gm(gm) {
+        if (!gm) {
+          this.$store.commit("manu/setLayer", "Token");
+          clearTransformerNodes();
+        }
+      }
+    },
     computed: {
       currentLayer() {
         return this.$store.state.manu.layer;
+      },
+      gm() {
+        return this.$store.state.authentication.gm;
       }
     }
   }

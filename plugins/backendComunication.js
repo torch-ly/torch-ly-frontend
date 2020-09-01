@@ -62,7 +62,7 @@ export function getPlayer() {
   apolloClient.query({
     query: gql`
     {
-      me {id name}
+      me {id name gm}
     }`
   })
   .then(({data}) => store.commit("authentication/setPlayer", data.me))
@@ -268,11 +268,6 @@ export function removeMap(name) {
   }).catch(logError);
 }
 
-function logError(err) {
-  console.log(err)
-  store.commit("errors/addError", "GraphQL Error")
-}
-
 function subscribeFogOfWar() {
   apolloClient.subscribe({
     query: gql`
@@ -309,4 +304,9 @@ export function setFogOfWar(polygons) {
       polygons: polygons
     }
   }).catch(logError);
+}
+
+function logError(...err) {
+  console.error(err)
+  store.commit("errors/addError", "GraphQL Error")
 }

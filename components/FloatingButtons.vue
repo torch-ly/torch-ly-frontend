@@ -7,7 +7,7 @@
 
       <fa icon="ruler-combined" @click="setTool(tools.measure)" :class="{'button-selected' :  currentTool === tools.measure}" class="button"/>
 
-      <fa icon="cloud" @click="setTool(tools.fogOfWar)" :class="{'button-selected' : currentTool === tools.fogOfWar}" class="button"/>
+      <fa icon="cloud" @click="setTool(tools.fogOfWar)" :class="{'button-selected' : currentTool === tools.fogOfWar}" class="button" v-if="$store.state.authentication.gm"/>
 
       <fa icon="book" @click="setTool(tools.monsters)" :class="{'button-selected' : currentTool === tools.monsters}" class="button"/>
 
