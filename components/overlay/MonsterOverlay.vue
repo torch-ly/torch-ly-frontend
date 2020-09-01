@@ -12,11 +12,10 @@
             <a :href="monsterUrl(monster.name)" target="_blank" :title="monster.name">{{ monster.name }}</a>
             <!--fa icon="angle-down"></fa-->
             <div class="select-none px-2 py-1" @click="expandMonster(monster)">
-              <div v-if="monster.details">▼</div>
-              <div v-else>►</div>
+              <div class="transition duration-200 transform " :class="{'-rotate-90' : !monster.details}">▼</div>
             </div>
           </div>
-          <div v-if="monster.details">
+          <div v-if="monster.details" class="bg-gray-600 p-1 rounded animate__animated animate__fadeInDown animate__faster">
             {{generateHPString(monster)}}
           </div>
         </div>
