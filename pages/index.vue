@@ -40,6 +40,11 @@
       }
     },
     mounted() {
+      if (process.env.NODE_ENV === "development") {
+        this.visible = false;
+        return;
+      }
+
       let self = this;
       let interval = setInterval(() => self.mirrored = !self.mirrored, 100);
       setTimeout(() => {
