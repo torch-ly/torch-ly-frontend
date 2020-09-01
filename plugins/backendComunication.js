@@ -7,6 +7,7 @@ import {init as tokenInit, updateCharacterPositions} from "../logic/stage/layers
 import {setBackgroundObjects} from "../logic/stage/layers/background/init";
 import {getParameters} from "./utils/ParameterHelper";
 import {clearTransformerNodes} from "@/logic/stage/layers/transformer";
+import {recieveSyncronize} from "../logic/stage/layers/fogofwar/main";
 
 const GRAPHQL_ENDPOINT = "ws://" + process.env.BACKEND + "/graphql";
 
@@ -279,8 +280,7 @@ function subscribeFogOfWar() {
     `
   }).subscribe({
     next({data}) {
-      //TODO remove comment
-      //reseveSyncronice(data.updateFogOfWar.polygons);
+      recieveSyncronize(data.updateFogOfWar.polygons);
     }
   });
 }

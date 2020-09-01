@@ -1,6 +1,7 @@
 import {stage, store} from "../../main";
 import {getRelativePointerPosition} from "../layerFunctions";
 import * as turf from "@turf/turf";
+import {setFogOfWar} from "../../../../plugins/backendComunication";
 
 let layer;
 let polygons = [];
@@ -74,7 +75,7 @@ export function syncronize(){
   for(let i = 0; i < turf_polygons.length; i++){
     polygons.push(turf_polygons[i].geometry.coordinates[0]);
   }
-  //setFogOfWar(polygons);
+  setFogOfWar(polygons);
 }
 
 export function recieveSyncronize(p_polygons) {
