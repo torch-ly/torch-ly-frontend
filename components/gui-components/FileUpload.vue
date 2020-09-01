@@ -32,7 +32,6 @@
         fetch("https://" + process.env.IMAGE_SERVER + "/upload", {method: "POST", body: formData})
           .then(response => response.text())
           .then(data => {
-            console.log(data);
             this.url = data;
             this.uploading = false;
             this.$emit("uploadSuccess", this.imageUrl);

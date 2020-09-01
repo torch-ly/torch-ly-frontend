@@ -50,7 +50,6 @@
       },
       selectToken(character) {
         let temp = stage.find('#' + String(character.id));
-        console.log(temp, character)
         reselectTokens(temp);
         stage.batchDraw();
       }

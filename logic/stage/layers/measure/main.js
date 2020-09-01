@@ -55,7 +55,7 @@ export function startDraw() {
     length();
 
     if (arrow.currentlyDrawing) {
-      console.log(store.state.manu.measureDetails.length, circle)
+
       if (store.state.manu.measureDetails.length === 0) {
         arrow.visible(false);
         circle.setAttrs({

@@ -39,8 +39,6 @@ export function updateBackgroundObject(hash, data){
 export function updateJSON() {
   let newJSON = [];
 
-  console.log(backgroundLayer.children)
-
   for (let object of backgroundLayer.children) {
 
     if (object instanceof Rect) {
