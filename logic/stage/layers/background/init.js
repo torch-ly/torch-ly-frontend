@@ -1,11 +1,12 @@
 import Konva, {Image as KonvaImage, Rect} from "konva";
-import {addSnapToGridListener, snapToGrid} from "../layerFunctions";
-import {clearLayer, draw, updateDraw} from "./main";
+import {addSnapToGridListener} from "../layerFunctions";
+import {clearLayer, draw} from "./main";
 import {addTransformerClickListener} from "../transformer";
 import {setBackgroundLayer} from "../../../../plugins/backendComunication";
 import {layer as backgroundLayer} from "@/logic/stage/layers/background/main";
 
 let backgroundObjects = [];
+let backgroundChanged = false;
 
 export function init() {
 
@@ -21,6 +22,10 @@ export function init() {
 }
 
 export function updateJSON() {
+  let oldBackgroundObjects = {
+    ...backgroundObjects
+  };
+
   backgroundObjects = [];
 
   for (let object of backgroundLayer.children) {
@@ -56,6 +61,8 @@ export function updateJSON() {
 
     }
   }
+  if (!backgroundChanged)
+    backgroundChanged = (oldBackgroundObjects != backgroundObjects);
 }
 
 export function loadObject(object, snapToGrid) {
@@ -102,6 +109,7 @@ export function loadRect(drawing) {
 }
 
 export function setBackgroundObjects(data) {
+  backgroundChanged = false;
   clearLayer();
   backgroundObjects = data;
   init();
