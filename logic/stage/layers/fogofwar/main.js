@@ -18,12 +18,12 @@ export function addFogOfWarListener() {
   stage.on('mouseup', () => {
     let point_x_y = getRelativePointerPosition(stage);
     addPointToPolygon([point_x_y.x, point_x_y.y])
-  }),
+  });
 
-    stage.on('mousemove', () => {
-      let point_x_y = getRelativePointerPosition(stage);
-      showNextPoint([point_x_y.x, point_x_y.y])
-    });
+  stage.on('mousemove', () => {
+    let point_x_y = getRelativePointerPosition(stage);
+    showNextPoint([point_x_y.x, point_x_y.y])
+  });
 }
 
 //graphql
@@ -250,8 +250,4 @@ function showNextPoint(point) {
 
   layer.add(nextPolygon);
   layer.batchDraw();
-}
-
-function addPointToPolygon(point){
-  currentPolygon.push(point);
 }
