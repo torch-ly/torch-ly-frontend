@@ -90,6 +90,6 @@ export function addTransformationListener(object) {
 
     let width = object.width() * object.getTransform().getMatrix()[0];
 
-    setCharacterAttrs(object.characterID, Math.floor(pastRot * 100000), Math.round(width / blockSnapSize))
+    setCharacterAttrs(object.characterID, pastRot, Math.round(width / blockSnapSize))
   });
 }

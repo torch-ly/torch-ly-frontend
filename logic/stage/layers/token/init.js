@@ -66,7 +66,7 @@ export function updateCharacterAttrs(character) {
       oldCharacter.width(character.pos.size * blockSnapSize);
       oldCharacter.height(character.pos.size * blockSnapSize);
 
-      oldCharacter.rotation(Math.floor(character.pos.rot / 100000));
+      oldCharacter.rotation(character.pos.rot);
 
       console.log(oldCharacter)
 

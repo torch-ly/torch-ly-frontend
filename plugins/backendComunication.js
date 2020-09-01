@@ -209,7 +209,7 @@ export function addCharacter(character) {
 export function setCharacterAttrs(id, rot, size) {
   apolloClient.mutate({
     mutation: gql`
-      mutation fogOfWar($id:String!, $rot:Int!, $size:Int!){
+      mutation fogOfWar($id:String!, $rot:Float!, $size:Int!){
         setCharacterRotationAndSize(id:$id, rot:$rot, size:$size) { id }
       }
     `,
