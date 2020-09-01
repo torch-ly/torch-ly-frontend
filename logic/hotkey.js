@@ -4,6 +4,10 @@ import {saveBackgroundLayer} from "~/logic/stage/layers/background/init";
 
 // toggle layer
 hotkeys('command+b,ctrl+b', () => {
+  toggleLayer()
+});
+
+export function toggleLayer() {
   store.commit("manu/setHand");
 
   if (store.state.manu.layer === "Background") {
@@ -11,8 +15,7 @@ hotkeys('command+b,ctrl+b', () => {
   } else {
     store.commit("manu/setLayer", "Background");
   }
-});
-
+}
 
 // Open Monster search
 hotkeys('command+m,ctrl+m', () => {

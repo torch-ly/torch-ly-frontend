@@ -22,6 +22,7 @@
 import _ from "lodash";
 import LoadingSpinner from "../gui-components/LoadingSpinner"
 import {getMonsters} from "@/plugins/backendComunication";
+import {toggleLayer} from "@/logic/hotkey";
 
 export default {
   data() {
@@ -34,7 +35,12 @@ export default {
   components: {LoadingSpinner},
   methods: {
     atChange(e) {
-      if (e.key.length > 1 && e.key !== "Backspace") return;
+      if (e.key === "b" && e.ctrlKey)
+        toggleLayer();
+
+      if (e.key.length > 1 && e.key !== "Backspace")
+        return;
+
       let monsters = false;
 
       this.monsters = this.monsters.map(m => {
