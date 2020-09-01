@@ -2,18 +2,17 @@ import hotkeys from 'hotkeys-js';
 import {store} from "~/logic/stage/main";
 import {saveBackgroundLayer} from "~/logic/stage/layers/background/init";
 
-// Set Layer to background layer
+// toggle layer
 hotkeys('command+b,ctrl+b', () => {
   store.commit("manu/setHand");
-  store.commit("manu/setLayer", "Background")
+
+  if (store.state.manu.layer === "Background") {
+    store.commit("manu/setLayer", "Token");
+  } else {
+    store.commit("manu/setLayer", "Background");
+  }
 });
 
-
-// Set Layer to token layer
-hotkeys('command+t,ctrl+t', () => {
-  store.commit("manu/setHand");
-  store.commit("manu/setLayer", "Token")
-});
 
 // Open Monster search
 hotkeys('command+m,ctrl+m', () => {
@@ -26,5 +25,5 @@ hotkeys('command+s,ctrl+s', (event) => {
     return;
 
   saveBackgroundLayer();
-  event.preventDefault()
+  event.preventDefault();
 });
