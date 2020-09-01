@@ -2,9 +2,9 @@ import Konva from "konva";
 import {stage, store} from "../main";
 import {setLayer as drawBackground} from "./background/main";
 import {draw as drawGrid} from "./grid/main";
-import {draw as drawFree} from "./freeDrawing/main";
+import {draw as drawFree} from "./mouseTools/main";
 import {setLayer as drawToken} from "./token/main";
-import {draw as drawMeasure} from "./measure/main";
+import {draw as drawMeasure} from "./mouseTools/measure";
 import {addTransformerToLayer, createTransformer} from "./transformer";
 
 let grid;

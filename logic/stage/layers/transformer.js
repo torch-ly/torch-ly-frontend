@@ -2,6 +2,7 @@ import {Image as KonvaImage} from "konva";
 import {stage, store} from "../main";
 import {setMoveObjectByArrow} from "./objectFunctions";
 import {manageTransformerLayer} from "./layerManager";
+import tools from '@/enums/tools';
 
 let transformer;
 let transformerLayer;
@@ -48,7 +49,7 @@ export function addTransformerToLayer(layer) {
 
 export function addTransformerClickListener(object) {
   stage.on('click', (e) => {
-    if (!store.state.manu.move) {
+    if (!store.state.manu.currentTool === tools.move) {
       return;
     }
     manageTransformerLayer();

@@ -10,24 +10,30 @@
     </button>
     <button
       :class="{'bg-red-300' : $store.state.manu.freeDrawing.drawingObject != 'circle' , 'bg-red-400' : $store.state.manu.freeDrawing.drawingObject == 'circle'}"
-      class="w-full outline-none rounded-full p-2 mt-4" v-on:click="onShapeDrawingClick('circle')">Circle
+      class="w-full outline-none rounded-full p-2 mt-4" v-on:click="setTool(tools.circle)">Circle
     </button>
     <button
       :class="{'bg-red-300' : $store.state.manu.freeDrawing.drawingObject != 'rect' , 'bg-red-400' : $store.state.manu.freeDrawing.drawingObject == 'rect'}"
-      class="w-full outline-none rounded-full p-2 mt-4" v-on:click="onShapeDrawingClick('rect')">Rectangle
+      class="w-full outline-none rounded-full p-2 mt-4" v-on:click="setTool(tools.rectangle)">Rectangle
     </button>
   </div>
 </template>
 <script>
   import {store} from "../../../logic/stage/main";
+  import {mapActions} from 'vuex';
+  import tools from '@/enums/tools';
 
   export default {
     data() {
       return {
-        hex: "#000000"
+        hex: "#000000",
+        tools
       }
     },
     methods: {
+      ...mapActions({
+        setTool: "manu/setTool"
+      }),
       onChange(e) {
         this.hex = e.target.value;
         this.$store.commit("manu/setDrawingColor", e.target.value);
