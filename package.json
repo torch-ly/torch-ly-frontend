@@ -30,6 +30,7 @@
     "sass-loader": "^8.0.2",
     "subscriptions-transport-ws": "^0.9.17",
     "turf-difference": "^3.0.12",
+    "turf-overlaps": "^1.0.3",
     "turf-union": "^3.0.12",
     "vue-konva": "^2.1.3"
   },
