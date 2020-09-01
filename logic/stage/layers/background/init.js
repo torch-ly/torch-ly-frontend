@@ -5,15 +5,13 @@ import {addTransformerClickListener} from "../transformer";
 import {setBackgroundLayer} from "../../../../plugins/backendComunication";
 import {layer as backgroundLayer} from "@/logic/stage/layers/background/main";
 
-let out = new Map();
-
-let backgroundObject = [];
+let backgroundObjects = [];
 
 export function init() {
 
   clearLayer();
 
-  for (let drawing of backgroundObject) {
+  for (let drawing of backgroundObjects) {
     if (drawing.type === 'rect') {
       loadRect(drawing);
     } else if (drawing.type === 'img') {
@@ -22,27 +20,13 @@ export function init() {
   }
 }
 
-export function updateBackgroundObject(hash, data){
-  let object = out.get(hash);
-  if(object === undefined)
-    return
-  object.x(data.x);
-  object.y(data.y);
-  object.snapToGrid = data.snapToGrid;
-  object.rotation(data.rotation);
-  if(data.snapToGrid)
-    snapToGrid(object);
-  updateDraw();
-  object.fire('click');
-}
-
 export function updateJSON() {
-  let newJSON = [];
+  backgroundObjects = [];
 
   for (let object of backgroundLayer.children) {
 
     if (object instanceof Rect) {
-      newJSON.push({
+      backgroundObjects.push({
         "pos": {
           "x": object.x(),
           "y": object.y(),
@@ -57,7 +41,7 @@ export function updateJSON() {
 
     } else if (object instanceof KonvaImage) {
 
-      newJSON.push({
+      backgroundObjects.push({
         "pos": {
           "x": object.x(),
           "y": object.y(),
@@ -72,18 +56,9 @@ export function updateJSON() {
 
     }
   }
-  backgroundObject = newJSON;
 }
 
 export function loadObject(object, snapToGrid) {
-  let hash;
-
-  do {
-    hash = Math.floor(Math.random() * 10000);
-  } while (out[hash] !== undefined);
-
-  out.set(hash, object);
-
   object.snapToGrid = snapToGrid;
 
   addTransformerClickListener(object);
@@ -128,11 +103,11 @@ export function loadRect(drawing) {
 
 export function setBackgroundObjects(data) {
   clearLayer();
-  backgroundObject = data;
+  backgroundObjects = data;
   init();
 }
 
 export function saveBackgroundLayer() {
   updateJSON();
-  setBackgroundLayer(backgroundObject);
+  setBackgroundLayer(backgroundObjects);
 }
