@@ -19,7 +19,7 @@ const client = new SubscriptionClient(GRAPHQL_ENDPOINT, {
   connectionParams: {
     authID: authID
   },
-  connectionCallback: error => error && console.error("WS connection error: ", error.message) // ToDo: catch in snackbar
+  connectionCallback: error => error && logError("WS connection error: ", error.message) // ToDo: catch in snackbar
 });
 
 const cache = new InMemoryCache();
@@ -63,7 +63,7 @@ export function getPlayer() {
     }`
   })
   .then(({data}) => store.commit("authentication/setPlayer", data.me))
-  .catch(console.error);
+  .catch(logError);
 }
 
 export function setCharacterPosition(charcterID, point) {
@@ -78,7 +78,7 @@ export function setCharacterPosition(charcterID, point) {
       x: point.x,
       y: point.y
     }
-  }).catch(console.error);
+  }).catch(logError);
 }
 
 export function setBackgroundLayer(layer) {
@@ -91,7 +91,7 @@ export function setBackgroundLayer(layer) {
     variables: {
       layer: layer
     }
-  }).catch((e) => console.error("Custom", e));
+  }).catch((e) => logError("Custom", e));
 }
 
 function subscribeCharacter() {
@@ -137,7 +137,7 @@ function loadCharacters() {
       store.commit("character/loadCharacters", data.allCharacters);
       tokenInit();
     })
-    .catch(console.error);
+    .catch(logError);
 }
 
 export function removeCharacter(charcterID) {
@@ -150,7 +150,7 @@ export function removeCharacter(charcterID) {
     variables: {
       id: charcterID
     }
-  }).catch(console.error);
+  }).catch(logError);
 }
 
 function loadBackground() {
@@ -164,7 +164,7 @@ function loadBackground() {
     .then(({data}) => {
       setBackgroundObjects(data.getBackgroundLayer.layer);
     })
-    .catch(console.error);
+    .catch(logError);
 }
 
 export function addCharacter(character) {
@@ -200,7 +200,7 @@ export function addCharacter(character) {
       visible: character.visible,
       players: character.player
     }
-  }).catch(console.error);
+  }).catch(logError);
 }
 
 export function getBackgroundLayerNames() {
@@ -211,16 +211,20 @@ export function getBackgroundLayerNames() {
       }`
   })
   .then(({data}) => store.commit("backgroundLayerNames/setLayers", data.getMaps))
-  .catch(console.error);
+  .catch(logError);
 }
 
 export async function getMonsters() {
-  return await apolloClient.query({
-    query: gql`
-      {
-        getMonsters
-      }`
-  });
+  try {
+    return await apolloClient.query({
+      query: gql`
+        {
+          getMonsters
+        }`
+    });
+  } catch {
+    logError();
+  }
 }
 
 export function setBackgroundLayerName(layer) {
@@ -233,7 +237,7 @@ export function setBackgroundLayerName(layer) {
     variables: {
       name: layer
     }
-  }).catch(console.error);
+  }).catch(logError);
 }
 
 export function addMap(name) {
@@ -246,7 +250,7 @@ export function addMap(name) {
     variables: {
       name: name
     }
-  }).catch(console.error);
+  }).catch(logError);
 }
 
 export function removeMap(name) {
@@ -259,5 +263,9 @@ export function removeMap(name) {
     variables: {
       name: name
     }
-  }).catch(console.error);
+  }).catch(logError);
+}
+
+function logError() {
+  store.commit("errors/addError", "GraphQL Error")
 }

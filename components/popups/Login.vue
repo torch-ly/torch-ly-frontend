@@ -24,6 +24,10 @@ export default {
       authID: "",
       active: !getParameters().hasOwnProperty("authID")
     }
+  },
+  mounted() {
+    let self = this;
+    this.$root.$on("login", () => self.active = true)
   }
 }
 </script>
