@@ -6,6 +6,8 @@ export const state = () => ({
 
   fogOfWar: false,
 
+  monsters: false,
+
   drawing: false,
   erase: false,
   freeDrawing: {
@@ -27,6 +29,7 @@ export const mutations = {
     state.drawing = true;
     state.move = false;
     state.measure = false;
+    state.monsters = false;
     state.fogOfWar = false;
 
     stage.draggable(false);
@@ -46,6 +49,7 @@ export const mutations = {
     state.move = true;
     state.drawing = false;
     state.measure = false;
+    state.monsters = false;
     state.fogOfWar = false;
 
     stage.draggable(true);
@@ -62,6 +66,7 @@ export const mutations = {
     state.move = false;
     state.drawing = false;
     state.measure = true;
+    state.monsters = false;
     state.fogOfWar = false;
 
     stage.draggable(false);
@@ -81,10 +86,21 @@ export const mutations = {
     state.move = false;
     state.drawing = false;
     state.measure = false;
+    state.monsters = false;
     state.fogOfWar = true;
 
     stage.draggable(true);
     stage.draw();
-  }
+  },
+  setMonsters(state) {
+    state.move = false;
+    state.drawing = false;
+    state.measure = false;
+    state.monsters = true;
+    state.fogOfWar = false;
 
+    stage.draggable(true);
+    stage.draw();
+
+  }
 }

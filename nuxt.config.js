@@ -35,6 +35,7 @@ export default {
   plugins: [
     'logic/stage/main.js',
     'plugins/backendComunication.js',
+    'logic/hotkey.js'
   ],
 
   /*
@@ -51,6 +52,7 @@ export default {
   modules: [
     // Doc: https://github.com/nuxt-community/dotenv-module
     '@nuxtjs/dotenv',
+    '@nuxtjs/axios',
     ['nuxt-fontawesome', {
       component: 'fa',
       imports: [

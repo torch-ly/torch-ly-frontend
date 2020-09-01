@@ -13,7 +13,6 @@ let background;
 let token;
 let freeDrawing;
 let measure;
-let menu;
 let fogofwar;
 
 export function init() {
@@ -23,7 +22,6 @@ export function init() {
   freeDrawing = new Konva.Layer();
   fogofwar = new Konva.Layer();
   measure = new Konva.Layer();
-  menu = new Konva.Layer();
 
   stage.add(grid);
   stage.add(background);
@@ -31,11 +29,9 @@ export function init() {
   stage.add(freeDrawing);
   stage.add(fogofwar);
   stage.add(measure)
-  stage.add(menu);
 
   createTransformer();
   manageTransformerLayer();
-  setSelectionLayer(menu);
 
   drawGrid(grid);
 
@@ -48,8 +44,6 @@ export function init() {
   drawFogOfWar(fogofwar);
 
   drawMeasure(measure);
-
-  addSelectionListener();
 }
 
 export function manageTransformerLayer() {
@@ -58,8 +52,4 @@ export function manageTransformerLayer() {
   } else if (store.state.manu.layer == "Token") {
     addTransformerToLayer(token);
   }
-}
-
-export function getTokenLayer() {
-  return token;
 }

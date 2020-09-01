@@ -1,38 +1,14 @@
 <template>
   <div>
-    <AddCharacter/>
-    <AddImage/>
-    <SelectBackgroundLayer/>
-    <Login/>
-    <MobileMovement class="md:hidden"></MobileMovement>
-
-    <div class="hidden md:block">
-      <div id="container" @contextmenu="$event.preventDefault()"></div>
-      <div id="menu">
-        <div>
-          <button id="pulse-button">Pulse</button>
-
-          <button id="snap-to-grid-button">Snap to Grid</button>
-
-          <button id="delete-button">Delete</button>
-        </div>
-      </div>
-    </div>
+    <div id="container" @contextmenu="$event.preventDefault()"></div>
   </div>
 </template>
 
 <script>
   import Konva from "konva";
   import {main} from "../logic/stage/main";
-  import BrushSelector from "./BrushSelector";
-  import MobileMovement from "./MobileMovement";
-  import AddCharacter from "./popups/AddCharacter";
-  import AddImage from "./popups/AddImage";
-  import Login from "./popups/Login";
-  import SelectBackgroundLayer from "./popups/SelectBackgroundLayer";
 
   export default {
-    components: {AddImage, AddCharacter, BrushSelector, MobileMovement, Login, SelectBackgroundLayer},
     mounted() {
       let width = window.innerWidth;
       let height = window.innerHeight;
@@ -46,27 +22,3 @@
   }
 }
 </script>
-
-<style scoped>
-#menu {
-  display: none;
-  position: absolute;
-  width: auto;
-  background-color: white;
-  box-shadow: 0 0 5px grey;
-  border-radius: 3px;
-}
-
-#menu button {
-  width: 100%;
-  background-color: white;
-  border: none;
-  margin: 0;
-  padding: 10px;
-}
-
-#menu button:hover {
-  background-color: lightgray;
-}
-
-</style>

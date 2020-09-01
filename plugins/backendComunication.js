@@ -3,10 +3,10 @@ import ApolloClient from "apollo-client";
 import gql from "graphql-tag";
 import {WebSocketLink} from "apollo-link-ws";
 import {InMemoryCache} from "apollo-cache-inmemory";
-import {init as tokenInit} from "../logic/stage/layers/token/init";
+import {init as tokenInit, updateCharacterPositions} from "../logic/stage/layers/token/init";
 import {setBackgroundObjects} from "../logic/stage/layers/background/init";
 import {getParameters} from "./utils/ParameterHelper";
-import {reselectTokens} from "../logic/stage/layers/transformer";
+import {clearTransformerNodes} from "@/logic/stage/layers/transformer";
 
 const GRAPHQL_ENDPOINT = "ws://" + process.env.BACKEND + "/graphql";
 
@@ -18,7 +18,7 @@ const client = new SubscriptionClient(GRAPHQL_ENDPOINT, {
   connectionParams: {
     authID: authID
   },
-  connectionCallback: error => error && console.error("WS connection error: ", error.message) // ToDo: catch in snackbar
+  connectionCallback: error => error && logError("WS connection error: ", error.message) // ToDo: catch in snackbar
 });
 
 const cache = new InMemoryCache();
@@ -52,6 +52,8 @@ export default async function (context) {
   loadBackground();
   subscribeBackgroundLayer();
   getBackgroundLayerNames();
+
+  subscribeFogOfWar();
 }
 
 export function getPlayer() {
@@ -62,7 +64,7 @@ export function getPlayer() {
     }`
   })
   .then(({data}) => store.commit("authentication/setPlayer", data.me))
-  .catch(console.error);
+  .catch(logError);
 }
 
 export function setCharacterPosition(charcterID, point) {
@@ -77,7 +79,7 @@ export function setCharacterPosition(charcterID, point) {
       x: point.x,
       y: point.y
     }
-  }).catch(console.error);
+  }).catch(logError);
 }
 
 export function setBackgroundLayer(layer) {
@@ -90,7 +92,7 @@ export function setBackgroundLayer(layer) {
     variables: {
       layer: layer
     }
-  }).catch((e) => console.error("Custom", e));
+  }).catch((e) => logError("Custom", e));
 }
 
 function subscribeCharacter() {
@@ -103,8 +105,7 @@ function subscribeCharacter() {
   }).subscribe({
     next({data}) {
       store.commit("character/updateCharacter", data.updateCharacter);
-      tokenInit();
-      reselectTokens();
+      updateCharacterPositions(data.updateCharacter);
     }
   });
 }
@@ -118,6 +119,7 @@ function subscribeBackgroundLayer() {
     `
   }).subscribe({
     next({data}) {
+      clearTransformerNodes();
       setBackgroundObjects(data.updateBackgroundLayer.layer);
     }
   });
@@ -135,7 +137,20 @@ function loadCharacters() {
       store.commit("character/loadCharacters", data.allCharacters);
       tokenInit();
     })
-    .catch(console.error);
+    .catch(logError);
+}
+
+export function removeCharacter(charcterID) {
+  apolloClient.mutate({
+    mutation: gql`
+      mutation removeCharacter($id:String!){
+        removeCharacter(id:$id)
+      }
+    `,
+    variables: {
+      id: charcterID
+    }
+  }).catch(logError);
 }
 
 function loadBackground() {
@@ -149,7 +164,7 @@ function loadBackground() {
     .then(({data}) => {
       setBackgroundObjects(data.getBackgroundLayer.layer);
     })
-    .catch(console.error);
+    .catch(logError);
 }
 
 export function addCharacter(character) {
@@ -185,7 +200,7 @@ export function addCharacter(character) {
       visible: character.visible,
       players: character.player
     }
-  }).catch(console.error);
+  }).catch(logError);
 }
 
 export function getBackgroundLayerNames() {
@@ -196,7 +211,20 @@ export function getBackgroundLayerNames() {
       }`
   })
   .then(({data}) => store.commit("backgroundLayerNames/setLayers", data.getMaps))
-  .catch(console.error);
+  .catch(logError);
+}
+
+export async function getMonsters() {
+  try {
+    return await apolloClient.query({
+      query: gql`
+        {
+          getMonsters
+        }`
+    });
+  } catch {
+    logError();
+  }
 }
 
 export function setBackgroundLayerName(layer) {
@@ -209,7 +237,7 @@ export function setBackgroundLayerName(layer) {
     variables: {
       name: layer
     }
-  }).catch(console.error);
+  }).catch(logError);
 }
 
 export function addMap(name) {
@@ -222,7 +250,7 @@ export function addMap(name) {
     variables: {
       name: name
     }
-  }).catch(console.error);
+  }).catch(logError);
 }
 
 export function removeMap(name) {
@@ -235,5 +263,37 @@ export function removeMap(name) {
     variables: {
       name: name
     }
-  }).catch(console.error);
+  }).catch(logError);
+}
+
+function logError() {
+  store.commit("errors/addError", "GraphQL Error")
+}
+
+function subscribeFogOfWar() {
+  apolloClient.subscribe({
+    query: gql`
+      subscription {
+        updateFogOfWar { polygons }
+      }
+    `
+  }).subscribe({
+    next({data}) {
+      //TODO remove comment
+      //reseveSyncronice(data.updateFogOfWar.polygons);
+    }
+  });
+}
+
+export function setFogOfWar(polygons) {
+  apolloClient.mutate({
+    mutation: gql`
+      mutation destroyMap($polygons:JSON!){
+        updateFogOfWar(polygons:$polygons) { polygons }
+      }
+    `,
+    variables: {
+      polygons: polygons
+    }
+  }).catch(logError);
 }

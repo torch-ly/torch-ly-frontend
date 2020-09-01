@@ -15,8 +15,8 @@
 </template>
 
 <script>
-  import {stage, store} from "../logic/stage/main";
-  import {reselectTokens} from "../logic/stage/layers/transformer";
+  import {store} from "../../../logic/stage/main";
+  import {selectToken} from "~/logic/stage/layers/transformer";
 
   export default {
     methods: {
@@ -49,14 +49,11 @@
         return out;
       },
       selectToken(character) {
-        let temp = stage.find('#' + String(character.id));
-        console.log(temp, character)
-        reselectTokens(temp);
-        stage.batchDraw();
+        selectToken(character);
       }
     },
   }
 </script>
 <style scoped lang="scss">
-  @import "assets/css/scheme";
+  @import "../../../assets/css/scheme";
 </style>

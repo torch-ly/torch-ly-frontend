@@ -1,7 +1,8 @@
 import {init} from "./init";
-import {stage} from "../../main";
+import {stage, store} from "../../main";
+import {Image as KonvaImage} from "konva";
 
-let layer;
+export let layer;
 
 export function draw(drawables) {
   layer.clear();

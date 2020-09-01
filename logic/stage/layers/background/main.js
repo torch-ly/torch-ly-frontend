@@ -1,7 +1,7 @@
 import {init} from "./init";
 import {manageTransformerLayer} from "../layerManager";
 
-let layer;
+export let layer;
 
 export function draw(drawable) {
   layer.add(drawable);
@@ -18,7 +18,10 @@ export function setLayer(pLayer) {
 }
 
 export function clearLayer(){
-  layer.destroyChildren();
+  layer.clear();
+  for (let children of layer.children) {
+    children.remove();
+  }
   manageTransformerLayer();
   layer.batchDraw();
 }

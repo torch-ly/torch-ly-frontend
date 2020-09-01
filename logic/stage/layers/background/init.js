@@ -1,17 +1,18 @@
 import Konva, {Image as KonvaImage, Rect} from "konva";
-import {addSnapToGridListener, snapToGrid} from "../layerFunctions";
-import {clearLayer, draw, updateDraw} from "./main";
+import {addSnapToGridListener} from "../layerFunctions";
+import {clearLayer, draw} from "./main";
 import {addTransformerClickListener} from "../transformer";
 import {setBackgroundLayer} from "../../../../plugins/backendComunication";
+import {layer as backgroundLayer} from "@/logic/stage/layers/background/main";
 
-let out = new Map();
-
-let backgroundObject = [];
+let backgroundObjects = [];
+let backgroundChanged = false;
 
 export function init() {
+
   clearLayer();
 
-  for (let drawing of backgroundObject) {
+  for (let drawing of backgroundObjects) {
     if (drawing.type === 'rect') {
       loadRect(drawing);
     } else if (drawing.type === 'img') {
@@ -20,69 +21,59 @@ export function init() {
   }
 }
 
-export function updateBackgroundObject(hash, data){
-  let object = out.get(hash);
-  if(object === undefined)
-    return
-  object.x(data.x);
-  object.y(data.y);
-  object.snapToGrid = data.snapToGrid;
-  object.rotation(data.rotation);
-  if(data.snapToGrid)
-    snapToGrid(object);
-  updateDraw();
-  object.fire('click');
-}
-
 export function updateJSON() {
-  let newJSON = [];
-  for (let object of out) {
-    object = object[1];
+  let oldBackgroundObjects = {
+    ...backgroundObjects
+  };
+
+  backgroundObjects = [];
+
+  for (let object of backgroundLayer.children) {
+
     if (object instanceof Rect) {
-      newJSON.push({
+      backgroundObjects.push({
         "pos": {
           "x": object.x(),
           "y": object.y(),
-          "width": object.width(),
-          "height": object.height()
+          "width": object.width() * object.getTransform().getMatrix()[0],
+          "height": object.height() * object.getTransform().getMatrix()[3]
         },
         "snapToGrid": object.snapToGrid,
         "type": "rect",
         "color": object.fill(),
         "rotation": object.rotation()
       });
+
     } else if (object instanceof KonvaImage) {
-      newJSON.push({
+
+      backgroundObjects.push({
         "pos": {
           "x": object.x(),
           "y": object.y(),
-          "width": object.width(),
-          "height": object.height()
+          "width": object.width() * object.getTransform().getMatrix()[0],
+          "height": object.height() * object.getTransform().getMatrix()[3]
         },
         "snapToGrid": object.snapToGrid,
         "type": "img",
         "src": object.image().src,
         "rotation": object.rotation()
-      })
+      });
+
     }
   }
-  console.log(newJSON)
-  backgroundObject = newJSON;
+  if (!backgroundChanged)
+    backgroundChanged = (oldBackgroundObjects != backgroundObjects);
 }
 
 export function loadObject(object, snapToGrid) {
-  let hash;
-
-  do {
-    hash = Math.floor(Math.random() * 10000);
-  } while (out[hash] !== undefined);
-
-  out.set(hash, object);
-
   object.snapToGrid = snapToGrid;
 
   addTransformerClickListener(object);
   addSnapToGridListener([object]);
+
+  object.removeElement = () => {
+    object.destroy();
+  }
 
   draw(object);
 }
@@ -99,15 +90,12 @@ export function loadImage(drawing) {
       rotation: drawing.rotation
     });
 
-    console.log(3, image)
-
     loadObject(image, drawing.snapToGrid);
-    console.log(1, image)
   };
   imageObj.src = drawing.src;
 }
 
-function loadRect(drawing) {
+export function loadRect(drawing) {
   let rect = new Konva.Rect({
     x: drawing.pos.x,
     y: drawing.pos.y,
@@ -121,11 +109,13 @@ function loadRect(drawing) {
 }
 
 export function setBackgroundObjects(data) {
-  backgroundObject = data;
+  backgroundChanged = false;
+  clearLayer();
+  backgroundObjects = data;
   init();
 }
 
 export function saveBackgroundLayer() {
   updateJSON();
-  setBackgroundLayer(backgroundObject);
+  setBackgroundLayer(backgroundObjects);
 }
