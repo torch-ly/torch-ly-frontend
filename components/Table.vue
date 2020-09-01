@@ -1,11 +1,5 @@
 <template>
   <div>
-    <AddCharacter/>
-    <AddImage/>
-    <SelectBackgroundLayer/>
-    <Login/>
-    <MobileMovement class="md:hidden"></MobileMovement>
-
     <div class="hidden md:block">
       <div id="container" @contextmenu="$event.preventDefault()"></div>
       <div id="menu">
@@ -24,15 +18,8 @@
 <script>
   import Konva from "konva";
   import {main} from "../logic/stage/main";
-  import BrushSelector from "./overlay/components/BrushSelector";
-  import MobileMovement from "./MobileMovement";
-  import AddCharacter from "./popups/AddCharacter";
-  import AddImage from "./popups/AddImage";
-  import Login from "./popups/Login";
-  import SelectBackgroundLayer from "./popups/SelectBackgroundLayer";
 
   export default {
-    components: {AddImage, AddCharacter, BrushSelector, MobileMovement, Login, SelectBackgroundLayer},
     mounted() {
       let width = window.innerWidth;
       let height = window.innerHeight;
