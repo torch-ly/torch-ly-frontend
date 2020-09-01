@@ -1,7 +1,6 @@
 import {init} from "./layers/layerManager";
 import {enableZoom} from "./layers/zoom";
 import {moveTokenByArrows} from "./layers/objectFunctions";
-import {addDeletionKeyListener} from "@/logic/stage/layers/transformer";
 import {initDrawingStoreWatch} from '@/logic/stage/layers/mouseTools/main';
 
 export let stage = null;
@@ -24,7 +23,6 @@ export function main(pStage, width, height) {
   enableZoom();
   resize();
   moveTokenByArrows();
-  addDeletionKeyListener();
 
 }
 

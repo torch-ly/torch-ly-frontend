@@ -74,18 +74,13 @@ export function selectToken(characterSelection) {
   transformerLayer.batchDraw();
 }
 
-export function addDeletionKeyListener() {
-  window.addEventListener("keyup", (e) => {
-    if (e.key != "Delete" && e.key != "Backspace")
-      return;
-
-    for (let object of transformer.nodes()) {
-      object.removeElement();
-      object.destroy();
-    }
-    clearTransformerNodes();
-    stage.batchDraw();
-  })
+export function deleteSelectedDrawingObjects() {
+  for (let object of transformer.nodes()) {
+    object.removeElement();
+    object.destroy();
+  }
+  clearTransformerNodes();
+  stage.batchDraw();
 }
 
 export function addTransformationListener(object) {
