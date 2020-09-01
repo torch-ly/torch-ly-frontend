@@ -55,7 +55,7 @@ export default {
       let monsters = false;
 
       this.monsters = this.monsters.map(m => {
-        let visible = m.name.includes(this.searchTerm);
+        let visible = m.name.toUpperCase().includes(this.searchTerm.toUpperCase());
         m.visible = visible;
         monsters |= visible;
         return m;
