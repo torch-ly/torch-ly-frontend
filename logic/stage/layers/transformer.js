@@ -1,4 +1,4 @@
-import Konva, {Transformer} from "konva";
+import {Image as KonvaImage, Transformer} from "konva";
 import {stage, store} from "../main";
 import {getRelativePointerPosition} from "./layerFunctions";
 import {setMoveObjectByArrow} from "./objectFunctions";
@@ -126,6 +126,15 @@ export function addSelectionListener() {
     transformerLayer.batchDraw();
     selectionLayer.batchDraw();
   })
+}
+
+export function selectToken(characterSelection) {
+  for (let character of transformerLayer.children.filter(char => char instanceof KonvaImage)) {
+    if (character.characterID == characterSelection.id) {
+      setNodesToTransformer([character]);
+    }
+  }
+  transformerLayer.batchDraw();
 }
 
 export function addDeletionKeyListener() {
