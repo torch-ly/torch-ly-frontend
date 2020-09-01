@@ -1,12 +1,10 @@
-import {Image as KonvaImage, Transformer} from "konva";
+import {Image as KonvaImage} from "konva";
 import {stage, store} from "../main";
-import {getRelativePointerPosition} from "./layerFunctions";
 import {setMoveObjectByArrow} from "./objectFunctions";
 import {manageTransformerLayer} from "./layerManager";
 
 let transformer;
 let transformerLayer;
-let selectionLayer;
 let transformerNodes = [];
 
 export function createTransformer() {
