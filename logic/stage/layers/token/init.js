@@ -68,8 +68,6 @@ export function updateCharacterAttrs(character) {
 
       oldCharacter.rotation(character.pos.rot);
 
-      console.log(oldCharacter)
-
       layer.batchDraw();
 
       return;
