@@ -7,9 +7,9 @@
 
     <div v-if="!noMonsters" class="h-full w-full pt-24">
       <div class="block w-full h-full overflow-auto px-6">
-        <div v-for="monster in monsters" v-show="monster.visible" class="overflow-auto my-2 mx-1">
+        <div v-for="monster in monsters" v-show="monster.visible" class="overflow-auto my-2 mx-1" >
           <div class="flex justify-between">
-            <a :href="monsterUrl(monster.name)" target="_blank" :title="monster.name">{{ monster.name }}</a>
+            <a :href="monsterUrl(monster.name)" target="_blank" :title="monster.name" draggable="true" @dragstart="drag($event, monster)">{{ monster.name }}</a>
             <!--fa icon="angle-down"></fa-->
             <div class="select-none px-2 py-1" @click="expandMonster(monster)">
               <div class="transition duration-200 transform " :class="{'-rotate-90' : !monster.details}">▼</div>
@@ -45,6 +45,10 @@ export default {
   },
   components: {LoadingSpinner},
   methods: {
+    drag(e, monster) {
+      e.dataTransfer.setData("monster", JSON.stringify(monster));
+      e.dataTransfer.setData("imgUrl", "https://5e.tools/img/" + monster.source + "/" + monster.name + ".png");
+    },
     atChange(e) {
       if (e.key === "b" && e.ctrlKey)
         toggleLayer();

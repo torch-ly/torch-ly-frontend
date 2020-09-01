@@ -8,7 +8,7 @@
 
       <fa icon="ruler-combined" @click="measureClick" :class="{'button-selected' : state.measure}" class="button"/>
 
-      <fa icon="cloud" @click="fogOfWarClick" :class="{'button-selected' : state.fogOfWar}" class="button"/>
+      <fa icon="cloud" @click="fogOfWarClick" :class="{'button-selected' : state.fogOfWar}" class="button" v-if="$store.state.authentication.gm"/>
 
       <fa icon="book" @click="monstersClick" :class="{'button-selected' : state.monsters}" class="button"/>
 
