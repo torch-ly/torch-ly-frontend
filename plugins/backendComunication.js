@@ -267,7 +267,8 @@ export function removeMap(name) {
   }).catch(logError);
 }
 
-function logError() {
+function logError(err) {
+  console.log(err)
   store.commit("errors/addError", "GraphQL Error")
 }
 
@@ -289,7 +290,7 @@ export function setFogOfWar(polygons) {
   apolloClient.mutate({
     mutation: gql`
       mutation destroyMap($polygons:JSON!){
-        updateFogOfWar(polygons:$polygons) { polygons }
+        updateFogOfWar(json:$polygons) { polygons }
       }
     `,
     variables: {

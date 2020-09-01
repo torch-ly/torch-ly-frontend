@@ -11,7 +11,7 @@
   @import "assets/css/scheme";
 </style>
 <script>
-  import {DeletePolygon, InsertPolygon, toggleInsert} from "../../logic/stage/layers/fogofwar/main";
+import {DeletePolygon, InsertPolygon, syncronize, toggleInsert} from "../../logic/stage/layers/fogofwar/main";
 
   export default {
     data() {
@@ -30,7 +30,7 @@
         this.InsertButtonText = !this.insert ? "Delete" : "Insert";
       },
       syncronizeClick(){
-
+        syncronize();
       }
     }
   }
