@@ -6,7 +6,6 @@ import {InMemoryCache} from "apollo-cache-inmemory";
 import {init as tokenInit, updateCharacterPositions} from "../logic/stage/layers/token/init";
 import {setBackgroundObjects} from "../logic/stage/layers/background/init";
 import {getParameters} from "./utils/ParameterHelper";
-import {reselectTokens} from "../logic/stage/layers/transformer";
 import {clearTransformerNodes} from "@/logic/stage/layers/transformer";
 
 const GRAPHQL_ENDPOINT = "ws://" + process.env.BACKEND + "/graphql";

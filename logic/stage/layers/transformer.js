@@ -50,31 +50,17 @@ export function addTransformerToLayer(layer) {
 
 export function addTransformerClickListener(object) {
   stage.on('click', (e) => {
-    selectTokensByClick(e, object)
+    if (!store.state.manu.move) {
+      return;
+    }
+    manageTransformerLayer();
+    if (e.target == stage) {
+      clearTransformerNodes();
+    } else if (e.target == object && Array.from(transformerLayer.children).includes(object)) { //is this object the target && is the object in the current layer of selection
+      setNodesToTransformer([object]);
+    }
+    transformerLayer.batchDraw();
   })
-}
-
-function selectTokensByClick(e, object, overwrite) {
-  if (!store.state.manu.move)
-    return;
-
-  manageTransformerLayer();
-
-  if (e && e.target === stage) {
-    clearTransformerNodes();
-  } else if (overwrite || (e && e.target === object && Array.from(transformerLayer.children).includes(object))) { // is this object the target && is the object in the current layer of selection
-    setNodesToTransformer([object]);
-  }
-  transformerLayer.batchDraw();
-}
-
-export function reselectTokens(tokens) {
-  if (tokens != null)
-    transformerNodes = tokens;
-
-  for (let node of transformerNodes) {
-    selectTokensByClick(null, stage.find('#' + node)[0], true);
-  }
 }
 
 export function setSelectionLayer(layer) {
