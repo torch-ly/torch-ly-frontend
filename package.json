@@ -23,6 +23,7 @@
     "apollo-link-ws": "^1.0.20",
     "font-awesome": "^4.7.0",
     "graphql": "^15.3.0",
+    "hotkeys-js": "^3.8.1",
     "konva": "^5.0.3",
     "lodash": "^4.17.19",
     "lowdash": "^1.2.0",
