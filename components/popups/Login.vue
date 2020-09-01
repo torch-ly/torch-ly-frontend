@@ -10,8 +10,8 @@
 
       <p class="text-justify mb-6">Damit du <span class="font-bold">torch-ly</span> richtig nutzen kannst, solltest du dich mit der Authentifizierungs-ID anmelden. Sobald du diese eingegeben hast, kannst du die Seite in deinen Favoriten speichern oder sie zum Startbildschirm hinzufügen - die Authentifizierung bleibt erhalten. Damit dies möglich ist, speichern wir die Authentifizierung in der Webseitenaddresse - du solltest diese also nicht einfach so an Freunde verschicken, da diese dann Zugriff auf deinen Account haben. </p>
 
-      <input class="input-field mb-4" type="password" placeholder="Authentifizierungs-ID" v-model="authID">
-      <a v-if="authID" class="block animate__animated animate__fadeInDown submit-button active:submit-button-active" :href="'/?authID=' + authID">Login</a>
+      <input class="input-field mb-4" type="password" placeholder="Authentifizierungs-ID" v-model="authID" @keyup.enter="$refs.link.click()">
+      <a v-if="authID" ref="link" class="block animate__animated animate__fadeInDown submit-button active:submit-button-active" :href="'/?authID=' + authID">Login</a>
     </div>
   </div>
 </template>
