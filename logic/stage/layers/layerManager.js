@@ -5,14 +5,13 @@ import {draw as drawGrid} from "./grid/main";
 import {draw as drawFree} from "./freeDrawing/main";
 import {setLayer as drawToken} from "./token/main";
 import {draw as drawMeasure} from "./measure/main";
-import {addSelectionListener, addTransformerToLayer, createTransformer, setSelectionLayer} from "./transformer";
+import {addTransformerToLayer, createTransformer} from "./transformer";
 
 let grid;
 let background;
 let token;
 let freeDrawing;
 let measure;
-let menu;
 
 export function init() {
   grid = new Konva.Layer();
@@ -20,18 +19,15 @@ export function init() {
   token = new Konva.Layer();
   freeDrawing = new Konva.Layer();
   measure = new Konva.Layer();
-  menu = new Konva.Layer();
 
   stage.add(grid);
   stage.add(background);
   stage.add(token);
   stage.add(freeDrawing);
-  stage.add(measure)
-  stage.add(menu);
+  stage.add(measure);
 
   createTransformer();
   manageTransformerLayer();
-  setSelectionLayer(menu);
 
   drawGrid(grid);
 
@@ -42,8 +38,6 @@ export function init() {
   drawFree(freeDrawing);
 
   drawMeasure(measure);
-
-  addSelectionListener();
 }
 
 export function manageTransformerLayer() {
@@ -52,8 +46,4 @@ export function manageTransformerLayer() {
   } else if (store.state.manu.layer == "Token") {
     addTransformerToLayer(token);
   }
-}
-
-export function getTokenLayer() {
-  return token;
 }
