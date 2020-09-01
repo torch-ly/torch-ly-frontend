@@ -1,13 +1,24 @@
 <template>
   <div class="relative h-screen">
     <div class="w-full absolute p-6 bg-gray-700">
-      <input class="w-full input-field" ref="input" v-model="searchTerm" placeholder="Search..." @keyup="atChange" autofocus>
+      <input class="w-full input-field" ref="input" v-model="searchTerm" placeholder="Search..." @keyup="atChange"
+             autofocus>
     </div>
 
     <div v-if="!noMonsters" class="h-full w-full pt-24">
       <div class="block w-full h-full overflow-auto px-6">
         <div v-for="monster in monsters" v-show="monster.visible" class="overflow-auto my-2 mx-1">
-          <a :href="monsterUrl(monster.name)" target="_blank" :title="monster.name">{{monster.name}}</a>
+          <div class="flex justify-between">
+            <a :href="monsterUrl(monster.name)" target="_blank" :title="monster.name">{{ monster.name }}</a>
+            <!--fa icon="angle-down"></fa-->
+            <div class="select-none px-2 py-1" @click="expandMonster(monster)">
+              <div v-if="monster.details">▼</div>
+              <div v-else>►</div>
+            </div>
+          </div>
+          <div v-if="monster.details">
+            {{generateHPString(monster)}}
+          </div>
         </div>
       </div>
     </div>
@@ -29,6 +40,7 @@ export default {
     return {
       monsters: [],
       noMonsters: true,
+      monsterDetailsActive: false,
       searchTerm: "",
     }
   },
@@ -54,6 +66,38 @@ export default {
     },
     monsterUrl(name) {
       return "https://www.dndbeyond.com/monsters/" + name.replace(/ /g, "-").replace(/"/g, "");
+    },
+    expandMonster(monster) {
+      console.log(monster)
+      if (monster.details) {
+        monster.details = false;
+        this.monsterDetailsActive = false;
+      } else {
+        if (this.monsterDetailsActive) {
+          for (let creature of this.monsters) {
+            if (creature.details) {
+              creature.details = false;
+              break;
+            }
+          }
+        }
+        monster.details = true;
+        this.monsterDetailsActive = true;
+      }
+    },
+    generateHPString(monster) {
+      console.log(monster)
+      if (!monster.hasOwnProperty("hp"))
+        return "";
+
+      if (monster.hp.hasOwnProperty("formula")) {
+        return "Hit Points " + monster.hp.formula + " (" + monster.hp.average + ")";
+      } else {
+        return "Hit Points " + monster.hp.special;
+      }
+    },
+    generateSpeedString(monster) {
+
     }
   },
   computed: {
@@ -62,9 +106,9 @@ export default {
     }
   },
   watch: {
-    monstersActive (value) {
-        if (value)
-          this.$nextTick(() => this.$refs.input.focus());
+    monstersActive(value) {
+      if (value)
+        this.$nextTick(() => this.$refs.input.focus());
     }
   },
   async fetch() {
@@ -74,7 +118,8 @@ export default {
 
       return {
         ...a,
-        visible: true
+        visible: true,
+        details: false
       }
     })
 

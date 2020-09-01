@@ -3,7 +3,7 @@ import ApolloClient from "apollo-client";
 import gql from "graphql-tag";
 import {WebSocketLink} from "apollo-link-ws";
 import {InMemoryCache} from "apollo-cache-inmemory";
-import {init as tokenInit} from "../logic/stage/layers/token/init";
+import {init as tokenInit, updateCharacterPositions} from "../logic/stage/layers/token/init";
 import {setBackgroundObjects} from "../logic/stage/layers/background/init";
 import {getParameters} from "./utils/ParameterHelper";
 import {reselectTokens} from "../logic/stage/layers/transformer";
@@ -104,8 +104,9 @@ function subscribeCharacter() {
   }).subscribe({
     next({data}) {
       store.commit("character/updateCharacter", data.updateCharacter);
-      tokenInit();
-      reselectTokens();
+      //tokenInit();
+      //reselectTokens();
+      updateCharacterPositions(data.updateCharacter);
     }
   });
 }
