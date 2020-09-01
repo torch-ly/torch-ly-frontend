@@ -14,9 +14,6 @@
 </template>
 <script>
   export default {
-    created() {
-      this.$store.commit("errors/addError");
-    },
     methods: {
       reload() {
         location.reload()
