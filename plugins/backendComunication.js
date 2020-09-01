@@ -54,6 +54,7 @@ export default async function (context) {
   subscribeBackgroundLayer();
   getBackgroundLayerNames();
 
+  getFogOfWar();
   subscribeFogOfWar();
 }
 
@@ -286,10 +287,21 @@ function subscribeFogOfWar() {
   });
 }
 
+export function getFogOfWar() {
+  apolloClient.query({
+    query: gql`
+      {
+        getFogOfWar { polygons }
+      }`
+  })
+  .then(({data}) => recieveSyncronize(data.getFogOfWar.polygons))
+  .catch(logError);
+}
+
 export function setFogOfWar(polygons) {
   apolloClient.mutate({
     mutation: gql`
-      mutation destroyMap($polygons:JSON!){
+      mutation fogOfWar($polygons:JSON!){
         updateFogOfWar(json:$polygons) { polygons }
       }
     `,
