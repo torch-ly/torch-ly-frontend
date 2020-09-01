@@ -6,7 +6,7 @@ import {setBackgroundLayer} from "../../../../plugins/backendComunication";
 import {layer as backgroundLayer} from "@/logic/stage/layers/background/main";
 
 let backgroundObjects = [];
-let backgroundChanged = false;
+export let backgroundChanged = false;
 
 export function init() {
 
