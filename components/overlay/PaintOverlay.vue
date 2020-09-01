@@ -1,6 +1,6 @@
 <template>
   <div>
-    <BrushSelector v-show="drawing"></BrushSelector>
+    <BrushSelector></BrushSelector>
 
     <hr class="my-4">
 
@@ -13,7 +13,7 @@
     <hr class="my-4">
 
     <button :class="{'bg-red-300' : !$store.state.manu.erase , 'bg-red-400' : $store.state.manu.erase}"
-            class="w-full outline-none rounded-full p-2" @click="clickErase">
+            class="w-full outline-none rounded-full p-2" @click="setTool(tools.eraser)">
       Radierer
     </button>
 
@@ -24,16 +24,23 @@
 </template>
 <script>
   import BrushSelector from "./components/BrushSelector";
-  import {clearDrawing} from "../../logic/stage/layers/freeDrawing/main";
+  import {clearDrawing} from "../../logic/stage/layers/mouseTools/main";
+  import {mapActions} from 'vuex';
+  import tools from '@/enums/tools';
 
   export default {
+    data: () => {
+      return {
+        tools
+      }
+    },
     components: {
       BrushSelector
     },
     methods: {
-      clickErase() {
-        this.$store.commit("manu/setErase");
-      },
+      ...mapActions({
+        setTool: "manu/setTool"
+      }),
       widthChange(e) {
         this.$store.commit("manu/setDrawingStrokeWidth", e.target.value)
       },

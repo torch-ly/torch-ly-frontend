@@ -2,6 +2,7 @@ import {stage, store} from "../../main";
 import Konva from "konva";
 import {getRelativePointerPosition} from "../layerFunctions";
 import {blockSnapSize} from "../grid/main";
+import tools from '@/enums/tools';
 
 export function createRect(layer) {
   let start = {x: 0, y: 0};
@@ -14,7 +15,7 @@ export function createRect(layer) {
 
   let x1, y1, x2, y2;
   stage.on('mousedown touchstart', (e) => {
-    if (store.state.manu.freeDrawing.drawingObject != "rect")
+    if (store.state.manu.currentTool !== tools.rectangle)
       return;
 
     if (store.state.manu.freeDrawing.snapToGrid) {
@@ -123,7 +124,7 @@ export function createCircle(layer) {
   layer.add(selectionArrow);
 
   stage.on('mousedown touchstart', () => {
-    if (store.state.manu.freeDrawing.drawingObject != "circle")
+    if (store.state.manu.currentTool !== tools.circle)
       return;
 
     if (store.state.manu.freeDrawing.snapToGrid) {

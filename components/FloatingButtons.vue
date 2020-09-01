@@ -1,52 +1,36 @@
 <template>
   <div class="hidden md:block fixed top-0 left-0">
     <div class="relative m-6 flex flex-col justify-center items-center">
-      <fa icon="arrows-alt" @click="handClick" :class="{'button-selected' : state.move}" class="button"/>
+      <fa icon="arrows-alt" @click="setTool(tools.move)" :class="{'button-selected' : currentTool === tools.move}" class="button"/>
 
-      <fa :icon="state.erase ? 'trash' : 'pen'" @click="paintClick"
-          :class="{'button-selected' : state.drawing}" class="button"/>
+      <fa icon="pen" @click="setTool(tools.pen)" :class="{'button-selected' : currentTool === tools.pen}" class="button"/>
 
-      <fa icon="ruler-combined" @click="measureClick" :class="{'button-selected' : state.measure}" class="button"/>
+      <fa icon="ruler-combined" @click="setTool(tools.measure)" :class="{'button-selected' :  currentTool === tools.measure}" class="button"/>
 
-      <fa icon="cloud" @click="fogOfWarClick" :class="{'button-selected' : state.fogOfWar}" class="button"/>
+      <fa icon="cloud" @click="setTool(tools.fogOfWar)" :class="{'button-selected' : currentTool === tools.fogOfWar}" class="button"/>
 
-      <fa icon="book" @click="monstersClick" :class="{'button-selected' : state.monsters}" class="button"/>
+      <fa icon="book" @click="setTool(tools.monsters)" :class="{'button-selected' : currentTool === tools.monsters}" class="button"/>
 
       <fa v-if="currentLayerIs('Background')" icon="save" @click="saveClick" class="button active:border-2"/>
     </div>
   </div>
 </template>
 <script>
-  import {useHand, usePen} from "../logic/stage/layers/freeDrawing/main";
-  import {startDraw} from "../logic/stage/layers/measure/main";
-  import {clearTransformerNodes} from "../logic/stage/layers/transformer";
+  import { mapActions, mapState } from 'vuex'
   import {saveBackgroundLayer} from "../logic/stage/layers/background/init";
+  import tools from '@/enums/tools';
+
 
   export default {
+    data: () => {
+      return {
+        tools
+      }
+    },
     methods: {
-      handClick() {
-        this.$store.commit("manu/setHand");
-        useHand();
-      },
-      paintClick() {
-        if (this.$store.state.manu.drawing)
-          this.$store.commit("manu/setErase")
-        else {
-          this.$store.commit("manu/setDrawing");
-          usePen();
-        }
-        clearTransformerNodes();
-      },
-      measureClick() {
-        this.$store.commit("manu/setMeasure");
-        startDraw();
-      },
-      fogOfWarClick() {
-        this.$store.commit("manu/setFogOfWar");
-      },
-      monstersClick() {
-        this.$store.commit("manu/setMonsters");
-      },
+      ...mapActions({
+        setTool: "manu/setTool"
+      }),
       saveClick() {
         setTimeout(() => {
           saveBackgroundLayer();
@@ -57,9 +41,9 @@
       }
     },
     computed: {
-      state() {
-        return this.$store.state.manu;
-      }
+      ...mapState({
+        currentTool: state => state.manu.currentTool
+      })
     }
   }
 </script>
