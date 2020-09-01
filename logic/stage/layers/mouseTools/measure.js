@@ -1,7 +1,6 @@
 import {stage, store} from "../../main";
 import {getRelativePointerPosition} from "../layerFunctions";
 import {blockSnapSize} from "../grid/main";
-import {endPen} from "../freeDrawing/main";
 
 let arrow;
 let start = {x: 0, y: 0};
@@ -21,12 +20,7 @@ export function draw(pLayer) {
 }
 
 export function startDraw() {
-  endPen();
-
   stage.on("mousedown", (e) => {
-    if (!store.state.manu.measure)
-      return;
-
     stage.draggable(false);
 
     lengthSoFar = length();
@@ -49,7 +43,7 @@ export function startDraw() {
   })
 
   stage.on("mousemove", (e) => {
-    if (!store.state.manu.measure || arrow == null)
+    if (arrow == null)
       return;
 
     length();
