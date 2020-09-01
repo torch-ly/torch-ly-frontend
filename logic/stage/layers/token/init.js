@@ -1,11 +1,12 @@
 import Konva, {Image as KonvaImage} from "konva";
 import {addSnapToGridListener} from "../layerFunctions";
-import {stage, store} from "../../main";
+import {store} from "../../main";
 import {blockSnapSize} from "../grid/main";
 import {draw, layer} from "./main";
 import {addTransformerClickListener} from "../transformer";
 import {setCharacterPosition} from "../../../../plugins/backendComunication";
 import {removeCharacter} from "@/plugins/backendComunication";
+import {addTransformationListener} from "~/logic/stage/layers/transformer";
 
 let out = [];
 
@@ -43,6 +44,8 @@ function loadImage(character) {
 
     addSnapToGridListener([image]);
 
+    addTransformationListener(image);
+
     out.push(image);
     draw(out);
   };
@@ -50,14 +53,22 @@ function loadImage(character) {
 }
 
 
-export function updateCharacterPositions(character) {
+export function updateCharacterAttrs(character) {
   let oldCharacters = layer.children.filter(child => child instanceof KonvaImage);
 
   for (let oldCharacter of oldCharacters) {
     if (oldCharacter.characterID === character.id) {
       // There is an existing old Character
+      oldCharacter.scaleX(1);
+      oldCharacter.scaleY(1);
       oldCharacter.x(character.pos.point.x * blockSnapSize);
       oldCharacter.y(character.pos.point.y * blockSnapSize);
+      oldCharacter.width(character.pos.size * blockSnapSize);
+      oldCharacter.height(character.pos.size * blockSnapSize);
+
+      oldCharacter.rotation(Math.floor(character.pos.rot / 100000));
+
+      console.log(oldCharacter)
 
       layer.batchDraw();
 

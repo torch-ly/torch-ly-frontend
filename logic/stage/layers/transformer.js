@@ -3,6 +3,8 @@ import {stage, store} from "../main";
 import {setMoveObjectByArrow} from "./objectFunctions";
 import {manageTransformerLayer} from "./layerManager";
 import tools from '@/enums/tools';
+import {setCharacterAttrs} from "~/plugins/backendComunication";
+import {blockSnapSize} from "~/logic/stage/layers/grid/main";
 
 let transformer;
 let transformerLayer;
@@ -84,4 +86,15 @@ export function addDeletionKeyListener() {
     clearTransformerNodes();
     stage.batchDraw();
   })
+}
+
+export function addTransformationListener(object) {
+  object.on("transformend", () => {
+    let pastRot = object.rotation();
+    object.rotation(0);
+
+    let width = object.width() * object.getTransform().getMatrix()[0];
+
+    setCharacterAttrs(object.characterID, Math.floor(pastRot * 100000), Math.round(width / blockSnapSize))
+  });
 }

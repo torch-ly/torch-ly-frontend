@@ -3,7 +3,7 @@ import ApolloClient from "apollo-client";
 import gql from "graphql-tag";
 import {WebSocketLink} from "apollo-link-ws";
 import {InMemoryCache} from "apollo-cache-inmemory";
-import {init as tokenInit, updateCharacterPositions} from "../logic/stage/layers/token/init";
+import {init as tokenInit, updateCharacterAttrs} from "../logic/stage/layers/token/init";
 import {setBackgroundObjects} from "../logic/stage/layers/background/init";
 import {getParameters} from "./utils/ParameterHelper";
 import {clearTransformerNodes} from "@/logic/stage/layers/transformer";
@@ -107,7 +107,7 @@ function subscribeCharacter() {
   }).subscribe({
     next({data}) {
       store.commit("character/updateCharacter", data.updateCharacter);
-      updateCharacterPositions(data.updateCharacter);
+      updateCharacterAttrs(data.updateCharacter);
     }
   });
 }
@@ -201,6 +201,22 @@ export function addCharacter(character) {
       sheet: character.sheet !== "" ? character.sheet : null,
       visible: character.visible,
       players: character.player
+    }
+  }).catch(logError);
+}
+
+
+export function setCharacterAttrs(id, rot, size) {
+  apolloClient.mutate({
+    mutation: gql`
+      mutation fogOfWar($id:String!, $rot:Int!, $size:Int!){
+        setCharacterRotationAndSize(id:$id, rot:$rot, size:$size) { id }
+      }
+    `,
+    variables: {
+      id: id,
+      rot: rot,
+      size: size
     }
   }).catch(logError);
 }
