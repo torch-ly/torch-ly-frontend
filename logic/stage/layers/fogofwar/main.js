@@ -10,9 +10,8 @@ let currentPolygon = [];
 let nextPolygon;
 let insert = true;
 
-export function draw(player){
+export function setFogOfWarLayer(player){
   layer = player;
-  addFogOfWarListener();
 }
 
 export function DeletePolygon() {
@@ -197,17 +196,13 @@ function addPointToPolygon(point){
 }
 
 
-function addFogOfWarListener() {
+export function addFogOfWarListener() {
   stage.on('mouseup', () => {
-    if(!store.state.manu.fogOfWar)
-      return;
     let point_x_y = getRelativePointerPosition(stage);
     addPointToPolygon([point_x_y.x, point_x_y.y])
-  }),
+  });
 
   stage.on('mousemove', () => {
-    if(!store.state.manu.fogOfWar)
-      return;
     let point_x_y = getRelativePointerPosition(stage);
     showNextPoint([point_x_y.x, point_x_y.y])
   });

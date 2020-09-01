@@ -6,6 +6,7 @@ import tools from '@/enums/tools';
 import { startDraw as startMeasure } from '@/logic/stage/layers/mouseTools/measure';
 import penTool from '@/logic/stage/layers/mouseTools/penTool';
 import eraserTool from '@/logic/stage/layers/mouseTools/eraserTool';
+import {addFogOfWarListener} from '~/logic/stage/layers/fogofwar/main';
 
 export let layer
 
@@ -35,6 +36,9 @@ function toolChanged (tool) {
       case tools.measure:
         startMeasure();
         break;
+      case tools.fogOfWar:
+        addFogOfWarListener();
+        break;
     }
   });
 }
@@ -43,7 +47,7 @@ function startMoveTool() {
   stage.draggable(true);
 }
 
-export function draw(pLayer) {
+export function setDrawLayer(pLayer) {
   layer = pLayer;
 }
 
