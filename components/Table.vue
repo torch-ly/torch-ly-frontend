@@ -24,7 +24,7 @@
 <script>
   import Konva from "konva";
   import {main} from "../logic/stage/main";
-  import BrushSelector from "./BrushSelector";
+  import BrushSelector from "./overlay/components/BrushSelector";
   import MobileMovement from "./MobileMovement";
   import AddCharacter from "./popups/AddCharacter";
   import AddImage from "./popups/AddImage";

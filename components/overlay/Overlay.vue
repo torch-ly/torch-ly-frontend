@@ -12,12 +12,12 @@
   </div>
 </template>
 <script>
-  import BrushSelector from "./BrushSelector";
-  import PaintOverlay from "~/components/overlay/PaintOverlay";
-  import MeasureOverlay from "./overlay/MeasureOverlay";
-  import MoveOverlay from "./overlay/MoveOverlay";
-  import FogOfWarOverlay from "./overlay/FogOfWarOverlay";
-  import MonsterOverlay from "./overlay/MonsterOverlay"
+  import BrushSelector from "./components/BrushSelector";
+  import PaintOverlay from "@/components/overlay/PaintOverlay";
+  import MeasureOverlay from "./MeasureOverlay";
+  import MoveOverlay from "./MoveOverlay";
+  import FogOfWarOverlay from "./FogOfWarOverlay";
+  import MonsterOverlay from "./MonsterOverlay"
 
   export default {
     data() {

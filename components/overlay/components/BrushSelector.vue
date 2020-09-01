@@ -19,7 +19,7 @@
   </div>
 </template>
 <script>
-  import {store} from "../logic/stage/main";
+  import {store} from "../../../logic/stage/main";
 
   export default {
     data() {

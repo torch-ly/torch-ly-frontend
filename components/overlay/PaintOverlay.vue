@@ -23,7 +23,7 @@
   </div>
 </template>
 <script>
-  import BrushSelector from "../BrushSelector";
+  import BrushSelector from "./components/BrushSelector";
   import {clearDrawing} from "../../logic/stage/layers/freeDrawing/main";
 
   export default {

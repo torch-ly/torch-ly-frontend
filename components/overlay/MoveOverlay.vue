@@ -60,7 +60,7 @@
   import {stage} from "../../logic/stage/main";
   import LoadingSpinner from "../gui-components/LoadingSpinner";
   import FileUpload from "../gui-components/FileUpload";
-  import CharacterList from "../CharacterList";
+  import CharacterList from "./components/CharacterList";
 
   export default {
     data() {

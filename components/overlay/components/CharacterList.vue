@@ -15,8 +15,8 @@
 </template>
 
 <script>
-  import {stage, store} from "../logic/stage/main";
-  import {reselectTokens} from "../logic/stage/layers/transformer";
+  import {stage, store} from "../../../logic/stage/main";
+  import {reselectTokens} from "../../../logic/stage/layers/transformer";
 
   export default {
     methods: {
@@ -57,5 +57,5 @@
   }
 </script>
 <style scoped lang="scss">
-  @import "assets/css/scheme";
+  @import "../../../assets/css/scheme";
 </style>

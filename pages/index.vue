@@ -7,7 +7,7 @@
 </template>
 <script>
   import Table from "../components/Table";
-  import Overlay from "../components/Overlay";
+  import Overlay from "../components/overlay/Overlay";
   import FloatingButtons from "../components/FloatingButtons"
 
   export default {
