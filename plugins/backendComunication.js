@@ -52,6 +52,8 @@ export default async function (context) {
   loadBackground();
   subscribeBackgroundLayer();
   getBackgroundLayerNames();
+
+  subscribeFogOfWar();
 }
 
 export function getPlayer() {
@@ -266,4 +268,32 @@ export function removeMap(name) {
 
 function logError() {
   store.commit("errors/addError", "GraphQL Error")
+}
+
+function subscribeFogOfWar() {
+  apolloClient.subscribe({
+    query: gql`
+      subscription {
+        updateFogOfWar { polygons }
+      }
+    `
+  }).subscribe({
+    next({data}) {
+      //TODO remove comment
+      //reseveSyncronice(data.updateFogOfWar.polygons);
+    }
+  });
+}
+
+export function setFogOfWar(polygons) {
+  apolloClient.mutate({
+    mutation: gql`
+      mutation destroyMap($polygons:JSON!){
+        updateFogOfWar(polygons:$polygons) { polygons }
+      }
+    `,
+    variables: {
+      polygons: polygons
+    }
+  }).catch(logError);
 }
