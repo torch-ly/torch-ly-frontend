@@ -30,6 +30,9 @@ export function updateJSON() {
 
   for (let object of backgroundLayer.children) {
 
+    let rotation = object.rotation();
+    object.rotation(0);
+
     if (object instanceof Rect) {
       backgroundObjects.push({
         "pos": {
@@ -41,7 +44,7 @@ export function updateJSON() {
         "snapToGrid": object.snapToGrid,
         "type": "rect",
         "color": object.fill(),
-        "rotation": object.rotation()
+        "rotation": rotation
       });
 
     } else if (object instanceof KonvaImage) {
@@ -56,7 +59,7 @@ export function updateJSON() {
         "snapToGrid": object.snapToGrid,
         "type": "img",
         "src": object.image().src,
-        "rotation": object.rotation()
+        "rotation": rotation
       });
 
     }
