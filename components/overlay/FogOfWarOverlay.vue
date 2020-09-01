@@ -3,6 +3,8 @@
     <button class="button" @click="inputClick">{{InsertButtonText}}</button>
     <div class="hr"/>
     <button class="button" @click="toggleClick">Toggle Delete/Insert</button>
+    <div class="hr"></div>
+    <button class="button" @click="syncronizeClick">Syncronize FogOfWar</button>
   </div>
 </template>
 <style lang="scss">
@@ -26,6 +28,9 @@
         toggleInsert();
         this.insert = !this.insert;
         this.InsertButtonText = !this.insert ? "Delete" : "Insert";
+      },
+      syncronizeClick(){
+
       }
     }
   }

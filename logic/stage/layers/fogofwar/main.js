@@ -15,7 +15,81 @@ export function draw(player){
 }
 
 export function DeletePolygon() {
+  try {
+    let coordinates = [[...currentPolygon, currentPolygon[0]]];
+    let turf_polygon = turf.polygon(coordinates);
+    currentPolygon = []
+    if (nextPolygon != null) {
+      nextPolygon.destroy();
+    }
+    let inside = [];
+    let intersect = [];
 
+    for (let i = 0; i < turf_polygons.length; i++) {
+      if (turf.booleanContains(turf_polygon, turf_polygons[i])) {
+        inside.push(i);
+        continue;
+      }
+      if (turf.booleanOverlap(turf_polygon, turf_polygons[i])) {
+        intersect.push(i);
+      }
+    }
+
+    for (let i of intersect) {
+      let difference = turf.difference(turf_polygons[i], turf_polygon);
+      let len = difference.geometry.coordinates.length;
+      polygons[i].destroy();
+      if (len > 1) {
+        for (let j = 0; j < len; j++) {
+          let split_poly = turf.polygon(difference.geometry.coordinates[j]);
+          if (j === 0) {
+            polygons[i] = addPolygons(split_poly, "#000");
+            turf_polygons[i] = split_poly;
+          } else {
+            polygons.push(addPolygons(split_poly, "#000"));
+            turf_polygons.push(split_poly);
+          }
+        }
+      } else {
+        polygons[i] = addPolygons(difference, "#000");
+        turf_polygons[i] = turf_polygons[i];
+      }
+    }
+
+  for(let i of inside.sort().reverse()){
+    turf_polygons.splice(i, 1);
+    polygons[i].destroy();
+    polygons.splice(i, 1);
+  }
+
+  }catch(e){
+    alert("Bitte neu zeichen")
+  }
+  console.log(polygons.length)
+  layer.batchDraw();
+}
+
+export function syncronize(){
+  let polygons = [];
+  for(let i = 0; i < turf_polygons.length; i++){
+    polygons.push(turf_polygons[i].geometry.coordinates[0]);
+  }
+  //setFogOfWar(polygons);
+}
+
+export function recieveSyncronize(p_polygons) {
+  //if(!dm)
+  //  return;
+  turf_polygons = [];
+  for(let poly in polygons){
+    poly.destroy();
+  }
+  for(let coordinates of p_polygons){
+    let turf_polygon = turf.polygon([coordinates]);
+    polygons.push(addPolygons(turf_polygon, "#000"));
+    turf_polygons.push(turf_polygon);
+  }
+  layer.draw();
 }
 
 export function toggleInsert() {
@@ -34,40 +108,40 @@ export function InsertPolygon(){
   if(nextPolygon != null){
     nextPolygon.destroy();
   }
-  let allUnions = [];
+  let intersects = [];
   for(let i = 0; i < turf_polygons.length; i++){
-    let a = turf.intersect(turf_polygon, turf_polygons[i]);
-    if(a !== null){
-      allUnions.push(i);
+    if(turf.booleanOverlap(turf_polygon, turf_polygons[i]) || turf.booleanContains(turf_polygon, turf_polygons[i]) ||
+      turf.booleanContains(turf_polygons[i], turf_polygon)){
+      intersects.push(i);
     }
   }
-  if(allUnions.length === 0){
+  if(intersects.length === 0){
     console.log("no overlaps");
-    addPolygons(turf_polygon, "#000");
-  }else{
+    polygons.push(addPolygons(turf_polygon, "#000"));
+    turf_polygons.push(turf_polygon);
+  }else {
     let union = turf_polygon;
-    for(let i = 0; i < allUnions.length; i++){
-      union = turf.union(union, turf_polygons[allUnions[i]])
-
+    for (let i = 0; i < intersects.length; i++) {
+      union = turf.union(union, turf_polygons[intersects[i]])
     }
-    for(let i of allUnions.sort().reverse()){
+    for (let i of intersects.sort().reverse()) {
       turf_polygons.splice(i, 1);
       polygons[i].destroy();
       polygons.splice(i, 1);
     }
-    addPolygons(union, "#000");
+    polygons.push(addPolygons(union, "#000"));
+    turf_polygons.push(union);
   }
+    console.log(polygons.length)
+    layer.batchDraw();
 }
 
 function addPolygons(turf, color){
   let konva_line = turf_to_Konva(turf);
   konva_line.fill(color);
   konva_line.stroke(color);
-  polygons.push(konva_line);
-  turf_polygons.push(turf);
   layer.add(konva_line);
-  layer.batchDraw();
-  console.log("length: " + polygons.length);
+  return konva_line;
 }
 
 function turf_to_Konva(turf_poylgon){
@@ -82,8 +156,6 @@ function turf_to_Konva(turf_poylgon){
 }
 
 function showNextPoint(point) {
-  if(!insert)
-    return;
   let points = JSON.parse(JSON.stringify(currentPolygon));
   points.push(point);
   if(nextPolygon != null){
@@ -91,8 +163,8 @@ function showNextPoint(point) {
   }
   nextPolygon = new Konva.Line({
     points: points.flat(),
-    fill: "#888888",
-    stroke: "#888888",
+    fill: (insert ? "#888888" : "#aa5555"),
+    stroke: (insert ? "#888888" : "#aa5555"),
     closed: true,
     strokeWidth: 1,
   });
