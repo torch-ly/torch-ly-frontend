@@ -104,8 +104,6 @@ function subscribeCharacter() {
   }).subscribe({
     next({data}) {
       store.commit("character/updateCharacter", data.updateCharacter);
-      //tokenInit();
-      //reselectTokens();
       updateCharacterPositions(data.updateCharacter);
     }
   });

@@ -68,7 +68,6 @@ export default {
       return "https://www.dndbeyond.com/monsters/" + name.replace(/ /g, "-").replace(/"/g, "");
     },
     expandMonster(monster) {
-      console.log(monster)
       if (monster.details) {
         monster.details = false;
         this.monsterDetailsActive = false;
@@ -86,7 +85,6 @@ export default {
       }
     },
     generateHPString(monster) {
-      console.log(monster)
       if (!monster.hasOwnProperty("hp"))
         return "";
 

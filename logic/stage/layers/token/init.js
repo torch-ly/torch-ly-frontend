@@ -56,7 +56,6 @@ export function updateCharacterPositions(character) {
   for (let oldCharacter of oldCharacters) {
     if (oldCharacter.characterID === character.id) {
       // There is an existing old Character
-      console.log(character.pos.point.x, character.pos.point.y)
       oldCharacter.x(character.pos.point.x * blockSnapSize);
       oldCharacter.y(character.pos.point.y * blockSnapSize);
 
