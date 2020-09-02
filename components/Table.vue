@@ -31,8 +31,6 @@ export default {
 
       let p = getRelativePointerPosition(stage);
 
-      console.log(p)
-
       switch (monster.size) {
         case 'L':
           size = 2;
@@ -59,8 +57,6 @@ export default {
         },
         player: [this.$store.state.authentication.playerID]
       };
-
-      console.log(character)
 
       addCharacter(character);
     }

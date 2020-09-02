@@ -4,7 +4,6 @@ import {stage} from "../main";
 export function addSnapToGridListener(objects) {
   for (let object of objects) {
     object.on('dragend transformend', (e) => {
-      console.log(123456)
       if (object.snapToGrid) {
         snapToGrid(object);
       }
@@ -30,8 +29,6 @@ export function snapToGrid(object) {
 
   let rot = object.rotation();
   object.rotation(0);
-
-  console.log(rot, object.rotation(), object.getTransform().getMatrix())
 
   let x = object.hasOwnProperty("attrs") ? object.attrs.x : object.x();
   let y = object.hasOwnProperty("attrs") ? object.attrs.y : object.y();

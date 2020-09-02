@@ -5,6 +5,5 @@ export const state = () => ({
 export const mutations = {
   addError(state, error) {
     state.errors.add(error);
-    console.log(state.errors)
   }
 }
