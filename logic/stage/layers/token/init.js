@@ -6,6 +6,7 @@ import {draw, layer} from "./main";
 import {addTransformerClickListener} from "../transformer";
 import {removeCharacter, setCharacterPosition} from "../../../../plugins/backendComunication/characters";
 import {addTransformationListener} from "~/logic/stage/layers/transformer";
+import devices from "@/enums/devices";
 
 let out = [];
 
@@ -13,6 +14,9 @@ export function init() {
   out = [];
 
   let characters = store.state.character.characters;
+
+  if (store.state.config.device === devices.MOBILE)
+    return ;
 
   characters.forEach(character => loadImage(character));
 }

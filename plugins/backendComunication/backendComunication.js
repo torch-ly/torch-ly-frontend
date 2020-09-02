@@ -8,6 +8,7 @@ import {getBackgroundLayerNames, loadBackground, subscribeBackgroundLayer} from 
 import {getFogOfWar, subscribeFogOfWar} from "~/plugins/backendComunication/fogOfWar";
 import {loadCharacters, subscribeCharacter} from "~/plugins/backendComunication/characters";
 import {getViewport, subscribeViewport} from "~/plugins/backendComunication/viewport";
+import devices from "@/enums/devices";
 
 const GRAPHQL_ENDPOINT = "ws://" + process.env.BACKEND + "/graphql";
 
@@ -50,6 +51,11 @@ export default async function (context) {
   loadCharacters();
   subscribeCharacter();
 
+  if (store.state.config.device !== devices.MOBILE)
+    loadTable();
+}
+
+function loadTable() {
   loadBackground();
   subscribeBackgroundLayer();
   getBackgroundLayerNames();
