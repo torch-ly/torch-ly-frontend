@@ -2,7 +2,8 @@ import {getParameters} from "../plugins/utils/ParameterHelper";
 import devices from "@/enums/devices";
 
 export const state = () => ({
-  device: getDevice()
+  device: getDevice(),
+  followDMScreen: false, //TODO implement to config page
 })
 
 function getDevice() {

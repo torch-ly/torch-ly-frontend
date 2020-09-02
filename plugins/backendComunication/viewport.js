@@ -1,6 +1,7 @@
 import {apolloClient, logError} from "~/plugins/backendComunication/backendComunication";
-import {stage} from "~/logic/stage/main";
+import {stage, store} from "~/logic/stage/main";
 import gql from "graphql-tag";
+import devices from "~/enums/devices";
 
 export function getViewport() {
   apolloClient.query({
@@ -10,11 +11,13 @@ export function getViewport() {
       }`
   })
   .then(({data}) => {
-    let matrix = data.getViewport;
-    stage.scale(matrix.scale);
-    stage.x(matrix.x);
-    stage.y(matrix.y);
-    stage.batchDraw();
+    if (store.state.config.device === devices.TV || store.state.config.followDMScreen) {
+      let matrix = data.getViewport;
+      stage.scale(matrix.scale);
+      stage.x(matrix.x);
+      stage.y(matrix.y);
+      stage.batchDraw();
+    }
   })
   .catch(logError);
 }
@@ -52,11 +55,13 @@ export function subscribeViewport() {
     `
   }).subscribe({
     next({data}) {
-      let matrix = data.updateViewport.matrix;
-      stage.scale(matrix.scale);
-      stage.x(matrix.x);
-      stage.y(matrix.y);
-      stage.batchDraw();
+      if (store.state.config.device === devices.TV || store.state.config.followDMScreen) {
+        let matrix = data.updateViewport.matrix;
+        stage.scale(matrix.scale);
+        stage.x(matrix.x);
+        stage.y(matrix.y);
+        stage.batchDraw();
+      }
     }
   });
 }
