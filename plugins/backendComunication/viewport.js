@@ -20,10 +20,17 @@ export function getViewport() {
 }
 
 export function setViewport() {
+  console.log({
+    matrix: {
+      scale: stage.scale(),
+      x: stage.x(),
+      y: stage.y()
+    }
+  })
   apolloClient.mutate({
     mutation: gql`
       mutation setViewport($matrix:JSON!){
-        updateViewport(matix:$matrix) { matrix }
+        updateViewport(matrix:$matrix) { matrix }
       }
     `,
     variables: {
@@ -45,7 +52,7 @@ export function subscribeViewport() {
     `
   }).subscribe({
     next({data}) {
-      let matrix = data.updateViewport;
+      let matrix = data.updateViewport.matrix;
       stage.scale(matrix.scale);
       stage.x(matrix.x);
       stage.y(matrix.y);
