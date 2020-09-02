@@ -14,6 +14,7 @@ export function getViewport() {
     stage.scale(matrix.scale);
     stage.x(matrix.x);
     stage.y(matrix.y);
+    stage.batchDraw();
   })
   .catch(logError);
 }
@@ -48,6 +49,7 @@ export function subscribeViewport() {
       stage.scale(matrix.scale);
       stage.x(matrix.x);
       stage.y(matrix.y);
+      stage.batchDraw();
     }
   });
 }
