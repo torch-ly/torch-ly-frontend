@@ -22,6 +22,7 @@
     "apollo-boost": "^0.4.9",
     "apollo-client": "^2.6.10",
     "apollo-link-ws": "^1.0.20",
+    "deepcopy": "^2.1.0",
     "font-awesome": "^4.7.0",
     "graphql": "^15.3.0",
     "hotkeys-js": "^3.8.1",

@@ -3,6 +3,7 @@ import {copy, getRelativePointerGridRectangle, getRelativePointerPosition} from 
 import * as turf from "@turf/turf";
 import {setFogOfWar} from "../../../../plugins/backendComunication";
 import {blockSnapSize} from "../grid/main";
+import deepcopy from "deepcopy";
 
 let layer;
 let polygons = [];
@@ -142,13 +143,18 @@ export function InsertPolygon() {
     turf_polygons.push(union);
   }
   layer.batchDraw();
-  console.log("Polygon, Overlap length: " + polygons.length + " - " + overlapPolygons.length);
 }
 
-function cutIntersection(index, cut_turf_polygon){
+function log(object){
+  console.log(object);
+  return true;
+}
+
+function cutIntersection(index, cut_turf_polygon) {
   let difference = turf.difference(turf_polygons[index], cut_turf_polygon);
   let len = difference.geometry.coordinates.length;
-  polygons[index].destroy();
+  if (polygons[index] != null)
+    polygons[index].destroy();
 
   if (len > 1) {
     for (let j = 0; j < len; j++) {
@@ -197,10 +203,65 @@ export function DeletePolygon() {
     }
   }
 
-  console.log("inside, intersect, overlap length: " + inside.length + " - " + intersect.length + " - " + overlayed.length);
-
   for (let i of intersect) {
     cutIntersection(i, turf_polygon);
+  }
+
+  for (let i of overlayed) {
+
+    polygons[i].destroy();
+    //split polygon
+    //search for split lines
+    let innerPoints = [turf_polygon.geometry.coordinates[0][0], turf_polygon.geometry.coordinates[0][1]];
+    let firstline;
+    let secondLine;
+    let firstindex;
+    let secondindex;
+
+    let coordinates = deepcopy(turf_polygons[i].geometry.coordinates[0]).splice(0, turf_polygons[i].geometry.coordinates[0].length - 1);
+
+    for (let j = 0; j < coordinates.length; j++) {
+      firstline = turf.lineString([innerPoints[0], coordinates[j]]);
+      if (turf.booleanContains(turf_polygons[i], firstline)) {
+        firstindex = j;
+        break;
+      }
+    }
+
+    for (let j = (firstindex + 1); (j % coordinates.length !== firstindex); j++) {
+      let index_j = j % coordinates.length;
+      secondLine = turf.lineString([innerPoints[1], coordinates[index_j]]);
+      if (turf.booleanContains(turf_polygons[i], secondLine) && log("no intersect") && turf.booleanDisjoint(firstline, secondLine)) {
+        secondindex = index_j;
+        break;
+      }
+    }
+
+
+    if(firstindex > secondindex){
+      let firstSplice = coordinates.splice(0, firstindex);
+      secondindex = firstSplice.length - 1 + secondindex;
+      firstindex = 0;
+      coordinates = [...coordinates, ...firstSplice];
+    }
+
+    let splice = coordinates.splice(firstindex, secondindex - firstindex + 1);
+    let firstpolygon = turf.polygon([[...splice, innerPoints[1], innerPoints[0], splice[0]]]);
+    let secondSplice = coordinates.splice(firstindex, coordinates.length - firstindex);
+
+    let secondcoordinates = coordinates;
+    secondcoordinates.push(splice[0]);
+    secondcoordinates.push(innerPoints[0]);
+    secondcoordinates.push(innerPoints[1]);
+    secondcoordinates.push(splice[splice.length - 1]);
+    secondcoordinates = [...secondcoordinates,...secondSplice];
+    secondcoordinates.push(coordinates[0]);
+    let secondpolygon = turf.polygon([secondcoordinates]);
+    turf_polygons[i] = firstpolygon;
+    cutIntersection(i, turf_polygon);
+    turf_polygons.push(secondpolygon);
+    polygons.push(null);
+    cutIntersection(polygons.length - 1, turf_polygon);
   }
 
   for (let i of inside.sort().reverse()) {
@@ -209,38 +270,6 @@ export function DeletePolygon() {
     polygons.splice(i, 1);
   }
 
-  if (overlayed.length > 0) {
-    let overlapping = addPolygons(turf_polygon, "#00000000");
-    overlapping.moveToTop();
-    overlapPolygons.push(overlapping);
-    overlapTurfPolygons.push(turf_polygon);
-  }
-
-  let destroyOverlapPolygons = [];
-
-  for (let i = 0; i < overlapTurfPolygons.length; i++) {
-    let overlap = false;
-    for (let j = 0; j < turf_polygons.length; j++) {
-      if (turf.booleanContains(turf_polygons[j], overlapTurfPolygons[i])) {
-        overlap = true;
-        break;
-      }
-      if(turf.booleanOverlap(turf_polygons[j], overlapTurfPolygons[i])){
-        cutIntersection(j, overlapTurfPolygons[i]);
-      }
-    }
-    if (!overlap) {
-      destroyOverlapPolygons.push(i);
-    }
-  }
-
-  for (let i of destroyOverlapPolygons.sort().reverse()) {
-    overlapTurfPolygons.splice(i, 1);
-    overlapPolygons[i].destroy();
-    overlapPolygons.splice(i, 1);
-  }
-
-  console.log("Polygon, Overlap length: " + polygons.length + " - " + overlapPolygons.length);
   layer.batchDraw();
 }
 
