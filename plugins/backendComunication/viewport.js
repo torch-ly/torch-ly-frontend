@@ -10,8 +10,10 @@ export function getViewport() {
       }`
   })
   .then(({data}) => {
-    let matrix = data.matrix;
-    stage.setTransform(matrix[0], matrix[1], matrix[2], matrix[3], matrix[4], matrix[5]);
+    let matrix = data.getViewport;
+    stage.scale(matrix.scale);
+    stage.x(matrix.x);
+    stage.y(matrix.y);
   })
   .catch(logError);
 }
@@ -24,7 +26,11 @@ export function setViewport() {
       }
     `,
     variables: {
-      name: stage.getTransform().getMatrix()
+      matrix: {
+        scale: stage.scale(),
+        x: stage.x(),
+        y: stage.y()
+      }
     }
   }).catch(logError);
 }
@@ -38,8 +44,10 @@ export function subscribeViewport() {
     `
   }).subscribe({
     next({data}) {
-      let matrix = data.matrix;
-      stage.setTransform(matrix[0], matrix[1], matrix[2], matrix[3], matrix[4], matrix[5]);
+      let matrix = data.updateViewport;
+      stage.scale(matrix.scale);
+      stage.x(matrix.x);
+      stage.y(matrix.y);
     }
   });
 }
