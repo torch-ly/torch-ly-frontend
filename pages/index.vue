@@ -11,7 +11,7 @@
     <AddImage v-if="device === devices.DEFAULT"/>
     <SelectBackgroundLayer v-if="device === devices.DEFAULT"/>
     <Login v-if="device === devices.DEFAULT"/>
-    <MobileMovement class="md:hidden" v-if="device === devices.MOBILE"></MobileMovement>
+    <MobileMovement class="md:hidden" v-if="device === devices.MOBILE"/>
 
     <div class="w-full h-full fixed top-0 left-0 bg-gray-700 flex justify-center items-center select-none" v-show="visible" :class="{'animate__animated animate__fadeOutDown animate__fast' : fadeOut}">
       <span class="font-10xl font-bold text-accent">t<img src="/icon-resized.png" class="inline-block h-auto w-16 -mt-6 mx-1" :class="{'mirrored' : mirrored}">rch.ly</span>
