@@ -4,7 +4,7 @@ import {copy, getRelativePointerGridRectangle, getRelativePointerPosition} from 
 import {blockSnapSize} from "../grid/main";
 import deepcopy from "deepcopy";
 import * as turf from "@turf/turf";
-import {setFogOfWar} from "../../../../plugins/backendComunication/fogOfWar";
+import {setFogOfWar} from "~/plugins/backendComunication/fogOfWar";
 
 
 let layer;
@@ -26,11 +26,9 @@ export function addFogOfWarListener() {
     if (snapToGrid) {
       let point = getRelativePointerGridRectangle();
       let smallerRect = (insert ? 0.1 : -0.1);
-      console.log(smallerRect);
       currentPolygon = [];
       point.x += smallerRect;
       point.y += smallerRect;
-      console.log(point);
       currentPolygon.push(pointToArray(point))
       point.x += blockSnapSize - (2 * smallerRect);
       currentPolygon.push(pointToArray(point));
@@ -38,7 +36,6 @@ export function addFogOfWarListener() {
       currentPolygon.push(pointToArray(point));
       point.x -= blockSnapSize - (2 * smallerRect);
       currentPolygon.push(pointToArray(point));
-      console.log(currentPolygon);
       (insert ? InsertPolygon() : DeletePolygon())
     } else {
       addPointToPolygon([point_x_y.x, point_x_y.y])
@@ -54,6 +51,7 @@ export function addFogOfWarListener() {
 }
 
 //graphql
+//send data via graphql
 export function syncronize() {
   let polygons = [];
   for (let i = 0; i < turf_polygons.length; i++) {
@@ -62,9 +60,10 @@ export function syncronize() {
   setFogOfWar(polygons);
 }
 
+//receive data via graphql
 export function recieveSyncronize(p_polygons) {
-  //if(!dm)
-  //  return;
+  if(!store.state.authentication.gm)
+    return;
   turf_polygons = [];
 
   for (let poly of polygons) {
@@ -81,6 +80,7 @@ export function recieveSyncronize(p_polygons) {
 }
 
 //frontend toggle
+//toggle insert / delete mode
 export function toggleInsert() {
   currentPolygon = []
 
@@ -92,6 +92,7 @@ export function toggleInsert() {
   insert = !insert;
 }
 
+//toggle snapToGrid mode
 export function toggleSnapToGrid() {
   currentPolygon = []
 
@@ -104,19 +105,23 @@ export function toggleSnapToGrid() {
 }
 
 //insert and delete
+//Insert currentPolygon
 export function InsertPolygon() {
+  //no lines or points
   if (currentPolygon.length < 3)
     return;
   let coordinates = [[...currentPolygon, currentPolygon[0]]];
   let turf_polygon = turf.polygon(coordinates);
   currentPolygon = []
 
+  //destroy preview polygon
   if (nextPolygon != null) {
     nextPolygon.destroy();
   }
 
   let intersects = [];
 
+  //check for overlapping polygons
   for (let i = 0; i < turf_polygons.length; i++) {
     if (turf.booleanOverlap(turf_polygon, turf_polygons[i]) || turf.booleanContains(turf_polygon, turf_polygons[i]) ||
       turf.booleanContains(turf_polygons[i], turf_polygon)) {
@@ -124,34 +129,36 @@ export function InsertPolygon() {
     }
   }
 
+
   if (intersects.length === 0) {
-    console.log("no overlaps");
+    //No overlaps found
     polygons.push(addPolygons(turf_polygon, "#000"));
     turf_polygons.push(turf_polygon);
   } else {
+    //build a union of all overlapping polygons
     let union = turf_polygon;
 
     for (let i = 0; i < intersects.length; i++) {
       union = turf.union(union, turf_polygons[intersects[i]])
     }
 
+    //delete old polygons
     for (let i of intersects.sort().reverse()) {
       turf_polygons.splice(i, 1);
       polygons[i].destroy();
       polygons.splice(i, 1);
     }
 
+    //add new union
     polygons.push(addPolygons(union, "#000"));
     turf_polygons.push(union);
   }
   layer.batchDraw();
+  console.log(polygons);
+  console.log(turf_polygons);
 }
 
-function log(object){
-  console.log(object);
-  return true;
-}
-
+//cut intersection of polygon with index "index" and the cut_polygon and draw it
 function cutIntersection(index, cut_turf_polygon) {
   let difference = turf.difference(turf_polygons[index], cut_turf_polygon);
   let len = difference.geometry.coordinates.length;
@@ -159,6 +166,7 @@ function cutIntersection(index, cut_turf_polygon) {
     polygons[index].destroy();
 
   if (len > 1) {
+    //check if intersection results in multiple polygons
     for (let j = 0; j < len; j++) {
       let split_poly = turf.polygon(difference.geometry.coordinates[j]);
       if (j === 0) {
@@ -175,16 +183,22 @@ function cutIntersection(index, cut_turf_polygon) {
   }
 }
 
+//Delete current polygon
 export function DeletePolygon() {
+  //ignore points and lines
   if (currentPolygon.length < 3)
     return;
 
   let coordinates = [[...currentPolygon, currentPolygon[0]]];
   let turf_polygon = turf.polygon(coordinates);
   currentPolygon = []
+
+  //destroy preview polygon
   if (nextPolygon != null) {
     nextPolygon.destroy();
   }
+
+  //check all polygons for intersections, within and contains
   let inside = [];
   let intersect = [];
   let overlayed = [];
@@ -205,67 +219,84 @@ export function DeletePolygon() {
     }
   }
 
+  //cut intersections of all intersecting polygons
   for (let i of intersect) {
     cutIntersection(i, turf_polygon);
   }
 
-  for (let i of overlayed) {
+  //process all within polygons
+  try {
+    for (let i of overlayed) {
 
-    polygons[i].destroy();
-    //split polygon
-    //search for split lines
-    let innerPoints = [turf_polygon.geometry.coordinates[0][0], turf_polygon.geometry.coordinates[0][1]];
-    let firstline;
-    let secondLine;
-    let firstindex;
-    let secondindex;
+      //destroy old polygon
+      polygons[i].destroy();
 
-    let coordinates = deepcopy(turf_polygons[i].geometry.coordinates[0]).splice(0, turf_polygons[i].geometry.coordinates[0].length - 1);
+      //split polygon
+      //search for split lines
+      let innerPoints = [turf_polygon.geometry.coordinates[0][0], turf_polygon.geometry.coordinates[0][1]];
+      let firstline;
+      let secondLine;
+      let firstindex;
+      let secondindex;
 
-    for (let j = 0; j < coordinates.length; j++) {
-      firstline = turf.lineString([innerPoints[0], coordinates[j]]);
-      if (turf.booleanContains(turf_polygons[i], firstline)) {
-        firstindex = j;
-        break;
+      let coordinates = deepcopy(turf_polygons[i].geometry.coordinates[0]).splice(0, turf_polygons[i].geometry.coordinates[0].length - 1);
+
+      //calculate first point on outer polygon
+      for (let j = 0; j < coordinates.length; j++) {
+        firstline = turf.lineString([innerPoints[0], coordinates[j]]);
+        if (turf.booleanContains(turf_polygons[i], firstline)) {
+          firstindex = j;
+          break;
+        }
       }
-    }
 
-    for (let j = (firstindex + 1); (j % coordinates.length !== firstindex); j++) {
-      let index_j = j % coordinates.length;
-      secondLine = turf.lineString([innerPoints[1], coordinates[index_j]]);
-      if (turf.booleanContains(turf_polygons[i], secondLine) && log("no intersect") && turf.booleanDisjoint(firstline, secondLine)) {
-        secondindex = index_j;
-        break;
+      //calculate second point on outer polygon
+      for (let j = (firstindex + 1); (j % coordinates.length !== firstindex); j++) {
+        let index_j = j % coordinates.length;
+        secondLine = turf.lineString([innerPoints[1], coordinates[index_j]]);
+        if (turf.booleanContains(turf_polygons[i], secondLine) && turf.booleanDisjoint(firstline, secondLine)) {
+          secondindex = index_j;
+          break;
+        }
       }
+
+      //make sure first point comes before second point
+      if (firstindex > secondindex) {
+        let firstSplice = coordinates.splice(0, firstindex);
+        secondindex = firstSplice.length - 1 + secondindex;
+        firstindex = 0;
+        coordinates = [...coordinates, ...firstSplice];
+      }
+
+      //splice coordinates
+      let splice = coordinates.splice(firstindex, secondindex - firstindex + 1);
+      let firstpolygon = turf.polygon([[...splice, innerPoints[1], innerPoints[0], splice[0]]]);
+      let secondSplice = coordinates.splice(firstindex, coordinates.length - firstindex);
+
+      //setup coodinates for second polygon
+      //cant use spread operator for some reason
+      let secondcoordinates = coordinates;
+      secondcoordinates.push(splice[0]);
+      secondcoordinates.push(innerPoints[0]);
+      secondcoordinates.push(innerPoints[1]);
+      secondcoordinates.push(splice[splice.length - 1]);
+      secondcoordinates = [...secondcoordinates, ...secondSplice];
+      secondcoordinates.push(coordinates[0]);
+      let secondpolygon = turf.polygon([secondcoordinates]);
+
+      //cut intersection of both polygons
+      turf_polygons[i] = firstpolygon;
+      cutIntersection(i, turf_polygon);
+      turf_polygons.push(secondpolygon);
+      //push null so array entry exists
+      polygons.push(null);
+      cutIntersection(polygons.length - 1, turf_polygon);
     }
-
-
-    if(firstindex > secondindex){
-      let firstSplice = coordinates.splice(0, firstindex);
-      secondindex = firstSplice.length - 1 + secondindex;
-      firstindex = 0;
-      coordinates = [...coordinates, ...firstSplice];
-    }
-
-    let splice = coordinates.splice(firstindex, secondindex - firstindex + 1);
-    let firstpolygon = turf.polygon([[...splice, innerPoints[1], innerPoints[0], splice[0]]]);
-    let secondSplice = coordinates.splice(firstindex, coordinates.length - firstindex);
-
-    let secondcoordinates = coordinates;
-    secondcoordinates.push(splice[0]);
-    secondcoordinates.push(innerPoints[0]);
-    secondcoordinates.push(innerPoints[1]);
-    secondcoordinates.push(splice[splice.length - 1]);
-    secondcoordinates = [...secondcoordinates,...secondSplice];
-    secondcoordinates.push(coordinates[0]);
-    let secondpolygon = turf.polygon([secondcoordinates]);
-    turf_polygons[i] = firstpolygon;
-    cutIntersection(i, turf_polygon);
-    turf_polygons.push(secondpolygon);
-    polygons.push(null);
-    cutIntersection(polygons.length - 1, turf_polygon);
+  }catch (e){
+    console.log("Error in overlap");
+    return;
   }
-
+  //delete all polygons inside removing polygon
   for (let i of inside.sort().reverse()) {
     turf_polygons.splice(i, 1);
     polygons[i].destroy();
@@ -273,9 +304,12 @@ export function DeletePolygon() {
   }
 
   layer.batchDraw();
+  console.log(polygons);
+  console.log(turf_polygons);
 }
 
 //helper functions
+//get konva polygon from turf polygon and draw it with color
 function addPolygons(turf, color) {
   let konva_line = turf_to_Konva(turf);
 
@@ -286,10 +320,12 @@ function addPolygons(turf, color) {
   return konva_line;
 }
 
+//add a point to the current polygon
 function addPointToPolygon(point) {
   currentPolygon.push(point);
 }
 
+//calculate a Konva polygon from a turf polygon
 function turf_to_Konva(turf_poylgon) {
   let arr = turf_poylgon.geometry.coordinates[0];
 
