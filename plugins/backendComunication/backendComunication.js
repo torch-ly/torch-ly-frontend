@@ -7,6 +7,7 @@ import {getPlayer} from "~/plugins/backendComunication/player";
 import {getBackgroundLayerNames, loadBackground, subscribeBackgroundLayer} from "~/plugins/backendComunication/map";
 import {getFogOfWar, subscribeFogOfWar} from "~/plugins/backendComunication/fogOfWar";
 import {loadCharacters, subscribeCharacter} from "~/plugins/backendComunication/characters";
+import {getViewport, subscribeViewport} from "~/plugins/backendComunication/viewport";
 
 const GRAPHQL_ENDPOINT = "ws://" + process.env.BACKEND + "/graphql";
 
@@ -55,6 +56,9 @@ export default async function (context) {
 
   getFogOfWar();
   subscribeFogOfWar();
+
+  getViewport();
+  subscribeViewport();
 }
 
 export function logError(...err) {
