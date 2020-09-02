@@ -3,6 +3,9 @@ import {stage} from "../main";
 
 export function addSnapToGridListener(objects) {
   for (let object of objects) {
+    if (object.characterID != null)
+      continue;
+
     object.on('dragend transformend', (e) => {
       if (object.snapToGrid) {
         snapToGrid(object);
@@ -11,21 +14,7 @@ export function addSnapToGridListener(objects) {
   }
 }
 
-//TODO Löschen
 export function snapToGrid(object) {
-  if (object.characterID != null) {
-
-    let x = object.x() + 0.5 * object.width();
-    let y = object.y() + 0.5 * object.height();
-
-
-    object.position({
-      x: Math.round(x / blockSnapSize) * blockSnapSize,
-      y: Math.round(y / blockSnapSize) * blockSnapSize
-    });
-    stage.batchDraw();
-    return;
-  }
 
   let rot = object.rotation();
   object.rotation(0);

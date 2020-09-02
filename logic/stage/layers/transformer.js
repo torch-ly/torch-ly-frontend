@@ -42,6 +42,8 @@ export function clearTransformerNodes() {
   transformer.nodes([]);
   transformerNodes = [];
   setMoveObjectByArrow(null);
+
+  stage.batchDraw();
 }
 
 export function addTransformerToLayer(layer) {
