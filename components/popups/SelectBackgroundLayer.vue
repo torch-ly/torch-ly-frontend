@@ -21,21 +21,26 @@
 </template>
 
 <script>
-  import PopupContainer from "../gui-components/PopupContainer";
-  import {store} from "../../logic/stage/main";
-  import {addMap, getBackgroundLayerNames, removeMap, setBackgroundLayerName} from "../../plugins/backendComunication";
+import PopupContainer from "../gui-components/PopupContainer";
+import {store} from "../../logic/stage/main";
+import {
+  addMap,
+  getBackgroundLayerNames,
+  removeMap,
+  setBackgroundLayerName
+} from "../../plugins/backendComunication/map";
 
-  export default {
-    components: {PopupContainer},
-    data() {
-      return {
-        newLayerName: null,
-        layerToRemove: null
-      }
-    },
-    mounted() {
-      this.$root.$on("openBackgroundLayerPopup", () => {
-        this.$refs.popupContainer.active = true;
+export default {
+  components: {PopupContainer},
+  data() {
+    return {
+      newLayerName: null,
+      layerToRemove: null
+    }
+  },
+  mounted() {
+    this.$root.$on("openBackgroundLayerPopup", () => {
+      this.$refs.popupContainer.active = true;
       });
     },
     methods: {

@@ -29,9 +29,8 @@
   </div>
 </template>
 <script>
-import _ from "lodash";
 import LoadingSpinner from "../gui-components/LoadingSpinner"
-import {getMonsters} from "@/plugins/backendComunication";
+import {getMonsters} from "@/plugins/backendComunication/monster";
 import {toggleLayer} from "@/logic/hotkey";
 
 export default {

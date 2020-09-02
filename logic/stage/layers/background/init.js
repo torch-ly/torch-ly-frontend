@@ -2,7 +2,7 @@ import Konva, {Image as KonvaImage, Rect} from "konva";
 import {addSnapToGridListener} from "../layerFunctions";
 import {clearLayer, draw} from "./main";
 import {addTransformerClickListener} from "../transformer";
-import {setBackgroundLayer} from "../../../../plugins/backendComunication";
+import {setBackgroundLayer} from "../../../../plugins/backendComunication/map";
 import {layer as backgroundLayer} from "@/logic/stage/layers/background/main";
 
 let backgroundObjects = [];

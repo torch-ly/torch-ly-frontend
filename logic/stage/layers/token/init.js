@@ -4,8 +4,7 @@ import {store} from "../../main";
 import {blockSnapSize} from "../grid/main";
 import {draw, layer} from "./main";
 import {addTransformerClickListener} from "../transformer";
-import {setCharacterPosition} from "../../../../plugins/backendComunication";
-import {removeCharacter} from "@/plugins/backendComunication";
+import {removeCharacter, setCharacterPosition} from "../../../../plugins/backendComunication/characters";
 import {addTransformationListener} from "~/logic/stage/layers/transformer";
 
 let out = [];

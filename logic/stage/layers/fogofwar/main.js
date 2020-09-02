@@ -1,7 +1,7 @@
-import {stage, store} from "../../main";
+import {stage} from "../../main";
 import {getRelativePointerPosition} from "../layerFunctions";
 import * as turf from "@turf/turf";
-import {setFogOfWar} from "../../../../plugins/backendComunication";
+import {setFogOfWar} from "../../../../plugins/backendComunication/fogOfWar";
 
 let layer;
 let polygons = [];

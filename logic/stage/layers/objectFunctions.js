@@ -1,6 +1,6 @@
 import {blockSnapSize} from "./grid/main";
 import {stage} from "../main";
-import {setCharacterPosition} from "../../../plugins/backendComunication";
+import {setCharacterPosition} from "../../../plugins/backendComunication/characters";
 
 let objectToMove;
 

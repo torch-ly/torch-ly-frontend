@@ -34,7 +34,7 @@ export default {
   */
   plugins: [
     'logic/stage/main.js',
-    'plugins/backendComunication.js',
+    'plugins/backendComunication/backendComunication.js',
     'logic/hotkey.js'
   ],
 

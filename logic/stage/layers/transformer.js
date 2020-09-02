@@ -3,7 +3,7 @@ import {stage, store} from "../main";
 import {setMoveObjectByArrow} from "./objectFunctions";
 import {manageTransformerLayer} from "./layerManager";
 import tools from '@/enums/tools';
-import {setCharacterAttrs} from "~/plugins/backendComunication";
+import {setCharacterAttrs} from "~/plugins/backendComunication/characters";
 import {blockSnapSize} from "~/logic/stage/layers/grid/main";
 
 let transformer;

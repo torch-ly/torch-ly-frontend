@@ -30,22 +30,21 @@
   </div>
 </template>
 <script>
-  import Table from "~/components/Table";
-  import {moveToken} from "../logic/stage/layers/objectFunctions";
-  import {setCharacterPosition} from "../plugins/backendComunication";
-  import {store} from "../logic/stage/main";
+import Table from "~/components/Table";
+import {setCharacterPosition} from "../plugins/backendComunication/characters";
+import {store} from "../logic/stage/main";
 
-  export default {
-    components: {Table},
-    data() {
-      return {
-        arrows: ["angle-left", "angle-up", "angle-up", "angle-left", "dot-circle", "angle-right", "angle-down", "angle-down", "angle-right"]
-      }
-    },
-    methods: {
-      click(index, character) {
-        window.navigator.vibrate(40);
-        let pos = {
+export default {
+  components: {Table},
+  data() {
+    return {
+      arrows: ["angle-left", "angle-up", "angle-up", "angle-left", "dot-circle", "angle-right", "angle-down", "angle-down", "angle-right"]
+    }
+  },
+  methods: {
+    click(index, character) {
+      window.navigator.vibrate(40);
+      let pos = {
           x: character.pos.point.x,
           y: character.pos.point.y
         }
