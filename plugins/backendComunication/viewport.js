@@ -23,13 +23,9 @@ export function getViewport() {
 }
 
 export function setViewport() {
-  console.log({
-    matrix: {
-      scale: stage.scale(),
-      x: stage.x(),
-      y: stage.y()
-    }
-  })
+  if (!store.state.authentication.gm)
+    return;
+
   apolloClient.mutate({
     mutation: gql`
       mutation setViewport($matrix:JSON!){
