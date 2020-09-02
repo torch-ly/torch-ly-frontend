@@ -35,3 +35,15 @@ export function getRelativePointerPosition(node) {
   // now we find relative point
   return transform.point(pos);
 }
+
+export function getRelativePointerGridRectangle() {
+  let point = getRelativePointerPosition(stage);
+  return {
+    x: Math.floor(point.x / blockSnapSize) * blockSnapSize,
+    y: Math.floor(point.y / blockSnapSize) * blockSnapSize
+  };
+}
+
+export function copy(object) {
+  return JSON.parse(JSON.stringify(object));
+}

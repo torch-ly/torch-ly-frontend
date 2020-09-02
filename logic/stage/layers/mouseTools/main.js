@@ -6,7 +6,7 @@ import tools from '@/enums/tools';
 import { startDraw as startMeasure } from '@/logic/stage/layers/mouseTools/measure';
 import penTool from '@/logic/stage/layers/mouseTools/penTool';
 import eraserTool from '@/logic/stage/layers/mouseTools/eraserTool';
-import {addFogOfWarListener} from '~/logic/stage/layers/fogofwar/main';
+import {addFogOfWarListener} from "../fogofwar/main";
 
 export let layer
 
@@ -18,29 +18,27 @@ export function initDrawingStoreWatch() {
 
 function toolChanged (tool) {
   stopAllTools();
-
-  stage.on('mousedown', () => {
-    createCircle(layer);
-    createRect(layer);
-
-    switch(tool) {
-      case tools.move:
-        startMoveTool();
-        break;
-      case tools.pen:
-        penTool();
-        break;
-      case tools.eraser:
-        eraserTool();
-        break;
-      case tools.measure:
-        startMeasure();
-        break;
-      case tools.fogOfWar:
-        addFogOfWarListener();
-        break;
-    }
-  });
+  createCircle(layer);
+  createRect(layer);
+  //stage.on('mousedown', () => {
+  //});
+  switch(tool) {
+    case tools.move:
+      startMoveTool();
+      break;
+    case tools.pen:
+      penTool();
+      break;
+    case tools.eraser:
+      eraserTool();
+      break;
+    case tools.measure:
+      startMeasure();
+      break;
+    case tools.fogOfWar:
+      addFogOfWarListener();
+      break;
+  }
 }
 
 function startMoveTool() {
