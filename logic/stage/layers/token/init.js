@@ -28,12 +28,18 @@ function loadImage(character) {
       rotation: character.pos.rot,
       id: String(character.id)
     });
+    image.offsetX(image.width() / 2);
+    image.offsetY(image.height() / 2);
+
+    image.x(image.x() + image.width() / 2);
+    image.y(image.y() + image.height() / 2);
+
     image.snapToGrid = true;
     image.characterID = character.id;
     image.on('dragend', e => {
       setCharacterPosition(image.characterID, {
-        x: Math.round(image.x() / blockSnapSize),
-        y: Math.round(image.y() / blockSnapSize)
+        x: Math.round((image.x() - image.width() / 2) / blockSnapSize),
+        y: Math.round((image.y() - image.height() / 2) / blockSnapSize)
       })
     });
     image.removeElement = () => {
@@ -59,12 +65,24 @@ export function updateCharacterAttrs(character) {
   for (let oldCharacter of oldCharacters) {
     if (oldCharacter.characterID === character.id) {
       // There is an existing old Character
+
+      oldCharacter.rotation(0)
+      oldCharacter.offsetX(0);
+      oldCharacter.offsetY(0);
+
       oldCharacter.scaleX(1);
       oldCharacter.scaleY(1);
       oldCharacter.x(character.pos.point.x * blockSnapSize);
       oldCharacter.y(character.pos.point.y * blockSnapSize);
       oldCharacter.width(character.pos.size * blockSnapSize);
       oldCharacter.height(character.pos.size * blockSnapSize);
+
+      // Offset for snap to center
+      oldCharacter.offsetX(oldCharacter.width() / 2);
+      oldCharacter.offsetY(oldCharacter.height() / 2);
+
+      oldCharacter.x(oldCharacter.x() + oldCharacter.width() / 2);
+      oldCharacter.y(oldCharacter.y() + oldCharacter.height() / 2);
 
       oldCharacter.rotation(character.pos.rot);
 
