@@ -1,6 +1,8 @@
 import hotkeys from 'hotkeys-js';
 import {store} from "~/logic/stage/main";
 import {saveBackgroundLayer} from "~/logic/stage/layers/background/init";
+import {deleteSelectedDrawingObjects} from "~/logic/stage/layers/transformer";
+import {setViewport} from "~/plugins/backendComunication/viewport";
 
 // toggle layer
 hotkeys('command+b,ctrl+b', () => {
@@ -30,3 +32,11 @@ hotkeys('command+s,ctrl+s', (event) => {
   saveBackgroundLayer();
   event.preventDefault();
 });
+
+hotkeys('Delete,Backspace', () => {
+  deleteSelectedDrawingObjects();
+})
+
+hotkeys('command+f,ctrl+f', () => {
+  setViewport();
+})

@@ -1,6 +1,6 @@
 import {blockSnapSize} from "./grid/main";
 import {stage} from "../main";
-import {setCharacterPosition} from "../../../plugins/backendComunication";
+import {setCharacterPosition} from "../../../plugins/backendComunication/characters";
 
 let objectToMove;
 
@@ -34,8 +34,8 @@ export function setMoveObjectByArrow(object) {
 
 function moveToken(character, moveTo) {
   let pos = {
-    x: Math.floor(character.x() / blockSnapSize),
-    y: Math.floor(character.y() / blockSnapSize)
+    x: Math.floor((character.x() - character.width() / 2) / blockSnapSize),
+    y: Math.floor((character.y() - character.height() / 2) / blockSnapSize)
   }
   switch (moveTo) {
     case 'U':

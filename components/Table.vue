@@ -7,7 +7,7 @@
 <script>
 import Konva from "konva";
 import {main, stage} from "../logic/stage/main";
-import {addCharacter} from "~/plugins/backendComunication";
+import {addCharacter} from "~/plugins/backendComunication/characters";
 import {getRelativePointerPosition} from "~/logic/stage/layers/layerFunctions";
 import {blockSnapSize} from "~/logic/stage/layers/grid/main";
 
@@ -30,8 +30,6 @@ export default {
       let size;
 
       let p = getRelativePointerPosition(stage);
-
-      console.log(p)
 
       switch (monster.size) {
         case 'L':
@@ -59,8 +57,6 @@ export default {
         },
         player: [this.$store.state.authentication.playerID]
       };
-
-      console.log(character)
 
       addCharacter(character);
     }

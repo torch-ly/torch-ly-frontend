@@ -1,9 +1,11 @@
+
 import {stage, store} from "../../main";
 import {copy, getRelativePointerGridRectangle, getRelativePointerPosition} from "../layerFunctions";
-import * as turf from "@turf/turf";
-import {setFogOfWar} from "../../../../plugins/backendComunication";
 import {blockSnapSize} from "../grid/main";
 import deepcopy from "deepcopy";
+import * as turf from "@turf/turf";
+import {setFogOfWar} from "../../../../plugins/backendComunication/fogOfWar";
+
 
 let layer;
 let polygons = [];

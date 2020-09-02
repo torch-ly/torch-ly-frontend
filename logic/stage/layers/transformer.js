@@ -3,6 +3,8 @@ import {stage, store} from "../main";
 import {setMoveObjectByArrow} from "./objectFunctions";
 import {manageTransformerLayer} from "./layerManager";
 import tools from '@/enums/tools';
+import {setCharacterAttrs} from "~/plugins/backendComunication/characters";
+import {blockSnapSize} from "~/logic/stage/layers/grid/main";
 
 let transformer;
 let transformerLayer;
@@ -72,16 +74,22 @@ export function selectToken(characterSelection) {
   transformerLayer.batchDraw();
 }
 
-export function addDeletionKeyListener() {
-  window.addEventListener("keyup", (e) => {
-    if (e.key != "Delete" && e.key != "Backspace")
-      return;
+export function deleteSelectedDrawingObjects() {
+  for (let object of transformer.nodes()) {
+    object.removeElement();
+    object.destroy();
+  }
+  clearTransformerNodes();
+  stage.batchDraw();
+}
 
-    for (let object of transformer.nodes()) {
-      object.removeElement();
-      object.destroy();
-    }
-    clearTransformerNodes();
-    stage.batchDraw();
-  })
+export function addTransformationListener(object) {
+  object.on("transformend", () => {
+    let pastRot = object.rotation();
+    object.rotation(0);
+
+    let width = object.width() * object.getTransform().getMatrix()[0];
+
+    setCharacterAttrs(object.characterID, pastRot, Math.round(width / blockSnapSize))
+  });
 }

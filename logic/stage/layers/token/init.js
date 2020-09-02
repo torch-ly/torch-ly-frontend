@@ -1,11 +1,12 @@
 import Konva, {Image as KonvaImage} from "konva";
 import {addSnapToGridListener} from "../layerFunctions";
-import {stage, store} from "../../main";
+import {store} from "../../main";
 import {blockSnapSize} from "../grid/main";
 import {draw, layer} from "./main";
 import {addTransformerClickListener} from "../transformer";
-import {setCharacterPosition} from "../../../../plugins/backendComunication";
-import {removeCharacter} from "@/plugins/backendComunication";
+import {removeCharacter, setCharacterPosition} from "../../../../plugins/backendComunication/characters";
+import {addTransformationListener} from "~/logic/stage/layers/transformer";
+import devices from "@/enums/devices";
 
 let out = [];
 
@@ -13,6 +14,9 @@ export function init() {
   out = [];
 
   let characters = store.state.character.characters;
+
+  if (store.state.config.device === devices.MOBILE)
+    return ;
 
   characters.forEach(character => loadImage(character));
 }
@@ -27,12 +31,18 @@ function loadImage(character) {
       rotation: character.pos.rot,
       id: String(character.id)
     });
+    image.offsetX(image.width() / 2);
+    image.offsetY(image.height() / 2);
+
+    image.x(image.x() + image.width() / 2);
+    image.y(image.y() + image.height() / 2);
+
     image.snapToGrid = true;
     image.characterID = character.id;
     image.on('dragend', e => {
       setCharacterPosition(image.characterID, {
-        x: Math.round(image.x() / blockSnapSize),
-        y: Math.round(image.y() / blockSnapSize)
+        x: Math.round((image.x() - image.width() / 2) / blockSnapSize),
+        y: Math.round((image.y() - image.height() / 2) / blockSnapSize)
       })
     });
     image.removeElement = () => {
@@ -43,6 +53,8 @@ function loadImage(character) {
 
     addSnapToGridListener([image]);
 
+    addTransformationListener(image);
+
     out.push(image);
     draw(out);
   };
@@ -50,14 +62,32 @@ function loadImage(character) {
 }
 
 
-export function updateCharacterPositions(character) {
+export function updateCharacterAttrs(character) {
   let oldCharacters = layer.children.filter(child => child instanceof KonvaImage);
 
   for (let oldCharacter of oldCharacters) {
     if (oldCharacter.characterID === character.id) {
       // There is an existing old Character
+
+      oldCharacter.rotation(0)
+      oldCharacter.offsetX(0);
+      oldCharacter.offsetY(0);
+
+      oldCharacter.scaleX(1);
+      oldCharacter.scaleY(1);
       oldCharacter.x(character.pos.point.x * blockSnapSize);
       oldCharacter.y(character.pos.point.y * blockSnapSize);
+      oldCharacter.width(character.pos.size * blockSnapSize);
+      oldCharacter.height(character.pos.size * blockSnapSize);
+
+      // Offset for snap to center
+      oldCharacter.offsetX(oldCharacter.width() / 2);
+      oldCharacter.offsetY(oldCharacter.height() / 2);
+
+      oldCharacter.x(oldCharacter.x() + oldCharacter.width() / 2);
+      oldCharacter.y(oldCharacter.y() + oldCharacter.height() / 2);
+
+      oldCharacter.rotation(character.pos.rot);
 
       layer.batchDraw();
 

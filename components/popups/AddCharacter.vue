@@ -25,22 +25,22 @@
 </template>
 
 <script>
-  import PopupContainer from "../gui-components/PopupContainer";
-  import AdvancedOptions from "../gui-components/AdvancedOptions";
-  import {addCharacter} from "../../plugins/backendComunication";
-  import {store} from "../../logic/stage/main";
+import PopupContainer from "../gui-components/PopupContainer";
+import AdvancedOptions from "../gui-components/AdvancedOptions";
+import {addCharacter} from "../../plugins/backendComunication/characters";
+import {store} from "../../logic/stage/main";
 
-  export default {
-    components: {PopupContainer, AdvancedOptions},
-    data() {
-      return {
-        character: {
-          name: "",
-          token: "",
-          pos: {
-            point: {}
-          },
-          sheet: "",
+export default {
+  components: {PopupContainer, AdvancedOptions},
+  data() {
+    return {
+      character: {
+        name: "",
+        token: "",
+        pos: {
+          point: {}
+        },
+        sheet: "",
           visible: false
         }
       }
