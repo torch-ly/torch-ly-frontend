@@ -1,41 +1,51 @@
 <template>
   <div
-    class="hidden md:block fixed md:w-64 bottom-0 md:top-0 right-0 bg-gray-700 animate__animated animate__fadeInRight text-white flex justify-center items-center flex-col"
+    class="hidden md:block fixed bottom-0 md:top-0 right-0 bg-gray-700 animate__animated animate__fadeInRight text-white"
     :class="{'hidden' : !visible}">
 
-    <MoveOverlay class="animate__animated animate__fadeInRight p-6" v-show="currentTool === tools.move"/>
-    <PaintOverlay class="animate__animated animate__fadeInRight p-6" v-show="[tools.pen, tools.eraser, tools.circle, tools.rectangle].indexOf(currentTool) >= 0"/>
-    <MeasureOverlay class="animate__animated animate__fadeInRight p-6" v-show="currentTool === tools.measure"/>
-    <FogOfWarOverlay class="animate__animated animate__fadeInRight p-6" v-show="currentTool === tools.fogOfWar"/>
-    <MonsterOverlay class="animate__animated animate__fadeInRight" v-show="currentTool === tools.monsters"/>
+    <div class="flex justify-between">
+      <InitiativeTracker class="p-6"/>
+
+      <div class="md:w-64">
+        <MoveOverlay class="animate__animated animate__fadeInRight p-6" v-show="currentTool === tools.move"/>
+        <PaintOverlay class="animate__animated animate__fadeInRight p-6"
+                      v-show="[tools.pen, tools.eraser, tools.circle, tools.rectangle].indexOf(currentTool) >= 0"/>
+        <MeasureOverlay class="animate__animated animate__fadeInRight p-6" v-show="currentTool === tools.measure"/>
+        <FogOfWarOverlay class="animate__animated animate__fadeInRight p-6" v-show="currentTool === tools.fogOfWar"/>
+        <MonsterOverlay class="animate__animated animate__fadeInRight" v-show="currentTool === tools.monsters"/>
+      </div>
+
+    </div>
 
   </div>
 </template>
 <script>
-  import BrushSelector from "./components/BrushSelector";
-  import PaintOverlay from "@/components/overlay/PaintOverlay";
-  import MeasureOverlay from "./MeasureOverlay";
-  import MoveOverlay from "./MoveOverlay";
-  import FogOfWarOverlay from "./FogOfWarOverlay";
-  import MonsterOverlay from "./MonsterOverlay"
-  import {mapState} from 'vuex';
-  import tools from '@/enums/tools';
+import BrushSelector from "./components/BrushSelector";
+import PaintOverlay from "@/components/overlay/PaintOverlay";
+import MeasureOverlay from "./MeasureOverlay";
+import MoveOverlay from "./MoveOverlay";
+import FogOfWarOverlay from "./FogOfWarOverlay";
+import MonsterOverlay from "./MonsterOverlay"
+import InitiativeTracker from "~/components/overlay/InitiativeTracker";
+import {mapState} from 'vuex';
+import tools from '@/enums/tools';
 
-  export default {
-    data() {
-      return {
-        layerButtonAcive: false,
-        tools
-      }
-    },
-    components: {
-      MoveOverlay,
-      BrushSelector,
-      MeasureOverlay,
-      PaintOverlay,
-      FogOfWarOverlay,
-      MonsterOverlay
-    },
+export default {
+  data() {
+    return {
+      layerButtonAcive: false,
+      tools
+    }
+  },
+  components: {
+    MoveOverlay,
+    BrushSelector,
+    MeasureOverlay,
+    PaintOverlay,
+    FogOfWarOverlay,
+    MonsterOverlay,
+    InitiativeTracker
+  },
     methods: {
       dropdownChange(e) {
         this.$store.commit("manu/setLayer", e.target.value);
