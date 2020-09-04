@@ -17,8 +17,11 @@
         {{ init.value }}
       </div>
     </div>
-    <button @click="orderInitiative">Order</button>
-    <button @click="nextTurn">Next turn</button>
+    <div class="flex justify-between">
+      <button @click="orderInitiative" class="submit-button active:submit-button-active mr-2">Order</button>
+      <button @click="nextTurn" class="submit-button active:submit-button-active">Next turn</button>
+    </div>
+
   </div>
 </template>
 <script>
@@ -65,3 +68,6 @@ export default {
   }
 }
 </script>
+<style scoped lang="scss">
+@import "assets/css/scheme";
+</style>

@@ -9,6 +9,7 @@ import {getFogOfWar, subscribeFogOfWar} from "~/plugins/backendComunication/fogO
 import {loadCharacters, subscribeCharacter} from "~/plugins/backendComunication/characters";
 import {getViewport, subscribeViewport} from "~/plugins/backendComunication/viewport";
 import devices from "@/enums/devices";
+import {getInitiative, subscribeInitiative} from "@/plugins/backendComunication/initiative";
 
 const GRAPHQL_ENDPOINT = "ws://" + process.env.BACKEND + "/graphql";
 
@@ -65,6 +66,9 @@ function loadTable() {
 
   getViewport();
   subscribeViewport();
+
+  getInitiative();
+  subscribeInitiative();
 }
 
 export function logError(...err) {
