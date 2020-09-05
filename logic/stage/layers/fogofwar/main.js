@@ -9,10 +9,10 @@ import {setFogOfWar} from "~/plugins/backendComunication/fogOfWar";
 
 let layer;
 let polygons = [];
-let turf_polygons = [];
 let currentPolygon = [];
 let nextPolygon;
 let insert = true;
+let ununionizable = [];
 
 let snapToGrid = false;
 
@@ -55,7 +55,7 @@ export function addFogOfWarListener() {
 export function syncronize() {
   let polygons = [];
   for (let i = 0; i < turf_polygons.length; i++) {
-    polygons.push(turf_polygons[i].geometry.coordinates[0]);
+    polygons.push(this.polygons[i].points());
   }
   setFogOfWar(polygons);
 }
@@ -70,10 +70,17 @@ export function recieveSyncronize(p_polygons) {
     poly.destroy();
   }
 
-  for (let coordinates of p_polygons) {
-    let turf_polygon = turf.polygon([coordinates]);
-    polygons.push(addPolygons(turf_polygon, "#000"));
-    turf_polygons.push(turf_polygon);
+  for (let coordinate of p_polygons) {
+    let konva_line = new Konva.Line({
+      id: ID(),
+      points: coordinate,
+      closed: true,
+      strokeWidth: 3,
+    });
+    konva_line.fill("#000");
+    konva_line.stroke("#aa0000");
+    layer.add(konva_line);
+    polygons.push(konva_line);
   }
 
   layer.draw();
@@ -104,6 +111,22 @@ export function toggleSnapToGrid() {
   snapToGrid = !snapToGrid;
 }
 
+function turf_from_konva(konva_polygon){
+  let coordinates = [];
+  let point = [];
+  for(let i = 0; i < konva_polygon.points().length; i++){
+    if(i%2===0){
+      point = [];
+      point.push(konva_polygon.points()[i]);
+    }else{
+      point.push(konva_polygon.points()[i]);
+      coordinates.push(deepcopy(point));
+    }
+  }
+  coordinates.push(coordinates[0]);
+  return turf.polygon([coordinates]);
+}
+
 //insert and delete
 //Insert currentPolygon
 export function InsertPolygon() {
@@ -120,66 +143,63 @@ export function InsertPolygon() {
   }
 
   let intersects = [];
+  let intersect_polygons = [];
 
   //check for overlapping polygons
-  for (let i = 0; i < turf_polygons.length; i++) {
-    if (turf.booleanOverlap(turf_polygon, turf_polygons[i]) || turf.booleanContains(turf_polygon, turf_polygons[i]) ||
-      turf.booleanContains(turf_polygons[i], turf_polygon)) {
+  for (let i = 0; i < polygons.length; i++) {
+    if(ununionizable.includes(polygons[i].id())){
+      continue;
+    }
+    let overlap_polygon = turf_from_konva(polygons[i]);
+    if (turf.booleanOverlap(turf_polygon, overlap_polygon) || turf.booleanContains(turf_polygon, overlap_polygon) ||
+      turf.booleanContains(overlap_polygon, turf_polygon)) {
       intersects.push(i);
+      intersect_polygons.push(overlap_polygon);
     }
   }
-
 
   if (intersects.length === 0) {
     //No overlaps found
     polygons.push(addPolygons(turf_polygon, "#000"));
-    turf_polygons.push(turf_polygon);
   } else {
     //build a union of all overlapping polygons
     let union = turf_polygon;
 
     for (let i = 0; i < intersects.length; i++) {
-      union = turf.union(union, turf_polygons[intersects[i]])
+      union = turf.union(union, intersect_polygons[i])
     }
 
     //delete old polygons
     for (let i of intersects.sort().reverse()) {
-      turf_polygons.splice(i, 1);
       polygons[i].destroy();
       polygons.splice(i, 1);
     }
 
     //add new union
     polygons.push(addPolygons(union, "#000"));
-    turf_polygons.push(union);
   }
   layer.batchDraw();
-  console.log(polygons);
-  console.log(turf_polygons);
 }
 
 //cut intersection of polygon with index "index" and the cut_polygon and draw it
 function cutIntersection(index, cut_turf_polygon) {
-  let difference = turf.difference(turf_polygons[index], cut_turf_polygon);
+  let difference = turf.difference(turf_from_konva(polygons[index]), cut_turf_polygon);
   let len = difference.geometry.coordinates.length;
   if (polygons[index] != null)
     polygons[index].destroy();
-
+  console.log("Type: " + typeof difference);
   if (len > 1) {
     //check if intersection results in multiple polygons
     for (let j = 0; j < len; j++) {
       let split_poly = turf.polygon(difference.geometry.coordinates[j]);
       if (j === 0) {
         polygons[index] = addPolygons(split_poly, "#000");
-        turf_polygons[index] = split_poly;
       } else {
         polygons.push(addPolygons(split_poly, "#000"));
-        turf_polygons.push(split_poly);
       }
     }
   } else {
     polygons[index] = addPolygons(difference, "#000");
-    turf_polygons[index] = difference;
   }
 }
 
@@ -203,18 +223,19 @@ export function DeletePolygon() {
   let intersect = [];
   let overlayed = [];
 
-  for (let i = 0; i < turf_polygons.length; i++) {
-    if (turf.booleanContains(turf_polygon, turf_polygons[i])) {
+  for (let i = 0; i < polygons.length; i++) {
+    let check_polygon = turf_from_konva(polygons[i]);
+    if (turf.booleanContains(turf_polygon, check_polygon)) {
       inside.push(i);
       continue;
     }
 
-    if (turf.booleanContains(turf_polygons[i], turf_polygon)) {
+    if (turf.booleanContains(check_polygon, turf_polygon)) {
       overlayed.push(i)
       continue;
     }
 
-    if (turf.booleanOverlap(turf_polygon, turf_polygons[i])) {
+    if (turf.booleanOverlap(turf_polygon, check_polygon)) {
       intersect.push(i);
     }
   }
@@ -228,6 +249,11 @@ export function DeletePolygon() {
   try {
     for (let i of overlayed) {
 
+      let overlayed_turf_polygon = turf_from_konva(polygons[i]);
+
+      let b_ununionizable = ununionizable.includes(polygons[i].id());
+      removeElement(ununionizable, polygons[i].id());
+
       //destroy old polygon
       polygons[i].destroy();
 
@@ -239,12 +265,14 @@ export function DeletePolygon() {
       let firstindex;
       let secondindex;
 
-      let coordinates = deepcopy(turf_polygons[i].geometry.coordinates[0]).splice(0, turf_polygons[i].geometry.coordinates[0].length - 1);
+      let coordinates = deepcopy(overlayed_turf_polygon.geometry.coordinates[0]).splice(0, overlayed_turf_polygon.geometry.coordinates[0].length - 1);
 
       //calculate first point on outer polygon
       for (let j = 0; j < coordinates.length; j++) {
         firstline = turf.lineString([innerPoints[0], coordinates[j]]);
-        if (turf.booleanContains(turf_polygons[i], firstline)) {
+        let inter = turf.intersect(overlayed_turf_polygon, firstline);
+        console.log(inter);
+        if (turf.booleanEqual(firstline, inter)) {
           firstindex = j;
           break;
         }
@@ -254,7 +282,7 @@ export function DeletePolygon() {
       for (let j = (firstindex + 1); (j % coordinates.length !== firstindex); j++) {
         let index_j = j % coordinates.length;
         secondLine = turf.lineString([innerPoints[1], coordinates[index_j]]);
-        if (turf.booleanContains(turf_polygons[i], secondLine) && turf.booleanDisjoint(firstline, secondLine)) {
+        if (turf.booleanEqual(turf.intersect(overlayed_turf_polygon, secondLine), secondLine) && turf.intersect(firstline, secondLine) === null) {
           secondindex = index_j;
           break;
         }
@@ -285,27 +313,29 @@ export function DeletePolygon() {
       let secondpolygon = turf.polygon([secondcoordinates]);
 
       //cut intersection of both polygons
-      turf_polygons[i] = firstpolygon;
+      polygons[i] = addPolygons(firstpolygon, "#000");
       cutIntersection(i, turf_polygon);
-      turf_polygons.push(secondpolygon);
-      //push null so array entry exists
-      polygons.push(null);
+      if(b_ununionizable){
+        ununionizable.push(polygons[i].id());
+      }
+      let second_konva = addPolygons(secondpolygon, "#000");
+      polygons.push(second_konva);
+      ununionizable.push(second_konva.id());
       cutIntersection(polygons.length - 1, turf_polygon);
     }
   }catch (e){
     console.log("Error in overlap");
+    console.log(e);
     return;
   }
   //delete all polygons inside removing polygon
   for (let i of inside.sort().reverse()) {
-    turf_polygons.splice(i, 1);
+    removeElement(ununionizable, polygons[i].id())
     polygons[i].destroy();
     polygons.splice(i, 1);
   }
 
   layer.batchDraw();
-  console.log(polygons);
-  console.log(turf_polygons);
 }
 
 //helper functions
@@ -314,7 +344,7 @@ function addPolygons(turf, color) {
   let konva_line = turf_to_Konva(turf);
 
   konva_line.fill(color);
-  konva_line.stroke(color);
+  konva_line.stroke("#aa0000");
   layer.add(konva_line);
 
   return konva_line;
@@ -329,19 +359,24 @@ function addPointToPolygon(point) {
 function turf_to_Konva(turf_poylgon) {
   let arr = turf_poylgon.geometry.coordinates[0];
 
-  arr = JSON.parse(JSON.stringify(arr));
+  arr = deepcopy(arr);
   arr = arr.splice(0, arr.length - 1);
 
   return new Konva.Line({
+    id: ID(),
     points: arr.flat(),
     closed: true,
-    strokeWidth: 1,
+    strokeWidth: 3,
   });
 }
 
+const ID = function () {
+  return '_' + Math.random().toString(36).substr(2, 9);
+};
+
 //draw temporary polygon
 function showNextPoint(point) {
-  let points = JSON.parse(JSON.stringify(currentPolygon));
+  let points = deepcopy(currentPolygon);
 
   points.push(point);
 
@@ -359,6 +394,13 @@ function showNextPoint(point) {
 
   layer.add(nextPolygon);
   layer.batchDraw();
+}
+
+function removeElement(array, element){
+  const index = array.indexOf(element);
+  if (index > -1) {
+    array.splice(index, 1);
+  }
 }
 
 function pointToArray(point) {
