@@ -20,7 +20,7 @@ export function setInitiative() {
   apolloClient.mutate({
     mutation: gql`
       mutation setInitiative($order:JSON!){
-        updateInitiative(order:$order) { order }
+        updateInitiative(order:$order) {order}
       }
     `,
     variables: {
@@ -38,7 +38,7 @@ export function subscribeInitiative() {
     `
   }).subscribe({
     next({data}) {
-      store.commit("character/setInitiativeOrder", data.getInitiative.order);
+      store.commit("character/setInitiativeOrder", data.updateInitiative.order);
     }
   });
 }

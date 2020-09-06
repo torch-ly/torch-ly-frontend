@@ -18,14 +18,16 @@
       </div>
     </div>
     <div class="flex justify-between">
-      <button @click="orderInitiative" class="submit-button active:submit-button-active mr-2">Order</button>
-      <button @click="nextTurn" class="submit-button active:submit-button-active">Next turn</button>
+      <button @click="$store.commit('character/orderInitiative')"
+              class="submit-button active:submit-button-active mr-2">Order
+      </button>
+      <button @click="$store.commit('character/nextTurn')" class="submit-button active:submit-button-active">Next turn
+      </button>
     </div>
 
   </div>
 </template>
 <script>
-import {store} from "~/logic/stage/main";
 
 export default {
   data() {
@@ -50,13 +52,6 @@ export default {
         }
       }
       return null;
-    },
-    orderInitiative() {
-      store.commit("character/orderInitiative");
-    },
-    nextTurn() {
-      this.currentInitiativeIndex++;
-      this.currentInitiativeIndex %= this.initiative.length;
     },
     getInitiativeList() {
       if (!this.fullList) {
