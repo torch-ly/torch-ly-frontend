@@ -13,7 +13,7 @@
         <div class="grid gap-3 grid-cols-3 text-center p-3">
           <!-- Create arrows for movement-control -->
           <div v-for="(arrow, index) in arrows"
-               class="flex justify-center items-center hover:bg-accent focus:bg-accent rounded-full h-12"
+               class="flex justify-center items-center hover:bg-accent active:bg-accent rounded-full h-12"
                @click="click(index, character)">
 
           <fa :icon="arrow" style="font-size: 1.8rem; color: white;"
@@ -72,6 +72,9 @@ export default {
               x: pos.x - 1,
               y: pos.y
             })
+            break;
+          case 4:
+            navigator.vibrate([50, 10, 50, 10, 50]);
             break;
           case 5:
             setCharacterPosition(character.id, {
