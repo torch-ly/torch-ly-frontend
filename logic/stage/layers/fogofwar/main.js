@@ -304,8 +304,8 @@ export function DeletePolygon() {
   }
 
   layer.batchDraw();
-  console.log(polygons);
-  console.log(turf_polygons);
+  // console.log(polygons);
+  // console.log(turf_polygons);
 }
 
 //helper functions

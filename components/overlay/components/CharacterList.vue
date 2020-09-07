@@ -49,8 +49,6 @@ import {store} from "../../../logic/stage/main";
 import {selectToken} from "~/logic/stage/layers/transformer";
 import {evaluate} from "mathjs";
 
-console.log(evaluate("2+3"))
-
 export default {
   data() {
     return {
