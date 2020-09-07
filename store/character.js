@@ -2,7 +2,9 @@ import {setInitiative} from "@/plugins/backendComunication/initiative";
 
 export const state = () => ({
   characters: [],
-  initiative: []
+  initiative: [],
+  hoverOverCharacter: "",
+  selectedCharacter: "",
 })
 
 export const mutations = {
@@ -28,4 +30,10 @@ export const mutations = {
     state.initiative.sort((a, b) => b.value - a.value);
     setInitiative();
   },
+  setHoverOverCharacter(state, characterID) {
+    state.hoverOverCharacter = characterID;
+  },
+  setSelectedCharacter(state, characterID) {
+    state.selectedCharacter = characterID;
+  }
 }
