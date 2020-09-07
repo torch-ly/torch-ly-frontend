@@ -4,6 +4,8 @@
 
     <Login/>
 
+    <FullscreenNotification />
+
     <InitiativeTracker v-if="device !== devices.MOBILE"/>
     <Overlay v-if="device === devices.DEFAULT"/>
 
@@ -33,15 +35,16 @@
   import SelectBackgroundLayer from "@/components/popups/SelectBackgroundLayer";
   import devices from "@/enums/devices";
   import InitiativeTracker from "@/components/overlay/InitiativeTracker";
+  import FullscreenNotification from "@/components/gui-components/FullscreenNotification";
 
   export default {
-    components: {Overlay, Table, InitiativeTracker, FloatingButtons, FloatingInfos, AddImage, AddCharacter, BrushSelector, MobileMovement, Login, SelectBackgroundLayer},
+    components: {Overlay, Table, FullscreenNotification, InitiativeTracker, FloatingButtons, FloatingInfos, AddImage, AddCharacter, BrushSelector, MobileMovement, Login, SelectBackgroundLayer},
     data() {
       return {
         mirrored: false,
         fadeOut: false,
         visible: true,
-        devices: devices
+        devices: devices,
       }
     },
     computed: {
