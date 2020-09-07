@@ -25,7 +25,7 @@ export const mutations = {
     setInitiative();
   },
   orderInitiative(state) {
-    state.initiative.sort((a, b) => a.value - b.value);
+    state.initiative.sort((a, b) => b.value - a.value);
     setInitiative();
   },
 }
