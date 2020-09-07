@@ -2,6 +2,7 @@
   <div>
     <Table v-if="device !== devices.MOBILE"/>
 
+    <InitiativeTracker v-if="device !== devices.MOBILE"/>
     <Overlay v-if="device === devices.DEFAULT"/>
 
     <FloatingButtons v-if="device === devices.DEFAULT"/>
@@ -30,9 +31,10 @@
   import Login from "@/components/popups/Login";
   import SelectBackgroundLayer from "@/components/popups/SelectBackgroundLayer";
   import devices from "@/enums/devices";
+  import InitiativeTracker from "@/components/overlay/InitiativeTracker";
 
   export default {
-    components: {Overlay, Table, FloatingButtons, FloatingInfos, AddImage, AddCharacter, BrushSelector, MobileMovement, Login, SelectBackgroundLayer},
+    components: {Overlay, Table, InitiativeTracker, FloatingButtons, FloatingInfos, AddImage, AddCharacter, BrushSelector, MobileMovement, Login, SelectBackgroundLayer},
     data() {
       return {
         mirrored: false,

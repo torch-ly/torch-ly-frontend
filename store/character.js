@@ -21,6 +21,7 @@ export const mutations = {
   },
   setInitiativeOrder(state, order) {
     state.initiative = order;
+    setInitiative();
   },
   nextTurn(state) {
     state.initiative.push(state.initiative.shift());
