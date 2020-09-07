@@ -51,12 +51,10 @@ function loadImage(character) {
 
     image.on('mouseenter', () => {
       store.commit("character/setHoverOverCharacter", image.characterID);
-      console.log(store.state.character.hoverOverCharacter);
     });
 
     image.on('mouseleave', () => {
       store.commit("character/setHoverOverCharacter", null);
-      console.log(store.state.character.hoverOverCharacter);
     });
 
     addTransformerClickListener(image);
