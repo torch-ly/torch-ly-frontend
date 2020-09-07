@@ -30,6 +30,7 @@
     "konva": "^5.0.3",
     "lodash": "^4.17.19",
     "lowdash": "^1.2.0",
+    "mathjs": "^7.2.0",
     "node-sass": "^4.14.1",
     "nuxt": "^2.0.0",
     "nuxt-fontawesome": "^0.4.0",
