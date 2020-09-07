@@ -2,6 +2,8 @@
   <div>
     <Table v-if="device !== devices.MOBILE"/>
 
+    <Login/>
+
     <InitiativeTracker v-if="device !== devices.MOBILE"/>
     <Overlay v-if="device === devices.DEFAULT"/>
 
@@ -11,7 +13,6 @@
     <AddCharacter v-if="device === devices.DEFAULT"/>
     <AddImage v-if="device === devices.DEFAULT"/>
     <SelectBackgroundLayer v-if="device === devices.DEFAULT"/>
-    <Login v-if="device === devices.DEFAULT"/>
     <MobileMovement class="md:hidden" v-if="device === devices.MOBILE"/>
 
     <div class="w-full h-full fixed top-0 left-0 bg-gray-700 flex justify-center items-center select-none" v-show="visible" :class="{'animate__animated animate__fadeOutDown animate__fast' : fadeOut}">
