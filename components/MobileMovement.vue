@@ -49,9 +49,21 @@ export default {
           y: character.pos.point.y
         }
         switch (index) {
+          case 0:
+            setCharacterPosition(character.id, {
+              x: pos.x -1,
+              y: pos.y - 1
+            })
+            break;
           case 1:
             setCharacterPosition(character.id, {
               x: pos.x,
+              y: pos.y - 1
+            })
+            break;
+          case 2:
+            setCharacterPosition(character.id, {
+              x: pos.x + 1,
               y: pos.y - 1
             })
             break;
@@ -67,9 +79,21 @@ export default {
               y: pos.y
             })
             break;
+          case 6:
+            setCharacterPosition(character.id, {
+              x: pos.x - 1,
+              y: pos.y + 1
+            })
+            break;
           case 7:
             setCharacterPosition(character.id, {
               x: pos.x,
+              y: pos.y + 1
+            })
+            break;
+          case 8:
+            setCharacterPosition(character.id, {
+              x: pos.x + 1,
               y: pos.y + 1
             })
             break;
