@@ -57,20 +57,19 @@ export function syncronize() {
   for (let i = 0; i < turf_polygons.length; i++) {
     polygons.push(this.polygons[i].points());
   }
-  setFogOfWar(polygons);
+  setFogOfWar([polygons, ununionizable]);
 }
 
 //receive data via graphql
 export function recieveSyncronize(p_polygons) {
   if(!store.state.authentication.gm)
     return;
-  turf_polygons = [];
 
   for (let poly of polygons) {
     poly.destroy();
   }
 
-  for (let coordinate of p_polygons) {
+  for (let coordinate of p_polygons[0]) {
     let konva_line = new Konva.Line({
       id: ID(),
       points: coordinate,
@@ -82,6 +81,8 @@ export function recieveSyncronize(p_polygons) {
     layer.add(konva_line);
     polygons.push(konva_line);
   }
+
+  ununionizable = p_polygons[1];
 
   layer.draw();
 }
@@ -187,7 +188,6 @@ function cutIntersection(index, cut_turf_polygon) {
   let len = difference.geometry.coordinates.length;
   if (polygons[index] != null)
     polygons[index].destroy();
-  console.log("Type: " + typeof difference);
   if (len > 1) {
     //check if intersection results in multiple polygons
     for (let j = 0; j < len; j++) {
@@ -260,8 +260,7 @@ export function DeletePolygon() {
       //split polygon
       //search for split lines
       let innerPoints = [turf_polygon.geometry.coordinates[0][0], turf_polygon.geometry.coordinates[0][1]];
-      let firstline;
-      let secondLine;
+      let firstcords;
       let firstindex;
       let secondindex;
 
@@ -269,10 +268,8 @@ export function DeletePolygon() {
 
       //calculate first point on outer polygon
       for (let j = 0; j < coordinates.length; j++) {
-        firstline = turf.lineString([innerPoints[0], coordinates[j]]);
-        let inter = turf.intersect(overlayed_turf_polygon, firstline);
-        console.log(inter);
-        if (turf.booleanEqual(firstline, inter)) {
+        if (lineInsidePolygon(polygons[i].points(), [innerPoints[0], coordinates[j]], coordinates[j])) {
+          firstcords = [innerPoints[0], coordinates[j]];
           firstindex = j;
           break;
         }
@@ -281,8 +278,8 @@ export function DeletePolygon() {
       //calculate second point on outer polygon
       for (let j = (firstindex + 1); (j % coordinates.length !== firstindex); j++) {
         let index_j = j % coordinates.length;
-        secondLine = turf.lineString([innerPoints[1], coordinates[index_j]]);
-        if (turf.booleanEqual(turf.intersect(overlayed_turf_polygon, secondLine), secondLine) && turf.intersect(firstline, secondLine) === null) {
+        if (lineInsidePolygon(polygons[i].points(), [innerPoints[1], coordinates[index_j]], coordinates[index_j]) &&
+          !linescross(firstcords[0], firstcords[1], innerPoints[1], coordinates[index_j])) {
           secondindex = index_j;
           break;
         }
@@ -320,8 +317,8 @@ export function DeletePolygon() {
       }
       let second_konva = addPolygons(secondpolygon, "#000");
       polygons.push(second_konva);
-      ununionizable.push(second_konva.id());
       cutIntersection(polygons.length - 1, turf_polygon);
+      ununionizable.push(polygons[polygons.length-1].id());
     }
   }catch (e){
     console.log("Error in overlap");
@@ -373,6 +370,54 @@ function turf_to_Konva(turf_poylgon) {
 const ID = function () {
   return '_' + Math.random().toString(36).substr(2, 9);
 };
+
+//polygon_coordinates first and last not matching, line coordinates = [x, y]
+function lineInsidePolygon(polygon_coordinates, line_coordinates, cords_to_splice) {
+  let cords = deepcopy(polygon_coordinates);
+  for(let i = 0; i < cords.length-1; i++){
+    if(cords[i] === cords_to_splice[0] && cords[i+1] === cords_to_splice[1]){
+      cords.splice(i, 2);
+      if(i !== 0){
+        cords.push(cords[0]);
+        cords.push(cords[1]);
+      }
+    }
+  }
+  for(let i = 0; i < cords.length - 2; i += 2){
+    if(linescross([cords[i], cords[i+1]], [cords[i+2], cords[i+3]], line_coordinates[0], line_coordinates[1])){
+      return false;
+    }
+  }
+  return true;
+}
+
+function linescross(p, q, r, s){
+  let d1 = direction(p,q,r);
+  let d2 = direction(p,q,s);
+  if (d1 === 0 && onSegment(p,q,r)) return true;
+  if (d2 === 0 && onSegment(p,q,s)) return true;
+  if((d1>0&&d2>0)||(d1<0&&d2<0))return false;
+  let d3 = direction(r,s,p);
+  let d4 = direction(r,s,q);
+  if (d3 === 0 && onSegment(r,s,p)) return true;
+  if (d4 === 0 && onSegment(r,s,q)) return true;
+  if((d3>0&&d4>0)||(d3<0&&d4<0)) return false;
+  return !(d1 === d2 && d2 === d3 && d3 === d4 && d4 === 0);
+}
+
+function det(a, b) {  return a[0]*b[1] - a[1]*b[0]; }
+
+function direction(p1, q1, r1) {
+  let a = [q1[0]-p1[0], q1[1]-p1[1]];
+  let b = [r1[0]-q1[0], r1[1]-q1[1]];
+  return det(a,b);
+}
+
+function onSegment(p,q, x) {
+  let topright = [Math.max(p[0],q[0]), Math.max(p[1],q[1])];
+  let botleft = [Math.min(p[0],q[0]), Math.min(p[1],q[1])];
+  return (x[0] <= topright[0])&&(x[1] <= topright[1])&& (botleft[0] <= x[0])&&(botleft[1] <= x[1]);
+}
 
 //draw temporary polygon
 function showNextPoint(point) {
