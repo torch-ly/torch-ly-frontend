@@ -49,6 +49,14 @@ function loadImage(character) {
       removeCharacter(image.characterID)
     }
 
+    image.on('mouseenter', () => {
+      store.commit("character/setHoverOverCharacter", image.characterID);
+    });
+
+    image.on('mouseleave', () => {
+      store.commit("character/setHoverOverCharacter", null);
+    });
+
     addTransformerClickListener(image);
 
     addSnapToGridListener([image]);

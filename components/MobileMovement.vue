@@ -13,11 +13,15 @@
         <div class="grid gap-3 grid-cols-3 text-center p-3">
           <!-- Create arrows for movement-control -->
           <div v-for="(arrow, index) in arrows"
-               class="flex justify-center items-center hover:bg-accent focus:bg-accent rounded-full h-12"
+               class="flex justify-center items-center hover:bg-accent active:bg-accent rounded-full h-12"
                @click="click(index, character)">
 
-          <fa :icon="arrow" style="font-size: 1.8rem; color: white;"
+            <fa v-if="index !== 4" :icon="arrow" style="font-size: 1.8rem; color: white;"
                 :class="{'rotate-45': [0,2,6,8].includes(index)}"/>
+
+            <div v-else>
+              <p class="text-2xl select-none">{{ displacement }}</p>
+            </div>
 
           </div>
         </div>
@@ -38,6 +42,8 @@ export default {
   components: {Table},
   data() {
     return {
+      displacement: 0,
+      moves: [],
       arrows: ["angle-left", "angle-up", "angle-up", "angle-left", "dot-circle", "angle-right", "angle-down", "angle-down", "angle-right"]
     }
   },
@@ -45,52 +51,88 @@ export default {
     click(index, character) {
       window.navigator.vibrate(40);
       let pos = {
-          x: character.pos.point.x,
-          y: character.pos.point.y
-        }
-        switch (index) {
-          case 1:
-            setCharacterPosition(character.id, {
-              x: pos.x,
-              y: pos.y - 1
-            })
-            break;
-          case 3:
-            setCharacterPosition(character.id, {
-              x: pos.x - 1,
-              y: pos.y
-            })
-            break;
-          case 5:
-            setCharacterPosition(character.id, {
-              x: pos.x + 1,
-              y: pos.y
-            })
-            break;
-          case 7:
-            setCharacterPosition(character.id, {
-              x: pos.x,
-              y: pos.y + 1
-            })
-            break;
-        }
-      },
-      getOwnCharacters() {
-        let ownCharacter = [];
-        for (let charater of store.state.character.characters) {
-          for (let player of charater.players) {
-            if (player.id == store.state.authentication.playerID) {
-              ownCharacter.push(charater);
-            }
+        x: character.pos.point.x,
+        y: character.pos.point.y
+      }
+      switch (index) {
+        case 0:
+          setCharacterPosition(character.id, {
+            x: pos.x - 1,
+            y: pos.y - 1
+          })
+          break;
+        case 1:
+          setCharacterPosition(character.id, {
+            x: pos.x,
+            y: pos.y - 1
+          })
+          break;
+        case 2:
+          setCharacterPosition(character.id, {
+            x: pos.x + 1,
+            y: pos.y - 1
+          })
+          break;
+        case 3:
+          setCharacterPosition(character.id, {
+            x: pos.x - 1,
+            y: pos.y
+          })
+          break;
+        case 4:
+          navigator.vibrate([50, 10, 50, 10, 50]);
+          break;
+        case 5:
+          setCharacterPosition(character.id, {
+            x: pos.x + 1,
+            y: pos.y
+          })
+          break;
+        case 6:
+          setCharacterPosition(character.id, {
+            x: pos.x - 1,
+            y: pos.y + 1
+          })
+          break;
+        case 7:
+          setCharacterPosition(character.id, {
+            x: pos.x,
+            y: pos.y + 1
+          })
+          break;
+        case 8:
+          setCharacterPosition(character.id, {
+            x: pos.x + 1,
+            y: pos.y + 1
+          })
+          break;
+      }
+      if (index == 4){
+        this.moves = [];
+      }else if (index + this.moves[this.moves.length-1] == 8){
+        this.moves.pop();
+      }else{
+        this.moves.push(index);
+      }
+      this.displacement = this.moves.length * 5;
+    },
+    //todo
+    getOwnCharacters() {
+      let ownCharacter = [];
+      for (let charater of store.state.character.characters) {
+        for (let player of charater.players) {
+          if (player.id == store.state.authentication.playerID) {
+            ownCharacter.push(charater);
           }
         }
-        return ownCharacter;
       }
+      return ownCharacter;
     }
   }
+}
 </script>
 <style scoped>
-  .rotate-45 {
-    transform: rotate(45deg);
-  }
+.rotate-45 {
+  transform: rotate(45deg);
+}
 </style>

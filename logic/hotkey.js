@@ -12,7 +12,7 @@ hotkeys('command+b,ctrl+b', () => {
 export function toggleLayer() {
   store.commit("manu/setHand");
 
-  if (store.state.manu.layer === "Background") {
+  if (store.state.manu.layer === "Background" || !store.state.authentication.gm) {
     store.commit("manu/setLayer", "Token");
   } else {
     store.commit("manu/setLayer", "Background");

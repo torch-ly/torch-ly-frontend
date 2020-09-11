@@ -2,6 +2,11 @@
   <div>
     <Table v-if="device !== devices.MOBILE"/>
 
+    <Login/>
+
+    <FullscreenNotification />
+
+    <InitiativeTracker v-if="device !== devices.MOBILE"/>
     <Overlay v-if="device === devices.DEFAULT"/>
 
     <FloatingButtons v-if="device === devices.DEFAULT"/>
@@ -10,7 +15,6 @@
     <AddCharacter v-if="device === devices.DEFAULT"/>
     <AddImage v-if="device === devices.DEFAULT"/>
     <SelectBackgroundLayer v-if="device === devices.DEFAULT"/>
-    <Login v-if="device === devices.DEFAULT"/>
     <MobileMovement class="md:hidden" v-if="device === devices.MOBILE"/>
 
     <div class="w-full h-full fixed top-0 left-0 bg-gray-700 flex justify-center items-center select-none" v-show="visible" :class="{'animate__animated animate__fadeOutDown animate__fast' : fadeOut}">
@@ -30,15 +34,17 @@
   import Login from "@/components/popups/Login";
   import SelectBackgroundLayer from "@/components/popups/SelectBackgroundLayer";
   import devices from "@/enums/devices";
+  import InitiativeTracker from "@/components/overlay/InitiativeTracker";
+  import FullscreenNotification from "@/components/gui-components/FullscreenNotification";
 
   export default {
-    components: {Overlay, Table, FloatingButtons, FloatingInfos, AddImage, AddCharacter, BrushSelector, MobileMovement, Login, SelectBackgroundLayer},
+    components: {Overlay, Table, FullscreenNotification, InitiativeTracker, FloatingButtons, FloatingInfos, AddImage, AddCharacter, BrushSelector, MobileMovement, Login, SelectBackgroundLayer},
     data() {
       return {
         mirrored: false,
         fadeOut: false,
         visible: true,
-        devices: devices
+        devices: devices,
       }
     },
     computed: {

@@ -32,6 +32,11 @@ export function setNodesToTransformer(nodes) {
   }
 
   transformer.moveToTop();
+
+  if (nodes[0].characterID != null) {
+    store.commit('character/setSelectedCharacter', nodes[0].characterID);
+  }
+
   setMoveObjectByArrow(nodes[0]);
 }
 
@@ -42,6 +47,8 @@ export function clearTransformerNodes() {
   transformer.nodes([]);
   transformerNodes = [];
   setMoveObjectByArrow(null);
+
+  store.commit('character/setSelectedCharacter', '');
 
   stage.batchDraw();
 }
