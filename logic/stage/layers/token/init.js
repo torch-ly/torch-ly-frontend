@@ -9,6 +9,7 @@ import {addTransformationListener} from "~/logic/stage/layers/transformer";
 import devices from "@/enums/devices";
 
 let out = [];
+let conditionSize = 40;
 
 export function init() {
   out = [];
@@ -31,11 +32,17 @@ function loadImage(character) {
       rotation: character.pos.rot,
       id: String(character.id)
     });
-    image.offsetX(image.width() / 2);
-    image.offsetY(image.height() / 2);
+
+    image.conditions = [];
+
+    //TODO add menu for activating conditions
+    //loadConditionImages([{src: "https://app.roll20.net/images/Roll20-OG.png?1595950669"}, {src: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/McDonald%27s_Golden_Arches.svg/1200px-McDonald%27s_Golden_Arches.svg.png"}], image, {x: image.x(), y: image.y(), width: image.width()});
 
     image.x(image.x() + image.width() / 2);
     image.y(image.y() + image.height() / 2);
+
+    image.offsetX(image.width() / 2);
+    image.offsetY(image.height() / 2);
 
     image.snapToGrid = true;
     image.characterID = character.id;
@@ -45,6 +52,11 @@ function loadImage(character) {
         y: Math.round((image.y() - image.height() / 2) / blockSnapSize)
       })
     });
+
+    image.on('dragmove', () => {
+      updateConditionImagePosition(image.conditions, {x: image.x(), y: image.y(), width: image.width()});
+    })
+
     image.removeElement = () => {
       removeCharacter(image.characterID)
     }
@@ -97,6 +109,12 @@ export function updateCharacterAttrs(character) {
 
       oldCharacter.rotation(character.pos.rot);
 
+      updateConditionImagePosition(oldCharacter.conditions, {
+        x: oldCharacter.x(),
+        y: oldCharacter.y(),
+        width: oldCharacter.width()
+      })
+
       layer.batchDraw();
 
       return;
@@ -108,3 +126,34 @@ export function updateCharacterAttrs(character) {
 
 }
 
+function loadConditionImages(conditions, parent, parentPos) {
+  for (let i = 0; i < conditions.length; i++) {
+    let imageObj = new Image(conditionSize, conditionSize);
+    imageObj.onload = function () {
+      let image = new Konva.Image({
+        x: Math.floor(parentPos.x + parentPos.width - (i + 1) * conditionSize),
+        y: Math.floor(parentPos.y),
+        image: imageObj
+      });
+
+      out.push(image);
+      parent.conditions.push(image);
+
+      draw(out);
+      image.moveToTop();
+    };
+    imageObj.src = conditions[i].src;
+  }
+
+
+}
+
+function updateConditionImagePosition(conditions, parentPos) {
+  console.log(conditions, parentPos)
+  for (let i = 0; i < conditions.length; i++) {
+    conditions[i].x(Math.floor((parentPos.x - parentPos.width / 2) + parentPos.width - (i + 1) * conditionSize));
+    conditions[i].y(Math.floor((parentPos.y - parentPos.width / 2)));
+    conditions[i].moveToTop();
+  }
+  layer.batchDraw();
+}
