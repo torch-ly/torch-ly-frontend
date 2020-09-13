@@ -1,0 +1,67 @@
+<template>
+  <div v-if="active"
+       class="bg-gray-200 z-30 w-screen h-screen fixed top-0 left-0 animate__animated animate__fadeIn animate__fast text-gray-800">
+    <div class="mx-auto max-w-4xl p-6 pt-18 relative">
+
+      <!-- title -->
+      <h1 class="title mb-6">Settings</h1>
+
+      <!-- icons -->
+      <div class="p-3 absolute top-0 right-0 mt-8 mr-4" @click="active = false">
+        <fa icon="times" class="text-gray-700 text-2xl"/>
+      </div>
+
+      <!-- set backend url -->
+      <div class="mb-6 border-b border-gray-400">
+        <input type="text" class="p-2 bg-gray-100 w-full rounded tracking-wider" v-model="backendURL"
+               placeholder="Backend HOST"/>
+        <button
+          @click="reload"
+          class="w-max-64 w-full float-right px-1 py-2 bg-red-200 mt-4 rounded animate__animated animate__fadeInDown">
+          Refresh page
+        </button>
+      </div>
+
+      <h1 class="title mt-20">User information</h1>
+
+      <div class="text-lg mt-6">
+        <p class="mb-6"><span class="select-none">UserID: </span>{{$store.state.authentication.playerID}}</p>
+
+      </div>
+
+    </div>
+  </div>
+</template>
+<script>
+export default {
+  data() {
+    return {
+      active: true,
+      backendURL: this.$store.state.config.backendURL,
+      backendURLChanged: false
+    }
+  },
+  created() {
+    let self = this;
+    this.$root.$on("settings-popup", () => {
+      self.active = true;
+    })
+  },
+  watch: {
+    backendURL() {
+      localStorage["torch-ly-backend"] = this.backendURL
+      this.backendURLChanged = true
+    }
+  },
+  methods: {
+    reload() {
+      location.reload()
+    }
+  }
+}
+</script>
+<style scoped lang="scss">
+.title {
+  @apply text-2xl tracking-wider p-2 border-b border-gray-600;
+}
+</style>

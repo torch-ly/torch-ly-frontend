@@ -7,9 +7,17 @@
         <span class="block w-full text-center mt-1 font-500">Network Error</span>
       </div>
 
-      <div class="button" @click="$store.state.authentication.name === null ? $root.$emit('login') : false">
-        <span v-if="$store.state.authentication.name === null">You're not signed in; click to signin</span>
-        <span v-else>Signed in as: {{$store.state.authentication.name}}</span>
+      <div class="flex flex-row">
+
+        <div class="button" @click="$store.state.authentication.name === null ? $root.$emit('login') : false">
+          <span v-if="$store.state.authentication.name === null">You're not signed in; click to signin</span>
+          <span v-else>Signed in as: {{$store.state.authentication.name}}</span>
+        </div>
+
+        <div class="button ml-3 w-10 h-10 flex items-center justify-center" @click="$root.$emit('settings-popup')">
+          <fa icon="cog"/>
+        </div>
+
       </div>
     </div>
   </div>

@@ -12,7 +12,7 @@ import devices from "@/enums/devices";
 import {getInitiative, subscribeInitiative} from "@/plugins/backendComunication/initiative";
 import {getAllPlayers} from "@/plugins/backendComunication/player";
 
-const GRAPHQL_ENDPOINT = "ws://" + process.env.BACKEND + "/graphql";
+const GRAPHQL_ENDPOINT = "ws://" + (localStorage["torch-ly-backend"] || process.env.BACKEND) + ":5000/graphql";
 
 let store = {};
 let authID = getParameters().authID;
