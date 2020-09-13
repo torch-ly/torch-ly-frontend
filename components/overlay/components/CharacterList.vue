@@ -97,7 +97,6 @@ export default {
       selectToken(character);
     },
     getSelectedCharacterByID() {
-      console.log(store.state.character.selectedCharacter)
       for (let character of this.characterStore.characters) {
         if (character.id == this.characterStore.selectedCharacter) {
           this.selectedCharacter = character;

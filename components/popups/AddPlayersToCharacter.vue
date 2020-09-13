@@ -17,8 +17,8 @@
 </template>
 <script>
 import PopupContainer from "../gui-components/PopupContainer";
-import {getAllPlayers} from "@/plugins/backendComunication/player";
 import {setCharacterPlayers} from "@/plugins/backendComunication/characters";
+import {store} from "@/logic/stage/main";
 
 export default {
   components: {PopupContainer},
@@ -34,7 +34,7 @@ export default {
       this.character = character;
 
       this.players = [];
-      for (let player of getAllPlayers()) {
+      for (let player of store.state.players.players) {
         let found = false;
         for (let characterPlayer of character.players) {
           if (characterPlayer.id == player.id) {
@@ -54,7 +54,6 @@ export default {
           })
         }
       }
-      console.log(this.players)
     });
     this.$root.$on("closePlayerCharacterPopup", () => {
       this.$refs.popupContainer.active = false;
@@ -62,7 +61,8 @@ export default {
   },
   methods: {
     savePlayers() {
-      setCharacterPlayers(this.character.id, this.players.filter((player) => player.active).map((player) => player.player.id))
+      setCharacterPlayers(this.character.id, this.players.filter((player) => player.active).map((player) => player.player.id));
+      this.$root.$emit("closePlayerCharacterPopup");
     }
   }
 }
