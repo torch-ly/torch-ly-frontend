@@ -8,7 +8,7 @@
 
       <!-- icons -->
       <div class="p-3 absolute top-0 right-0 mt-8 mr-4" @click="active = false">
-        <fa icon="times" class="text-gray-700 text-2xl"/>
+        <fa icon="times" class="text-gray-700 text-2xl w-4 h-4"/>
       </div>
 
       <!-- set backend url -->

@@ -15,7 +15,7 @@
         </div>
 
         <div class="button ml-3 w-10 h-10 flex items-center justify-center" @click="$root.$emit('settings-popup')">
-          <fa icon="cog"/>
+          <fa icon="cog" class="w-4 h-4"/>
         </div>
 
       </div>
