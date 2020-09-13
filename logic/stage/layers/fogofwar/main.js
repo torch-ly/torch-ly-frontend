@@ -62,8 +62,6 @@ export function syncronize() {
 
 //receive data via graphql
 export function recieveSyncronize(p_polygons) {
-  if(!store.state.authentication.gm)
-    return;
 
   for (let poly of polygons) {
     poly.destroy();
@@ -75,9 +73,10 @@ export function recieveSyncronize(p_polygons) {
       points: coordinate,
       closed: true,
       strokeWidth: 3,
+      listening: (!store.state.authentication.gm),
     });
     konva_line.fill("#000");
-    konva_line.stroke("#aa0000");
+    konva_line.stroke("#000000");
     layer.add(konva_line);
     polygons.push(konva_line);
   }
@@ -364,6 +363,7 @@ function turf_to_Konva(turf_poylgon) {
     points: arr.flat(),
     closed: true,
     strokeWidth: 3,
+    listening: (!store.state.authentication.gm),
   });
 }
 
