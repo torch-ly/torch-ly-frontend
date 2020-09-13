@@ -41,6 +41,10 @@
 
       <div class="submit-button active:submit-button-active my-2" @click="openPlayersPopup()">Add Players</div>
 
+      <div class="submit-button active:submit-button-active my-2" @click="openInitiativePrompt()"
+           v-if="!alreadyInInitiativeOrder">Add to Initiative
+      </div>
+
       <div class="hr"/>
 
       <div class="text-lg mb-2">Notes:</div>
@@ -108,11 +112,21 @@ export default {
     },
     openPlayersPopup() {
       this.$root.$emit("openPlayerCharacterPopup", this.selectedCharacter);
+    },
+    openInitiativePrompt() {
+      let initiative = prompt("Initiative value: ");
+      store.commit("character/addCharacterToInitiative", {
+        id: this.selectedCharacter.id,
+        value: initiative
+      });
     }
   },
   computed: {
     characterStore() {
       return this.$store.state.character;
+    },
+    alreadyInInitiativeOrder() {
+      return (this.$store.state.character.initiative.filter((a) => a.id == this.selectedCharacter.id).length > 0)
     }
   }
 }
