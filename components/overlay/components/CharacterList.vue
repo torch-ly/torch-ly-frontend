@@ -15,6 +15,7 @@
         </div>
       </div>
     </div>
+
     <div v-else class="mt-3">
       {{ getSelectedCharacterByID() }}
       <div class="w-full flex flex-column my-4 justify-center items-center">
@@ -36,6 +37,15 @@
           </span>
         </div>
       </div>
+
+      <div class="hr"/>
+
+      <button class="submit-button active:submit-button-active mb-4 mt-4" @click="openConditionPopup">
+        Add Conditions
+      </button>
+
+      <div class="hr"/>
+
       <div class="text-lg mb-2">Notes:</div>
       <div contenteditable="true">
         gjlkdfgjklm,sjknmdg
@@ -99,6 +109,9 @@ export default {
     },
     evaluateHPBox() {
       this.hp = evaluate(this.hp);
+    },
+    openConditionPopup() {
+      this.$root.$emit('openCharacterConditionsPopup', this.selectedCharacter);
     }
   },
   computed: {

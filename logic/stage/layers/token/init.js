@@ -7,6 +7,7 @@ import {addTransformerClickListener} from "../transformer";
 import {removeCharacter, setCharacterPosition} from "../../../../plugins/backendComunication/characters";
 import {addTransformationListener} from "~/logic/stage/layers/transformer";
 import devices from "@/enums/devices";
+import conditions from "@/enums/conditions";
 
 let out = [];
 let conditionSize = 40;
@@ -34,9 +35,7 @@ function loadImage(character) {
     });
 
     image.conditions = [];
-
-    //TODO add menu for activating conditions
-    //loadConditionImages([{src: "https://app.roll20.net/images/Roll20-OG.png?1595950669"}, {src: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/McDonald%27s_Golden_Arches.svg/1200px-McDonald%27s_Golden_Arches.svg.png"}], image, {x: image.x(), y: image.y(), width: image.width()});
+    loadConditionImages(image, {x: image.x(), y: image.y(), width: image.width()});
 
     image.x(image.x() + image.width() / 2);
     image.y(image.y() + image.height() / 2);
@@ -54,7 +53,11 @@ function loadImage(character) {
     });
 
     image.on('dragmove', () => {
-      updateConditionImagePosition(image.conditions, {x: image.x(), y: image.y(), width: image.width()});
+      updateConditionImagePosition(image.conditions, {
+        x: image.x(),
+        y: image.y(),
+        width: image.width()
+      }, character.conditions);
     })
 
     image.removeElement = () => {
@@ -126,21 +129,26 @@ export function updateCharacterAttrs(character) {
 
 }
 
-function loadConditionImages(conditions, parent, parentPos) {
+function loadConditionImages(parent, parentPos, activeConditionList) {
   for (let i = 0; i < conditions.length; i++) {
     let imageObj = new Image(conditionSize, conditionSize);
     imageObj.onload = function () {
       let image = new Konva.Image({
-        x: Math.floor(parentPos.x + parentPos.width - (i + 1) * conditionSize),
-        y: Math.floor(parentPos.y),
+        x: 0,
+        y: 0,
         image: imageObj
       });
 
       out.push(image);
-      parent.conditions.push(image);
+
+      parent.conditions.push({
+        object: image,
+        name: conditions[i],
+        active: activeConditionList[conditions[i]]
+      });
 
       draw(out);
-      image.moveToTop();
+      updateConditionImagePosition(parent.conditions, parentPos)
     };
     imageObj.src = conditions[i].src;
   }
@@ -150,10 +158,15 @@ function loadConditionImages(conditions, parent, parentPos) {
 
 function updateConditionImagePosition(conditions, parentPos) {
   console.log(conditions, parentPos)
+  let pos = 0;
   for (let i = 0; i < conditions.length; i++) {
-    conditions[i].x(Math.floor((parentPos.x - parentPos.width / 2) + parentPos.width - (i + 1) * conditionSize));
-    conditions[i].y(Math.floor((parentPos.y - parentPos.width / 2)));
-    conditions[i].moveToTop();
+    if (!conditions[i].active)
+      continue;
+
+    conditions[i].object.x(Math.floor((parentPos.x - parentPos.width / 2) + parentPos.width - (pos + 1) * conditionSize));
+    conditions[i].object.y(Math.floor((parentPos.y - parentPos.width / 2)));
+    conditions[i].object.moveToTop();
+    pos++;
   }
   layer.batchDraw();
 }
