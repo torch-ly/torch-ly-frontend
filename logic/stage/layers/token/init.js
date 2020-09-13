@@ -149,7 +149,6 @@ function loadConditionImages(conditions, parent, parentPos) {
 }
 
 function updateConditionImagePosition(conditions, parentPos) {
-  console.log(conditions, parentPos)
   for (let i = 0; i < conditions.length; i++) {
     conditions[i].x(Math.floor((parentPos.x - parentPos.width / 2) + parentPos.width - (i + 1) * conditionSize));
     conditions[i].y(Math.floor((parentPos.y - parentPos.width / 2)));

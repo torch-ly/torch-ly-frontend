@@ -97,7 +97,7 @@ export function subscribeCharacter() {
   });
 }
 
-export function setCharacterPosition(charcterID, point) {
+export function setCharacterPosition(characterID, point) {
   apolloClient.mutate({
     mutation: gql`
       mutation setCharacterPosition($id:String!, $x:Int!, $y:Int!){
@@ -105,9 +105,24 @@ export function setCharacterPosition(charcterID, point) {
       }
     `,
     variables: {
-      id: charcterID,
+      id: characterID,
       x: point.x,
       y: point.y
     }
   }).catch(logError);
+}
+
+export function setCharacterPlayers(characterID, players) {
+  apolloClient.mutate({
+    mutation: gql`
+      mutation setCharacterPlayers($id:String!, $players:[String!]!){
+        setCharacterPlayers(id:$id, players:$players) {pos{point{x y} rot size} name token players {id} id}
+      }
+    `,
+    variables: {
+      id: characterID,
+      players: players
+    }
+  }).catch(logError);
+
 }

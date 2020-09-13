@@ -36,6 +36,13 @@
           </span>
         </div>
       </div>
+
+      <div class="hr"/>
+
+      <div class="submit-button active:submit-button-active my-2" @click="openPlayersPopup()">Add Players</div>
+
+      <div class="hr"/>
+
       <div class="text-lg mb-2">Notes:</div>
       <div contenteditable="true">
         gjlkdfgjklm,sjknmdg
@@ -90,7 +97,6 @@ export default {
       selectToken(character);
     },
     getSelectedCharacterByID() {
-      console.log(store.state.character.selectedCharacter)
       for (let character of this.characterStore.characters) {
         if (character.id == this.characterStore.selectedCharacter) {
           this.selectedCharacter = character;
@@ -99,6 +105,9 @@ export default {
     },
     evaluateHPBox() {
       this.hp = evaluate(this.hp);
+    },
+    openPlayersPopup() {
+      this.$root.$emit("openPlayerCharacterPopup", this.selectedCharacter);
     }
   },
   computed: {
