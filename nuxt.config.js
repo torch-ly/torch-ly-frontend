@@ -2,6 +2,10 @@
 export default {
   mode: 'spa',
 
+  env: {
+    IMAGE_SERVER: process.env.IMAGE_SERVER,
+  },
+
   /*
   ** Headers of the page
   */
