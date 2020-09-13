@@ -14,7 +14,7 @@ export function draw(pLayer) {
     y: 0,
     width: blockSnapSize,
     height: blockSnapSize,
-    stroke: 'black',
+    stroke: "lightgray",
     strokeWidth: 0.5,
     listening: false
   });
