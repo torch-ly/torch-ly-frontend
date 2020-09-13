@@ -2,7 +2,7 @@
   <div>
     <Table v-if="device !== devices.MOBILE"/>
 
-    <Login/>
+    <Login v-if="device !== devices.TV"/>
 
     <FullscreenNotification />
 
