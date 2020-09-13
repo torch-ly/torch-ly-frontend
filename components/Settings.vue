@@ -36,7 +36,7 @@
 export default {
   data() {
     return {
-      active: true,
+      active: false,
       backendURL: this.$store.state.config.backendURL,
       backendURLChanged: false
     }

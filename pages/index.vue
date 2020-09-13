@@ -42,6 +42,7 @@ import devices from "@/enums/devices";
 import InitiativeTracker from "@/components/overlay/InitiativeTracker";
 import FullscreenNotification from "@/components/gui-components/FullscreenNotification";
 import Settings from "@/components/Settings";
+import AddPlayersToCharacter from "@/components/popups/AddPlayersToCharacter";
 
 export default {
   components: {
