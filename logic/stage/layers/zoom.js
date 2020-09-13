@@ -1,4 +1,5 @@
 import {stage} from "../main";
+import {updateGrid} from "@/logic/stage/layers/grid/main";
 
 export function enableZoom() {
   stage.on('wheel', (e) => {
@@ -26,6 +27,7 @@ export function enableZoom() {
     };
     stage.position(newPos);
 
+    updateGrid();
     stage.batchDraw();
   });
 }
