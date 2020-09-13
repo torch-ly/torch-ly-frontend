@@ -53,6 +53,8 @@ export default {
           return;
 
         addMap(this.newLayerName);
+
+        this.newLayerName = "";
         getBackgroundLayerNames();
       },
       removeLayer(layer) {
