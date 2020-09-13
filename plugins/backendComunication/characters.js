@@ -111,3 +111,9 @@ export function setCharacterPosition(charcterID, point) {
     }
   }).catch(logError);
 }
+
+export function setCharacterPlayers(characterID, players) {
+  //TODO implement
+  console.log(characterID, players)
+  console.log("setCharacterPlayers is not implemented yet")
+}
