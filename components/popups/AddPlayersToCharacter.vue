@@ -62,7 +62,7 @@ export default {
   },
   methods: {
     savePlayers() {
-      setCharacterPlayers(this.character.id, this.players.filter((player) => player.active).map((player) => player.player))
+      setCharacterPlayers(this.character.id, this.players.filter((player) => player.active).map((player) => player.player.id))
     }
   }
 }
