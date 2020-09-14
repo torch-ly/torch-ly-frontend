@@ -18,6 +18,7 @@
     <AddImage v-if="device === devices.DEFAULT"/>
     <SelectBackgroundLayer v-if="device === devices.DEFAULT"/>
     <AddPlayersToCharacter v-if="device === devices.DEFAULT"/>
+    <AddCharacterConditions v-if="device === devices.DEFAULT"/>
     <MobileMovement class="md:hidden" v-if="device === devices.MOBILE"/>
 
     <div class="w-full h-full fixed top-0 left-0 bg-gray-700 flex justify-center items-center select-none"
@@ -43,9 +44,11 @@ import InitiativeTracker from "@/components/overlay/InitiativeTracker";
 import FullscreenNotification from "@/components/gui-components/FullscreenNotification";
 import Settings from "@/components/Settings";
 import AddPlayersToCharacter from "@/components/popups/AddPlayersToCharacter";
+import AddCharacterConditions from "@/components/popups/AddCharacterConditions";
 
 export default {
   components: {
+    AddCharacterConditions,
     AddPlayersToCharacter,
     Overlay,
     Table,
