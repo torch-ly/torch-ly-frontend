@@ -23,7 +23,9 @@
 
     <button class="submit-button active:submit-button-active mt-2" @click="clearFogOfWar">Clear FogOfWar</button>
 
-    <button class="button" @click="toggleTransparentMode">Toggle FogOfWar-SeeThrough</button>
+    <button class="submit-button active:submit-button-active mt-2" @click="toggleTransparentMode">Toggle
+      FogOfWar-SeeThrough
+    </button>
 
   </div>
 </template>
@@ -31,10 +33,10 @@
 import {
   DeletePolygon,
   InsertPolygon,
+  resetFogOfWar,
   syncronize,
   toggleInsert,
   toggleSnapToGrid,
-  resetFogOfWar,
   toggleTransparent
 } from "../../logic/stage/layers/fogofwar/main";
 

@@ -22,9 +22,6 @@ export function setFogOfWarLayer(player) {
 
 export function addFogOfWarListener() {
   stage.on('mouseup', (e) => {
-    if(e.evt.button === 2){
-
-    }
     let point_x_y = getRelativePointerPosition(stage);
     if (snapToGrid) {
       let point = getRelativePointerGridRectangle();
