@@ -38,6 +38,9 @@ export const mutations = {
     state.initiative.push(character);
     setInitiative();
   },
+  removeCharacterFromInitiative(state, characterID) {
+    state.initiative = state.initiative.filter(char => char.id != characterID);
+  },
   setHoverOverCharacter(state, characterID) {
     state.hoverOverCharacter = characterID;
   },

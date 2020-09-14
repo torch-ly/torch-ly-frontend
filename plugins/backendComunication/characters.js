@@ -108,6 +108,7 @@ export function subscribeRemoveCharacter() {
   }).subscribe({
     next({data}) {
       store.commit("character/removeCharacter", data.removeCharacter);
+      store.commit("character/removeCharacterFromInitiative", data.removeCharacter);
       removeKonvaCharacter(data.removeCharacter);
     }
   });
