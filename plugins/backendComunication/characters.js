@@ -71,7 +71,7 @@ export function loadCharacters() {
   apolloClient.query({
     query: gql`
       {
-        allCharacters{pos{point{x y} rot size} name token players {id name} id}
+        allCharacters{pos{point{x y} rot size} name token players {id name} id conditions}
       }
     `
   })
@@ -86,7 +86,7 @@ export function subscribeCharacter() {
   apolloClient.subscribe({
     query: gql`
       subscription {
-        updateCharacter {pos{point{x y} rot size} name token players {id name} id}
+        updateCharacter {pos{point{x y} rot size} name token players {id name} id conditions}
       }
     `
   }).subscribe({
@@ -108,6 +108,20 @@ export function setCharacterPosition(charcterID, point) {
       id: charcterID,
       x: point.x,
       y: point.y
+    }
+  }).catch(logError);
+}
+
+export function setCharacterConditions(charcterID, conditions) {
+  apolloClient.mutate({
+    mutation: gql`
+      mutation setCharacterConditions($id:String!, $conditions:[ConditionInput]!){
+        setCharacterConditions(id:$id, conditions:$conditions) {pos{point{x y} rot size} name token players {id} id}
+      }
+    `,
+    variables: {
+      id: charcterID,
+      conditions: conditions
     }
   }).catch(logError);
 }
