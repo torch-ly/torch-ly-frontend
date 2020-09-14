@@ -23,9 +23,16 @@
 
     <button class="submit-button active:submit-button-active mt-2" @click="clearFogOfWar">Clear FogOfWar</button>
 
-    <button class="submit-button active:submit-button-active mt-2" @click="toggleTransparentMode">Toggle
-      FogOfWar-SeeThrough
-    </button>
+    <div class="flex flex-row mt-2">
+      <div class="flex items-center">
+        <label class="switch">
+          <input type="checkbox" @change="toggleTransparentMode" value="false">
+          <span class="slider round"></span>
+        </label>
+      </div>
+
+      <div class="flex items-center ml-2 text-center">See Through Fog Of war</div>
+    </div>
 
   </div>
 </template>
@@ -69,7 +76,7 @@ export default {
       resetFogOfWar();
     },
     toggleTransparentMode() {
-      toggleTransparent()
+      toggleTransparent();
     }
   },
   computed: {
