@@ -66,9 +66,11 @@ export default {
     },
     openInitiativePrompt() {
       let initiative = prompt("Initiative value: ");
+      if (Number.isNaN(parseInt(initiative)))
+        return;
       store.commit("character/addCharacterToInitiative", {
         id: this.selectedCharacter.id,
-        value: initiative
+        value: parseInt(initiative)
       });
     },
     getSelectedCharacterByID() {
