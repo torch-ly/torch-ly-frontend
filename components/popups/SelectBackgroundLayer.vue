@@ -1,8 +1,8 @@
 <template>
-  <PopupContainer ref="popupContainer" title="Select Background Layer">
+  <PopupContainer ref="popupContainer" title="Select Map" class="select-none">
     <div v-for="layer of layerNames"
          class="p-4 text-white text-lg hover:bg-primary-light rounded flex justify-between flex-row"
-         @click="layerSelection(layer.name)">
+         @click="layerSelection(layer)">
       {{layer.name}}
       <div v-if="layer.selected">
         <fa icon="check"/>
@@ -13,7 +13,7 @@
     </div>
     <div class="w-full flex flex-row justify-between items-center h-10 p-4 mt-4">
       <div class="w-11/12 inline-block">
-        <input placeholder="Layer Name" class="input-field" v-model="newLayerName">
+        <input placeholder="Map Name" class="input-field" v-model="newLayerName">
       </div>
       <fa icon="plus" @click="addLayer" class="text-white inline-block hover:text-accent"/>
     </div>
@@ -45,7 +45,10 @@ export default {
     },
     methods: {
       layerSelection(layer) {
-        setBackgroundLayerName(layer);
+        if(layer.selected)
+          return
+
+        setBackgroundLayerName(layer.name);
         getBackgroundLayerNames();
       },
       addLayer() {
@@ -53,6 +56,8 @@ export default {
           return;
 
         addMap(this.newLayerName);
+
+        this.newLayerName = "";
         getBackgroundLayerNames();
       },
       removeLayer(layer) {

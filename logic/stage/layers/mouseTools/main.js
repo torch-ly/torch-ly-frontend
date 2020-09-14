@@ -7,20 +7,27 @@ import { startDraw as startMeasure } from '@/logic/stage/layers/mouseTools/measu
 import penTool from '@/logic/stage/layers/mouseTools/penTool';
 import eraserTool from '@/logic/stage/layers/mouseTools/eraserTool';
 import {addFogOfWarListener} from '~/logic/stage/layers/fogofwar/main';
+import {destroyCurrentlyDrawing} from "../fogofwar/main";
 
 export let layer
 
 export function initDrawingStoreWatch() {
   store.watch((state, getters) => state.manu.currentTool, (newState, oldState) => {
-    toolChanged(newState)
+    shutDownOldTool(oldState);
+    toolChanged(newState);
   });
+}
+
+function shutDownOldTool(oldtool){
+  switch(oldtool){
+    case tools.fogOfWar:
+      destroyCurrentlyDrawing();
+  }
 }
 
 function toolChanged (tool) {
   stopAllTools();
 
-  //stage.on('mousedown', () => {
-  //});
   switch(tool) {
     case tools.move:
       startMoveTool();

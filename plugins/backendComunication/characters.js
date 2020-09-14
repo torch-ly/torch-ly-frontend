@@ -2,6 +2,7 @@ import {apolloClient, logError} from "~/plugins/backendComunication/backendComun
 import {init as tokenInit, updateCharacterAttrs} from "~/logic/stage/layers/token/init";
 import gql from "graphql-tag";
 import {store} from "~/logic/stage/main";
+import {removeKonvaCharacter} from "@/logic/stage/layers/token/init";
 
 export function setCharacterAttrs(id, rot, size) {
   apolloClient.mutate({
@@ -71,7 +72,7 @@ export function loadCharacters() {
   apolloClient.query({
     query: gql`
       {
-        allCharacters{pos{point{x y} rot size} name token players {id name} id conditions}
+        allCharacters{pos{point{x y} rot size} name token players {id name} id details conditions}
       }
     `
   })
@@ -86,13 +87,29 @@ export function subscribeCharacter() {
   apolloClient.subscribe({
     query: gql`
       subscription {
-        updateCharacter {pos{point{x y} rot size} name token players {id name} id conditions}
+        updateCharacter {pos{point{x y} rot size} name token players {id name} id details conditions}
       }
     `
   }).subscribe({
     next({data}) {
       store.commit("character/updateCharacter", data.updateCharacter);
       updateCharacterAttrs(data.updateCharacter);
+    }
+  });
+}
+
+export function subscribeRemoveCharacter() {
+  apolloClient.subscribe({
+    query: gql`
+      subscription {
+        removeCharacter
+      }
+    `
+  }).subscribe({
+    next({data}) {
+      store.commit("character/removeCharacter", data.removeCharacter);
+      store.commit("character/removeCharacterFromInitiative", data.removeCharacter);
+      removeKonvaCharacter(data.removeCharacter);
     }
   });
 }
@@ -110,6 +127,36 @@ export function setCharacterPosition(charcterID, point) {
       y: point.y
     }
   }).catch(logError);
+}
+
+export function setCharacterPlayers(characterID, players) {
+  apolloClient.mutate({
+    mutation: gql`
+      mutation setCharacterPlayers($id:String!, $players:[String!]!){
+        setCharacterPlayers(id:$id, players:$players) {pos{point{x y} rot size} name token players {id} id}
+      }
+    `,
+    variables: {
+      id: characterID,
+      players: players
+    }
+  }).catch(logError);
+
+}
+
+export function setCharacterDetails(characterID, details) {
+  apolloClient.mutate({
+    mutation: gql`
+      mutation setCharacterDetails($id:String!, $details:JSON!){
+        setCharacterDetails(id:$id, details:$details) {pos{point{x y} rot size} name token players {id} id}
+      }
+    `,
+    variables: {
+      id: characterID,
+      details: details
+    }
+  }).catch(logError);
+
 }
 
 export function setCharacterConditions(charcterID, conditions) {

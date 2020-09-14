@@ -2,6 +2,7 @@ import {apolloClient, logError} from "~/plugins/backendComunication/backendComun
 import {stage, store} from "~/logic/stage/main";
 import gql from "graphql-tag";
 import devices from "~/enums/devices";
+import {updateGrid} from "@/logic/stage/layers/grid/main";
 
 export function getViewport() {
   apolloClient.query({
@@ -16,6 +17,7 @@ export function getViewport() {
       stage.scale(matrix.scale);
       stage.x(matrix.x);
       stage.y(matrix.y);
+      updateGrid();
       stage.batchDraw();
     }
   })

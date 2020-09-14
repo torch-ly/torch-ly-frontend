@@ -1,6 +1,5 @@
-
 import {stage, store} from "../../main";
-import {copy, getRelativePointerGridRectangle, getRelativePointerPosition} from "../layerFunctions";
+import {getRelativePointerGridRectangle, getRelativePointerPosition} from "../layerFunctions";
 import {blockSnapSize} from "../grid/main";
 import deepcopy from "deepcopy";
 import * as turf from "@turf/turf";
@@ -13,6 +12,7 @@ let currentPolygon = [];
 let nextPolygon;
 let insert = true;
 let ununionizable = [];
+let transparent = false;
 
 let snapToGrid = false;
 
@@ -21,11 +21,12 @@ export function setFogOfWarLayer(player) {
 }
 
 export function addFogOfWarListener() {
-  stage.on('mouseup', () => {
+  stage.on('mouseup', (e) => {
     let point_x_y = getRelativePointerPosition(stage);
     if (snapToGrid) {
       let point = getRelativePointerGridRectangle();
-      let smallerRect = (insert ? 0.1 : -0.1);
+      let insertF = (insert && e.evt.button === 0);
+      let smallerRect = (insertF ? 0.1 : -0.1);
       currentPolygon = [];
       point.x += smallerRect;
       point.y += smallerRect;
@@ -36,9 +37,12 @@ export function addFogOfWarListener() {
       currentPolygon.push(pointToArray(point));
       point.x -= blockSnapSize - (2 * smallerRect);
       currentPolygon.push(pointToArray(point));
-      (insert ? InsertPolygon() : DeletePolygon())
+      (insertF ? InsertPolygon() : DeletePolygon())
     } else {
-      addPointToPolygon([point_x_y.x, point_x_y.y])
+      addPointToPolygon([point_x_y.x, point_x_y.y]);
+      if(e.evt.button === 2){
+        (insert ? InsertPolygon() : DeletePolygon());
+      }
     }
   });
 
@@ -50,20 +54,36 @@ export function addFogOfWarListener() {
   });
 }
 
+export function destroyCurrentlyDrawing(){
+  currentPolygon = [];
+
+  if(nextPolygon != null){
+    nextPolygon.destroy();
+  }
+
+  nextPolygon = null;
+}
+
 //graphql
 //send data via graphql
 export function syncronize() {
   let polygons = [];
-  for (let i = 0; i < turf_polygons.length; i++) {
+  for (let i = 0; i < this.polygons.length; i++) {
     polygons.push(this.polygons[i].points());
   }
   setFogOfWar([polygons, ununionizable]);
 }
 
+export function toggleTransparent(){
+  transparent = !transparent;
+  for(let poly of polygons){
+    poly.fill(transparent ? "rgba(0,0,0,0.13)" : "#000000");
+  }
+  layer.batchDraw();
+}
+
 //receive data via graphql
 export function recieveSyncronize(p_polygons) {
-  if(!store.state.authentication.gm)
-    return;
 
   for (let poly of polygons) {
     poly.destroy();
@@ -75,9 +95,10 @@ export function recieveSyncronize(p_polygons) {
       points: coordinate,
       closed: true,
       strokeWidth: 3,
+      listening: (!store.state.authentication.gm),
     });
-    konva_line.fill("#000");
-    konva_line.stroke("#aa0000");
+    konva_line.fill(transparent ? "rgba(0,0,0,0.13)" : "#000");
+    konva_line.stroke("#000000");
     layer.add(konva_line);
     polygons.push(konva_line);
   }
@@ -112,14 +133,24 @@ export function toggleSnapToGrid() {
   snapToGrid = !snapToGrid;
 }
 
-function turf_from_konva(konva_polygon){
+export function resetFogOfWar() {
+  polygons = [];
+  currentPolygon = [];
+  nextPolygon = null;
+  ununionizable = [];
+
+  layer.destroyChildren();
+  layer.batchDraw();
+}
+
+function turf_from_konva(konva_polygon) {
   let coordinates = [];
   let point = [];
-  for(let i = 0; i < konva_polygon.points().length; i++){
-    if(i%2===0){
+  for (let i = 0; i < konva_polygon.points().length; i++) {
+    if (i % 2 === 0) {
       point = [];
       point.push(konva_polygon.points()[i]);
-    }else{
+    } else {
       point.push(konva_polygon.points()[i]);
       coordinates.push(deepcopy(point));
     }
@@ -161,7 +192,7 @@ export function InsertPolygon() {
 
   if (intersects.length === 0) {
     //No overlaps found
-    polygons.push(addPolygons(turf_polygon, "#000"));
+    polygons.push(addPolygons(turf_polygon, (transparent ? "rgba(0,0,0,0.13)" : "#000")));
   } else {
     //build a union of all overlapping polygons
     let union = turf_polygon;
@@ -177,7 +208,7 @@ export function InsertPolygon() {
     }
 
     //add new union
-    polygons.push(addPolygons(union, "#000"));
+    polygons.push(addPolygons(union, (transparent ? "rgba(0,0,0,0.13)" : "#000")));
   }
   layer.batchDraw();
 }
@@ -193,13 +224,13 @@ function cutIntersection(index, cut_turf_polygon) {
     for (let j = 0; j < len; j++) {
       let split_poly = turf.polygon(difference.geometry.coordinates[j]);
       if (j === 0) {
-        polygons[index] = addPolygons(split_poly, "#000");
+        polygons[index] = addPolygons(split_poly, (transparent ? "rgba(0,0,0,0.13)" : "#000"));
       } else {
-        polygons.push(addPolygons(split_poly, "#000"));
+        polygons.push(addPolygons(split_poly, (transparent ? "rgba(0,0,0,0.13)" : "#000")));
       }
     }
   } else {
-    polygons[index] = addPolygons(difference, "#000");
+    polygons[index] = addPolygons(difference, (transparent ? "rgba(0,0,0,0.13)" : "#000"));
   }
 }
 
@@ -310,12 +341,12 @@ export function DeletePolygon() {
       let secondpolygon = turf.polygon([secondcoordinates]);
 
       //cut intersection of both polygons
-      polygons[i] = addPolygons(firstpolygon, "#000");
+      polygons[i] = addPolygons(firstpolygon, (transparent ? "rgba(0,0,0,0.13)" : "#000"));
       cutIntersection(i, turf_polygon);
       if(b_ununionizable){
         ununionizable.push(polygons[i].id());
       }
-      let second_konva = addPolygons(secondpolygon, "#000");
+      let second_konva = addPolygons(secondpolygon, (transparent ? "rgba(0,0,0,0.13)" : "#000"));
       polygons.push(second_konva);
       cutIntersection(polygons.length - 1, turf_polygon);
       ununionizable.push(polygons[polygons.length-1].id());
@@ -341,7 +372,7 @@ function addPolygons(turf, color) {
   let konva_line = turf_to_Konva(turf);
 
   konva_line.fill(color);
-  konva_line.stroke("#aa0000");
+  konva_line.stroke("#000000");
   layer.add(konva_line);
 
   return konva_line;
@@ -364,6 +395,7 @@ function turf_to_Konva(turf_poylgon) {
     points: arr.flat(),
     closed: true,
     strokeWidth: 3,
+    listening: (!store.state.authentication.gm),
   });
 }
 

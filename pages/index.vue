@@ -2,7 +2,9 @@
   <div>
     <Table v-if="device !== devices.MOBILE"/>
 
-    <Login/>
+    <Login v-if="device !== devices.TV"/>
+
+    <Settings v-if="device !== devices.TV"/>
 
     <FullscreenNotification />
 
@@ -15,11 +17,14 @@
     <AddCharacter v-if="device === devices.DEFAULT"/>
     <AddImage v-if="device === devices.DEFAULT"/>
     <SelectBackgroundLayer v-if="device === devices.DEFAULT"/>
+    <AddPlayersToCharacter v-if="device === devices.DEFAULT"/>
     <AddCharacterConditions v-if="device === devices.DEFAULT"/>
     <MobileMovement class="md:hidden" v-if="device === devices.MOBILE"/>
 
-    <div class="w-full h-full fixed top-0 left-0 bg-gray-700 flex justify-center items-center select-none" v-show="visible" :class="{'animate__animated animate__fadeOutDown animate__fast' : fadeOut}">
-      <span class="font-10xl font-bold text-accent">t<img src="/icon-resized.png" class="inline-block h-auto w-16 -mt-6 mx-1" :class="{'mirrored' : mirrored}">rch.ly</span>
+    <div class="w-full h-full fixed top-0 left-0 bg-gray-700 flex justify-center items-center select-none"
+         v-show="visible" :class="{'animate__animated animate__fadeOutDown animate__fast' : fadeOut}">
+      <span class="font-10xl font-bold text-accent">t<img src="/icon-resized.png"
+                                                          class="inline-block h-auto w-16 -mt-6 mx-1" :class="{'mirrored' : mirrored}">rch.ly</span>
     </div>
   </div>
 </template>
@@ -37,14 +42,18 @@ import SelectBackgroundLayer from "@/components/popups/SelectBackgroundLayer";
 import devices from "@/enums/devices";
 import InitiativeTracker from "@/components/overlay/InitiativeTracker";
 import FullscreenNotification from "@/components/gui-components/FullscreenNotification";
+import Settings from "@/components/Settings";
+import AddPlayersToCharacter from "@/components/popups/AddPlayersToCharacter";
 import AddCharacterConditions from "@/components/popups/AddCharacterConditions";
 
 export default {
   components: {
     AddCharacterConditions,
+    AddPlayersToCharacter,
     Overlay,
     Table,
     FullscreenNotification,
+    Settings,
     InitiativeTracker,
     FloatingButtons,
     FloatingInfos,
@@ -65,26 +74,26 @@ export default {
   },
   computed: {
     device() {
-        return this.$store.state.config.device;
-      }
-    },
-    mounted() {
-      if (process.env.NODE_ENV === "development") {
-        this.visible = false;
-        return;
-      }
-
-      let self = this;
-      let interval = setInterval(() => self.mirrored = !self.mirrored, 100);
-      setTimeout(() => {
-        self.fadeOut = true;
-      }, 2000);
-      setTimeout(() => {
-        clearInterval(interval);
-        self.visible = false;
-      }, 2500);
+      return this.$store.state.config.device;
     }
+  },
+  mounted() {
+    if (process.env.NODE_ENV === "development") {
+      this.visible = false;
+      return;
+    }
+
+    let self = this;
+    let interval = setInterval(() => self.mirrored = !self.mirrored, 100);
+    setTimeout(() => {
+      self.fadeOut = true;
+    }, 2000);
+    setTimeout(() => {
+      clearInterval(interval);
+      self.visible = false;
+    }, 2500);
   }
+}
 </script>
 <style>
   .font-10xl {

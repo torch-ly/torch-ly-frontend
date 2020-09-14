@@ -4,6 +4,7 @@ import devices from "@/enums/devices";
 export const state = () => ({
   device: getDevice(),
   followDMScreen: false, //TODO implement to config page
+  backendURL: localStorage["torch-ly-backend"] || process.env.BACKEND
 })
 
 function getDevice() {

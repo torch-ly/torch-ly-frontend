@@ -1,7 +1,7 @@
 {
   "name": "torch.ly",
   "version": "1.0.0",
-  "description": "My solid Nuxt.js project",
+  "description": "The online virtual tabletop software",
   "author": "Caesar0815 + EricHier",
   "private": true,
   "scripts": {

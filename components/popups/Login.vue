@@ -22,7 +22,7 @@ export default {
   data() {
     return {
       authID: "",
-      active: !getParameters().hasOwnProperty("authID")
+      active: false
     }
   },
   mounted() {
