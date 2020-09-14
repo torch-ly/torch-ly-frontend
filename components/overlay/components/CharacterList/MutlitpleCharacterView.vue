@@ -64,7 +64,6 @@ export default {
   },
   watch: {
     charactersInStore() {
-      console.log("whatcherIsActive");
       this.updateOwnCharacters();
     }
   },

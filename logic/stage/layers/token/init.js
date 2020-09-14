@@ -128,7 +128,6 @@ export function updateCharacterAttrs(character) {
 
 export function removeKonvaCharacter(characterID) {
   for (let i = 0; i < out.length; i++) {
-    console.log(1)
     if (out[i].characterID == characterID) {
       out.splice(i, 1);
       draw(out);
