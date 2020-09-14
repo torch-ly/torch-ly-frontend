@@ -126,6 +126,17 @@ export function updateCharacterAttrs(character) {
 
 }
 
+export function removeKonvaCharacter(characterID) {
+  for (let i = 0; i < out.length; i++) {
+    console.log(1)
+    if (out[i].characterID == characterID) {
+      out.splice(i, 1);
+      draw(out);
+      return;
+    }
+  }
+}
+
 function loadConditionImages(conditions, parent, parentPos) {
   for (let i = 0; i < conditions.length; i++) {
     let imageObj = new Image(conditionSize, conditionSize);

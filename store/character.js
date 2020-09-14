@@ -11,6 +11,9 @@ export const mutations = {
   loadCharacters(state, characters) {
     state.characters = characters.sort((a, b) => a.name.localeCompare(b.name));
   },
+  removeCharacter(state, characterID) {
+    state.characters = state.characters.filter(char => char.id != characterID);
+  },
   updateCharacter(state, character) {
     state.characters = state.characters.filter(char => char.id != character.id);
     state.characters.push(character);
