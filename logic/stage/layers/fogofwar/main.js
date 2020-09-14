@@ -190,9 +190,15 @@ export function InsertPolygon() {
   } else {
     //build a union of all overlapping polygons
     let union = turf_polygon;
+    let cut_outs = [];
 
     for (let i = 0; i < intersects.length; i++) {
       union = turf.union(union, intersect_polygons[i])
+      if(union.geometry.coordinates.length >= 1){
+        for(let k = 1; k < union.geometry.coordinates.length; k++){
+          cut_outs.push(deepcopy(union.geometry.coordinates[k]));
+        }
+      }
     }
 
     //delete old polygons
@@ -200,9 +206,17 @@ export function InsertPolygon() {
       polygons[i].destroy();
       polygons.splice(i, 1);
     }
-
     //add new union
     polygons.push(addPolygons(union, (transparent ? "rgba(0,0,0,0.13)" : "#000")));
+
+    for(let cords of cut_outs){
+      currentPolygon = [];
+      for(let k = 0; k < cords.length - 1; k++){
+        currentPolygon.push(cords[k])
+      }
+      console.log("DELETE");
+      DeletePolygon();
+    }
   }
   layer.batchDraw();
 }
@@ -210,6 +224,9 @@ export function InsertPolygon() {
 //cut intersection of polygon with index "index" and the cut_polygon and draw it
 function cutIntersection(index, cut_turf_polygon) {
   let difference = turf.difference(turf_from_konva(polygons[index]), cut_turf_polygon);
+  if(difference === null){
+    return;
+  }
   let len = difference.geometry.coordinates.length;
   if (polygons[index] != null)
     polygons[index].destroy();
@@ -230,9 +247,10 @@ function cutIntersection(index, cut_turf_polygon) {
 
 //Delete current polygon
 export function DeletePolygon() {
-  //ignore points and lines
-  if (currentPolygon.length < 3)
+  if (currentPolygon.length < 3) {
     return;
+  }
+  //ignore points and lines
 
   let coordinates = [[...currentPolygon, currentPolygon[0]]];
   let turf_polygon = turf.polygon(coordinates);
@@ -348,6 +366,7 @@ export function DeletePolygon() {
   }catch (e){
     console.log("Error in overlap");
     console.log(e);
+    console.log(e.stack.replace("///", "\n"));
     return;
   }
   //delete all polygons inside removing polygon
@@ -366,7 +385,7 @@ function addPolygons(turf, color) {
   let konva_line = turf_to_Konva(turf);
 
   konva_line.fill(color);
-  konva_line.stroke("#000000");
+  konva_line.stroke("#aa0000");
   layer.add(konva_line);
 
   return konva_line;
