@@ -3,7 +3,7 @@
 
     <div class="flex flex-row">
       <label class="switch" @click="toggleClick()">
-        <input type="checkbox" v-model="insert">
+        <input type="checkbox" v-model="delete">
         <span class="slider round"></span>
       </label>
       <div class="flex items-center ml-2">Insert / Delete</div>
@@ -37,12 +37,12 @@
 export default {
   data() {
     return {
-      insert: false,
+      delete: false,
     }
   },
   methods: {
     inputClick() {
-      !this.insert ? InsertPolygon() : DeletePolygon()
+      !this.delete ? InsertPolygon() : DeletePolygon()
     },
     toggleClick() {
       toggleInsert();
@@ -59,13 +59,14 @@ export default {
   },
   computed: {
     insertButtonText() {
-      return (this.insert ? "Delete" : "Insert");
+      return (this.delete ? "Delete" : "Insert");
     }
   }
 }
 </script>
 <style lang="scss">
 @import "assets/css/scheme";
+
 /* The switch - the box around the slider */
 .switch {
   position: relative;
