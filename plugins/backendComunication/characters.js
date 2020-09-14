@@ -71,7 +71,7 @@ export function loadCharacters() {
   apolloClient.query({
     query: gql`
       {
-        allCharacters{pos{point{x y} rot size} name token players {id name} id}
+        allCharacters{pos{point{x y} rot size} name token players {id name} id details}
       }
     `
   })
@@ -86,11 +86,12 @@ export function subscribeCharacter() {
   apolloClient.subscribe({
     query: gql`
       subscription {
-        updateCharacter {pos{point{x y} rot size} name token players {id name} id}
+        updateCharacter {pos{point{x y} rot size} name token players {id name} id details}
       }
     `
   }).subscribe({
     next({data}) {
+      console.log(data)
       store.commit("character/updateCharacter", data.updateCharacter);
       updateCharacterAttrs(data.updateCharacter);
     }
@@ -122,6 +123,21 @@ export function setCharacterPlayers(characterID, players) {
     variables: {
       id: characterID,
       players: players
+    }
+  }).catch(logError);
+
+}
+
+export function setCharacterDetails(characterID, details) {
+  apolloClient.mutate({
+    mutation: gql`
+      mutation setCharacterDetails($id:String!, $details:JSON!){
+        setCharacterDetails(id:$id, details:$details) {pos{point{x y} rot size} name token players {id} id}
+      }
+    `,
+    variables: {
+      id: characterID,
+      details: details
     }
   }).catch(logError);
 

@@ -1,6 +1,5 @@
-
 import {stage, store} from "../../main";
-import {copy, getRelativePointerGridRectangle, getRelativePointerPosition} from "../layerFunctions";
+import {getRelativePointerGridRectangle, getRelativePointerPosition} from "../layerFunctions";
 import {blockSnapSize} from "../grid/main";
 import deepcopy from "deepcopy";
 import * as turf from "@turf/turf";
@@ -72,7 +71,7 @@ export function destroyCurrentlyDrawing(){
 //send data via graphql
 export function syncronize() {
   let polygons = [];
-  for (let i = 0; i < turf_polygons.length; i++) {
+  for (let i = 0; i < this.polygons.length; i++) {
     polygons.push(this.polygons[i].points());
   }
   setFogOfWar([polygons, ununionizable]);
