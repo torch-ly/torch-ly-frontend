@@ -50,6 +50,16 @@ export function addFogOfWarListener() {
   });
 }
 
+export function destroyCurrentlyDrawing(){
+  currentPolygon = [];
+
+  if(nextPolygon != null){
+    nextPolygon.destroy();
+  }
+
+  nextPolygon = null;
+}
+
 //graphql
 //send data via graphql
 export function syncronize() {
