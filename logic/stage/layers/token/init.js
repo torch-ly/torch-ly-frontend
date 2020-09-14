@@ -35,7 +35,7 @@ function loadImage(character) {
     });
 
     image.conditions = [];
-    loadConditionImages(image, {x: image.x(), y: image.y(), width: image.width()});
+    loadConditionImages(image, {x: image.x(), y: image.y(), width: image.width()}, character.conditions || []);
 
     image.x(image.x() + image.width() / 2);
     image.y(image.y() + image.height() / 2);
@@ -57,7 +57,7 @@ function loadImage(character) {
         x: image.x(),
         y: image.y(),
         width: image.width()
-      }, character.conditions);
+      }, character.conditions || []);
     })
 
     image.removeElement = () => {
@@ -140,7 +140,8 @@ export function removeKonvaCharacter(characterID) {
 }
 
 function loadConditionImages(parent, parentPos, activeConditionList) {
-  for (let i = 0; i < conditions.length; i++) {
+  parent.conditions = [];
+  for (let i = 0; i < activeConditionList.length; i++) {
     let imageObj = new Image(conditionSize, conditionSize);
     imageObj.onload = function () {
       let image = new Konva.Image({
@@ -149,34 +150,41 @@ function loadConditionImages(parent, parentPos, activeConditionList) {
         image: imageObj
       });
 
+      image.conditionName = activeConditionList[i];
+      parent.conditions.push(image);
       out.push(image);
-
-      parent.conditions.push({
-        object: image,
-        name: conditions[i],
-        active: activeConditionList[conditions[i]]
-      });
 
       draw(out);
       updateConditionImagePosition(parent.conditions, parentPos)
     };
-    imageObj.src = conditions[i].src;
+    imageObj.src = conditions[activeConditionList[i]];
   }
 
 
 }
 
 function updateConditionImagePosition(conditions, parentPos) {
-  console.log(conditions, parentPos)
-  let pos = 0;
   for (let i = 0; i < conditions.length; i++) {
-    if (!conditions[i].active)
-      continue;
-
-    conditions[i].object.x(Math.floor((parentPos.x - parentPos.width / 2) + parentPos.width - (pos + 1) * conditionSize));
-    conditions[i].object.y(Math.floor((parentPos.y - parentPos.width / 2)));
-    conditions[i].object.moveToTop();
-    pos++;
+    conditions[i].x(Math.floor((parentPos.x - parentPos.width / 2) + parentPos.width - (i + 1) * conditionSize));
+    conditions[i].y(Math.floor((parentPos.y - parentPos.width / 2)));
+    conditions[i].moveToTop();
   }
   layer.batchDraw();
+}
+
+function removeConditionImages(character) {
+  for (let condition of character.conditions) {
+    out = out.filter(object => object.conditionName != condition.conditionName)
+    condition.destroy();
+  }
+}
+
+export function updateConditionImages(characterID, conditions) {
+  let konvaCharacter = layer.children.filter(img => img.characterID == characterID)[0];
+  removeConditionImages(konvaCharacter);
+  loadConditionImages(konvaCharacter, {
+    x: konvaCharacter.x(),
+    y: konvaCharacter.y(),
+    width: konvaCharacter.width()
+  }, conditions);
 }

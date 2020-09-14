@@ -4,7 +4,7 @@
       <div v-for="(condition, index) in conditions">
         <div class="flex flex-row" @click="activateCondition(index)">
           <div class="flex justify-center items-center">
-            <input type="checkbox">
+            <input type="checkbox" v-model="condition.active">
           </div>
           <img :src="condition.src" width="50" height="50" class="ml-4">
         </div>
@@ -17,12 +17,13 @@
 <script>
 import PopupContainer from "../gui-components/PopupContainer";
 import conditions from "@/enums/conditions";
+import {updateConditionImages} from "@/logic/stage/layers/token/init";
 
 export default {
   components: {PopupContainer},
   data() {
     return {
-      conditions: this.generateConditionJSON(),
+      conditions: [],
       character: null
     }
   },
@@ -40,29 +41,41 @@ export default {
   },
   methods: {
     loadConditions() {
-      for (let condition in conditions) {
-        this.conditions[condition] = this.characters.conditions[condition];
+      for (let condition of Object.keys(conditions)) {
+        if (this.character.conditions.filter(con => con.name == condition) > 0) { // character has this condition
+          this.conditions.push({
+            src: conditions[condition],
+            name: condition,
+            active: true
+          })
+        } else {
+          this.conditions.push({
+            src: conditions[condition],
+            name: condition,
+            active: false
+          })
+        }
       }
     },
     saveConditions() {
-      for (let condition in conditions) {
-        this.characters.conditions[condition] = this.conditions[condition];
+      let activeConditions = [];
+      console.log(this.conditions)
+      for (let condition of this.conditions) {
+        console.log(condition.active)
+        if (condition.active) {
+          activeConditions.push(condition.name);
+        }
       }
-    },
-    generateConditionJSON() {
-      let json = [];
-
-      for (let condition in conditions) {
-        json.push({
-          src: conditions[condition],
-          active: false,
-        })
+      let newCharacter = {
+        ...this.character,
+        conditions: activeConditions
       }
-      console.log(json)
-      return json;
+      this.$store.commit("character/updateCharacter", newCharacter);
+      updateConditionImages(this.character.id, activeConditions);
+      console.log(this.$store.state.character.characters)
     },
     activateCondition(index) {
-      this.conditions[index].active ^= true;
+      this.conditions[index].active = !this.conditions[index].active;
     }
   }
 }

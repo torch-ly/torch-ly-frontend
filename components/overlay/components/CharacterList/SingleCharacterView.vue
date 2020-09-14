@@ -29,6 +29,8 @@
          v-if="!alreadyInInitiativeOrder">Add to Initiative
     </div>
 
+    <div class="submit-button active:submit-button-active my-2" @click="openConditionsPopup()">Add Conditions</div>
+
     <div class="hr"/>
 
     <div class="text-lg my-2">Notes:</div>
@@ -56,6 +58,9 @@ export default {
     },
     openPlayersPopup() {
       this.$root.$emit("openPlayerCharacterPopup", this.selectedCharacter);
+    },
+    openConditionsPopup() {
+      this.$root.$emit("openCharacterConditionsPopup", this.selectedCharacter);
     },
     saveCharacterDetailChanges() {
       setCharacterDetails(this.selectedCharacter.id, {

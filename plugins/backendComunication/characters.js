@@ -72,7 +72,7 @@ export function loadCharacters() {
   apolloClient.query({
     query: gql`
       {
-        allCharacters{pos{point{x y} rot size} name token players {id name} id details conditions}
+        allCharacters{pos{point{x y} rot size} name token players {id name} id details conditions { name active}}
       }
     `
   })
@@ -87,7 +87,7 @@ export function subscribeCharacter() {
   apolloClient.subscribe({
     query: gql`
       subscription {
-        updateCharacter {pos{point{x y} rot size} name token players {id name} id details conditions}
+        updateCharacter {pos{point{x y} rot size} name token players {id name} id details conditions { name active}}
       }
     `
   }).subscribe({
