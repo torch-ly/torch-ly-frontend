@@ -31,6 +31,10 @@ export const mutations = {
     state.initiative.sort((a, b) => b.value - a.value);
     setInitiative();
   },
+  addCharacterToInitiative(state, character) {
+    state.initiative.push(character);
+    setInitiative();
+  },
   setHoverOverCharacter(state, characterID) {
     state.hoverOverCharacter = characterID;
   },

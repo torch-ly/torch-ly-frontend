@@ -29,7 +29,7 @@
       <div class="hr mt-4"/>
 
       <button class="submit-button active:submit-button-active mb-4 mt-4" @click="openBackgroundLayerPopup">
-        Select Background Layer
+        Select Map
       </button>
 
     </div>

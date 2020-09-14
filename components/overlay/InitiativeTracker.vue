@@ -89,7 +89,7 @@ export default {
           return character;
         }
       }
-      return null;
+      return {};
     },
     marginClass() {
       let a = {};

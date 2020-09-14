@@ -1,7 +1,11 @@
 import {stage} from "../main";
+import {updateGrid} from "@/logic/stage/layers/grid/main";
 
 export function enableZoom() {
   stage.on('wheel', (e) => {
+    if (!stage.draggable())
+      return;
+
     let scaleBy = 0.95;
     e.evt.preventDefault();
     let oldScale = stage.scaleX();
@@ -26,6 +30,7 @@ export function enableZoom() {
     };
     stage.position(newPos);
 
+    updateGrid();
     stage.batchDraw();
   });
 }

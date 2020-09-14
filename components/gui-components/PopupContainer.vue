@@ -9,7 +9,7 @@
 
       <!-- Close icon in the top right -->
       <div class="p-3 absolute top-0 right-0 mt-2 mr-4" @click="active = false">
-        <fa icon="times" class="text-white text-xl"/>
+        <fa icon="times" class="text-white text-xl w-4 h-4"/>
       </div>
 
     </div>

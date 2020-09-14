@@ -12,3 +12,14 @@ export function getPlayer() {
   .then(({data}) => store.commit("authentication/setPlayer", data.me))
   .catch(logError);
 }
+
+export function getAllPlayers() {
+  apolloClient.query({
+    query: gql`
+      {
+        allPlayers {id name gm}
+      }`
+  })
+  .then(({data}) => store.commit("players/setPlayers", data.allPlayers))
+  .catch(logError);
+}
