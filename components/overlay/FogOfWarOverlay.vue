@@ -2,7 +2,7 @@
   <div>
 
     <div class="flex flex-row">
-      <label class="switch" @click="toggleClick()">
+      <label class="switch" @click="toggleClick">
         <input type="checkbox" v-model="deleteMode">
         <span class="slider round"></span>
       </label>
@@ -38,6 +38,7 @@ export default {
   data() {
     return {
       deleteMode: false,
+      inToggle: false,
     }
   },
   methods: {
@@ -45,7 +46,12 @@ export default {
       !this.deleteMode ? InsertPolygon() : DeletePolygon()
     },
     toggleClick() {
-      toggleInsert();
+      if (this.inToggle) {
+        this.inToggle = false;
+      } else {
+        toggleInsert();
+        this.inToggle = true;
+      }
     },
     syncronizeClick() {
       syncronize();
