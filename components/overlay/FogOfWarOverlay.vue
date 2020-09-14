@@ -4,6 +4,8 @@
     <div class="hr"/>
     <button class="button" @click="toggleClick">Toggle Delete/Insert</button>
     <div class="hr"></div>
+    <button class="button" @click="toggleTransparentMode">Toggle FogOfWar-SeeThrough</button>
+    <div class="hr"></div>
     <button class="button" @click="syncronizeClick">Syncronize FogOfWar</button>
     <div class="hr"></div>
     <div><label>SnapGrid</label><input type="checkbox" @change="gridSnapChanged" value="false"></div>
@@ -18,7 +20,7 @@
     InsertPolygon,
     syncronize,
     toggleInsert,
-    toggleSnapToGrid
+    toggleSnapToGrid, toggleTransparent
   } from "../../logic/stage/layers/fogofwar/main";
 
   export default {
@@ -42,6 +44,9 @@
       },
       gridSnapChanged(){
         toggleSnapToGrid();
+      },
+      toggleTransparentMode(){
+        toggleTransparent()
       }
     }
   }
