@@ -3,7 +3,7 @@
 
     <div class="flex flex-row">
       <label class="switch" @click="toggleClick()">
-        <input type="checkbox" v-model="delete">
+        <input type="checkbox" v-model="deleteMode">
         <span class="slider round"></span>
       </label>
       <div class="flex items-center ml-2">Insert / Delete</div>
@@ -37,12 +37,12 @@
 export default {
   data() {
     return {
-      delete: false,
+      deleteMode: false,
     }
   },
   methods: {
     inputClick() {
-      !this.delete ? InsertPolygon() : DeletePolygon()
+      !this.deleteMode ? InsertPolygon() : DeletePolygon()
     },
     toggleClick() {
       toggleInsert();
@@ -59,7 +59,7 @@ export default {
   },
   computed: {
     insertButtonText() {
-      return (this.delete ? "Delete" : "Insert");
+      return (this.deleteMode ? "Delete" : "Insert");
     }
   }
 }
