@@ -31,8 +31,8 @@
 
     <div class="hr"/>
 
-    <div class="text-lg mb-2">Notes:</div>
-    <textarea v-model="notes" class="text-black"/>
+    <div class="text-lg my-2">Notes:</div>
+    <textarea v-model="notes" class="text-black w-full rounded p-1"/>
   </div>
 </template>
 <script>
