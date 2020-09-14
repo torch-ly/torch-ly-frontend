@@ -78,7 +78,8 @@ export default {
       }
       this.$store.commit("character/updateCharacter", newCharacter);
       updateConditionImages(this.character.id, activeConditions);
-      setCharacterConditions(this.character.id, activeConditions)
+      setCharacterConditions(this.character.id, activeConditions);
+      this.$root.$emit("closeCharacterConditionsPopup");
     },
     activateCondition(index) {
       this.conditions[index].active = !this.conditions[index].active;

@@ -35,6 +35,9 @@ export function setNodesToTransformer(nodes) {
 
   if (nodes[0].characterID != null) {
     store.commit('character/setSelectedCharacter', nodes[0].characterID);
+    for (let condition of nodes[0].conditions) {
+      condition.moveToTop();
+    }
   }
 
   setMoveObjectByArrow(nodes[0]);
