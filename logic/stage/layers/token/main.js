@@ -1,6 +1,6 @@
 import {init} from "./init";
-import {stage, store} from "../../main";
-import {Image as KonvaImage} from "konva";
+import {stage} from "../../main";
+import {manageTransformerLayer} from "@/logic/stage/layers/layerManager";
 
 export let layer;
 
@@ -10,7 +10,7 @@ export function draw(drawables) {
     children.remove();
   }
 
-  //manageTransformerLayer();
+  manageTransformerLayer();
 
   drawables.forEach(drawable => layer.add(drawable));
   stage.draw();

@@ -18,6 +18,7 @@
 import PopupContainer from "../gui-components/PopupContainer";
 import conditions from "@/enums/conditions";
 import {updateConditionImages} from "@/logic/stage/layers/token/init";
+import {setCharacterConditions} from "@/plugins/backendComunication/characters";
 
 export default {
   components: {PopupContainer},
@@ -29,7 +30,6 @@ export default {
   },
   mounted() {
     this.$root.$on("openCharacterConditionsPopup", (character) => {
-      console.log(character)
       this.$refs.popupContainer.active = true;
       this.character = character;
       this.loadConditions();
@@ -41,8 +41,16 @@ export default {
   },
   methods: {
     loadConditions() {
+      this.conditions = [];
       for (let condition of Object.keys(conditions)) {
-        if (this.character.conditions.filter(con => con.name == condition) > 0) { // character has this condition
+        let isActive = false;
+        for (let con of this.character.conditions) {
+          if (con == condition) {
+            isActive = true;
+            break;
+          }
+        }
+        if (isActive) { // character has this condition
           this.conditions.push({
             src: conditions[condition],
             name: condition,
@@ -59,9 +67,7 @@ export default {
     },
     saveConditions() {
       let activeConditions = [];
-      console.log(this.conditions)
       for (let condition of this.conditions) {
-        console.log(condition.active)
         if (condition.active) {
           activeConditions.push(condition.name);
         }
@@ -72,7 +78,7 @@ export default {
       }
       this.$store.commit("character/updateCharacter", newCharacter);
       updateConditionImages(this.character.id, activeConditions);
-      console.log(this.$store.state.character.characters)
+      setCharacterConditions(this.character.id, activeConditions)
     },
     activateCondition(index) {
       this.conditions[index].active = !this.conditions[index].active;

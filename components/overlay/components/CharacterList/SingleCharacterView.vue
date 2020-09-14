@@ -60,6 +60,7 @@ export default {
       this.$root.$emit("openPlayerCharacterPopup", this.selectedCharacter);
     },
     openConditionsPopup() {
+      this.getSelectedCharacterByID();
       this.$root.$emit("openCharacterConditionsPopup", this.selectedCharacter);
     },
     saveCharacterDetailChanges() {

@@ -2,7 +2,7 @@ import {apolloClient, logError} from "~/plugins/backendComunication/backendComun
 import {init as tokenInit, updateCharacterAttrs} from "~/logic/stage/layers/token/init";
 import gql from "graphql-tag";
 import {store} from "~/logic/stage/main";
-import {removeKonvaCharacter} from "@/logic/stage/layers/token/init";
+import {removeKonvaCharacter, updateConditionImages} from "@/logic/stage/layers/token/init";
 
 export function setCharacterAttrs(id, rot, size) {
   apolloClient.mutate({
@@ -72,7 +72,7 @@ export function loadCharacters() {
   apolloClient.query({
     query: gql`
       {
-        allCharacters{pos{point{x y} rot size} name token players {id name} id details conditions { name active}}
+        allCharacters{pos{point{x y} rot size} name token players {id name} id details conditions}
       }
     `
   })
@@ -87,13 +87,14 @@ export function subscribeCharacter() {
   apolloClient.subscribe({
     query: gql`
       subscription {
-        updateCharacter {pos{point{x y} rot size} name token players {id name} id details conditions { name active}}
+        updateCharacter {pos{point{x y} rot size} name token players {id name} id details conditions}
       }
     `
   }).subscribe({
     next({data}) {
       store.commit("character/updateCharacter", data.updateCharacter);
       updateCharacterAttrs(data.updateCharacter);
+      updateConditionImages(data.updateCharacter.id, data.updateCharacter.conditions);
     }
   });
 }
@@ -162,7 +163,7 @@ export function setCharacterDetails(characterID, details) {
 export function setCharacterConditions(charcterID, conditions) {
   apolloClient.mutate({
     mutation: gql`
-      mutation setCharacterConditions($id:String!, $conditions:[ConditionInput]!){
+      mutation setCharacterConditions($id:String!, $conditions:[String]!){
         setCharacterConditions(id:$id, conditions:$conditions) {pos{point{x y} rot size} name token players {id} id}
       }
     `,

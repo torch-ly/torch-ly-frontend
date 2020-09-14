@@ -34,9 +34,6 @@ function loadImage(character) {
       id: String(character.id)
     });
 
-    image.conditions = [];
-    loadConditionImages(image, {x: image.x(), y: image.y(), width: image.width()}, character.conditions || []);
-
     image.x(image.x() + image.width() / 2);
     image.y(image.y() + image.height() / 2);
 
@@ -51,6 +48,9 @@ function loadImage(character) {
         y: Math.round((image.y() - image.height() / 2) / blockSnapSize)
       })
     });
+
+    image.conditions = [];
+    loadConditionImages(image, {x: image.x(), y: image.y(), width: image.width()}, character.conditions || []);
 
     image.on('dragmove', () => {
       updateConditionImagePosition(image.conditions, {
@@ -155,6 +155,7 @@ function loadConditionImages(parent, parentPos, activeConditionList) {
       out.push(image);
 
       draw(out);
+
       updateConditionImagePosition(parent.conditions, parentPos)
     };
     imageObj.src = conditions[activeConditionList[i]];
