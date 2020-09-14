@@ -136,14 +136,24 @@ export function toggleSnapToGrid() {
   snapToGrid = !snapToGrid;
 }
 
-function turf_from_konva(konva_polygon){
+export function resetFogOfWar() {
+  polygons = [];
+  currentPolygon = [];
+  nextPolygon = null;
+  ununionizable = [];
+
+  layer.destroyChildren();
+  layer.batchDraw();
+}
+
+function turf_from_konva(konva_polygon) {
   let coordinates = [];
   let point = [];
-  for(let i = 0; i < konva_polygon.points().length; i++){
-    if(i%2===0){
+  for (let i = 0; i < konva_polygon.points().length; i++) {
+    if (i % 2 === 0) {
       point = [];
       point.push(konva_polygon.points()[i]);
-    }else{
+    } else {
       point.push(konva_polygon.points()[i]);
       coordinates.push(deepcopy(point));
     }

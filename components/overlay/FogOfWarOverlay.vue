@@ -21,18 +21,22 @@
       <div class="flex items-center ml-2">Snap to Grid</div>
     </div>
 
+    <button class="submit-button active:submit-button-active mt-2" @click="clearFogOfWar">Clear FogOfWar</button>
+
     <button class="button" @click="toggleTransparentMode">Toggle FogOfWar-SeeThrough</button>
 
   </div>
 </template>
 <script>
-  import {
-    DeletePolygon,
-    InsertPolygon,
-    syncronize,
-    toggleInsert,
-    toggleSnapToGrid, toggleTransparent
-  } from "../../logic/stage/layers/fogofwar/main";
+import {
+  DeletePolygon,
+  InsertPolygon,
+  syncronize,
+  toggleInsert,
+  toggleSnapToGrid,
+  resetFogOfWar,
+  toggleTransparent
+} from "../../logic/stage/layers/fogofwar/main";
 
 export default {
   data() {
@@ -58,6 +62,9 @@ export default {
     },
     gridSnapChanged() {
       toggleSnapToGrid();
+    },
+    clearFogOfWar() {
+      resetFogOfWar();
     },
     toggleTransparentMode() {
       toggleTransparent()
