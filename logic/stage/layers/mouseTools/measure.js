@@ -6,6 +6,7 @@ let arrow;
 let start = {x: 0, y: 0};
 let layer;
 let lengthSoFar = 0;
+let newTouchCorner = false;
 
 let circle = new Konva.Circle({
   x: 0,
@@ -20,7 +21,7 @@ export function draw(pLayer) {
 }
 
 export function startDraw() {
-  stage.on("mousedown", (e) => {
+  stage.on("mousedown touchstart", (e) => {
     stage.draggable(false);
 
     lengthSoFar = length();
@@ -42,7 +43,7 @@ export function startDraw() {
     layer.add(circle)
   })
 
-  stage.on("mousemove", (e) => {
+  stage.on("mousemove touchmove", (e) => {
     if (arrow == null)
       return;
 
@@ -67,13 +68,24 @@ export function startDraw() {
     layer.batchDraw();
   })
 
-  stage.on("mouseup", (e) => {
-    if (e.evt.button === 2)
+  stage.on("mouseup touchend", (e) => {
+    if (e.evt.button === 2 || newTouchCorner) {
+      newTouchCorner = false;
       return true;
+    }
 
     arrow = null;
     layer.removeChildren();
     layer.batchDraw();
+  })
+
+  stage.on("touchstart", (e) => {
+    let touch1 = e.evt.touches[0];
+    let touch2 = e.evt.touches[1];
+
+    if (touch1 && touch2) {
+      newTouchCorner = true;
+    }
   })
 }
 

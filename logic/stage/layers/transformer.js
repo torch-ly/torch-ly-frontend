@@ -35,6 +35,9 @@ export function setNodesToTransformer(nodes) {
 
   if (nodes[0].characterID != null) {
     store.commit('character/setSelectedCharacter', nodes[0].characterID);
+    for (let condition of nodes[0].conditions) {
+      condition.moveToTop();
+    }
   }
 
   setMoveObjectByArrow(nodes[0]);
@@ -59,7 +62,7 @@ export function addTransformerToLayer(layer) {
 }
 
 export function addTransformerClickListener(object) {
-  stage.on('click', (e) => {
+  stage.on('click tap', (e) => {
     if (!store.state.manu.currentTool === tools.move) {
       return;
     }
