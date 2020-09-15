@@ -1,13 +1,11 @@
 import {stage, store} from "../../main";
-import {getRelativePointerPosition} from "../layerFunctions";
-import Konva from "konva";
-import {createCircle, createRect} from "./drawShapes";
 import tools from '@/enums/tools';
-import { startDraw as startMeasure } from '@/logic/stage/layers/mouseTools/measure';
+import {startDraw as startMeasure} from '@/logic/stage/layers/mouseTools/measure';
 import penTool from '@/logic/stage/layers/mouseTools/penTool';
 import eraserTool from '@/logic/stage/layers/mouseTools/eraserTool';
 import {addFogOfWarListener} from '~/logic/stage/layers/fogofwar/main';
 import {destroyCurrentlyDrawing} from "../fogofwar/main";
+import {enableZoom} from "@/logic/stage/layers/zoom";
 
 export let layer
 
@@ -63,6 +61,12 @@ export function stopAllTools() {
   stage.off('mousedown');
   stage.off('mousemove');
   stage.off('mouseup');
+  stage.off('touchstart');
+  stage.off('touchmove');
+  stage.off('touchend');
+
+  // Enable zoom zo prevent default zoom
+  enableZoom();
 }
 
 export function clearDrawing() {

@@ -15,6 +15,8 @@ export default function (context) {
 }
 
 export function main(pStage, width, height) {
+  Konva.hitOnDragEnabled = true;
+
   stage = pStage;
   stageWidth = width;
   stageHeight = height;

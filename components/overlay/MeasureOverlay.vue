@@ -8,9 +8,9 @@
     <AdvancedOptions>
       <input type="number" class="input-field" v-model="boxSize" @change="submitUnitChange">
 
-      <input type="text" class="input-field" v-model="unitEnding" @change="submitUnitChange">
+      <input type="text" class="input-field mt-2" v-model="unitEnding" @change="submitUnitChange">
 
-      <div class="p-2" @click="restoreDefault">
+      <div class="p-2 mt-2" @click="restoreDefault">
         <fa icon="undo" class="mx-auto block"></fa>
       </div>
     </AdvancedOptions>
@@ -19,30 +19,30 @@
 </template>
 
 <script>
-  import {store} from "../../logic/stage/main";
-  import AdvancedOptions from "../gui-components/AdvancedOptions";
+import {store} from "../../logic/stage/main";
+import AdvancedOptions from "../gui-components/AdvancedOptions";
 
-  export default {
-    data() {
-      return {
-        boxSize: store.state.manu.measureDetails.boxSize,
-        unitEnding: store.state.manu.measureDetails.unitEnding,
-      }
+export default {
+  data() {
+    return {
+      boxSize: store.state.manu.measureDetails.boxSize,
+      unitEnding: store.state.manu.measureDetails.unitEnding,
+    }
+  },
+  components: {AdvancedOptions},
+  computed: {
+    getLength() {
+      let measureDetails = this.$store.state.manu.measureDetails;
+      return measureDetails.length * measureDetails.boxSize + " " + measureDetails.unitEnding;
+    }
+  },
+  methods: {
+    submitUnitChange() {
+      store.commit("manu/setMeasureDetails", {
+        boxSize: this.boxSize,
+        unitEnding: this.unitEnding
+      })
     },
-    components: {AdvancedOptions},
-    computed: {
-      getLength() {
-        let measureDetails = this.$store.state.manu.measureDetails;
-        return measureDetails.length * measureDetails.boxSize + " " + measureDetails.unitEnding;
-      }
-    },
-    methods: {
-      submitUnitChange() {
-        store.commit("manu/setMeasureDetails", {
-          boxSize: this.boxSize,
-          unitEnding: this.unitEnding
-        })
-      },
       restoreDefault() {
         this.boxSize = 5;
         this.unitEnding = "ft";
