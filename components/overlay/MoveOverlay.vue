@@ -37,23 +37,23 @@
   </div>
 </template>
 <script>
-  import {clearTransformerNodes} from "../../logic/stage/layers/transformer";
-  import {stage} from "../../logic/stage/main";
-  import LoadingSpinner from "../gui-components/LoadingSpinner";
-  import FileUpload from "../gui-components/FileUpload";
-  import CharacterList from "./components/CharacterList";
+import {clearTransformerNodes} from "../../logic/stage/layers/transformer";
+import {stage} from "../../logic/stage/main";
+import LoadingSpinner from "../gui-components/LoadingSpinner";
+import FileUpload from "../gui-components/FileUpload";
+import CharacterList from "./components/CharacterList/CharacterList";
 
-  export default {
-    data() {
-      return {
-        tokens: []
-      }
-    },
-    components: {LoadingSpinner, FileUpload, CharacterList},
-    methods: {
-      dropdownChange(e) {
-        clearTransformerNodes();
-        stage.batchDraw();
+export default {
+  data() {
+    return {
+      tokens: []
+    }
+  },
+  components: {LoadingSpinner, FileUpload, CharacterList},
+  methods: {
+    dropdownChange(e) {
+      clearTransformerNodes();
+      stage.batchDraw();
         this.$store.commit("manu/setLayer", e.target.value);
       },
       openTokenPopup() {

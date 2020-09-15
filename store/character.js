@@ -11,6 +11,9 @@ export const mutations = {
   loadCharacters(state, characters) {
     state.characters = characters.sort((a, b) => a.name.localeCompare(b.name));
   },
+  removeCharacter(state, characterID) {
+    state.characters = state.characters.filter(char => char.id != characterID);
+  },
   updateCharacter(state, character) {
     state.characters = state.characters.filter(char => char.id != character.id);
     state.characters.push(character);
@@ -34,6 +37,9 @@ export const mutations = {
   addCharacterToInitiative(state, character) {
     state.initiative.push(character);
     setInitiative();
+  },
+  removeCharacterFromInitiative(state, characterID) {
+    state.initiative = state.initiative.filter(char => char.id != characterID);
   },
   setHoverOverCharacter(state, characterID) {
     state.hoverOverCharacter = characterID;

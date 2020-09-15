@@ -11,6 +11,7 @@ import {getViewport, subscribeViewport} from "~/plugins/backendComunication/view
 import devices from "@/enums/devices";
 import {getInitiative, subscribeInitiative} from "@/plugins/backendComunication/initiative";
 import {getAllPlayers} from "@/plugins/backendComunication/player";
+import {subscribeRemoveCharacter} from "@/plugins/backendComunication/characters";
 
 const secure = location.protocol === 'https:' ? "wss" : "ws";
 const GRAPHQL_ENDPOINT = secure + "://" + (localStorage["torch-ly-backend"] || process.env.BACKEND) + ":5000/graphql";
@@ -54,6 +55,7 @@ export default async function (context) {
 
   loadCharacters();
   subscribeCharacter();
+  subscribeRemoveCharacter();
 
   if (store.state.config.device !== devices.MOBILE)
     loadTable();

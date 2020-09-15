@@ -35,6 +35,9 @@ export function setNodesToTransformer(nodes) {
 
   if (nodes[0].characterID != null) {
     store.commit('character/setSelectedCharacter', nodes[0].characterID);
+    for (let condition of nodes[0].conditions) {
+      condition.moveToTop();
+    }
   }
 
   setMoveObjectByArrow(nodes[0]);
@@ -59,14 +62,14 @@ export function addTransformerToLayer(layer) {
 }
 
 export function addTransformerClickListener(object) {
-  stage.on('click', (e) => {
+  stage.on('click tap', (e) => {
     if (!store.state.manu.currentTool === tools.move) {
       return;
     }
     manageTransformerLayer();
     if (e.target == stage) {
       clearTransformerNodes();
-    } else if (e.target == object && Array.from(transformerLayer.children).includes(object)) { //is this object the target && is the object in the current layer of selection
+    } else if (e.target == object && Array.from(transformerLayer.children).includes(object) && store.state.manu.currentTool == tools.DEFAULT) { //is this object the target && is the object in the current layer of selection
       setNodesToTransformer([object]);
     }
     transformerLayer.batchDraw();

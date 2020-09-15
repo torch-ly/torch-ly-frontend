@@ -7,6 +7,7 @@ import {addTransformerClickListener} from "../transformer";
 import {removeCharacter, setCharacterPosition} from "../../../../plugins/backendComunication/characters";
 import {addTransformationListener} from "~/logic/stage/layers/transformer";
 import devices from "@/enums/devices";
+import conditions from "@/enums/conditions";
 
 let out = [];
 let conditionSize = 40;
@@ -33,11 +34,6 @@ function loadImage(character) {
       id: String(character.id)
     });
 
-    image.conditions = [];
-
-    //TODO add menu for activating conditions
-    //loadConditionImages([{src: "https://app.roll20.net/images/Roll20-OG.png?1595950669"}, {src: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/McDonald%27s_Golden_Arches.svg/1200px-McDonald%27s_Golden_Arches.svg.png"}], image, {x: image.x(), y: image.y(), width: image.width()});
-
     image.x(image.x() + image.width() / 2);
     image.y(image.y() + image.height() / 2);
 
@@ -53,8 +49,15 @@ function loadImage(character) {
       })
     });
 
+    image.conditions = [];
+    loadConditionImages(image, {x: image.x(), y: image.y(), width: image.width()}, character.conditions || []);
+
     image.on('dragmove', () => {
-      updateConditionImagePosition(image.conditions, {x: image.x(), y: image.y(), width: image.width()});
+      updateConditionImagePosition(image.conditions, {
+        x: image.x(),
+        y: image.y(),
+        width: image.width()
+      }, character.conditions || []);
     })
 
     image.removeElement = () => {
@@ -126,23 +129,36 @@ export function updateCharacterAttrs(character) {
 
 }
 
-function loadConditionImages(conditions, parent, parentPos) {
-  for (let i = 0; i < conditions.length; i++) {
+export function removeKonvaCharacter(characterID) {
+  for (let i = 0; i < out.length; i++) {
+    if (out[i].characterID == characterID) {
+      out.splice(i, 1);
+      draw(out);
+      return;
+    }
+  }
+}
+
+function loadConditionImages(parent, parentPos, activeConditionList) {
+  parent.conditions = [];
+  for (let i = 0; i < activeConditionList.length; i++) {
     let imageObj = new Image(conditionSize, conditionSize);
     imageObj.onload = function () {
       let image = new Konva.Image({
-        x: Math.floor(parentPos.x + parentPos.width - (i + 1) * conditionSize),
-        y: Math.floor(parentPos.y),
+        x: 0,
+        y: 0,
         image: imageObj
       });
 
-      out.push(image);
+      image.conditionName = activeConditionList[i];
       parent.conditions.push(image);
+      out.push(image);
 
       draw(out);
-      image.moveToTop();
+
+      updateConditionImagePosition(parent.conditions, parentPos)
     };
-    imageObj.src = conditions[i].src;
+    imageObj.src = conditions[activeConditionList[i]];
   }
 
 
@@ -155,4 +171,21 @@ function updateConditionImagePosition(conditions, parentPos) {
     conditions[i].moveToTop();
   }
   layer.batchDraw();
+}
+
+function removeConditionImages(character) {
+  for (let condition of character.conditions) {
+    out = out.filter(object => object.conditionName != condition.conditionName)
+    condition.destroy();
+  }
+}
+
+export function updateConditionImages(characterID, conditions) {
+  let konvaCharacter = layer.children.filter(img => img.characterID == characterID)[0];
+  removeConditionImages(konvaCharacter);
+  loadConditionImages(konvaCharacter, {
+    x: konvaCharacter.x(),
+    y: konvaCharacter.y(),
+    width: konvaCharacter.width()
+  }, conditions);
 }

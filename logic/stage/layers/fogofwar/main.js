@@ -1,6 +1,5 @@
-
 import {stage, store} from "../../main";
-import {copy, getRelativePointerGridRectangle, getRelativePointerPosition} from "../layerFunctions";
+import {getRelativePointerGridRectangle, getRelativePointerPosition} from "../layerFunctions";
 import {blockSnapSize} from "../grid/main";
 import deepcopy from "deepcopy";
 import * as turf from "@turf/turf";
@@ -22,10 +21,7 @@ export function setFogOfWarLayer(player) {
 }
 
 export function addFogOfWarListener() {
-  stage.on('mouseup', (e) => {
-    if(e.evt.button === 2){
-
-    }
+  stage.on('mouseup touchend', (e) => {
     let point_x_y = getRelativePointerPosition(stage);
     if (snapToGrid) {
       let point = getRelativePointerGridRectangle();
@@ -50,7 +46,7 @@ export function addFogOfWarListener() {
     }
   });
 
-  stage.on('mousemove', () => {
+  stage.on('mousemove touchmove', () => {
     if (snapToGrid)
       return;
     let point_x_y = getRelativePointerPosition(stage);
@@ -72,7 +68,7 @@ export function destroyCurrentlyDrawing(){
 //send data via graphql
 export function syncronize() {
   let polygons = [];
-  for (let i = 0; i < turf_polygons.length; i++) {
+  for (let i = 0; i < this.polygons.length; i++) {
     polygons.push(this.polygons[i].points());
   }
   setFogOfWar([polygons, ununionizable]);
@@ -137,14 +133,24 @@ export function toggleSnapToGrid() {
   snapToGrid = !snapToGrid;
 }
 
-function turf_from_konva(konva_polygon){
+export function resetFogOfWar() {
+  polygons = [];
+  currentPolygon = [];
+  nextPolygon = null;
+  ununionizable = [];
+
+  layer.destroyChildren();
+  layer.batchDraw();
+}
+
+function turf_from_konva(konva_polygon) {
   let coordinates = [];
   let point = [];
-  for(let i = 0; i < konva_polygon.points().length; i++){
-    if(i%2===0){
+  for (let i = 0; i < konva_polygon.points().length; i++) {
+    if (i % 2 === 0) {
       point = [];
       point.push(konva_polygon.points()[i]);
-    }else{
+    } else {
       point.push(konva_polygon.points()[i]);
       coordinates.push(deepcopy(point));
     }
