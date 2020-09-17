@@ -63,7 +63,7 @@ export function addTransformerToLayer(layer) {
 
 export function addTransformerClickListener(object) {
   stage.on('click tap', (e) => {
-    if (!store.state.manu.currentTool === tools.move) {
+    if (store.state.manu.currentTool !== tools.move) {
       return;
     }
     manageTransformerLayer();

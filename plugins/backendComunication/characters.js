@@ -2,7 +2,7 @@ import {apolloClient, logError} from "~/plugins/backendComunication/backendComun
 import {init as tokenInit, updateCharacterAttrs} from "~/logic/stage/layers/token/init";
 import gql from "graphql-tag";
 import {store} from "~/logic/stage/main";
-import {removeKonvaCharacter, updateConditionImages} from "@/logic/stage/layers/token/init";
+import {removeKonvaCharacter} from "@/logic/stage/layers/token/init";
 
 export function setCharacterAttrs(id, rot, size) {
   apolloClient.mutate({
@@ -92,9 +92,9 @@ export function subscribeCharacter() {
     `
   }).subscribe({
     next({data}) {
+      console.log(data)
       store.commit("character/updateCharacter", data.updateCharacter);
       updateCharacterAttrs(data.updateCharacter);
-      updateConditionImages(data.updateCharacter.id, data.updateCharacter.conditions);
     }
   });
 }

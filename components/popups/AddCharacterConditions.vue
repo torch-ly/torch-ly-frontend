@@ -1,8 +1,11 @@
 <template>
   <PopupContainer ref="popupContainer" title="Add Character">
     <div class="grid grid-flow-row grid-cols-4 grid-rows-3 gap-4">
-      <div v-for="(condition, index) in conditions">
-        <div class="flex flex-row" @click="activateCondition(index)">
+      <div v-for="(condition, index) in conditions" @click="activateCondition(index)">
+        <div class="mb-2 text-white font-bold select-none">
+          {{ condition.name }}
+        </div>
+        <div class="flex flex-row">
           <div class="flex justify-center items-center">
             <input type="checkbox" v-model="condition.active">
           </div>
@@ -17,7 +20,6 @@
 <script>
 import PopupContainer from "../gui-components/PopupContainer";
 import conditions from "@/enums/conditions";
-import {updateConditionImages} from "@/logic/stage/layers/token/init";
 import {setCharacterConditions} from "@/plugins/backendComunication/characters";
 
 export default {
@@ -72,12 +74,7 @@ export default {
           activeConditions.push(condition.name);
         }
       }
-      let newCharacter = {
-        ...this.character,
-        conditions: activeConditions
-      }
-      this.$store.commit("character/updateCharacter", newCharacter);
-      updateConditionImages(this.character.id, activeConditions);
+
       setCharacterConditions(this.character.id, activeConditions);
       this.$root.$emit("closeCharacterConditionsPopup");
     },

@@ -112,11 +112,13 @@ export function updateCharacterAttrs(character) {
 
       oldCharacter.rotation(character.pos.rot);
 
-      updateConditionImagePosition(oldCharacter.conditions, {
+      /*updateConditionImagePosition(oldCharacter.conditions, {
         x: oldCharacter.x(),
         y: oldCharacter.y(),
         width: oldCharacter.width()
-      })
+      })*/
+
+      updateConditionImages(character.id, character.conditions);
 
       layer.batchDraw();
 
@@ -147,7 +149,8 @@ function loadConditionImages(parent, parentPos, activeConditionList) {
       let image = new Konva.Image({
         x: 0,
         y: 0,
-        image: imageObj
+        image: imageObj,
+        listening: false
       });
 
       image.conditionName = activeConditionList[i];
@@ -182,6 +185,7 @@ function removeConditionImages(character) {
 
 export function updateConditionImages(characterID, conditions) {
   let konvaCharacter = layer.children.filter(img => img.characterID == characterID)[0];
+  console.log(characterID, conditions, konvaCharacter, layer.children, layer.children.length)
   removeConditionImages(konvaCharacter);
   loadConditionImages(konvaCharacter, {
     x: konvaCharacter.x(),
