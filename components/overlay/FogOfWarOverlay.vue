@@ -26,7 +26,7 @@
     <div class="flex flex-row mt-2">
       <div class="flex items-center">
         <label class="switch">
-          <input type="checkbox" @change="toggleTransparentMode" value="false">
+          <input type="checkbox" @change="toggleTransparentMode" checked>
           <span class="slider round"></span>
         </label>
       </div>
