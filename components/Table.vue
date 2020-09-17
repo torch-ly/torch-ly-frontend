@@ -29,6 +29,8 @@ export default {
       let imgUrl = e.dataTransfer.getData("imgUrl");
       let size;
 
+      stage.setPointersPositions(e);
+
       let p = getRelativePointerPosition(stage);
 
       switch (monster.size) {
