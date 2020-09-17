@@ -42,6 +42,9 @@ function toolChanged (tool) {
     case tools.fogOfWar:
       addFogOfWarListener();
       break;
+    case tools.monsters:
+      startMoveTool();
+      break;
   }
 }
 
