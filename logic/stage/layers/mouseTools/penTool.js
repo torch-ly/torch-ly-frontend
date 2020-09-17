@@ -61,8 +61,11 @@ export default function () {
   });
 
   stage.on('mousedown touchstart', (e) => {
-    if (e.evt.touches[0].touchType == "direct") {
-      stage.draggable(true);
+    try {
+      if (e.evt.touches[0].touchType == "direct") {
+        stage.draggable(true);
+      }
+    } catch (e) {
     }
   });
 

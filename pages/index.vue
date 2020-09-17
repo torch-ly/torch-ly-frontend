@@ -35,7 +35,7 @@ import FloatingButtons from "../components/FloatingButtons";
 import FloatingInfos from "../components/FloatingInfos";
 import AddImage from "@/components/popups/AddImage";
 import AddCharacter from "@/components/popups/AddCharacter";
-import BrushSelector from "@/components/overlay/components/BrushSelector";
+import BrushSelector from "@/components/overlay/PaintOverlay/BrushSelector";
 import MobileMovement from "@/components/MobileMovement";
 import Login from "@/components/popups/Login";
 import SelectBackgroundLayer from "@/components/popups/SelectBackgroundLayer";

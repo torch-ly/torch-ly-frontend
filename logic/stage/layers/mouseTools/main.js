@@ -2,7 +2,7 @@ import {stage, store} from "../../main";
 import tools from '@/enums/tools';
 import {startDraw as startMeasure} from '@/logic/stage/layers/mouseTools/measure';
 import penTool from '@/logic/stage/layers/mouseTools/penTool';
-import eraserTool from '@/logic/stage/layers/mouseTools/eraserTool';
+import eraserTool, {removeEraser} from '@/logic/stage/layers/mouseTools/eraserTool';
 import {addFogOfWarListener} from '~/logic/stage/layers/fogofwar/main';
 import {destroyCurrentlyDrawing} from "../fogofwar/main";
 import {enableZoom} from "@/logic/stage/layers/zoom";
@@ -70,10 +70,12 @@ export function stopAllTools() {
 
   // Enable zoom zo prevent default zoom
   enableZoom();
+
+  // Remove Eraser Rectangle
+  removeEraser();
 }
 
 export function clearDrawing() {
   layer.destroyChildren();
-  draw(layer);
   layer.batchDraw();
 }

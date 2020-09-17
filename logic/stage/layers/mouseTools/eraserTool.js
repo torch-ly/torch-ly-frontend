@@ -1,9 +1,10 @@
-import {createCircle, createRect} from '@/logic/stage/layers/mouseTools/drawShapes';
 import {stage, store} from '@/logic/stage/main';
 import {getRelativePointerPosition} from '@/logic/stage/layers/layerFunctions';
 import Konva from 'konva';
 
 import {layer} from '@/logic/stage/layers/mouseTools/main';
+
+let eraserRect;
 
 export default function () {
   let isDrawing = false; // currently drawing a line
@@ -11,42 +12,69 @@ export default function () {
 
   stage.batchDraw();
 
+  eraserRect = new Konva.Rect({
+    visible: true,
+    width: store.state.manu.freeDrawing.strokeWidth * 20,
+    height: store.state.manu.freeDrawing.strokeWidth * 20,
+    stroke: 'black'
+  });
+
+  layer.add(eraserRect);
+
   stage.on('mousedown', () => {
+    destroyIntersectingLines();
     // Start drawing
     isDrawing = true;
 
-    // Create new line object
     let pos = getRelativePointerPosition(stage);
-
-    currentLine = new Konva.Line({
-      stroke: store.state.manu.freeDrawing.color,
-      strokeWidth: store.state.manu.freeDrawing.strokeWidth * 10, // TODO: Implement a speperate stroke width for eraser
-      points: [pos.x, pos.y],
-      globalCompositeOperation: 'destination-out',
+    eraserRect.position({
+      x: pos.x - eraserRect.width() / 2,
+      y: pos.y - eraserRect.height() / 2
     });
-
-    layer.add(currentLine);
 
     stage.batchDraw();
   });
 
   stage.on('mousemove', () => {
-    stage.batchDraw();
+    let pos = getRelativePointerPosition(stage);
+    eraserRect.position({
+      x: pos.x - eraserRect.width() / 2,
+      y: pos.y - eraserRect.height() / 2
+    });
 
+    layer.batchDraw();
     if (!isDrawing)
       return;
 
-    // If drawing, add new point to the current line object
-    let pos = getRelativePointerPosition(stage);
-    let newPoints = currentLine.points().concat([pos.x, pos.y]);
+    destroyIntersectingLines();
 
-    currentLine.points(newPoints);
-
-    layer.batchDraw();
   });
 
   stage.on('mouseup', () => {
     // End drawing
     isDrawing = false;
   });
+}
+
+function destroyIntersectingLines() {
+  let lines = layer.children.filter(child => (child instanceof Konva.Line && !(child instanceof Konva.Arrow)));
+
+  for (let line of lines) {
+    for (let i = 0; i < line.points().length - 2; i += 2) {
+      if (eraserRect.intersects({
+        x: line.points()[i],
+        y: line.points()[i + 1]
+      })) {
+        line.destroy();
+      }
+    }
+  }
+}
+
+export function removeEraser() {
+  try {
+    eraserRect.destroy();
+    layer.batchDraw();
+  } catch (e) {
+  }
 }
