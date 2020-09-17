@@ -6,7 +6,7 @@
 
     <div class="flex flex-row mt-2">
       <label class="switch">
-        <input type="checkbox" @change="changeEraserState" :checked="true">
+        <input type="checkbox" @change="onEraserSwitch" v-model="erasing">
         <span class="slider round"></span>
       </label>
       <div class="flex items-center ml-2">Eraser</div>
@@ -19,11 +19,30 @@
     <hr class="my-4">
 
     <div class="flex flex-col">
-      <button v-on:click="onShapeSnapToGridSwitch">Snap Shapes To Grid</button>
+      <div class="flex flex-row mt-2">
+        <label class="switch">
+          <input type="checkbox" @change="onShapeSnapToGridSwitch" v-model="snapToGrid">
+          <span class="slider round"></span>
+        </label>
+        <div class="flex items-center ml-2">Snap Shapes To Grid</div>
+      </div>
 
-      <button v-on:click="setTool(tools.circle)">Circle</button>
+      <div class="flex flex-row mt-2">
+        <label class="switch">
+          <input type="checkbox" @change="onRectangleSwitch" v-model="rectangle">
+          <span class="slider round"></span>
+        </label>
+        <div class="flex items-center ml-2">Rectangle</div>
+      </div>
 
-      <button v-on:click="setTool(tools.rectangle)">Rectangle</button>
+      <div class="flex flex-row mt-2">
+        <label class="switch">
+          <input type="checkbox" @change="onCircleSwitch" v-model="circle">
+          <span class="slider round"></span>
+        </label>
+        <div class="flex items-center ml-2">Circle</div>
+      </div>
+
     </div>
   </div>
 </template>
@@ -37,7 +56,11 @@ import {store} from "@/logic/stage/main";
 export default {
   data: () => {
     return {
-      tools
+      tools,
+      erasing: false,
+      snapToGrid: false,
+      rectangle: false,
+      circle: false
     }
   },
   components: {
@@ -58,12 +81,30 @@ export default {
       }
     },
     onShapeSnapToGridSwitch() {
-      this.$store.commit("manu/setDrawingObjectSnapToGrid");
+      if (this.$store.state.manu.freeDrawing.snapToGrid) {
+        this.$store.commit("manu/setDrawingObjectSnapToGrid", false);
+      } else {
+        this.$store.commit("manu/setDrawingObjectSnapToGrid", true);
+      }
     },
-    changeEraserState() {
-      if (this.currentTool === this.tools.pen) {
+    onEraserSwitch() {
+      if (this.currentTool !== this.tools.eraser) {
         this.setTool(this.tools.eraser);
-      } else if (this.currentTool === this.tools.eraser) {
+      } else {
+        this.setTool(this.tools.pen);
+      }
+    },
+    onRectangleSwitch() {
+      if (this.currentTool !== this.tools.rectangle) {
+        this.setTool(this.tools.rectangle);
+      } else {
+        this.setTool(this.tools.pen);
+      }
+    },
+    onCircleSwitch() {
+      if (this.currentTool !== this.tools.circle) {
+        this.setTool(this.tools.circle);
+      } else {
         this.setTool(this.tools.pen);
       }
     }
@@ -74,6 +115,28 @@ export default {
     },
     currentTool() {
       return this.$store.state.manu["currentTool"];
+    },
+    snapToGridActive() {
+      return this.$store.state.manu.freeDrawing.snapToGrid;
+    }
+  },
+  watch: {
+    currentTool() {
+      this.erasing = false;
+      this.rectangle = false;
+      this.circle = false;
+
+      if (this.currentTool == this.tools.eraser) {
+        this.erasing = true;
+      }
+      if (this.currentTool == this.tools.rectangle) {
+        this.rectangle = true;
+      } else if (this.currentTool == this.tools.circle) {
+        this.circle = true;
+      }
+    },
+    snapToGridActive() {
+      this.snapToGrid = this.snapToGridActive;
     }
   }
 }
@@ -104,7 +167,7 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #20880a;
+  background-color: #f32121;
   -webkit-transition: .4s;
   transition: .4s;
 }
@@ -122,11 +185,11 @@ export default {
 }
 
 input:checked + .slider {
-  background-color: #f32121;
+  background-color: #20880a;
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #f32121;
+  box-shadow: 0 0 1px #20880a;
 }
 
 input:checked + .slider:before {

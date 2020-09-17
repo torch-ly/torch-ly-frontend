@@ -3,8 +3,9 @@ import Konva from "konva";
 import {getRelativePointerPosition} from "../layerFunctions";
 import {blockSnapSize} from "../grid/main";
 import tools from '@/enums/tools';
+import {layer} from "@/logic/stage/layers/mouseTools/main";
 
-export function createRect(layer) {
+export function createRect() {
   let start = {x: 0, y: 0};
 
   let selectionRectangle = new Konva.Rect({
@@ -108,7 +109,7 @@ export function createRect(layer) {
   });
 }
 
-export function createCircle(layer) {
+export function createCircle() {
   let start = {x: 0, y: 0};
 
   let selectionArrow = new Konva.Arrow({

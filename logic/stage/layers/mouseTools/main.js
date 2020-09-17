@@ -6,6 +6,7 @@ import eraserTool, {removeEraser} from '@/logic/stage/layers/mouseTools/eraserTo
 import {addFogOfWarListener} from '~/logic/stage/layers/fogofwar/main';
 import {destroyCurrentlyDrawing} from "../fogofwar/main";
 import {enableZoom} from "@/logic/stage/layers/zoom";
+import {createCircle, createRect} from "@/logic/stage/layers/mouseTools/drawShapes";
 
 export let layer
 
@@ -44,6 +45,12 @@ function toolChanged (tool) {
       break;
     case tools.monsters:
       startMoveTool();
+      break;
+    case tools.circle:
+      createCircle();
+      break;
+    case tools.rectangle:
+      createRect();
       break;
   }
 }

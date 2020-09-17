@@ -1,4 +1,3 @@
-import {stage} from "../logic/stage/main";
 import tools from '@/enums/tools';
 import {clearTransformerNodes} from "../logic/stage/layers/transformer";
 
@@ -35,8 +34,8 @@ export const mutations = {
     state.erase = false;
     state.freeDrawing.drawingObject = object;
   },
-  setDrawingObjectSnapToGrid(state) {
-    state.freeDrawing.snapToGrid = !state.freeDrawing.snapToGrid;
+  setDrawingObjectSnapToGrid(state, value) {
+    state.freeDrawing.snapToGrid = value;
   },
   setMeasureLength(state, length) {
     state.measureDetails.length = length;

@@ -14,15 +14,15 @@ export default function () {
 
   eraserRect = new Konva.Rect({
     visible: true,
-    width: store.state.manu.freeDrawing.strokeWidth * 20,
-    height: store.state.manu.freeDrawing.strokeWidth * 20,
+    width: store.state.manu.freeDrawing.strokeWidth * 10,
+    height: store.state.manu.freeDrawing.strokeWidth * 10,
     stroke: 'black'
   });
 
   layer.add(eraserRect);
 
   stage.on('mousedown', () => {
-    destroyIntersectingLines();
+    destroyIntersectingObjects();
     // Start drawing
     isDrawing = true;
 
@@ -46,7 +46,7 @@ export default function () {
     if (!isDrawing)
       return;
 
-    destroyIntersectingLines();
+    destroyIntersectingObjects();
 
   });
 
@@ -56,17 +56,23 @@ export default function () {
   });
 }
 
-function destroyIntersectingLines() {
-  let lines = layer.children.filter(child => (child instanceof Konva.Line && !(child instanceof Konva.Arrow)));
+function destroyIntersectingObjects() {
+  //let lines = layer.children.filter(child => (child instanceof Konva.Line && !(child instanceof Konva.Arrow)));
 
-  for (let line of lines) {
-    for (let i = 0; i < line.points().length - 2; i += 2) {
-      if (eraserRect.intersects({
-        x: line.points()[i],
-        y: line.points()[i + 1]
-      })) {
-        line.destroy();
-      }
+  for (let object of layer.children) {
+    if (object instanceof Konva.Line) {
+      destroyIntersectingLines(object.points(), object);
+    }
+  }
+}
+
+function destroyIntersectingLines(points, object) {
+  for (let i = 0; i < points.length - 2; i += 2) {
+    if (eraserRect.intersects({
+      x: points[i],
+      y: points[i + 1]
+    })) {
+      object.destroy();
     }
   }
 }
