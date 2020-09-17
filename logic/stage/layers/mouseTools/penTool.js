@@ -14,8 +14,14 @@ export default function () {
 
   stage.batchDraw();
 
-  stage.on('mousedown', () => {
-    // Start drawing
+  stage.on('mousedown touchstart', (e) => {
+    try {
+      if (e.evt.touches[0].touchType == "direct") {
+        return;
+      }
+    } catch (e) {
+    }
+
     isDrawing = true;
 
     // Create new line object
@@ -23,9 +29,10 @@ export default function () {
 
     currentLine = new Konva.Line({
       stroke: store.state.manu.freeDrawing.color,
-      strokeWidth: store.state.manu.erase ? store.state.manu.freeDrawing.strokeWidth * 10 : store.state.manu.freeDrawing.strokeWidth,
+      strokeWidth: parseInt(store.state.manu.erase ? store.state.manu.freeDrawing.strokeWidth * 10 : store.state.manu.freeDrawing.strokeWidth),
       points: [pos.x, pos.y],
       globalCompositeOperation: 'source-over',
+      listening: false
     });
 
     layer.add(currentLine);
@@ -33,7 +40,7 @@ export default function () {
     stage.batchDraw();
   });
 
-  stage.on('mousemove', () => {
+  stage.on('mousemove touchmove', () => {
     stage.batchDraw();
 
     if (!isDrawing)
@@ -48,7 +55,7 @@ export default function () {
     layer.batchDraw();
   });
 
-  stage.on('mouseup', () => {
+  stage.on('mouseup touchend', () => {
     // End drawing
     isDrawing = false;
   });
