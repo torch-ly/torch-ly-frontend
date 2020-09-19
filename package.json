@@ -17,6 +17,7 @@
     "@fortawesome/vue-fontawesome": "^0.1.10",
     "@nuxtjs/axios": "^5.12.1",
     "@nuxtjs/dotenv": "^1.4.0",
+    "@nuxtjs/pwa": "^3.0.2",
     "@turf/turf": "^5.1.6",
     "@types/mathjs": "^6.0.5",
     "animate.css": "^4.1.0",

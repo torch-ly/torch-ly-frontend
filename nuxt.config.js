@@ -17,14 +17,30 @@ export default {
       { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'}
     ]
   },
 
   /*
   ** Customize the progress-bar color
   */
-  loading: { color: '#fff' },
+  loading: {color: '#fff'},
+
+  pwa: {
+    meta: {
+      name: "torch.ly",
+      nativeUI: true
+    },
+    manifest: {
+      lang: 'de',
+      name: "torch.ly",
+      short_name: "torch.ly",
+      background_color: "#eae2b7",
+      start_url: "/",
+      display: "standalone",
+      theme_color: "#eae2b7"
+    }
+  },
 
   /*
   ** Global CSS
@@ -57,6 +73,7 @@ export default {
     // Doc: https://github.com/nuxt-community/dotenv-module
     '@nuxtjs/dotenv',
     '@nuxtjs/axios',
+    '@nuxtjs/pwa',
     ['nuxt-fontawesome', {
       component: 'fa',
       imports: [
