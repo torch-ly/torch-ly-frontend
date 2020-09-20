@@ -107,15 +107,6 @@ export function addDrawingObject(object) {
 
     layer.add(line);
     layer.batchDraw();
-  } else if (object.type === "Rect") {
-    let rect = new Konva.Rect({
-      ...object,
-      listening: false
-    })
-    rect.objectID = object._id;
-
-    layer.add(rect);
-    layer.batchDraw();
   } else if (object.type === "Circle") {
     let circle = new Konva.Circle({
       ...object,

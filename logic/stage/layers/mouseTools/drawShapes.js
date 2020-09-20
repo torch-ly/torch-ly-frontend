@@ -75,27 +75,27 @@ export function createRect() {
       return;
     }
 
+    let width, height;
     if (store.state.manu.freeDrawing.snapToGrid) {
-      addDrawing({
-        x: start.x,
-        y: start.y,
-        width: calculateSnapToGrid(getRelativePointerPosition(stage)).x - start.x,
-        height: calculateSnapToGrid(getRelativePointerPosition(stage)).y - start.y,
-        stroke: store.state.manu.freeDrawing.color,
-        strokeWidth: store.state.manu.freeDrawing.strokeWidth,
-        type: "Rect"
-      })
+      width = calculateSnapToGrid(getRelativePointerPosition(stage)).x - start.x;
+      height = calculateSnapToGrid(getRelativePointerPosition(stage)).y - start.y;
     } else {
-      addDrawing({
-        x: start.x,
-        y: start.y,
-        width: getRelativePointerPosition(stage).x - start.x,
-        height: getRelativePointerPosition(stage).y - start.y,
-        stroke: store.state.manu.freeDrawing.color,
-        strokeWidth: store.state.manu.freeDrawing.strokeWidth,
-        type: "Rect"
-      });
+      width = getRelativePointerPosition(stage).x - start.x;
+      height = getRelativePointerPosition(stage).y - start.y;
     }
+
+    addDrawing({
+      stroke: store.state.manu.freeDrawing.color,
+      strokeWidth: store.state.manu.freeDrawing.strokeWidth,
+      points: [
+        start.x, start.y,
+        start.x + width, start.y,
+        start.x + width, start.y + height,
+        start.x, start.y + height,
+        start.x, start.y
+      ],
+      type: "Line"
+    });
 
     // update visibility in timeout, so we can check it in click event
     setTimeout(() => {
