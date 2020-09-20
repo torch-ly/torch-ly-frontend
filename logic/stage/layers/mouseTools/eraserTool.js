@@ -62,22 +62,34 @@ function destroyIntersectingObjects() {
 
   for (let object of layer.children) {
     if (object instanceof Konva.Line) {
-      destroyIntersectingLines(object.points(), object);
+      destroyIntersectingLines(object);
+    } else if (object instanceof Konva.Circle) {
+      destroyIntersectingCircle(object);
     }
   }
 }
 
-function destroyIntersectingLines(points, object) {
-  for (let i = 0; i < points.length - 2; i += 2) {
+function destroyIntersectingLines(object) {
+  for (let i = 0; i < object.points().length - 2; i += 2) {
     if (eraserRect.intersects({
-      x: points[i],
-      y: points[i + 1]
+      x: object.points()[i],
+      y: object.points()[i + 1]
     })) {
       if (object.objectID != null) {
-        object.points([0, 0]);
+        object.points([]);
         removeDrawing(object.objectID);
       }
     }
+  }
+}
+
+function destroyIntersectingCircle(object) {
+  let pos = getRelativePointerPosition(stage);
+
+  let distance = Math.sqrt(Math.pow(object.x() - pos.x, 2) + Math.pow(object.y() - pos.y, 2));
+
+  if (Math.abs(distance - object.radius()) < (eraserRect.width() * 3 / 4)) {
+    removeDrawing(object.objectID);
   }
 }
 
