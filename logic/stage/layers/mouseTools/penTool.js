@@ -13,7 +13,7 @@ export default function () {
   let isDrawing = false; // currently drawing a line
   let currentLine; // currently drawn line
 
-  stage.batchDraw();
+  layer.batchDraw();
 
   stage.on('mousedown touchstart', (e) => {
     try {
@@ -30,7 +30,7 @@ export default function () {
 
     currentLine = new Konva.Line({
       stroke: store.state.manu.freeDrawing.color,
-      strokeWidth: parseInt(store.state.manu.erase ? store.state.manu.freeDrawing.strokeWidth * 10 : store.state.manu.freeDrawing.strokeWidth),
+      strokeWidth: (store.state.manu.erase ? store.state.manu.freeDrawing.strokeWidth * 10 : store.state.manu.freeDrawing.strokeWidth),
       points: [pos.x, pos.y],
       globalCompositeOperation: 'source-over',
       listening: false
@@ -38,11 +38,11 @@ export default function () {
 
     layer.add(currentLine);
 
-    stage.batchDraw();
+    layer.batchDraw();
   });
 
   stage.on('mousemove touchmove', () => {
-    stage.batchDraw();
+    layer.batchDraw();
 
     if (!isDrawing)
       return;
@@ -69,7 +69,7 @@ export default function () {
     layer.batchDraw();
   });
 
-  stage.on('mousedown touchstart', (e) => {
+  stage.on('touchstart', (e) => {
     try {
       if (e.evt.touches[0].touchType == "direct") {
         stage.draggable(true);
@@ -78,20 +78,7 @@ export default function () {
     }
   });
 
-  stage.on('mousedown touchstart', (e) => {
-    try {
-      if (e.evt.touches[0].touchType == "direct") {
-        stage.draggable(true);
-      }
-    } catch (e) {
-    }
-  });
-
-  stage.on('mouseup touchend', () => {
-    stage.draggable(false);
-  });
-
-  stage.on('mouseup touchend', () => {
+  stage.on('touchend', () => {
     stage.draggable(false);
   });
 }

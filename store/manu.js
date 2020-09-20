@@ -45,7 +45,7 @@ export const mutations = {
     state.measureDetails.boxSize = detail.boxSize
   },
   setDrawingStrokeWidth(state, width) {
-    state.freeDrawing.strokeWidth = width;
+    state.freeDrawing.strokeWidth = parseInt(width);
   }
 }
 

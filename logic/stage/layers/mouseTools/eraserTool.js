@@ -58,10 +58,23 @@ export default function () {
     // End drawing
     isDrawing = false;
   });
+
+  stage.on('touchstart', (e) => {
+    try {
+      if (e.evt.touches[0].touchType == "direct") {
+        stage.draggable(true);
+      }
+    } catch (e) {
+    }
+  });
+
+  stage.on('touchend', () => {
+    stage.draggable(false);
+  });
+
 }
 
 function destroyIntersectingObjects() {
-  //let lines = layer.children.filter(child => (child instanceof Konva.Line && !(child instanceof Konva.Arrow)));
 
   for (let object of layer.children) {
     if (object instanceof Konva.Line) {

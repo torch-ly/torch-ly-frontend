@@ -51,7 +51,6 @@ export function getAllDrawingObjects() {
   })
   .then(({data}) => {
     let objects = data.getAllDrawingObjects;
-    console.log(objects);
     for (let object of objects) {
       addDrawingObject(object);
     }
