@@ -70,15 +70,10 @@ function destroyIntersectingObjects() {
 }
 
 function destroyIntersectingLines(object) {
-  for (let i = 0; i < object.points().length - 2; i += 2) {
-    if (eraserRect.intersects({
-      x: object.points()[i],
-      y: object.points()[i + 1]
-    })) {
-      if (object.objectID != null) {
-        object.points([]);
-        removeDrawing(object.objectID);
-      }
+  let points = object.points()
+  for (let i = 0; i < points.length - 2; i += 2) {
+    if (lineCrossesEraser([{x: points[i], y: points[i + 1]}, {x: points[i + 2], y: points[i + 3]}])) {
+      removeDrawing(object.objectID);
     }
   }
 }
@@ -99,4 +94,46 @@ export function removeEraser() {
     layer.batchDraw();
   } catch (e) {
   }
+}
+
+function lineCrossesEraser(points) {
+  let rectTop = eraserRect.y();
+  let rectBottom = eraserRect.y() + eraserRect.height();
+  let rectLeft = eraserRect.x();
+  let rectRight = eraserRect.x() + eraserRect.width();
+
+  let square = [
+    [0, 0, 0, 0],
+    [0, 0, 0, 0]
+  ];
+
+  for (let i = 0; i < 2; i++) {
+    if (points[i].y <= rectTop) {
+      square[i][0] = 1;
+    } else if (points[i].y >= rectBottom) {
+      square[i][1] = 1;
+    }
+
+    if (points[i].x <= rectLeft) {
+      square[i][3] = 1;
+    } else if (points[i].x >= rectRight) {
+      square[i][2] = 1;
+    }
+  }
+
+  if (JSON.stringify(square[0]) === JSON.stringify(square[1])) {
+    if (JSON.stringify(square[0]) === JSON.stringify([0, 0, 0, 0])) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  for (let i = 0; i < 4; i++) {
+    if (square[0][i] === square[1][i] && square[0][i] === 1) {
+      return false;
+    }
+  }
+
+  return true;
 }
