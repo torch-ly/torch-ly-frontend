@@ -1,6 +1,7 @@
 import {apolloClient, logError} from "~/plugins/backendComunication/backendComunication";
 import gql from "graphql-tag";
 import {addDrawingObject, removeDrawingObject} from "@/logic/stage/layers/mouseTools/penTool";
+import {clearDrawing} from "@/logic/stage/layers/mouseTools/main";
 
 export function addDrawing(object) {
   apolloClient.mutate({
@@ -24,6 +25,19 @@ export function removeDrawing(id) {
     `,
     variables: {
       id: id
+    }
+  }).catch(logError);
+}
+
+export function clearAllDrawings() {
+  apolloClient.mutate({
+    mutation: gql`
+      mutation clearAllDrawings($args:Boolean){
+        clearAllDrawings(args:$args)
+      }
+    `,
+    variables: {
+      args: true
     }
   }).catch(logError);
 }
@@ -69,6 +83,20 @@ export function subscribeRemoveDrawing() {
   }).subscribe({
     next({data}) {
       removeDrawingObject(data.removeDrawing);
+    }
+  });
+}
+
+export function subscribeClearAllDrawings() {
+  apolloClient.subscribe({
+    query: gql`
+      subscription {
+        clearAllDrawings
+      }
+    `
+  }).subscribe({
+    next({data}) {
+      clearDrawing();
     }
   });
 }

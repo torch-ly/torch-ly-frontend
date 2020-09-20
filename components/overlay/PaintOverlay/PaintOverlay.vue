@@ -48,10 +48,10 @@
 </template>
 <script>
 import BrushSelector from "./BrushSelector";
-import {clearDrawing} from "../../../logic/stage/layers/mouseTools/main";
 import {mapActions} from 'vuex';
 import tools from '@/enums/tools';
 import {store} from "@/logic/stage/main";
+import {clearAllDrawings} from "@/plugins/backendComunication/drawing";
 
 export default {
   data: () => {
@@ -71,7 +71,7 @@ export default {
       setTool: "manu/setTool"
     }),
     clearDrawingLayer() {
-      clearDrawing();
+      clearAllDrawings();
     },
     onShapeDrawingClick(object) {
       if (store.state.manu.freeDrawing.drawingObject == '') {
