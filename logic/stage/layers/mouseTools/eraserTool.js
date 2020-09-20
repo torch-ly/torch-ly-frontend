@@ -22,7 +22,7 @@ export default function () {
 
   layer.add(eraserRect);
 
-  stage.on('mousedown', () => {
+  stage.on('mousedown touchstart', () => {
     destroyIntersectingObjects();
     // Start drawing
     isDrawing = true;
@@ -33,10 +33,12 @@ export default function () {
       y: pos.y - eraserRect.height() / 2
     });
 
-    stage.batchDraw();
+    destroyIntersectingObjects();
+
+    layer.batchDraw();
   });
 
-  stage.on('mousemove', () => {
+  stage.on('mousemove touchmove', () => {
     let pos = getRelativePointerPosition(stage);
     eraserRect.position({
       x: pos.x - eraserRect.width() / 2,
@@ -44,6 +46,7 @@ export default function () {
     });
 
     layer.batchDraw();
+
     if (!isDrawing)
       return;
 
@@ -51,7 +54,7 @@ export default function () {
 
   });
 
-  stage.on('mouseup', () => {
+  stage.on('mouseup touchend', () => {
     // End drawing
     isDrawing = false;
   });
