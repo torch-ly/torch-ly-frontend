@@ -4,6 +4,7 @@ import {getRelativePointerPosition} from '@/logic/stage/layers/layerFunctions';
 import Konva from 'konva';
 
 import {layer} from '@/logic/stage/layers/mouseTools/main';
+import {addDrawing} from "@/plugins/backendComunication/drawing";
 
 export default function () {
   createCircle(layer);
@@ -58,6 +59,23 @@ export default function () {
   stage.on('mouseup touchend', () => {
     // End drawing
     isDrawing = false;
+    addDrawing({
+      stroke: currentLine.stroke(),
+      strokeWidth: currentLine.strokeWidth(),
+      points: currentLine.points(),
+      type: 'Line'
+    });
+    currentLine.points([]);
+    layer.batchDraw();
+  });
+
+  stage.on('mousedown touchstart', (e) => {
+    try {
+      if (e.evt.touches[0].touchType == "direct") {
+        stage.draggable(true);
+      }
+    } catch (e) {
+    }
   });
 
   stage.on('mousedown touchstart', (e) => {
@@ -72,4 +90,32 @@ export default function () {
   stage.on('mouseup touchend', () => {
     stage.draggable(false);
   });
+
+  stage.on('mouseup touchend', () => {
+    stage.draggable(false);
+  });
+}
+
+export function addDrawingObject(object) {
+  if (object.type === "Line") {
+    let line = new Konva.Line({
+      stroke: object.stroke,
+      strokeWidth: object.strokeWidth,
+      points: object.points,
+      globalCompositeOperation: 'source-over',
+      listening: false
+    })
+    line.objectID = object._id;
+
+    layer.add(line);
+    layer.batchDraw();
+  }
+}
+
+export function removeDrawingObject(objectID) {
+  try {
+    layer.children.filter(object => object.objectID == objectID)[0].destroy();
+    layer.batchDraw();
+  } catch (e) {
+  }
 }

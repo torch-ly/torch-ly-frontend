@@ -3,6 +3,7 @@ import {getRelativePointerPosition} from '@/logic/stage/layers/layerFunctions';
 import Konva from 'konva';
 
 import {layer} from '@/logic/stage/layers/mouseTools/main';
+import {removeDrawing} from "@/plugins/backendComunication/drawing";
 
 let eraserRect;
 
@@ -72,7 +73,10 @@ function destroyIntersectingLines(points, object) {
       x: points[i],
       y: points[i + 1]
     })) {
-      object.destroy();
+      if (object.objectID != null) {
+        object.points([0, 0]);
+        removeDrawing(object.objectID);
+      }
     }
   }
 }
