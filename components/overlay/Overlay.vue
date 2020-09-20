@@ -12,10 +12,10 @@
   </div>
 </template>
 <script>
-import BrushSelector from "./components/BrushSelector";
-import PaintOverlay from "@/components/overlay/PaintOverlay";
+import BrushSelector from "./PaintOverlay/BrushSelector";
+import PaintOverlay from "@/components/overlay/PaintOverlay/PaintOverlay";
 import MeasureOverlay from "./MeasureOverlay";
-import MoveOverlay from "./MoveOverlay";
+import MoveOverlay from "./MoveOverlay/MoveOverlay";
 import FogOfWarOverlay from "./FogOfWarOverlay";
 import MonsterOverlay from "./MonsterOverlay"
 import InitiativeTracker from "~/components/overlay/InitiativeTracker";

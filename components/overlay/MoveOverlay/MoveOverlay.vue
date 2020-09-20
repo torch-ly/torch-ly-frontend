@@ -37,11 +37,11 @@
   </div>
 </template>
 <script>
-import {clearTransformerNodes} from "../../logic/stage/layers/transformer";
-import {stage} from "../../logic/stage/main";
-import LoadingSpinner from "../gui-components/LoadingSpinner";
-import FileUpload from "../gui-components/FileUpload";
-import CharacterList from "./components/CharacterList/CharacterList";
+import {clearTransformerNodes} from "../../../logic/stage/layers/transformer";
+import {stage} from "../../../logic/stage/main";
+import LoadingSpinner from "../../gui-components/LoadingSpinner";
+import FileUpload from "../../gui-components/FileUpload";
+import CharacterList from "./CharacterList/CharacterList";
 
 export default {
   data() {
@@ -85,7 +85,7 @@ export default {
   }
 </script>
 <style scoped lang="scss">
-  @import "assets/css/scheme";
+@import "../../../assets/css/scheme";
 
   .input {
     @apply text-black mt-4 ml-2 w-16 p-1 rounded;

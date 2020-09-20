@@ -92,7 +92,6 @@ export function subscribeCharacter() {
     `
   }).subscribe({
     next({data}) {
-      console.log(data)
       store.commit("character/updateCharacter", data.updateCharacter);
       updateCharacterAttrs(data.updateCharacter);
     }

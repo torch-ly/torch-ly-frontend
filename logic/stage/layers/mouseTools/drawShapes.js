@@ -3,8 +3,10 @@ import Konva from "konva";
 import {getRelativePointerPosition} from "../layerFunctions";
 import {blockSnapSize} from "../grid/main";
 import tools from '@/enums/tools';
+import {layer} from "@/logic/stage/layers/mouseTools/main";
+import {addDrawing} from "@/plugins/backendComunication/drawing";
 
-export function createRect(layer) {
+export function createRect() {
   let start = {x: 0, y: 0};
 
   let selectionRectangle = new Konva.Rect({
@@ -73,31 +75,28 @@ export function createRect(layer) {
       return;
     }
 
-    let newRect;
+    let width, height;
     if (store.state.manu.freeDrawing.snapToGrid) {
-      newRect = new Konva.Rect({
-        x: start.x,
-        y: start.y,
-        width: calculateSnapToGrid(getRelativePointerPosition(stage)).x - start.x,
-        height: calculateSnapToGrid(getRelativePointerPosition(stage)).y - start.y,
-        stroke: store.state.manu.freeDrawing.color,
-        strokeWidth: store.state.manu.freeDrawing.strokeWidth
-      });
-      layer.add(newRect);
+      width = calculateSnapToGrid(getRelativePointerPosition(stage)).x - start.x;
+      height = calculateSnapToGrid(getRelativePointerPosition(stage)).y - start.y;
     } else {
-      newRect = new Konva.Rect({
-        x: start.x,
-        y: start.y,
-        width: getRelativePointerPosition(stage).x - start.x,
-        height: getRelativePointerPosition(stage).y - start.y,
-        stroke: store.state.manu.freeDrawing.color,
-        strokeWidth: store.state.manu.freeDrawing.strokeWidth
-      });
-      layer.add(newRect);
+      width = getRelativePointerPosition(stage).x - start.x;
+      height = getRelativePointerPosition(stage).y - start.y;
     }
 
+    addDrawing({
+      stroke: store.state.manu.freeDrawing.color,
+      strokeWidth: store.state.manu.freeDrawing.strokeWidth,
+      points: [
+        start.x, start.y,
+        start.x + width, start.y,
+        start.x + width, start.y + height,
+        start.x, start.y + height,
+        start.x, start.y
+      ],
+      type: "Line"
+    });
 
-    //setStageDragAndDrop(true, true);
     // update visibility in timeout, so we can check it in click event
     setTimeout(() => {
       selectionRectangle.visible(false);
@@ -108,7 +107,7 @@ export function createRect(layer) {
   });
 }
 
-export function createCircle(layer) {
+export function createCircle() {
   let start = {x: 0, y: 0};
 
   let selectionArrow = new Konva.Arrow({
@@ -168,14 +167,14 @@ export function createCircle(layer) {
       end = getRelativePointerPosition(stage);
     }
 
-    let newCricle = new Konva.Circle({
+    addDrawing({
       x: start.x,
       y: start.y,
       radius: Math.sqrt(Math.pow(end.x - start.x, 2) + Math.pow(end.y - start.y, 2)),
       stroke: store.state.manu.freeDrawing.color,
-      strokeWidth: store.state.manu.freeDrawing.strokeWidth
+      strokeWidth: store.state.manu.freeDrawing.strokeWidth,
+      type: "Circle"
     });
-    layer.add(newCricle);
 
     setTimeout(() => {
       selectionArrow.visible(false);

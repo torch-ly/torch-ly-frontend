@@ -3,6 +3,7 @@ import {store} from "~/logic/stage/main";
 import {saveBackgroundLayer} from "~/logic/stage/layers/background/init";
 import {deleteSelectedDrawingObjects} from "~/logic/stage/layers/transformer";
 import {setViewport} from "~/plugins/backendComunication/viewport";
+import tools from "@/enums/tools";
 
 // toggle layer
 hotkeys('command+b,ctrl+b', () => {
@@ -10,7 +11,7 @@ hotkeys('command+b,ctrl+b', () => {
 });
 
 export function toggleLayer() {
-  store.commit("manu/setHand");
+  store.commit("manu/setTool", tools.move);
 
   if (store.state.manu.layer === "Background" || !store.state.authentication.gm) {
     store.commit("manu/setLayer", "Token");

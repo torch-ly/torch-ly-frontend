@@ -11,8 +11,8 @@
 
 <script>
 import {store} from "../../../../logic/stage/main";
-import SingleCharacterView from "@/components/overlay/components/CharacterList/SingleCharacterView";
-import MultipleCharacterView from "@/components/overlay/components/CharacterList/MutlitpleCharacterView"
+import SingleCharacterView from "@/components/overlay/MoveOverlay/CharacterList/SingleCharacterView";
+import MultipleCharacterView from "@/components/overlay/MoveOverlay/CharacterList/MutlitpleCharacterView"
 
 export default {
   components: {SingleCharacterView, MultipleCharacterView},

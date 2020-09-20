@@ -2,10 +2,11 @@ import {stage, store} from "../../main";
 import tools from '@/enums/tools';
 import {startDraw as startMeasure} from '@/logic/stage/layers/mouseTools/measure';
 import penTool from '@/logic/stage/layers/mouseTools/penTool';
-import eraserTool from '@/logic/stage/layers/mouseTools/eraserTool';
+import eraserTool, {removeEraser} from '@/logic/stage/layers/mouseTools/eraserTool';
 import {addFogOfWarListener} from '~/logic/stage/layers/fogofwar/main';
 import {destroyCurrentlyDrawing} from "../fogofwar/main";
 import {enableZoom} from "@/logic/stage/layers/zoom";
+import {createCircle, createRect} from "@/logic/stage/layers/mouseTools/drawShapes";
 
 export let layer
 
@@ -45,6 +46,12 @@ function toolChanged (tool) {
     case tools.monsters:
       startMoveTool();
       break;
+    case tools.circle:
+      createCircle();
+      break;
+    case tools.rectangle:
+      createRect();
+      break;
   }
 }
 
@@ -70,10 +77,12 @@ export function stopAllTools() {
 
   // Enable zoom zo prevent default zoom
   enableZoom();
+
+  // Remove Eraser Rectangle
+  removeEraser();
 }
 
 export function clearDrawing() {
   layer.destroyChildren();
-  draw(layer);
   layer.batchDraw();
 }
