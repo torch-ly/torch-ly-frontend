@@ -99,15 +99,32 @@ export default function () {
 export function addDrawingObject(object) {
   if (object.type === "Line") {
     let line = new Konva.Line({
-      stroke: object.stroke,
-      strokeWidth: object.strokeWidth,
-      points: object.points,
+      ...object,
       globalCompositeOperation: 'source-over',
       listening: false
     })
     line.objectID = object._id;
 
     layer.add(line);
+    layer.batchDraw();
+  } else if (object.type === "Rect") {
+    let rect = new Konva.Rect({
+      ...object,
+      listening: false
+    })
+    rect.objectID = object._id;
+
+    layer.add(rect);
+    layer.batchDraw();
+  } else if (object.type === "Circle") {
+    let circle = new Konva.Circle({
+      ...object,
+      listening: false
+    });
+
+    circle.objectID = object._id;
+
+    layer.add(circle);
     layer.batchDraw();
   }
 }

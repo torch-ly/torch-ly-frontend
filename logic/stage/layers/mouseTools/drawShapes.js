@@ -4,6 +4,7 @@ import {getRelativePointerPosition} from "../layerFunctions";
 import {blockSnapSize} from "../grid/main";
 import tools from '@/enums/tools';
 import {layer} from "@/logic/stage/layers/mouseTools/main";
+import {addDrawing} from "@/plugins/backendComunication/drawing";
 
 export function createRect() {
   let start = {x: 0, y: 0};
@@ -74,31 +75,28 @@ export function createRect() {
       return;
     }
 
-    let newRect;
     if (store.state.manu.freeDrawing.snapToGrid) {
-      newRect = new Konva.Rect({
+      addDrawing({
         x: start.x,
         y: start.y,
         width: calculateSnapToGrid(getRelativePointerPosition(stage)).x - start.x,
         height: calculateSnapToGrid(getRelativePointerPosition(stage)).y - start.y,
         stroke: store.state.manu.freeDrawing.color,
-        strokeWidth: store.state.manu.freeDrawing.strokeWidth
-      });
-      layer.add(newRect);
+        strokeWidth: store.state.manu.freeDrawing.strokeWidth,
+        type: "Rect"
+      })
     } else {
-      newRect = new Konva.Rect({
+      addDrawing({
         x: start.x,
         y: start.y,
         width: getRelativePointerPosition(stage).x - start.x,
         height: getRelativePointerPosition(stage).y - start.y,
         stroke: store.state.manu.freeDrawing.color,
-        strokeWidth: store.state.manu.freeDrawing.strokeWidth
+        strokeWidth: store.state.manu.freeDrawing.strokeWidth,
+        type: "Rect"
       });
-      layer.add(newRect);
     }
 
-
-    //setStageDragAndDrop(true, true);
     // update visibility in timeout, so we can check it in click event
     setTimeout(() => {
       selectionRectangle.visible(false);
@@ -169,14 +167,14 @@ export function createCircle() {
       end = getRelativePointerPosition(stage);
     }
 
-    let newCricle = new Konva.Circle({
+    addDrawing({
       x: start.x,
       y: start.y,
       radius: Math.sqrt(Math.pow(end.x - start.x, 2) + Math.pow(end.y - start.y, 2)),
       stroke: store.state.manu.freeDrawing.color,
-      strokeWidth: store.state.manu.freeDrawing.strokeWidth
+      strokeWidth: store.state.manu.freeDrawing.strokeWidth,
+      type: "Circle"
     });
-    layer.add(newCricle);
 
     setTimeout(() => {
       selectionArrow.visible(false);
