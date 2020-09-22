@@ -72,7 +72,6 @@ export default {
       setTool: "manu/setTool"
     }),
     clearDrawingLayer() {
-      this.setTool(this.tools.pen);
       clearAllDrawings();
     },
     onShapeSnapToGridSwitch() {
