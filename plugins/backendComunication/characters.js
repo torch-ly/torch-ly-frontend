@@ -1,5 +1,6 @@
 import {apolloClient, logError} from "~/plugins/backendComunication/backendComunication";
-import {init as tokenInit, updateCharacterAttrs} from "~/logic/stage/layers/token/init";
+import {init as tokenInit} from "~/logic/stage/layers/token/init";
+import {updateCharacterAttrs} from "@/logic/stage/layers/token/update";
 import gql from "graphql-tag";
 import {store} from "~/logic/stage/main";
 import {removeKonvaCharacter} from "@/logic/stage/layers/token/init";

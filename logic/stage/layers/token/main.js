@@ -3,6 +3,7 @@ import {stage} from "../../main";
 import {manageTransformerLayer} from "@/logic/stage/layers/layerManager";
 
 export let layer;
+export let out;
 
 export function draw(drawables) {
   layer.clear();
@@ -20,4 +21,8 @@ export function setLayer(pLayer) {
   layer = pLayer;
   init();
   layer.clearBeforeDraw(true);
+}
+
+export function setOut(pOut) {
+  out = pOut;
 }
