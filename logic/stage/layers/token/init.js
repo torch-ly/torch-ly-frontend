@@ -185,7 +185,6 @@ function removeConditionImages(character) {
 
 export function updateConditionImages(characterID, conditions) {
   let konvaCharacter = layer.children.filter(img => img.characterID == characterID)[0];
-  console.log(characterID, conditions, konvaCharacter, layer.children, layer.children.length)
   removeConditionImages(konvaCharacter);
   loadConditionImages(konvaCharacter, {
     x: konvaCharacter.x(),
