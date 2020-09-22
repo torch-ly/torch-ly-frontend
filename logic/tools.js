@@ -1,10 +1,10 @@
 import {stage, store} from "@/logic/stage/main";
 import tools from "@/enums/tools";
 import {addFogOfWarListener, destroyCurrentlyDrawing} from "@/logic/stage/layers/fogofwar/main";
-import penTool from "@/logic/stage/layers/mouseTools/penTool";
-import eraserTool, {removeEraser} from "@/logic/stage/layers/mouseTools/eraserTool";
+import penTool from "@/logic/stage/layers/drawing/penTool";
+import eraserTool, {removeEraser} from "@/logic/stage/layers/drawing/eraserTool";
 import {startDraw as startMeasure} from "@/logic/stage/layers/measure/lineMeasure";
-import {createCircle, createRect} from "@/logic/stage/layers/mouseTools/drawShapes";
+import {createCircle, createRect} from "@/logic/stage/layers/drawing/drawShapes";
 import {enableZoom} from "@/logic/stage/functions/zoom";
 
 export function initDrawingStoreWatch() {

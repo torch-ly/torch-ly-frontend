@@ -2,7 +2,7 @@ import {stage, store} from '@/logic/stage/main';
 import {getRelativePointerPosition} from '@/logic/stage/functions/layerFunctions';
 import Konva from 'konva';
 
-import {layer} from '@/logic/stage/layers/mouseTools/main';
+import {layer} from '@/logic/stage/layers/drawing/main';
 import {removeDrawing} from "@/plugins/backendComunication/drawing";
 
 let eraserRect;

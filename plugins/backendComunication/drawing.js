@@ -1,7 +1,7 @@
 import {apolloClient, logError} from "~/plugins/backendComunication/backendComunication";
 import gql from "graphql-tag";
-import {addDrawingObject, removeDrawingObject} from "@/logic/stage/layers/mouseTools/penTool";
-import {clearDrawing} from "@/logic/stage/layers/mouseTools/main";
+import {addDrawingObject, removeDrawingObject} from "@/logic/stage/layers/drawing/penTool";
+import {clearDrawing} from "@/logic/stage/layers/drawing/main";
 
 export function addDrawing(object) {
   apolloClient.mutate({

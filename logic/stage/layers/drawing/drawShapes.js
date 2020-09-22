@@ -3,7 +3,7 @@ import Konva from "konva";
 import {getRelativePointerPosition} from "../../functions/layerFunctions";
 import {blockSnapSize} from "../grid/main";
 import tools from '@/enums/tools';
-import {layer} from "@/logic/stage/layers/mouseTools/main";
+import {layer} from "@/logic/stage/layers/drawing/main";
 import {addDrawing} from "@/plugins/backendComunication/drawing";
 
 export function createRect() {

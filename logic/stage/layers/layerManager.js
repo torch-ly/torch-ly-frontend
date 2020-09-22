@@ -2,7 +2,7 @@ import Konva from "konva";
 import {stage, store} from "../main";
 import {setLayer as drawBackground} from "./background/main";
 import {draw as drawGrid} from "./grid/main";
-import {setDrawLayer} from "./mouseTools/main";
+import {setDrawLayer} from "./drawing/main";
 import {setLayer as drawToken} from "./token/main";
 import {draw as drawMeasure} from "./measure/lineMeasure";
 import {setFogOfWarLayer} from "./fogofwar/main";
