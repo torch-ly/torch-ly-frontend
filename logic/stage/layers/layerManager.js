@@ -4,9 +4,9 @@ import {setLayer as drawBackground} from "./background/main";
 import {draw as drawGrid} from "./grid/main";
 import {setDrawLayer} from "./mouseTools/main";
 import {setLayer as drawToken} from "./token/main";
-import {draw as drawMeasure} from "./measure/measure";
+import {draw as drawMeasure} from "./measure/lineMeasure";
 import {setFogOfWarLayer} from "./fogofwar/main";
-import {addTransformerToLayer, createTransformer} from "./transformer";
+import {addTransformerToLayer, createTransformer} from "../functions/transformer";
 
 let grid;
 let background;

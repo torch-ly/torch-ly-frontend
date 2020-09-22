@@ -1,5 +1,5 @@
 import {stage, store} from '@/logic/stage/main';
-import {getRelativePointerPosition} from '@/logic/stage/layers/layerFunctions';
+import {getRelativePointerPosition} from '@/logic/stage/functions/layerFunctions';
 import Konva from 'konva';
 
 import {layer} from '@/logic/stage/layers/mouseTools/main';

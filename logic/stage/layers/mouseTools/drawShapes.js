@@ -1,6 +1,6 @@
 import {stage, store} from "../../main";
 import Konva from "konva";
-import {getRelativePointerPosition} from "../layerFunctions";
+import {getRelativePointerPosition} from "../../functions/layerFunctions";
 import {blockSnapSize} from "../grid/main";
 import tools from '@/enums/tools';
 import {layer} from "@/logic/stage/layers/mouseTools/main";

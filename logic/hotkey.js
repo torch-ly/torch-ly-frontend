@@ -1,7 +1,7 @@
 import hotkeys from 'hotkeys-js';
 import {store} from "~/logic/stage/main";
 import {saveBackgroundLayer} from "~/logic/stage/layers/background/init";
-import {deleteSelectedDrawingObjects} from "~/logic/stage/layers/transformer";
+import {deleteSelectedDrawingObjects} from "@/logic/stage/functions/transformer";
 import {setViewport} from "~/plugins/backendComunication/viewport";
 import tools from "@/enums/tools";
 

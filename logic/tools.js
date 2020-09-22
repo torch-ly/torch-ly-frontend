@@ -3,9 +3,9 @@ import tools from "@/enums/tools";
 import {addFogOfWarListener, destroyCurrentlyDrawing} from "@/logic/stage/layers/fogofwar/main";
 import penTool from "@/logic/stage/layers/mouseTools/penTool";
 import eraserTool, {removeEraser} from "@/logic/stage/layers/mouseTools/eraserTool";
-import {startDraw as startMeasure} from "@/logic/stage/layers/measure/measure";
+import {startDraw as startMeasure} from "@/logic/stage/layers/measure/lineMeasure";
 import {createCircle, createRect} from "@/logic/stage/layers/mouseTools/drawShapes";
-import {enableZoom} from "@/logic/stage/layers/zoom";
+import {enableZoom} from "@/logic/stage/functions/zoom";
 
 export function initDrawingStoreWatch() {
   store.watch((state, getters) => state.manu.currentTool, (newState, oldState) => {

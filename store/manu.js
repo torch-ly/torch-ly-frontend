@@ -1,5 +1,5 @@
 import tools from '@/enums/tools';
-import {clearTransformerNodes} from "../logic/stage/layers/transformer";
+import {clearTransformerNodes} from "../logic/stage/functions/transformer";
 
 export const state = () => ({
   currentTool: tools.DEFAULT,

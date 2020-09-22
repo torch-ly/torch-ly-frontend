@@ -1,6 +1,6 @@
 import {init} from "./layers/layerManager";
-import {enableZoom} from "./layers/zoom";
-import {moveTokenByArrows} from "./layers/objectFunctions";
+import {enableZoom} from "./functions/zoom";
+import {moveTokenByArrows} from "./functions/objectFunctions";
 import {initDrawingStoreWatch} from "@/logic/tools";
 
 export let stage = null;

@@ -1,7 +1,7 @@
 import Konva, {Image as KonvaImage, Rect} from "konva";
-import {addSnapToGridListener} from "../layerFunctions";
+import {addSnapToGridListener} from "../../functions/layerFunctions";
 import {clearLayer, draw} from "./main";
-import {addTransformerClickListener} from "../transformer";
+import {addTransformerClickListener} from "../../functions/transformer";
 import {setBackgroundLayer} from "../../../../plugins/backendComunication/map";
 import {layer as backgroundLayer} from "@/logic/stage/layers/background/main";
 

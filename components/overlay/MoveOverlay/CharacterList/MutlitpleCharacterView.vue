@@ -13,7 +13,7 @@
   </div>
 </template>
 <script>
-import {selectToken} from "@/logic/stage/layers/transformer";
+import {selectToken} from "@/logic/stage/functions/transformer";
 
 export default {
   data() {

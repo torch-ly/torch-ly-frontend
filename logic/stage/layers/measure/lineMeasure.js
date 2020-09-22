@@ -1,5 +1,5 @@
 import {stage, store} from "../../main";
-import {getRelativePointerPosition} from "../layerFunctions";
+import {getRelativePointerPosition} from "../../functions/layerFunctions";
 import {blockSnapSize} from "../grid/main";
 
 let arrow;

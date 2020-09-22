@@ -1,5 +1,5 @@
 import {stage, store} from "../../main";
-import {getRelativePointerGridRectangle, getRelativePointerPosition} from "../layerFunctions";
+import {getRelativePointerGridRectangle, getRelativePointerPosition} from "../../functions/layerFunctions";
 import {blockSnapSize} from "../grid/main";
 import deepcopy from "deepcopy";
 import * as turf from "@turf/turf";

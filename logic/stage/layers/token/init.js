@@ -1,11 +1,11 @@
 import Konva, {Image as KonvaImage} from "konva";
-import {addSnapToGridListener} from "../layerFunctions";
+import {addSnapToGridListener} from "../../functions/layerFunctions";
 import {store} from "../../main";
 import {blockSnapSize} from "../grid/main";
 import {draw, layer} from "./main";
-import {addTransformerClickListener} from "../transformer";
+import {addTransformerClickListener} from "../../functions/transformer";
 import {removeCharacter, setCharacterPosition} from "../../../../plugins/backendComunication/characters";
-import {addTransformationListener} from "~/logic/stage/layers/transformer";
+import {addTransformationListener} from "@/logic/stage/functions/transformer";
 import devices from "@/enums/devices";
 import conditions from "@/enums/conditions";
 

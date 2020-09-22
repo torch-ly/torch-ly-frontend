@@ -1,4 +1,4 @@
-import {blockSnapSize} from "./grid/main";
+import {blockSnapSize} from "../layers/grid/main";
 import {stage} from "../main";
 
 export function addSnapToGridListener(objects) {

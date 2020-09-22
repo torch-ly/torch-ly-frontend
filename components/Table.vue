@@ -8,7 +8,7 @@
 import Konva from "konva";
 import {main, stage} from "../logic/stage/main";
 import {addCharacter} from "~/plugins/backendComunication/characters";
-import {getRelativePointerPosition} from "~/logic/stage/layers/layerFunctions";
+import {getRelativePointerPosition} from "@/logic/stage/functions/layerFunctions";
 import {blockSnapSize} from "~/logic/stage/layers/grid/main";
 
 export default {
