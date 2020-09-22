@@ -1,17 +1,21 @@
 <template>
   <div class="hidden md:block fixed top-0 left-0">
     <div class="relative m-6 flex flex-col justify-center items-center">
-      <fa icon="arrows-alt" @click="setTool(tools.move)" :class="{'button-selected' : currentTool === tools.move}" class="button"/>
-
-      <fa icon="pen" @click="setTool(tools.pen)"
-          :class="{'button-selected' : currentTool === tools.pen || currentTool === tools.eraser || currentTool === tools.rectangle || currentTool === tools.circle}"
+      <fa icon="arrows-alt" @click="setTool(tools.move)" :class="{'button-selected' : currentTool === tools.move}"
           class="button"/>
 
-      <fa icon="ruler-combined" @click="setTool(tools.measure)" :class="{'button-selected' :  currentTool === tools.measure}" class="button"/>
+      <fa icon="pen" @click="setTool(drawTools.pen)"
+          :class="{'button-selected' : currentTool === tools.draw}"
+          class="button"/>
 
-      <fa icon="cloud" @click="setTool(tools.fogOfWar)" :class="{'button-selected' : currentTool === tools.fogOfWar}" class="button" v-if="$store.state.authentication.gm"/>
+      <fa icon="ruler-combined" @click="setTool(tools.measure)"
+          :class="{'button-selected' :  currentTool === tools.measure}" class="button"/>
 
-      <fa icon="book" @click="setTool(tools.monsters)" :class="{'button-selected' : currentTool === tools.monsters}" class="button"/>
+      <fa icon="cloud" @click="setTool(tools.fogOfWar)" :class="{'button-selected' : currentTool === tools.fogOfWar}"
+          class="button" v-if="$store.state.authentication.gm"/>
+
+      <fa icon="book" @click="setTool(tools.monsters)" :class="{'button-selected' : currentTool === tools.monsters}"
+          class="button"/>
 
       <fa v-if="currentLayerIs('Background')" icon="save" @click="saveClick" class="button active:border-2"/>
     </div>
@@ -20,13 +24,15 @@
 <script>
 import {mapActions, mapState} from 'vuex'
 import {saveBackgroundLayer} from "../logic/stage/layers/background/init";
-import tools from '@/enums/tools';
+import tools from '@/enums/tools/tools';
+import drawTools from "@/enums/tools/drawTools";
 
 
 export default {
   data: () => {
     return {
-      tools
+      tools,
+      drawTools
     }
   },
   methods: {

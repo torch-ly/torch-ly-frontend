@@ -49,14 +49,15 @@
 <script>
 import BrushSelector from "./BrushSelector";
 import {mapActions} from 'vuex';
-import tools from '@/enums/tools';
-import {store} from "@/logic/stage/main";
+import tools from '@/enums/tools/tools';
 import {clearAllDrawings} from "@/plugins/backendComunication/drawing";
+import drawTools from "@/enums/tools/drawTools";
 
 export default {
   data: () => {
     return {
       tools,
+      drawTools,
       erasing: false,
       snapToGrid: false,
       rectangle: false,
@@ -74,13 +75,6 @@ export default {
       this.setTool(this.tools.pen);
       clearAllDrawings();
     },
-    onShapeDrawingClick(object) {
-      if (store.state.manu.freeDrawing.drawingObject == '') {
-        this.$store.commit("manu/setDrawingObject", object);
-      } else {
-        this.$store.commit("manu/setDrawingObject", '');
-      }
-    },
     onShapeSnapToGridSwitch() {
       if (this.$store.state.manu.freeDrawing.snapToGrid) {
         this.$store.commit("manu/setDrawingObjectSnapToGrid", false);
@@ -89,24 +83,24 @@ export default {
       }
     },
     onEraserSwitch() {
-      if (this.currentTool !== this.tools.eraser) {
-        this.setTool(this.tools.eraser);
+      if (this.currentTool !== this.drawTools.eraser) {
+        this.setTool(this.drawTools.eraser);
       } else {
-        this.setTool(this.tools.pen);
+        this.setTool(this.drawTools.pen);
       }
     },
     onRectangleSwitch() {
-      if (this.currentTool !== this.tools.rectangle) {
-        this.setTool(this.tools.rectangle);
+      if (this.currentTool !== this.drawTools.rectangle) {
+        this.setTool(this.drawTools.rectangle);
       } else {
-        this.setTool(this.tools.pen);
+        this.setTool(this.drawTools.pen);
       }
     },
     onCircleSwitch() {
-      if (this.currentTool !== this.tools.circle) {
-        this.setTool(this.tools.circle);
+      if (this.currentTool !== this.drawTools.circle) {
+        this.setTool(this.drawTools.circle);
       } else {
-        this.setTool(this.tools.pen);
+        this.setTool(this.drawTools.pen);
       }
     }
   },
@@ -115,7 +109,7 @@ export default {
       return this.$store.state.manu["drawing"];
     },
     currentTool() {
-      return this.$store.state.manu["currentTool"];
+      return this.$store.state.manu["drawTool"];
     },
     snapToGridActive() {
       return this.$store.state.manu.freeDrawing.snapToGrid;

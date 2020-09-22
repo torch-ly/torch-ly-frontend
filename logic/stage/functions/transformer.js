@@ -2,7 +2,7 @@ import {Image as KonvaImage} from "konva";
 import {stage, store} from "../main";
 import {setMoveObjectByArrow} from "./objectFunctions";
 import {manageTransformerLayer} from "../layers/layerManager";
-import tools from '@/enums/tools';
+import tools from '@/enums/tools/tools';
 import {setCharacterAttrs} from "@/plugins/backendComunication/characters";
 import {blockSnapSize} from "@/logic/stage/layers/grid/main";
 

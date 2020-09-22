@@ -1,16 +1,22 @@
 import {stage, store} from "@/logic/stage/main";
-import tools from "@/enums/tools";
+import tools from "@/enums/tools/tools";
 import {addFogOfWarListener, destroyCurrentlyDrawing} from "@/logic/stage/layers/fogofwar/main";
 import penTool from "@/logic/stage/layers/drawing/penTool";
 import eraserTool, {removeEraser} from "@/logic/stage/layers/drawing/eraserTool";
 import {startDraw as startMeasure} from "@/logic/stage/layers/measure/lineMeasure";
 import {createCircle, createRect} from "@/logic/stage/layers/drawing/drawShapes";
 import {enableZoom} from "@/logic/stage/functions/zoom";
+import drawTools from "@/enums/tools/drawTools";
 
 export function initDrawingStoreWatch() {
   store.watch((state, getters) => state.manu.currentTool, (newState, oldState) => {
     shutDownOldTool(oldState);
     toolChanged(newState);
+  });
+
+  store.watch((state, getters) => state.manu.drawTool, (newState, oldState) => {
+    shutDownOldTool(oldState);
+    drawToolChanged(newState);
   });
 }
 
@@ -21,18 +27,31 @@ function shutDownOldTool(oldtool) {
   }
 }
 
+function drawToolChanged(tool) {
+  stopAllTools();
+
+  switch (tool) {
+    case drawTools.pen:
+      penTool();
+      break;
+    case drawTools.eraser:
+      eraserTool();
+      break;
+    case drawTools.circle:
+      createCircle();
+      break;
+    case drawTools.rectangle:
+      createRect();
+      break;
+  }
+}
+
 function toolChanged(tool) {
   stopAllTools();
 
   switch (tool) {
     case tools.move:
       startMoveTool();
-      break;
-    case tools.pen:
-      penTool();
-      break;
-    case tools.eraser:
-      eraserTool();
       break;
     case tools.measure:
       startMeasure();
@@ -42,12 +61,6 @@ function toolChanged(tool) {
       break;
     case tools.monsters:
       startMoveTool();
-      break;
-    case tools.circle:
-      createCircle();
-      break;
-    case tools.rectangle:
-      createRect();
       break;
   }
 }
