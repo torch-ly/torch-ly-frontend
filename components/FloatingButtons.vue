@@ -3,7 +3,9 @@
     <div class="relative m-6 flex flex-col justify-center items-center">
       <fa icon="arrows-alt" @click="setTool(tools.move)" :class="{'button-selected' : currentTool === tools.move}" class="button"/>
 
-      <fa icon="pen" @click="setTool(tools.pen)" :class="{'button-selected' : currentTool === tools.pen}" class="button"/>
+      <fa icon="pen" @click="setTool(tools.pen)"
+          :class="{'button-selected' : currentTool === tools.pen || currentTool === tools.eraser || currentTool === tools.rectangle || currentTool === tools.circle}"
+          class="button"/>
 
       <fa icon="ruler-combined" @click="setTool(tools.measure)" :class="{'button-selected' :  currentTool === tools.measure}" class="button"/>
 
@@ -16,22 +18,22 @@
   </div>
 </template>
 <script>
-  import { mapActions, mapState } from 'vuex'
-  import {saveBackgroundLayer} from "../logic/stage/layers/background/init";
-  import tools from '@/enums/tools';
+import {mapActions, mapState} from 'vuex'
+import {saveBackgroundLayer} from "../logic/stage/layers/background/init";
+import tools from '@/enums/tools';
 
 
-  export default {
-    data: () => {
-      return {
-        tools
-      }
-    },
-    methods: {
-      ...mapActions({
-        setTool: "manu/setTool"
-      }),
-      saveClick() {
+export default {
+  data: () => {
+    return {
+      tools
+    }
+  },
+  methods: {
+    ...mapActions({
+      setTool: "manu/setTool"
+    }),
+    saveClick() {
         setTimeout(() => {
           saveBackgroundLayer();
         }, 0);
