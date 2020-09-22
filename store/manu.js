@@ -1,10 +1,13 @@
 import tools from '@/enums/tools/tools';
 import {clearTransformerNodes} from "../logic/stage/functions/transformer";
 import drawTools from "@/enums/tools/drawTools";
+import measureTools from "@/enums/tools/measureTools";
 
 export const state = () => ({
   currentTool: tools.DEFAULT,
   drawTool: null,
+  measureTool: null,
+
 
   layer: "Token",
 
@@ -28,6 +31,9 @@ export const mutations = {
   },
   setDrawTool(state, tool) {
     state.drawTool = tool;
+  },
+  setMeasureTool(state, tool) {
+    state.measureTool = tool;
   },
   setDrawingColor(state, color) {
     state.freeDrawing.color = color;
@@ -56,13 +62,19 @@ export const mutations = {
 
 export const actions = {
   setTool({commit, state}, tool) {
-
+    console.log(tool)
     clearTransformerNodes();
     if (JSON.stringify(drawTools).includes(tool)) {
       commit("setTool", tools.draw);
+      commit("setMeasureTool", null);
       commit("setDrawTool", tool);
+    } else if (JSON.stringify(measureTools).includes(tool)) {
+      commit("setDrawTool", null);
+      commit("setTool", tools.measure);
+      commit("setMeasureTool", tool);
     } else {
-      commit("setDrawTool", null)
+      commit("setDrawTool", null);
+      commit("setMeasureTool", null);
       commit("setTool", tool);
     }
   },

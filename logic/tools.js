@@ -28,6 +28,9 @@ function shutDownOldTool(oldtool) {
 }
 
 function drawToolChanged(tool) {
+  if (tool == null)
+    return;
+  
   stopAllTools();
 
   switch (tool) {

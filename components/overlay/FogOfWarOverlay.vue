@@ -86,7 +86,7 @@ export default {
   }
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 @import "assets/css/scheme";
 
 /* The switch - the box around the slider */

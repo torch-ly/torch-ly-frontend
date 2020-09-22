@@ -8,7 +8,7 @@
           :class="{'button-selected' : currentTool === tools.draw}"
           class="button"/>
 
-      <fa icon="ruler-combined" @click="setTool(tools.measure)"
+      <fa icon="ruler-combined" @click="setTool(measureTools.line)"
           :class="{'button-selected' :  currentTool === tools.measure}" class="button"/>
 
       <fa icon="cloud" @click="setTool(tools.fogOfWar)" :class="{'button-selected' : currentTool === tools.fogOfWar}"
@@ -26,13 +26,15 @@ import {mapActions, mapState} from 'vuex'
 import {saveBackgroundLayer} from "../logic/stage/layers/background/init";
 import tools from '@/enums/tools/tools';
 import drawTools from "@/enums/tools/drawTools";
+import measureTools from "@/enums/tools/measureTools";
 
 
 export default {
   data: () => {
     return {
       tools,
-      drawTools
+      drawTools,
+      measureTools
     }
   },
   methods: {
