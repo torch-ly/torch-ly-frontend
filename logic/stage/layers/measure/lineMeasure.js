@@ -1,10 +1,10 @@
 import {stage, store} from "../../main";
 import {getRelativePointerPosition} from "../../functions/layerFunctions";
 import {blockSnapSize} from "../grid/main";
+import {layer} from "@/logic/stage/layers/measure/main";
 
 let arrow;
 let start = {x: 0, y: 0};
-let layer;
 let lengthSoFar = 0;
 let newTouchCorner = false;
 
@@ -16,11 +16,7 @@ let circle = new Konva.Circle({
   fill: '#4a5568'
 });
 
-export function draw(pLayer) {
-  layer = pLayer;
-}
-
-export function startDraw() {
+export function startLineMeasure() {
   stage.on("mousedown touchstart", (e) => {
     stage.draggable(false);
 

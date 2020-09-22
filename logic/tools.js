@@ -3,10 +3,11 @@ import tools from "@/enums/tools/tools";
 import {addFogOfWarListener, destroyCurrentlyDrawing} from "@/logic/stage/layers/fogofwar/main";
 import penTool from "@/logic/stage/layers/drawing/penTool";
 import eraserTool, {removeEraser} from "@/logic/stage/layers/drawing/eraserTool";
-import {startDraw as startMeasure} from "@/logic/stage/layers/measure/lineMeasure";
+import {startLineMeasure as startMeasure} from "@/logic/stage/layers/measure/lineMeasure";
 import {createCircle, createRect} from "@/logic/stage/layers/drawing/drawShapes";
 import {enableZoom} from "@/logic/stage/functions/zoom";
 import drawTools from "@/enums/tools/drawTools";
+import measureTools from "@/enums/tools/measureTools";
 
 export function initDrawingStoreWatch() {
   store.watch((state, getters) => state.manu.currentTool, (newState, oldState) => {
@@ -18,6 +19,11 @@ export function initDrawingStoreWatch() {
     shutDownOldTool(oldState);
     drawToolChanged(newState);
   });
+
+  store.watch((state, getters) => state.manu.measureTool, (newState, oldState) => {
+    shutDownOldTool(oldState);
+    measureToolChanged(newState);
+  });
 }
 
 function shutDownOldTool(oldtool) {
@@ -28,9 +34,6 @@ function shutDownOldTool(oldtool) {
 }
 
 function drawToolChanged(tool) {
-  if (tool == null)
-    return;
-  
   stopAllTools();
 
   switch (tool) {
@@ -49,15 +52,26 @@ function drawToolChanged(tool) {
   }
 }
 
+function measureToolChanged(tool) {
+  stopAllTools();
+
+  switch (tool) {
+    case measureTools.line:
+      startMeasure();
+      break;
+    case measureTools.circle:
+      break;
+    case measureTools.cone:
+      break;
+  }
+}
+
 function toolChanged(tool) {
   stopAllTools();
 
   switch (tool) {
     case tools.move:
       startMoveTool();
-      break;
-    case tools.measure:
-      startMeasure();
       break;
     case tools.fogOfWar:
       addFogOfWarListener();
