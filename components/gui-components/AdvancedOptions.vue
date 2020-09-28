@@ -5,8 +5,8 @@
       <!-- title which uses default value when not provided -->
       <h3 class="text-lg text-bold mb-2 inline-block">{{title}}</h3>
 
-      <fa v-if="!active" icon="caret-right" class="advanced-icon"></fa>
-      <fa v-else icon="caret-down" class="advanced-icon"></fa>
+      <fa v-if="!active" icon="caret-right" class="advanced-icon w-4"></fa>
+      <fa v-else icon="caret-down" class="advanced-icon w-4"></fa>
     </div>
 
     <!-- advanced options shown when active is true -->
