@@ -23,11 +23,11 @@
 
     <div class="hr"/>
 
-    <div class="submit-button active:submit-button-active my-2" @click="openPlayersPopup()">Add Players</div>
+    <button class="submit-button active:submit-button-active my-2" @click="openPlayersPopup()">Add Players</button>
 
-    <div class="submit-button active:submit-button-active my-2" @click="openInitiativePrompt()">Add to Initiative</div>
+    <button class="submit-button active:submit-button-active my-2" @click="openInitiativePrompt()">{{!alreadyInInitiativeOrder ? "Add to" : "Edit"}} Initiative</button>
 
-    <div class="submit-button active:submit-button-active my-2" @click="openConditionsPopup()">Add Conditions</div>
+    <button class="submit-button active:submit-button-active my-2" @click="openConditionsPopup()">Add Conditions</button>
 
     <div class="hr"/>
 
@@ -101,7 +101,10 @@ export default {
     },
     selectedCharacterStore() {
       return this.$store.state.character.selectedCharacter;
-    }
+    },
+    alreadyInInitiativeOrder() {
+      return (this.$store.state.character.initiative.filter((a) => a.id == this.selectedCharacter.id).length > 0)
+    },
   },
   created() {
     this.getSelectedCharacterByID();
