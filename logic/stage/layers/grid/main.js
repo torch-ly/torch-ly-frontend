@@ -14,7 +14,7 @@ export function draw(pLayer) {
     y: 0,
     width: blockSnapSize,
     height: blockSnapSize,
-    stroke: "lightgray",
+    stroke: "rgba(200,200,200,0.4)",
     strokeWidth: 0.5,
     listening: false
   });
