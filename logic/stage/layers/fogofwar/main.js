@@ -85,6 +85,9 @@ export function toggleTransparent(){
 //receive data via graphql
 export function recieveSyncronize(p_polygons) {
 
+  if(p_polygons.length === 0)
+    return;
+
   for (let poly of polygons) {
     poly.destroy();
   }
