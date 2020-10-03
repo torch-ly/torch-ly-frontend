@@ -26,7 +26,7 @@ export function loadImage(character) {
   let imageObj = new Image(character.pos.size * blockSnapSize, character.pos.size * blockSnapSize);
 
   imageObj.onerror = () => {
-    imageObj.src = "/static/404.jpg";
+    imageObj.src = "/no-image.jpg";
   }
 
   imageObj.onload = function () {
