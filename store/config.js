@@ -4,8 +4,14 @@ import devices from "@/enums/devices";
 export const state = () => ({
   device: getDevice(),
   followDMScreen: false, //TODO implement to config page
-  backendURL: localStorage["torch-ly-backend"] || process.env.BACKEND
+  backendURL: getBackendUrl()
 })
+
+export function getBackendUrl() {
+  let backend = getParameters().backend || localStorage["torch-ly-backend"] || process.env.BACKEND;
+  localStorage["torch-ly-backend"] = backend;
+  return backend;
+}
 
 function getDevice() {
   if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))

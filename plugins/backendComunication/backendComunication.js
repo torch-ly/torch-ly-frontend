@@ -18,9 +18,10 @@ import {
   subscribeDrawing,
   subscribeRemoveDrawing
 } from "@/plugins/backendComunication/drawing";
+import {getBackendUrl} from "@/store/config";
 
-const secure = location.protocol === 'https:' ? "wss" : "ws";
-const GRAPHQL_ENDPOINT = secure + "://" + (localStorage["torch-ly-backend"] || process.env.BACKEND) + ":5000/graphql";
+const secure = location.protocol === "https:" ? "wss" : "ws";
+const GRAPHQL_ENDPOINT = secure + "://" + (getBackendUrl()) + ":5000/graphql";
 
 let store = {};
 let authID = getParameters().authID;
@@ -38,12 +39,12 @@ const link = new WebSocketLink(client);
 
 const defaultOptions = {
   watchQuery: {
-    fetchPolicy: 'no-cache',
-    errorPolicy: 'ignore',
+    fetchPolicy: "no-cache",
+    errorPolicy: "ignore",
   },
   query: {
-    fetchPolicy: 'no-cache',
-    errorPolicy: 'all',
+    fetchPolicy: "no-cache",
+    errorPolicy: "all",
   },
 }
 

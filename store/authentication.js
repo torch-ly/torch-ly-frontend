@@ -1,11 +1,17 @@
 import {getParameters} from "../plugins/utils/ParameterHelper";
 
 export const state = () => ({
-  authID: getParameters().authID,
+  authID: getAuthID(),
   playerID: null,
   name: null,
   gm: false
 })
+
+function getAuthID() {
+  let authID = getParameters().authID || localStorage["torch-ly-user"];
+  localStorage["torch-ly-user"] = authID;
+  return authID;
+}
 
 export const mutations = {
   setPlayer(state, player) {
