@@ -24,6 +24,11 @@ export function init() {
 
 export function loadImage(character) {
   let imageObj = new Image(character.pos.size * blockSnapSize, character.pos.size * blockSnapSize);
+
+  imageObj.onerror = () => {
+    imageObj.src = "/static/404.jpg";
+  }
+
   imageObj.onload = function () {
     let image = new Konva.Image({
       x: Math.floor(character.pos.point.x * blockSnapSize),
