@@ -22,7 +22,7 @@ export function init() {
   characters.forEach(character => loadImage(character));
 }
 
-function loadImage(character) {
+export function loadImage(character) {
   let imageObj = new Image(character.pos.size * blockSnapSize, character.pos.size * blockSnapSize);
   imageObj.onload = function () {
     let image = new Konva.Image({

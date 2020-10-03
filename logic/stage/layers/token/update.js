@@ -2,7 +2,7 @@ import {layer} from "@/logic/stage/layers/token/main";
 import {Image as KonvaImage} from "konva";
 import {blockSnapSize} from "@/logic/stage/layers/grid/main";
 import {updateConditionImages} from "@/logic/stage/layers/token/conditions";
-import {loadImage} from "@/logic/stage/layers/background/init";
+import {loadImage} from "@/logic/stage/layers/token/init";
 
 export function updateCharacterAttrs(character) {
   let oldCharacters = layer.children.filter(child => child instanceof KonvaImage);
