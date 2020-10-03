@@ -25,9 +25,7 @@
 
     <div class="submit-button active:submit-button-active my-2" @click="openPlayersPopup()">Add Players</div>
 
-    <div class="submit-button active:submit-button-active my-2" @click="openInitiativePrompt()"
-         v-if="!alreadyInInitiativeOrder">Add to Initiative
-    </div>
+    <div class="submit-button active:submit-button-active my-2" @click="openInitiativePrompt()">Add to Initiative</div>
 
     <div class="submit-button active:submit-button-active my-2" @click="openConditionsPopup()">Add Conditions</div>
 
@@ -100,9 +98,6 @@ export default {
   computed: {
     characterStore() {
       return this.$store.state.character;
-    },
-    alreadyInInitiativeOrder() {
-      return (this.$store.state.character.initiative.filter((a) => a.id == this.selectedCharacter.id).length > 0)
     },
     selectedCharacterStore() {
       return this.$store.state.character.selectedCharacter;

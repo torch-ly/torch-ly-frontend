@@ -35,6 +35,7 @@ export const mutations = {
     setInitiative();
   },
   addCharacterToInitiative(state, character) {
+    state.initiative = state.initiative.filter(a => a.id !== character.id);
     state.initiative.push(character);
     setInitiative();
   },
