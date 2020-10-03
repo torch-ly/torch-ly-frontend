@@ -1,7 +1,7 @@
 <template>
   <div v-if="initiative.length > 0" class="fixed top-0 right-0 text-white p-6 bg-gray-800 bg-opacity-50 h-fit max-h-screen rounded-bl animate__animated animate__fadeInRight" :class="marginClass()">
 
-    <div class="container block transition-height duration-500 overflow-hidden" :style="{'--height': initiative.length * 14 / 4 + 'rem'}" :class="{'!h-28' : !fullList}">
+    <div class="container block transition-height duration-500 overflow-hidden" :style="{'--height': initiative.length * 14 / 4 + 'rem'}" :class="{'h-28-important' : !fullList}">
 
       <draggable
         class="select-none"
@@ -109,6 +109,10 @@ export default {
 
 .icon {
   @apply w-8 h-8 bg-white bg-opacity-50 rounded-full p-2;
+}
+
+.h-28-important {
+  height: 7rem !important;
 }
 
 .container {

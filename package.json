@@ -45,7 +45,6 @@
   },
   "devDependencies": {
     "@nuxt/types": "^0.7.9",
-    "@nuxtjs/tailwindcss": "^1.0.0",
-    "tailwindcss-important": "^1.0.0"
+    "@nuxtjs/tailwindcss": "^1.0.0"
   }
 }
