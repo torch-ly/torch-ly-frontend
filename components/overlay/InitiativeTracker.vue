@@ -33,6 +33,8 @@
     <div class="flex flex-end justify-between flex-row-reverse text-3xl">
       <fa icon="angle-up" class="block icon transition duration-500 transform" @click="fullList = !fullList"
           :class="{'rotate-180' : !fullList}"/>
+      <fa icon="trash" class="block text-2xl icon" :class="buttonVisibility()"
+          @click="$store.commit('character/setInitiativeOrder', [])"/>
       <fa icon="arrow-right" class="block icon" :class="buttonVisibility()" @click="$store.commit('character/nextTurn')"/>
       <fa icon="sort" class="block text-2xl icon" :class="buttonVisibility()" @click="$store.commit('character/orderInitiative')"/>
     </div>
