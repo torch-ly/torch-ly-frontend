@@ -8,6 +8,7 @@ import {createCircle, createRect} from "@/logic/stage/layers/drawing/drawShapes"
 import {enableZoom} from "@/logic/stage/functions/zoom";
 import drawTools from "@/enums/tools/drawTools";
 import measureTools from "@/enums/tools/measureTools";
+import {startCircleMeasure} from "@/logic/stage/layers/measure/circleMeasure";
 
 export function initDrawingStoreWatch() {
   store.watch((state, getters) => state.manu.currentTool, (newState, oldState) => {
@@ -34,6 +35,9 @@ function shutDownOldTool(oldtool) {
 }
 
 function drawToolChanged(tool) {
+  if (tool == null)
+    return;
+
   stopAllTools();
 
   switch (tool) {
@@ -53,6 +57,9 @@ function drawToolChanged(tool) {
 }
 
 function measureToolChanged(tool) {
+  if (tool == null)
+    return;
+
   stopAllTools();
 
   switch (tool) {
@@ -60,6 +67,7 @@ function measureToolChanged(tool) {
       startMeasure();
       break;
     case measureTools.circle:
+      startCircleMeasure();
       break;
     case measureTools.cone:
       break;
