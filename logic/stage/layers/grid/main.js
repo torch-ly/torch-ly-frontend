@@ -11,8 +11,10 @@ export function draw(pLayer) {
 
   line = new Konva.Line({
     points: [],
-    stroke: "rgba(200,200,200,0.4)",
-    strokeWidth: 0.5,
+    stroke: "rgba(190,190,190,0.8)",
+    dash: [2, 10],
+    lineCap: "round",
+    strokeWidth: 2,
     listening: false
   });
   line.cache();
