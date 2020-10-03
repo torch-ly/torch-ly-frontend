@@ -1,13 +1,15 @@
 <template>
-  <div>
-    <div class="bg-background h-screen fixed top-0 overflow-auto">
+  <div class="bg-background min-h-screen overflow-scroll">
+    <h1 class="text-center text-black mb-4 mt-8 text-2xl font-bold">Character overview of {{$store.state.authentication.name}}</h1>
+
+    <div class="bg-background h-auto w-full overflow-auto grid grid-cols-1 lg:grid-cols-2 gap-4 p-4">
       <div
         v-for="character in getOwnCharacters()"
-        class="bg-primary text-white m-4 mb-0 rounded-lg shadow-lg last:mb-4">
+        class="bg-primary text-white  mb-0 rounded-lg shadow-lg h-auto">
 
-        <div class="w-full flex flex-column">
-          <img class="w-1/3 p-4 mr-0" v-bind:src="character.token">
-          <th class="w-2/3 p-4 flex text-lg items-center text-left">{{ character.name }}</th>
+        <div class="w-full flex flex-column justify-center">
+          <img class="w-48 h-48 p-4 mr-0" v-bind:src="character.token">
+          <p class="p-4 flex text-lg md:text-xl items-center text-left">{{ character.name }}</p>
         </div>
 
         <div class="grid gap-3 grid-cols-3 text-center p-3">
@@ -49,7 +51,9 @@ export default {
   },
   methods: {
     click(index, character) {
-      window.navigator.vibrate(40);
+      if (window.navigator.vibrate)
+        window.navigator.vibrate(40);
+
       let pos = {
         x: character.pos.point.x,
         y: character.pos.point.y
@@ -80,7 +84,8 @@ export default {
           })
           break;
         case 4:
-          navigator.vibrate([50, 10, 50, 10, 50]);
+          if (window.navigator.vibrate)
+              navigator.vibrate([50, 10, 50, 10, 50]);
           break;
         case 5:
           setCharacterPosition(character.id, {
