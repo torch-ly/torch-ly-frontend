@@ -19,12 +19,13 @@ import {
   subscribeRemoveDrawing
 } from "@/plugins/backendComunication/drawing";
 import {getBackendUrl} from "@/store/config";
+import {getAuthID} from "@/store/authentication";
 
 const secure = location.protocol === "https:" ? "wss" : "ws";
 const GRAPHQL_ENDPOINT = secure + "://" + (getBackendUrl()) + ":5000/graphql";
 
 let store = {};
-let authID = getParameters().authID;
+let authID = getAuthID();
 
 const client = new SubscriptionClient(GRAPHQL_ENDPOINT, {
   reconnect: true,
@@ -88,7 +89,7 @@ function loadTable() {
   subscribeInitiative();
 }
 
-export function logError(...err) {
+export function logError(err) {
   console.error(err)
   store.commit("errors/addError", "GraphQL Error")
 }

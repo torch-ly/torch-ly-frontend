@@ -7,7 +7,7 @@ export const state = () => ({
   gm: false
 })
 
-function getAuthID() {
+export function getAuthID() {
   let authID = getParameters().authID || localStorage["torch-ly-user"];
   localStorage["torch-ly-user"] = authID;
   return authID;
