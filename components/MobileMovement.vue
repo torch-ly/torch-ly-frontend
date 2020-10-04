@@ -18,7 +18,7 @@
                class="flex justify-center items-center hover:bg-accent active:bg-accent rounded-full h-12"
                @click="click(index, character)">
 
-            <fa v-if="index !== 4" :icon="arrow" style="font-size: 1.8rem; color: white;"
+            <fa v-if="index !== 4" :icon="arrow" class="text-white text-3xl w-16 h-16"
                 :class="{'rotate-45': [0,2,6,8].includes(index)}"/>
 
             <div v-else>
