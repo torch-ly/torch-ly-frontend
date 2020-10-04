@@ -6,7 +6,7 @@
 
     <Settings v-if="device !== devices.TV"/>
 
-    <FullscreenNotification />
+    <FullscreenNotification class="hidden" />
 
     <InitiativeTracker v-if="device !== devices.MOBILE"/>
     <Overlay v-if="device === devices.DEFAULT"/>
