@@ -18,10 +18,10 @@
                class="flex justify-center items-center hover:bg-accent active:bg-accent rounded-full h-12"
                @click="click(index, character)">
 
-            <fa v-if="index !== 4" :icon="arrow" class="text-white text-3xl w-16 h-16"
+            <fa v-if="index !== 4" :icon="arrow" class="text-white text-3xl w-4 h-4"
                 :class="{'rotate-45': [0,2,6,8].includes(index)}"/>
 
-            <div v-else>
+            <div v-else>K
               <p class="text-2xl select-none">{{ displacement }}</p>
             </div>
 
