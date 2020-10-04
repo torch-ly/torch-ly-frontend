@@ -49,6 +49,9 @@ export default {
       this.$root.$on("openCharacterPopup", () => {
         this.$refs.popupContainer.active = true;
       });
+      this.$root.$on("closeCharacterPopup", () => {
+        this.$refs.popupContainer.active = false;
+      })
     },
     methods: {
       newCharacter() {
@@ -63,6 +66,8 @@ export default {
           visible: this.character.visible,
           player: [store.state.authentication.playerID]
         });
+
+        this.$root.$emit("closeCharacterPopup");
       },
     }
   }
