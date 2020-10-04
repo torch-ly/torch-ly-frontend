@@ -38,6 +38,7 @@ hotkeys('Delete,Backspace', () => {
   deleteSelectedDrawingObjects();
 })
 
-hotkeys('command+f,ctrl+f', () => {
+hotkeys('command+f,ctrl+f', (event) => {
+  event.preventDefault();
   setViewport();
 })
