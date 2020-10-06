@@ -21,6 +21,7 @@ export function setCharacterAttrs(id, rot, size) {
 }
 
 export function addCharacter(character) {
+  console.log(character)
   if (character.pos.point.x == undefined) {
     character.pos.point.x = 0;
   } else {
@@ -98,6 +99,7 @@ export function subscribeCharacter() {
     next({data}) {
       store.commit("character/updateCharacter", data.updateCharacter);
       updateCharacterAttrs(data.updateCharacter);
+      console.log(data)
     }
   });
 }

@@ -1,7 +1,7 @@
 import hotkeys from 'hotkeys-js';
 import {store} from "~/logic/stage/main";
 import {saveBackgroundLayer} from "~/logic/stage/layers/background/init";
-import {deleteSelectedDrawingObjects} from "@/logic/stage/functions/transformer";
+import {clearTransformerNodes, deleteSelectedDrawingObjects} from "@/logic/stage/functions/transformer";
 import {setViewport} from "~/plugins/backendComunication/viewport";
 import tools from "@/enums/tools/tools";
 
@@ -38,6 +38,9 @@ hotkeys('Delete,Backspace', () => {
   deleteSelectedDrawingObjects();
 })
 
-hotkeys('command+f,ctrl+f', () => {
+hotkeys("esc", clearTransformerNodes)
+
+hotkeys('command+f,ctrl+f', (event) => {
+  event.preventDefault();
   setViewport();
 })

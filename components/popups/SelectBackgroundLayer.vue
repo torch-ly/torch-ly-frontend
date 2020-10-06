@@ -5,17 +5,17 @@
          @click="layerSelection(layer)">
       {{layer.name}}
       <div v-if="layer.selected">
-        <fa icon="check"/>
+        <fa icon="check" class="w-4"/>
       </div>
       <div v-else @click.stop="removeLayer(layer)">
-        <fa icon="trash" :class="{'text-accent': layerToRemove === layer}"/>
+        <fa icon="trash" :class="{'text-accent': layerToRemove === layer}" class="w-4"/>
       </div>
     </div>
     <div class="w-full flex flex-row justify-between items-center h-10 p-4 mt-4">
       <div class="w-11/12 inline-block">
         <input placeholder="Map Name" class="input-field" v-model="newLayerName">
       </div>
-      <fa icon="plus" @click="addLayer" class="text-white inline-block hover:text-accent"/>
+      <fa icon="plus" @click="addLayer" class="text-white inline-block hover:text-accent w-4"/>
     </div>
   </PopupContainer>
 </template>

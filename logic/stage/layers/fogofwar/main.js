@@ -67,11 +67,11 @@ export function destroyCurrentlyDrawing(){
 //graphql
 //send data via graphql
 export function syncronize() {
-  let polygons = [];
-  for (let i = 0; i < this.polygons.length; i++) {
-    polygons.push(this.polygons[i].points());
+  let pPolygons = [];
+  for (let i = 0; i < polygons.length; i++) {
+    pPolygons.push(polygons[i].points());
   }
-  setFogOfWar([polygons, ununionizable]);
+  setFogOfWar([pPolygons, ununionizable]);
 }
 
 export function toggleTransparent(){
@@ -84,6 +84,9 @@ export function toggleTransparent(){
 
 //receive data via graphql
 export function recieveSyncronize(p_polygons) {
+
+  if(p_polygons.length === 0)
+    return;
 
   for (let poly of polygons) {
     poly.destroy();

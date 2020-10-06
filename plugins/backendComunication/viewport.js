@@ -58,6 +58,7 @@ export function subscribeViewport() {
         stage.scale(matrix.scale);
         stage.x(matrix.x);
         stage.y(matrix.y);
+        updateGrid();
         stage.batchDraw();
       }
     }

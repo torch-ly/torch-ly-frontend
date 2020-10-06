@@ -52,6 +52,9 @@ export const mutations = {
   },
   setDrawingStrokeWidth(state, width) {
     state.freeDrawing.strokeWidth = parseInt(width);
+  },
+  setMonsters(state) {
+    state.currentTool = tools.monsters;
   }
 }
 

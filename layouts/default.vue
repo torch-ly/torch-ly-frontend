@@ -8,3 +8,8 @@
 
   }
 </script>
+<style lang="scss">
+html {
+  @apply overflow-hidden;
+}
+</style>

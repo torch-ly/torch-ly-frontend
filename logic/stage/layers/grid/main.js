@@ -3,22 +3,21 @@ import Konva from "konva";
 
 export let blockSnapSize = 120;
 let layer;
-let grid;
+let line;
 
 export function draw(pLayer) {
   layer = pLayer;
   layer.listening(false);
 
-  grid = new Konva.Rect({
-    x: 0,
-    y: 0,
-    width: blockSnapSize,
-    height: blockSnapSize,
-    stroke: "lightgray",
-    strokeWidth: 0.5,
+  line = new Konva.Line({
+    points: [],
+    stroke: "rgba(190,190,190,0.8)",
+    dash: [2, 10],
+    lineCap: "round",
+    strokeWidth: 2,
     listening: false
   });
-  grid.cache();
+  line.cache();
 
   checkShapes();
   layer.batchDraw();
@@ -41,23 +40,31 @@ function checkShapes() {
   let startY = Math.floor((topLeftCorner.y - stage.height() * 0.2 * Math.pow(stage.scaleY(), -1)) / blockSnapSize) * blockSnapSize;
   let endY = Math.floor((topLeftCorner.y + stage.height() * 1.2 * Math.pow(stage.scaleY(), -1)) / blockSnapSize) * blockSnapSize;
 
-  if (Math.pow(stage.scaleX(), -1) > 3) {
+  if (Math.pow(stage.scaleX(), -1) > 10) {
     return;
   }
 
 
   let clone;
+
   for (let x = startX; x < endX; x += blockSnapSize) {
-    for (let y = startY; y < endY; y += blockSnapSize) {
-      clone = grid.clone({
-        x,
-        y
-      });
-      clone.perfectDrawEnabled(false);
-      clone.shadowForStrokeEnabled(false);
-      clone.transformsEnabled('position');
-      layer.add(clone);
-    }
+    clone = line.clone({
+      points: [x, startY, x, endY]
+    })
+    clone.perfectDrawEnabled(false);
+    clone.shadowForStrokeEnabled(false);
+    clone.transformsEnabled('position');
+    layer.add(clone);
+  }
+
+  for (let y = startY; y < endY; y += blockSnapSize) {
+    clone = line.clone({
+      points: [startX, y, endX, y]
+    })
+    clone.perfectDrawEnabled(false);
+    clone.shadowForStrokeEnabled(false);
+    clone.transformsEnabled('position');
+    layer.add(clone);
   }
 }
 

@@ -36,6 +36,6 @@
 </script>
 <style scoped lang="scss">
   .advanced-icon {
-    @apply ml-2 text-xl;
+    @apply ml-2 text-xl -mt-1 w-2;
   }
 </style>

@@ -6,7 +6,7 @@
 
     <Settings v-if="device !== devices.TV"/>
 
-    <FullscreenNotification />
+    <FullscreenNotification class="hidden" />
 
     <InitiativeTracker v-if="device !== devices.MOBILE"/>
     <Overlay v-if="device === devices.DEFAULT"/>
@@ -19,7 +19,7 @@
     <SelectBackgroundLayer v-if="device === devices.DEFAULT"/>
     <AddPlayersToCharacter v-if="device === devices.DEFAULT"/>
     <AddCharacterConditions v-if="device === devices.DEFAULT"/>
-    <MobileMovement class="md:hidden" v-if="device === devices.MOBILE"/>
+    <MobileMovement v-if="device === devices.MOBILE"/>
 
     <div class="w-full h-full fixed top-0 left-0 bg-gray-700 flex justify-center items-center select-none"
          v-show="visible" :class="{'animate__animated animate__fadeOutDown animate__fast' : fadeOut}">

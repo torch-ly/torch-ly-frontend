@@ -1,5 +1,3 @@
-const important = require('tailwindcss-important')();
-
 module.exports = {
   theme: {
     extend: {
@@ -41,7 +39,8 @@ module.exports = {
   variants: {
     borderWidth: ['responsive', "hover", "active"],
     margin: ["responsive", "last"],
-    height: ['responsive', 'visited', "important"],
   },
-  plugins: [important]
+  purge: {
+    content: ['./**/*.vue'],
+  },
 }

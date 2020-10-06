@@ -8,23 +8,23 @@ import {setLayer as drawMeasure} from "./measure/main";
 import {setFogOfWarLayer} from "./fogofwar/main";
 import {addTransformerToLayer, createTransformer} from "../functions/transformer";
 
-let grid;
 let background;
+let grid;
 let token;
 let freeDrawing;
 let measure;
 let fogofwar;
 
 export function init() {
-  grid = new Konva.Layer();
   background = new Konva.Layer();
+  grid = new Konva.Layer();
   token = new Konva.Layer();
   freeDrawing = new Konva.Layer();
   fogofwar = new Konva.Layer();
   measure = new Konva.Layer();
 
-  stage.add(grid);
   stage.add(background);
+  stage.add(grid);
   stage.add(token);
   stage.add(freeDrawing);
   stage.add(fogofwar);
@@ -33,9 +33,9 @@ export function init() {
   createTransformer();
   manageTransformerLayer();
 
-  drawGrid(grid);
-
   drawBackground(background);
+
+  drawGrid(grid);
 
   drawToken(token);
 

@@ -18,12 +18,14 @@ import {
   subscribeDrawing,
   subscribeRemoveDrawing
 } from "@/plugins/backendComunication/drawing";
+import {getBackendUrl} from "@/store/config";
+import {getAuthID} from "@/store/authentication";
 
-const secure = location.protocol === 'https:' ? "wss" : "ws";
-const GRAPHQL_ENDPOINT = secure + "://" + (localStorage["torch-ly-backend"] || process.env.BACKEND) + ":5000/graphql";
+const secure = location.protocol === "https:" ? "wss" : "wss";
+const GRAPHQL_ENDPOINT = secure + "://" + (getBackendUrl()) + ":5000/graphql";
 
 let store = {};
-let authID = getParameters().authID;
+let authID = getAuthID();
 
 const client = new SubscriptionClient(GRAPHQL_ENDPOINT, {
   reconnect: true,
@@ -38,12 +40,12 @@ const link = new WebSocketLink(client);
 
 const defaultOptions = {
   watchQuery: {
-    fetchPolicy: 'no-cache',
-    errorPolicy: 'ignore',
+    fetchPolicy: "no-cache",
+    errorPolicy: "ignore",
   },
   query: {
-    fetchPolicy: 'no-cache',
-    errorPolicy: 'all',
+    fetchPolicy: "no-cache",
+    errorPolicy: "all",
   },
 }
 
@@ -87,7 +89,7 @@ function loadTable() {
   subscribeInitiative();
 }
 
-export function logError(...err) {
+export function logError(err) {
   console.error(err)
   store.commit("errors/addError", "GraphQL Error")
 }
