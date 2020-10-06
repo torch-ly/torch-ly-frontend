@@ -7,6 +7,14 @@ export const state = () => ({
   backendURL: getBackendUrl()
 })
 
+if (getDevice() !== devices.MOBILE)
+  setThemeColor();
+
+function setThemeColor() {
+  let metaThemeColor = document.querySelector("meta[name=theme-color]");
+  metaThemeColor.setAttribute("content", "#4A5568");
+}
+
 export function getBackendUrl() {
   let backend = getParameters().backend || localStorage["torch-ly-backend"] || process.env.BACKEND;
   localStorage["torch-ly-backend"] = backend;
