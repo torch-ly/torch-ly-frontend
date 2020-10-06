@@ -41,6 +41,7 @@
     "turf-overlaps": "^1.0.3",
     "turf-union": "^3.0.12",
     "vue-konva": "^2.1.3",
+    "vue-popperjs": "^2.3.0",
     "vuedraggable": "^2.24.1"
   },
   "devDependencies": {

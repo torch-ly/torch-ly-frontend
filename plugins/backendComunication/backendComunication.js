@@ -21,7 +21,7 @@ import {
 import {getBackendUrl} from "@/store/config";
 import {getAuthID} from "@/store/authentication";
 
-const secure = location.protocol === "https:" ? "wss" : "ws";
+const secure = location.protocol === "https:" ? "wss" : "wss";
 const GRAPHQL_ENDPOINT = secure + "://" + (getBackendUrl()) + ":5000/graphql";
 
 let store = {};
