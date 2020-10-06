@@ -15,7 +15,7 @@
         möglich ist, speichern wir die Authentifizierung in der Webseitenaddresse - du solltest diese also nicht einfach
         so an Freunde verschicken, da diese dann Zugriff auf deinen Account haben. </p>
 
-      <form @submit.prevent="submit">
+      <form @submit.prevent="$refs.link.click()">
         <input class="input-field mb-4" type="password" autofocus placeholder="Authentifizierungs-ID" v-model="authID"
                @keyup.enter="$refs.link.click()">
       </form>
