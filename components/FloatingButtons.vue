@@ -48,7 +48,7 @@
           Fog of War
         </div>
 
-        <fa icon="cloud" slot="reference" @click="setTool(tools.fogOfWar)" :class="{'button-selected' : currentTool === tools.fogOfWar}" class="button" v-if="$store.state.authentication.gm"/>
+        <fa icon="cloud" slot="reference" @click="setTool(tools.fogOfWar)" :class="{'button-selected' : currentTool === tools.fogOfWar}" class="button" v-show="$store.state.authentication.gm"/>
 
       </popper>
 
