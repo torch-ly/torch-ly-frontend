@@ -22,9 +22,8 @@
           Paint Mode
         </div>
 
-        <fa icon="pen" @click="setTool(tools.pen)" slot="reference"
-            :class="{'button-selected' : currentTool === tools.pen || currentTool === tools.eraser || currentTool === tools.rectangle || currentTool === tools.circle}"
-            class="button"/>
+        <fa icon="pen" @click="setTool(drawTools.pen)" slot="reference"
+            :class="{'button-selected' : currentTool === tools.draw}" class="button"/>
 
       </popper>
 
@@ -36,7 +35,8 @@
           Measure Tool
         </div>
 
-        <fa icon="ruler-combined" slot="reference" @click="setTool(tools.measure)" :class="{'button-selected' :  currentTool === tools.measure}" class="button"/>
+        <fa icon="ruler-combined" slot="reference" @click="setTool(measureTools.line)"
+            :class="{'button-selected' :  currentTool === tools.measure}" class="button"/>
 
       </popper>
 
@@ -82,7 +82,9 @@
 <script>
 import {mapActions, mapState} from 'vuex'
 import {saveBackgroundLayer} from "@/logic/stage/layers/background/init";
-import tools from '@/enums/tools';
+import tools from '@/enums/tools/tools';
+import drawTools from "~/enums/tools/drawTools";
+import measureTools from "~/enums/tools/measureTools";
 import Popper from 'vue-popperjs';
 
 export default {
@@ -90,9 +92,11 @@ export default {
   data: () => {
     return {
       tools,
+      drawTools,
+      measureTools,
       popperOptions: {
         placement: 'right',
-        modifiers: { offset: { offset: '0,10px' } }
+        modifiers: {offset: {offset: '0,10px'}}
       }
     }
   },

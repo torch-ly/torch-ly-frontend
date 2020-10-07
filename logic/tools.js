@@ -8,7 +8,7 @@ import {createCircle, createRect} from "@/logic/stage/layers/drawing/drawShapes"
 import {enableZoom} from "@/logic/stage/functions/zoom";
 import drawTools from "@/enums/tools/drawTools";
 import measureTools from "@/enums/tools/measureTools";
-import {startCircleMeasure} from "@/logic/stage/layers/measure/circleMeasure";
+import {disableCircleMeasure, startCircleMeasure} from "@/logic/stage/layers/measure/circleMeasure";
 
 export function initDrawingStoreWatch() {
   store.watch((state, getters) => state.manu.currentTool, (newState, oldState) => {
@@ -109,4 +109,7 @@ export function stopAllTools() {
 
   // Remove Eraser Rectangle
   removeEraser();
+
+  // Remove Circle Measure objects
+  disableCircleMeasure();
 }

@@ -2,7 +2,6 @@ import {SubscriptionClient} from "subscriptions-transport-ws";
 import ApolloClient from "apollo-client";
 import {WebSocketLink} from "apollo-link-ws";
 import {InMemoryCache} from "apollo-cache-inmemory";
-import {getParameters} from "../utils/ParameterHelper";
 import {getPlayer} from "~/plugins/backendComunication/player";
 import {getBackgroundLayerNames, loadBackground, subscribeBackgroundLayer} from "~/plugins/backendComunication/map";
 import {getFogOfWar, subscribeFogOfWar} from "~/plugins/backendComunication/fogOfWar";
@@ -21,7 +20,7 @@ import {
 import {getBackendUrl} from "@/store/config";
 import {getAuthID} from "@/store/authentication";
 
-const secure = location.protocol === "https:" ? "wss" : "wss";
+const secure = location.protocol === "https:" ? "wss" : "ws";
 const GRAPHQL_ENDPOINT = secure + "://" + (getBackendUrl()) + ":5000/graphql";
 
 let store = {};
