@@ -4,7 +4,7 @@ import {setLayer as drawBackground} from "./background/main";
 import {draw as drawGrid} from "./grid/main";
 import {setDrawLayer} from "./drawing/main";
 import {setLayer as drawToken} from "./token/main";
-import {draw as drawMeasure} from "./measure/lineMeasure";
+import {setLayer as drawMeasure} from "./measure/main";
 import {setFogOfWarLayer} from "./fogofwar/main";
 import {addTransformerToLayer, createTransformer} from "../functions/transformer";
 

@@ -14,7 +14,7 @@
 </template>
 <script>
 import {mapActions} from 'vuex';
-import tools from '@/enums/tools';
+import tools from '@/enums/tools/tools';
 
 export default {
   data() {

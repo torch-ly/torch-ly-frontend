@@ -58,6 +58,9 @@ export function addCharacter(character) {
 }
 
 export function removeCharacter(charcterID) {
+  if (charcterID == null)
+    return;
+
   apolloClient.mutate({
     mutation: gql`
       mutation removeCharacter($id:String!){

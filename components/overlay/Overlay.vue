@@ -3,8 +3,7 @@
     class="h-screen fixed top-0 right-0 bg-gray-700 w-64 animate__animated animate__fadeInRight text-white overflow-y-auto">
 
     <MoveOverlay class="animate__animated animate__fadeInRight p-6" v-show="currentTool === tools.move"/>
-    <PaintOverlay class="animate__animated animate__fadeInRight p-6"
-                  v-show="[tools.pen, tools.eraser, tools.circle, tools.rectangle].indexOf(currentTool) >= 0"/>
+    <PaintOverlay class="animate__animated animate__fadeInRight p-6" v-show="currentTool === tools.draw"/>
     <MeasureOverlay class="animate__animated animate__fadeInRight p-6" v-show="currentTool === tools.measure"/>
     <FogOfWarOverlay class="animate__animated animate__fadeInRight p-6" v-show="currentTool === tools.fogOfWar"/>
     <MonsterOverlay class="animate__animated animate__fadeInRight" v-show="currentTool === tools.monsters"/>
@@ -20,7 +19,7 @@ import FogOfWarOverlay from "./FogOfWarOverlay";
 import MonsterOverlay from "./MonsterOverlay"
 import InitiativeTracker from "~/components/overlay/InitiativeTracker";
 import {mapState} from 'vuex';
-import tools from '@/enums/tools';
+import tools from '@/enums/tools/tools';
 
 export default {
   data() {
