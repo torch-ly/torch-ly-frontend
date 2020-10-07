@@ -2,6 +2,7 @@ import {blockSnapSize} from "@/logic/stage/layers/grid/main";
 import {getRelativePointerPosition} from "@/logic/stage/functions/layerFunctions";
 import {stage, store} from "@/logic/stage/main";
 import {layer} from "@/logic/stage/layers/measure/main";
+import {addDrawing} from "~/plugins/backendComunication/drawing";
 
 let circle1;
 let circle2;
@@ -160,6 +161,19 @@ function getSnapPos() {
   return {
     x: blockSnapSize * Math.round(getRelativePointerPosition(stage).x / blockSnapSize),
     y: blockSnapSize * Math.round(getRelativePointerPosition(stage).y / blockSnapSize)
+  }
+}
+
+export function saveAsDrawing() {
+  if (measureCircle != null) {
+    addDrawing({
+      x: measureCircle.x(),
+      y: measureCircle.y(),
+      radius: measureCircle.radius(),
+      stroke: 'black',
+      strokeWidth: 4,
+      type: "Circle"
+    });
   }
 }
 

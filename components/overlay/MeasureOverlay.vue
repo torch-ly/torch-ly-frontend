@@ -37,6 +37,10 @@
       <div class="flex items-center ml-2 text-center">Cone measure</div>
     </div>
 
+    <button class="submit-button active:submit-button-active mt-2" v-show="savableMeasureToolActive"
+            @click="saveMeasureAsPainting">Save as drawing
+    </button>
+
   </div>
 </template>
 
@@ -46,6 +50,7 @@ import AdvancedOptions from "../gui-components/AdvancedOptions";
 import measureTools from "@/enums/tools/measureTools";
 import {mapActions} from "vuex";
 import tools from "@/enums/tools/tools";
+import {saveAsDrawing} from "~/logic/stage/layers/measure/circleMeasure";
 
 export default {
   data() {
@@ -66,6 +71,9 @@ export default {
     },
     measureTool() {
       return this.$store.state.manu.measureTool;
+    },
+    savableMeasureToolActive() {
+      return (this.$store.state.manu.measureTool === measureTools.circle || this.$store.state.manu.measureTool === measureTools.cone);
     }
   },
   watch: {
@@ -110,6 +118,11 @@ export default {
         this.setTool(this.measureTools.line);
       } else {
         this.setTool(this.measureTools.cone);
+      }
+    },
+    saveMeasureAsPainting() {
+      if (this.$store.state.manu.measureTool === measureTools.circle) {
+        saveAsDrawing();
       }
     }
   }
