@@ -25,69 +25,31 @@ export function startCircleMeasure() {
 
   layer.add(measureArrow);
 
-  stage.on("mousedown", () => {
+  stage.on("mousedown touchstart", () => {
     if (!circle1) {
-      circle1 = new Konva.Circle({
-        x: getSnapPos().x,
-        y: getSnapPos().y,
-        radius: 20,
-        fill: '#4a5568',
-        stroke: 'black',
-        draggable: true
-      });
-
-      measureArrow.points([circle1.x(), circle1.y()]);
-
-      circle1.on('dragmove', moveCircle);
-      circle1.on('dragend', snapCircle1);
-
-      layer.add(circle1);
-
+      addFirstCircle();
     } else if (!circle2) {
-      circle2 = new Konva.Circle({
-        x: getSnapPos().x,
-        y: getSnapPos().y,
-        radius: 20,
-        fill: '#4a5568',
-        stroke: 'black',
-        draggable: true
-      });
-
-      measureArrow.points([circle1.x(), circle1.y(), circle2.x(), circle2.y()]);
-
-      updateOffset();
-
-      layer.add(circle2);
-
-      measureCircle = new Konva.Circle({
-        x: circle1.x(),
-        y: circle1.y(),
-        radius: 0,
-        stroke: '#4a5568',
-        fill: 'rgba(74,85,104,0.17)',
-        strokeWidth: 4,
-        listening: false
-      });
-
-      circle2.on('dragmove', changeRadius);
-      circle2.on('dragend', snapCircle2);
-
-      updateMeasure();
-
-      layer.add(measureCircle);
-      layer.batchDraw();
+      addSecondCircle();
     }
     layer.batchDraw();
   });
 
-  stage.on("mousemove", () => {
+  stage.on("mousemove touchmove", () => {
     if (circle1 && !circle2) {
       measureArrow.points([circle1.x(), circle1.y(), getSnapPos().x, getSnapPos().y]);
-      store.commit("manu/setMeasureLength", Math.max(Math.abs(measureArrow.points()[0] - measureArrow.points()[2]), Math.abs(measureArrow.points()[1] - measureArrow.points()[3])) / blockSnapSize);
+      store.commit("manu/setMeasureLength", Math.max(Math.abs(measureArrow.points()[0] - measureArrow.points()[2]),
+        Math.abs(measureArrow.points()[1] - measureArrow.points()[3])) / blockSnapSize);
       layer.batchDraw();
     } else if (circle2) {
       measureArrow.visible(false);
       layer.batchDraw();
+    }
+  });
+
+  stage.on('mouseup touchend', () => {
+    if (circle1 && !circle2 && Math.max(Math.abs(measureArrow.points()[0] - getSnapPos().x),
+      Math.abs(measureArrow.points()[1] - getSnapPos().y)) / blockSnapSize > 0) {
+      addSecondCircle();
     }
   })
 
@@ -134,6 +96,59 @@ function snapCircle2() {
   circle2.y(blockSnapSize * Math.round(circle2.y() / blockSnapSize));
 
   changeRadius();
+}
+
+function addFirstCircle() {
+  circle1 = new Konva.Circle({
+    x: getSnapPos().x,
+    y: getSnapPos().y,
+    radius: 20,
+    fill: '#4a5568',
+    stroke: 'black',
+    draggable: true
+  });
+
+  measureArrow.points([circle1.x(), circle1.y()]);
+
+  circle1.on('dragmove', moveCircle);
+  circle1.on('dragend', snapCircle1);
+
+  layer.add(circle1);
+}
+
+function addSecondCircle() {
+  circle2 = new Konva.Circle({
+    x: getSnapPos().x,
+    y: getSnapPos().y,
+    radius: 20,
+    fill: '#4a5568',
+    stroke: 'black',
+    draggable: true
+  });
+
+  measureArrow.points([circle1.x(), circle1.y(), circle2.x(), circle2.y()]);
+
+  updateOffset();
+
+  layer.add(circle2);
+
+  measureCircle = new Konva.Circle({
+    x: circle1.x(),
+    y: circle1.y(),
+    radius: 0,
+    stroke: '#4a5568',
+    fill: 'rgba(74,85,104,0.17)',
+    strokeWidth: 4,
+    listening: false
+  });
+
+  circle2.on('dragmove', changeRadius);
+  circle2.on('dragend', snapCircle2);
+
+  updateMeasure();
+
+  layer.add(measureCircle);
+  layer.batchDraw();
 }
 
 function updateOffset() {
