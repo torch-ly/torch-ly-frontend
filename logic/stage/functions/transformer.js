@@ -67,9 +67,9 @@ export function addTransformerClickListener(object) {
       return;
     }
     manageTransformerLayer();
-    if (e.target == stage) {
-      clearTransformerNodes();
-    } else if (e.target == object && Array.from(transformerLayer.children).includes(object) && store.state.manu.currentTool == tools.DEFAULT) { //is this object the target && is the object in the current layer of selection
+    clearTransformerNodes();
+
+    if (e.target == object && Array.from(transformerLayer.children).includes(object) && store.state.manu.currentTool == tools.DEFAULT) { //is this object the target && is the object in the current layer of selection
       setNodesToTransformer([object]);
     }
     transformerLayer.batchDraw();
