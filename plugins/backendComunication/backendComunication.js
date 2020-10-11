@@ -19,6 +19,7 @@ import {
 } from "@/plugins/backendComunication/drawing";
 import {getBackendUrl} from "@/store/config";
 import {getAuthID} from "@/store/authentication";
+import {updatePointTo} from "@/plugins/backendComunication/pointer";
 
 const secure = location.protocol === "https:" ? "wss" : "ws";
 const GRAPHQL_ENDPOINT = secure + "://" + (getBackendUrl()) + ":5000/graphql";
@@ -68,6 +69,8 @@ export default async function (context) {
   subscribeDrawing();
   subscribeRemoveDrawing();
   subscribeClearAllDrawings();
+
+  updatePointTo();
 
   if (store.state.config.device !== devices.MOBILE)
     loadTable();

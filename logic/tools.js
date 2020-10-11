@@ -9,6 +9,7 @@ import {enableZoom} from "@/logic/stage/functions/zoom";
 import drawTools from "@/enums/tools/drawTools";
 import measureTools from "@/enums/tools/measureTools";
 import {disableCircleMeasure, startCircleMeasure} from "@/logic/stage/layers/measure/circleMeasure";
+import {enablePointer} from "@/logic/stage/layers/measure/pointer";
 
 export function initDrawingStoreWatch() {
   store.watch((state, getters) => state.manu.currentTool, (newState, oldState) => {
@@ -91,6 +92,7 @@ function toolChanged(tool) {
 }
 
 function startMoveTool() {
+  enablePointer();
   stage.draggable(true);
 }
 
@@ -103,6 +105,7 @@ export function stopAllTools() {
   stage.off('touchstart');
   stage.off('touchmove');
   stage.off('touchend');
+  stage.off('dblclick');
 
   // Enable zoom zo prevent default zoom
   enableZoom();
