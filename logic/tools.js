@@ -10,6 +10,7 @@ import drawTools from "@/enums/tools/drawTools";
 import measureTools from "@/enums/tools/measureTools";
 import {disableCircleMeasure, startCircleMeasure} from "@/logic/stage/layers/measure/circleMeasure";
 import {enablePointer} from "@/logic/stage/layers/measure/pointer";
+import {addSelectionRect} from "@/logic/stage/functions/transformer/selector";
 
 export function initDrawingStoreWatch() {
   store.watch((state, getters) => state.manu.currentTool, (newState, oldState) => {
@@ -93,6 +94,7 @@ function toolChanged(tool) {
 
 function startMoveTool() {
   enablePointer();
+  addSelectionRect();
   stage.draggable(true);
 }
 

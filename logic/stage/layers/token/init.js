@@ -3,9 +3,9 @@ import {addSnapToGridListener} from "../../functions/layerFunctions";
 import {store} from "../../main";
 import {blockSnapSize} from "../grid/main";
 import {draw, out, setOut} from "@/logic/stage/layers/token/main";
-import {addTransformerClickListener} from "../../functions/transformer";
+import {addTransformerClickListener} from "../../functions/transformer/transformer";
 import {removeCharacter, setCharacterPosition} from "../../../../plugins/backendComunication/characters";
-import {addTransformationListener} from "@/logic/stage/functions/transformer";
+import {addTransformationListener} from "@/logic/stage/functions/transformer/transformer";
 import devices from "@/enums/devices";
 import {loadConditionImages, updateConditionImagePosition} from "@/logic/stage/layers/token/conditions";
 

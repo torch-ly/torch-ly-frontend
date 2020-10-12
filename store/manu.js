@@ -1,5 +1,5 @@
 import tools from '@/enums/tools/tools';
-import {clearTransformerNodes} from "../logic/stage/functions/transformer";
+import {clearTransformerNodes} from "../logic/stage/functions/transformer/transformer";
 import drawTools from "@/enums/tools/drawTools";
 import measureTools from "@/enums/tools/measureTools";
 

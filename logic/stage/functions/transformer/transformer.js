@@ -1,13 +1,13 @@
 import {Image as KonvaImage} from "konva";
-import {stage, store} from "../main";
-import {setMoveObjectByArrow} from "./objectFunctions";
-import {manageTransformerLayer} from "../layers/layerManager";
+import {stage, store} from "../../main";
+import {setMoveObjectByArrow} from "../objectFunctions";
+import {manageTransformerLayer} from "../../layers/layerManager";
 import tools from '@/enums/tools/tools';
 import {setCharacterAttrs} from "@/plugins/backendComunication/characters";
 import {blockSnapSize} from "@/logic/stage/layers/grid/main";
 
-let transformer;
-let transformerLayer;
+export let transformer;
+export let transformerLayer;
 let transformerNodes = [];
 
 export function createTransformer() {
@@ -33,14 +33,17 @@ export function setNodesToTransformer(nodes) {
 
   transformer.moveToTop();
 
-  if (nodes[0].characterID != null) {
-    store.commit('character/setSelectedCharacter', nodes[0].characterID);
-    for (let condition of nodes[0].conditions) {
-      condition.moveToTop();
+  if (nodes.length === 1) {
+    if (nodes[0].characterID != null) {
+      store.commit('character/setSelectedCharacter', nodes[0].characterID);
+      for (let condition of nodes[0].conditions) {
+        condition.moveToTop();
+      }
     }
-  }
 
-  setMoveObjectByArrow(nodes[0]);
+    setMoveObjectByArrow(nodes[0]);
+  }
+  transformer.forceUpdate();
 }
 
 export function clearTransformerNodes() {
@@ -63,7 +66,7 @@ export function addTransformerToLayer(layer) {
 
 export function addTransformerClickListener(object) {
   stage.on('click tap', (e) => {
-    if (store.state.manu.currentTool !== tools.move) {
+    if (store.state.manu.currentTool !== tools.move || e.evt.button === 2) {
       return;
     }
     manageTransformerLayer();

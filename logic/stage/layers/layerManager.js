@@ -6,7 +6,7 @@ import {setDrawLayer} from "./drawing/main";
 import {setLayer as drawToken} from "./token/main";
 import {setLayer as drawMeasure} from "./measure/main";
 import {setFogOfWarLayer} from "./fogofwar/main";
-import {addTransformerToLayer, createTransformer} from "../functions/transformer";
+import {addTransformerToLayer, createTransformer} from "../functions/transformer/transformer";
 
 let background;
 let grid;

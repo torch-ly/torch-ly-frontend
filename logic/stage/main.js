@@ -3,6 +3,7 @@ import {enableZoom} from "./functions/zoom";
 import {moveTokenByArrows} from "./functions/objectFunctions";
 import {initDrawingStoreWatch} from "@/logic/tools";
 import {enablePointer} from "@/logic/stage/layers/measure/pointer";
+import {addSelectionRect} from "@/logic/stage/functions/transformer/selector";
 
 export let stage = null;
 export let stageWidth = 0;
@@ -27,6 +28,7 @@ export function main(pStage, width, height) {
   resize();
   moveTokenByArrows();
   enablePointer();
+  addSelectionRect();
 }
 
 function resize() {

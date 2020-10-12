@@ -37,7 +37,7 @@
   </div>
 </template>
 <script>
-import {clearTransformerNodes} from "../../../logic/stage/functions/transformer";
+import {clearTransformerNodes} from "../../../logic/stage/functions/transformer/transformer";
 import {stage} from "../../../logic/stage/main";
 import LoadingSpinner from "../../gui-components/LoadingSpinner";
 import FileUpload from "../../gui-components/FileUpload";
