@@ -73,8 +73,28 @@ export function addTransformerClickListener(object) {
 
     if (!Array.from(transformerLayer.children).includes(e.target)) {
       clearTransformerNodes();
-    } else if (e.target == object && Array.from(transformerLayer.children).includes(object) && store.state.manu.currentTool == tools.DEFAULT) { //is this object the target && is the object in the current layer of selection
-      setNodesToTransformer([object]);
+    } else if (Array.from(transformerLayer.children).includes(object) && store.state.manu.currentTool == tools.DEFAULT) { //is this object the target && is the object in the current layer of selection
+
+      // do we pressed shift or ctrl?
+      const metaPressed = e.evt.shiftKey || e.evt.ctrlKey || e.evt.metaKey;
+      const isSelected = transformer.nodes().indexOf(e.target) >= 0;
+
+      if (!metaPressed && !isSelected) {
+        // if no key pressed and the node is not selected
+        // select just one
+        setNodesToTransformer([e.target])
+      } else if (metaPressed && isSelected) {
+        // if we pressed keys and node was selected
+        // we need to remove it from selection:
+        const nodes = transformer.nodes().slice(); // use slice to have new copy of array
+        // remove node from array
+        nodes.splice(nodes.indexOf(e.target), 1);
+        setNodesToTransformer(nodes)
+      } else if (metaPressed && !isSelected) {
+        // add the node into selection
+        const nodes = transformer.nodes().concat([e.target]);
+        setNodesToTransformer(nodes)
+      }
     }
     transformerLayer.batchDraw();
   })
