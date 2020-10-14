@@ -8,30 +8,11 @@ export function enableZoom() {
 
     let scaleBy = 0.95;
     e.evt.preventDefault();
-    let oldScale = stage.scaleX();
-
-    let pointer = stage.getPointerPosition();
-
-    let mousePointTo = {
-      x: (pointer.x - stage.x()) / oldScale,
-      y: (pointer.y - stage.y()) / oldScale,
-    };
-
-    let newScale = e.evt.deltaY > 0 ? oldScale * scaleBy : oldScale / scaleBy;
-
-    stage.scale({
-      x: newScale,
-      y: newScale
-    });
-
-    let newPos = {
-      x: pointer.x - mousePointTo.x * newScale,
-      y: pointer.y - mousePointTo.y * newScale,
-    };
-    stage.position(newPos);
-
-    updateGrid();
-    stage.batchDraw();
+    if (e.evt.deltaY > 0) {
+      zoomByScale(scaleBy);
+    } else {
+      zoomByScale(1 + (1 - scaleBy));
+    }
   });
 
   let lastCenter = null;
@@ -106,6 +87,33 @@ export function enableZoom() {
     lastDist = 0;
     lastCenter = null;
   });
+}
+
+function zoomByScale(scaleFactor) {
+  let oldScale = stage.scaleX();
+
+  let pointer = stage.getPointerPosition();
+
+  let newScale = oldScale * scaleFactor;
+
+  let mousePointTo = {
+    x: (pointer.x - stage.x()) / oldScale,
+    y: (pointer.y - stage.y()) / oldScale,
+  };
+
+  stage.scale({
+    x: newScale,
+    y: newScale
+  });
+
+  let newPos = {
+    x: pointer.x - mousePointTo.x * newScale,
+    y: pointer.y - mousePointTo.y * newScale,
+  };
+  stage.position(newPos);
+
+  updateGrid();
+  stage.batchDraw();
 }
 
 function getDistance(p1, p2) {
