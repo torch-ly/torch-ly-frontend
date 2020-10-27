@@ -108,6 +108,7 @@ export function stopAllTools() {
   stage.off('touchmove');
   stage.off('touchend');
   stage.off('dblclick');
+  stage.off('dbltap');
 
   // Enable zoom zo prevent default zoom
   enableZoom();

@@ -32,5 +32,5 @@ export function pointTo(x, y, color) {
 }
 
 export function enablePointer() {
-  stage.on('dblclick', () => pointToPos(parseInt(getRelativePointerPosition(stage).x), parseInt(getRelativePointerPosition(stage).y), "green"))
+  stage.on('dblclick dbltap', () => pointToPos(parseInt(getRelativePointerPosition(stage).x), parseInt(getRelativePointerPosition(stage).y), "green"))
 }
