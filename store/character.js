@@ -1,4 +1,4 @@
-import {setInitiative} from "@/plugins/backendComunication/initiative";
+import {addToInitiative, setInitiative} from "@/plugins/backendComunication/initiative";
 
 export const state = () => ({
   characters: [],
@@ -22,6 +22,9 @@ export const mutations = {
   addCharacter(state, character) {
     state.characters.push(character);
   },
+  setInitiativeOrderWithoutSaving(state, order) {
+    state.initiative = order;
+  },
   setInitiativeOrder(state, order) {
     state.initiative = order;
     setInitiative();
@@ -35,9 +38,7 @@ export const mutations = {
     setInitiative();
   },
   addCharacterToInitiative(state, character) {
-    state.initiative = state.initiative.filter(a => a.id !== character.id);
-    state.initiative.push(character);
-    setInitiative();
+    addToInitiative(character.id, character.value);
   },
   removeCharacterFromInitiative(state, characterID) {
     state.initiative = state.initiative.filter(char => char.id != characterID);
