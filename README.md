@@ -1,22 +1,22 @@
-# RPGOnlineTool
+# torch-ly 
 
-> My solid Nuxt.js project
+> this repo hosts the frontend of the an open-source web-based RPG assistant
 
-## Build Setup
+## What does torch-ly do? 
 
-```bash
-# install dependencies
-$ npm install
+- managing characters, NPCs and monsters
+- creating and sharing a map of various game situations
+- enabling multi-user gaming experiences
+- TV mode for in-table displays
+- mobile remote control capabilities
+- initiative management
+- fog of war
+- drawing mode with stylus support
 
-# serve with hot reload at localhost:3000
-$ npm run dev
+## What's next up? 
 
-# build for production and launch server
-$ npm run build
-$ npm run start
+Take a look at our [torch-ly trello](https://trello.com/b/1igBiIXo/torchly).
 
-# generate static project
-$ npm run generate
-```
+## I would like to use the project. What do I have to know? 
 
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+You can contact us at [developer@ondolin.de](mailto:developer@ondolin.de) or [developer.erichier@gmail.com](mailto:developer.erichier@gmail.com) to get further details. 
