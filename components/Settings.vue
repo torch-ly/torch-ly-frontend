@@ -25,8 +25,14 @@
       <h1 class="title mt-20">User information</h1>
 
       <div class="text-lg mt-6">
-        <p class="mb-6"><span class="select-none">UserID: </span>{{$store.state.authentication.playerID}}</p>
+        <p class="mb-6"><span class="select-none">UserID: </span>{{ $store.state.authentication.playerID }}</p>
 
+        <a ref="link"
+           class="block animate__animated animate__fadeInDown submit-button active:submit-button-active"
+           :href="'/'"
+           @click="logout">
+          Logout
+        </a>
       </div>
 
     </div>
@@ -56,6 +62,9 @@ export default {
   methods: {
     reload() {
       location.reload()
+    },
+    logout() {
+      this.$store.commit("authentication/setAuthID", "");
     }
   }
 }
