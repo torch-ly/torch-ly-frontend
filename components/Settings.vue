@@ -35,6 +35,20 @@
         </a>
       </div>
 
+      <div v-if="$store.state.authentication.canActivateGM">
+        <h1 class="title mt-20">GM Settings</h1>
+
+        <div class="text-lg mt-6">
+          <div class="flex flex-row">
+            <span>Activate GM mode:</span>
+            <div class="flex flex-center items-center ml-2">
+              <input type="checkbox" v-model="gm">
+            </div>
+          </div>
+        </div>
+
+      </div>
+
     </div>
   </div>
 </template>
@@ -65,6 +79,16 @@ export default {
     },
     logout() {
       this.$store.commit("authentication/setAuthID", "");
+    }
+  },
+  computed: {
+    gm: {
+      get() {
+        return this.$store.state.authentication.gm
+      },
+      set(value) {
+        this.$store.commit('authentication/setGM', value)
+      }
     }
   }
 }
