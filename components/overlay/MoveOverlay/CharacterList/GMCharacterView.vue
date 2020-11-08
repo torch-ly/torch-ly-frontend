@@ -31,12 +31,21 @@ export default {
       if (this.allPlayers == undefined)
         return;
 
+      let oldArray = [...this.players];
       this.players = [];
 
       for (let player of this.allPlayers) {
+
+        let wasActiveBeforeReset;
+        if (JSON.parse(JSON.stringify(oldArray.filter((char) => char.object.id === player.id))).length > 0) {
+          wasActiveBeforeReset = JSON.parse(JSON.stringify(oldArray.filter((char) => char.object.id === player.id)))[0].active;
+        } else {
+          wasActiveBeforeReset = false;
+        }
+
         this.players.push({
           object: player,
-          active: false,
+          active: wasActiveBeforeReset,
           charactersOnStage: this.charactersOnStage(player.id),
         })
       }
@@ -47,7 +56,7 @@ export default {
           id: null,
           name: "Unassigned Characters"
         },
-        active: false,
+        active: oldArray.length > 0 ? oldArray[oldArray.length - 1] : false,
         charactersOnStage: this.allCharacters.filter((character) => character.players.length === 0).length
       })
 
