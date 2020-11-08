@@ -45,15 +45,19 @@
               <input type="checkbox" v-model="gm">
             </div>
           </div>
+
+          <!-- under development
+          <ManageGMStatus /-->
         </div>
-
       </div>
-
     </div>
   </div>
 </template>
 <script>
+import ManageGMStatus from "@/components/settings/ManageGMStatus";
+
 export default {
+  components: {ManageGMStatus},
   data() {
     return {
       active: false,

@@ -1,10 +1,19 @@
 <template>
-  <div v-if="getOwnCharacters().length !== 0">
+  <div>
 
-    <div class="hr"/>
+    <div class="hr mb-4"/>
 
-    <MultipleCharacterView v-if="$store.state.character.selectedCharacter == ''"/>
-    <SingleCharacterView v-else/>
+    <div v-if="getOwnCharacters().length !== 0 && !isGM">
+
+      <MultipleCharacterView v-if="$store.state.character.selectedCharacter == ''"
+                             :player-i-d="$store.state.authentication.playerID"/>
+      <SingleCharacterView v-else/>
+
+    </div>
+
+    <GMCharacterView v-if="isGM && $store.state.character.selectedCharacter == ''"/>
+
+    <SingleCharacterView v-if="$store.state.character.selectedCharacter !== ''"/>
 
   </div>
 </template>
@@ -13,9 +22,10 @@
 import {store} from "../../../../logic/stage/main";
 import SingleCharacterView from "@/components/overlay/MoveOverlay/CharacterList/SingleCharacterView";
 import MultipleCharacterView from "@/components/overlay/MoveOverlay/CharacterList/MutlitpleCharacterView"
+import GMCharacterView from "@/components/overlay/MoveOverlay/CharacterList/GMCharacterView";
 
 export default {
-  components: {SingleCharacterView, MultipleCharacterView},
+  components: {GMCharacterView, SingleCharacterView, MultipleCharacterView},
   methods: {
     getOwnCharacters() {
       if (store.state.authentication.playerID == null) {
@@ -31,6 +41,14 @@ export default {
         }
       }
       return ownCharacter;
+    }
+  },
+  computed: {
+    allCharacters() {
+      return this.$store.state.character.characters;
+    },
+    isGM() {
+      return this.$store.state.authentication.gm;
     }
   }
 }

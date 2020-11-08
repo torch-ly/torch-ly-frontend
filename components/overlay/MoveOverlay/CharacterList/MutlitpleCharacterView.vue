@@ -16,6 +16,7 @@
 import {selectToken} from "@/logic/stage/functions/transformer/transformer";
 
 export default {
+  props: ['playerID'],
   data() {
     return {
       characterList: []
@@ -23,15 +24,15 @@ export default {
   },
   methods: {
     updateOwnCharacters() {
-      if (this.$store.state.authentication.playerID == null) {
-        this.characterList = this.characterStore.characters;
-      }
-
       let ownCharacter = [];
       for (let character of this.characterStore.characters) {
-        for (let player of character.players) {
-          if (player.id == this.$store.state.authentication.playerID) {
-            ownCharacter.push(character);
+        if (this.playerID === null && character.players.length === 0) {
+          ownCharacter.push(character);
+        } else {
+          for (let player of character.players) {
+            if (player.id == this.playerID) {
+              ownCharacter.push(character);
+            }
           }
         }
       }
