@@ -47,6 +47,15 @@ export default {
           size = 1;
       }
 
+      let ac = 0;
+      if (monster.hasOwnProperty("ac")) {
+        if (monster.ac.length > 0 && monster.ac[0].ac) {
+          ac = monster.ac[0].ac;
+        } else {
+          ac = monster.ac;
+        }
+      }
+
       let character = {
         name: monster.name,
         token: imgUrl,
@@ -57,7 +66,12 @@ export default {
           },
           size
         },
-        player: [this.$store.state.authentication.playerID]
+        player: [this.$store.state.authentication.playerID],
+        details: {
+          hp: monster.hasOwnProperty("hp") && monster.hp.hasOwnProperty("average") ? monster.hp.average : 0,
+          ac: ac,
+          notes: ""
+        }
       };
 
       addCharacter(character);
