@@ -1,9 +1,9 @@
 <template>
-  <div class="mt-3">
+  <div class="mt-4">
+    <input type="text" class="font-bold pl-1 rounded bg-gray-700" v-model="name">
     <div class="w-full flex flex-column my-4 justify-center items-center">
       <img class="w-20 h-20 block" draggable="false" v-bind:src="selectedCharacter.token">
-      <div class="w-2/3 flex-col ml-2 pl-2 border-l-2 text-lg py-2"><span
-        class="font-bold block" contenteditable="true">{{ selectedCharacter.name }}</span>
+      <div class="w-2/3 flex-col ml-2 pl-2 border-l-2 text-lg py-2">
         <span class="block">
             <form @submit.prevent="evaluateHPBox()">
               <div class="flex flex-row justify-between">
@@ -37,16 +37,17 @@
 </template>
 <script>
 import {evaluate} from "mathjs";
-import {setCharacterDetails} from "@/plugins/backendComunication/characters";
+import {setCharacterDetails, setCharacterName} from "@/plugins/backendComunication/characters";
 import {store} from "@/logic/stage/main";
 
 export default {
   data() {
     return {
       selectedCharacter: null,
-      hp: 5,
-      ac: 4,
-      notes: null
+      hp: 0,
+      ac: 0,
+      notes: null,
+      name: null,
     }
   },
   methods: {
@@ -66,7 +67,8 @@ export default {
         hp: this.hp,
         ac: this.ac,
         notes: this.notes
-      })
+      });
+      setCharacterName(this.selectedCharacter.id, this.name);
     },
     openInitiativePrompt() {
       let initiative = prompt("Initiative value: ");
@@ -90,6 +92,7 @@ export default {
             this.ac = 0;
             this.notes = "";
           }
+          this.name = character.name;
           break;
         }
       }

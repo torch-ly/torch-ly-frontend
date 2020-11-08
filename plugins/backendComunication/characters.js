@@ -176,3 +176,17 @@ export function setCharacterConditions(charcterID, conditions) {
     }
   }).catch(logError);
 }
+
+export function setCharacterName(charcterID, name) {
+  apolloClient.mutate({
+    mutation: gql`
+      mutation setCharacterName($id:String!, $name:String!){
+        setCharacterName(id:$id, name:$name) {pos{point{x y} rot size} name token players {id} id}
+      }
+    `,
+    variables: {
+      id: charcterID,
+      name: name
+    }
+  }).catch(logError);
+}
