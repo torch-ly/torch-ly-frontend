@@ -3,7 +3,7 @@
     <div class="flex items-center">
       <label class="switch">
         <input type="checkbox" v-model="value">
-        <span class="slider round"></span>
+        <span class="slider round" :class="{'inverted' : inverted}"></span>
       </label>
     </div>
 
@@ -24,6 +24,10 @@ export default {
     },
     title: {
       type: String
+    },
+    inverted: {
+      type: Boolean,
+      default: false,
     }
   },
   watch: {
@@ -64,6 +68,18 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
+  background-color: #f32121;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider.inverted {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background-color: #20880a;
   -webkit-transition: .4s;
   transition: .4s;
@@ -82,12 +98,16 @@ export default {
 }
 
 input:checked + .slider {
+  background-color: #20880a;
+}
+
+input:checked + .slider.inverted {
   background-color: #f32121;
 }
 
-input:focus + .slider {
-  box-shadow: 0 0 1px #f32121;
-}
+//input:focus + .slider {
+//  box-shadow: 0 0 1px #f32121;
+//}
 
 input:checked + .slider:before {
   -webkit-transform: translateX(19px);
