@@ -19,10 +19,18 @@ export function getAuthID() {
 
 export const mutations = {
   setPlayer(state, player) {
-    state.playerID = player.id;
-    state.name = player.name;
-    state.gm = player.gm;
-    state.canActivateGM = player.gm;
+    if (player !== null) {
+      console.log(1)
+      state.playerID = player.id;
+      state.name = player.name;
+      state.gm = player.gm;
+      state.canActivateGM = player.gm;
+    } else {
+      state.playerID = null;
+      state.name = "";
+      state.gm = false;
+      state.canActivateGM = false;
+    }
   },
   setAuthID(state, authID) {
     state.authID = authID;
