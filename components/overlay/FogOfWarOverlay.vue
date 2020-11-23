@@ -11,22 +11,22 @@
 
     <button class="submit-button active:submit-button-active mt-2" @click="inputClick">{{ insertButtonText }}</button>
 
-    <button class="submit-button active:submit-button-active mt-2" @click="syncronizeClick">Syncronize FogOfWar</button>
+    <button class="submit-button active:submit-button-active mt-2" @click="syncronize">Syncronize FogOfWar</button>
 
     <div class="flex flex-row mt-2">
       <label class="switch">
-        <input type="checkbox" @change="gridSnapChanged" value="false">
+        <input type="checkbox" @change="toggleSnapToGrid" value="false">
         <span class="slider round"></span>
       </label>
       <div class="flex items-center ml-2">Snap to Grid</div>
     </div>
 
-    <button class="submit-button active:submit-button-active mt-2" @click="clearFogOfWar">Clear FogOfWar</button>
+    <button class="submit-button active:submit-button-active mt-2" @click="resetFogOfWar">Clear FogOfWar</button>
 
     <div class="flex flex-row mt-2">
       <div class="flex items-center">
         <label class="switch">
-          <input type="checkbox" @change="toggleTransparentMode" checked>
+          <input type="checkbox" @change="toggleTransparent" checked>
           <span class="slider round"></span>
         </label>
       </div>
@@ -55,6 +55,10 @@ export default {
     }
   },
   methods: {
+    syncronize,
+    toggleSnapToGrid,
+    resetFogOfWar,
+    toggleTransparent,
     inputClick() {
       !this.deleteMode ? InsertPolygon() : DeletePolygon()
     },
@@ -66,18 +70,6 @@ export default {
         this.inToggle = true;
       }
     },
-    syncronizeClick() {
-      syncronize();
-    },
-    gridSnapChanged() {
-      toggleSnapToGrid();
-    },
-    clearFogOfWar() {
-      resetFogOfWar();
-    },
-    toggleTransparentMode() {
-      toggleTransparent();
-    }
   },
   computed: {
     insertButtonText() {

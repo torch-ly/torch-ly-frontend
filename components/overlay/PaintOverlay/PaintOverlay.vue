@@ -12,7 +12,7 @@
       <div class="flex items-center ml-2">Eraser</div>
     </div>
 
-    <button class="submit-button active:submit-button-active mt-2" @click="clearDrawingLayer">
+    <button class="submit-button active:submit-button-active mt-2" @click="clearAllDrawings">
       Clear all
     </button>
 
@@ -71,9 +71,7 @@ export default {
     ...mapActions({
       setTool: "manu/setTool"
     }),
-    clearDrawingLayer() {
-      clearAllDrawings();
-    },
+    clearAllDrawings,
     onShapeSnapToGridSwitch() {
       if (this.$store.state.manu.freeDrawing.snapToGrid) {
         this.$store.commit("manu/setDrawingObjectSnapToGrid", false);
