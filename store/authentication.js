@@ -27,7 +27,7 @@ export const mutations = {
       state.canActivateGM = player.gm;
     } else {
       state.playerID = null;
-      state.name = "";
+      state.name = null;
       state.gm = false;
       state.canActivateGM = false;
     }
