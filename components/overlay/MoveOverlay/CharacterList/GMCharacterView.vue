@@ -17,6 +17,7 @@
 </template>
 <script>
 import MultipleCharacterView from "@/components/overlay/MoveOverlay/CharacterList/MutlitpleCharacterView";
+import {getCharactersByPlayerID} from "@/plugins/utils/characterHelper";
 
 export default {
   components: {MultipleCharacterView},
@@ -26,6 +27,7 @@ export default {
     }
   },
   methods: {
+    getCharactersByPlayerID,
     generatePlayerArray() {
 
       if (this.allPlayers == undefined)
@@ -46,7 +48,7 @@ export default {
         this.players.push({
           object: player,
           active: wasActiveBeforeReset,
-          charactersOnStage: this.charactersOnStage(player.id),
+          charactersOnStage: this.getCharactersByPlayerID(player.id).length,
         })
       }
 
@@ -60,17 +62,6 @@ export default {
         charactersOnStage: this.allCharacters.filter((character) => character.players.length === 0).length
       })
 
-    },
-    charactersOnStage(id) {
-      let amount = 0;
-      for (let character of this.allCharacters) {
-        for (let characterPlayer of character.players) {
-          if (characterPlayer.id == id) {
-            amount++;
-          }
-        }
-      }
-      return amount;
     }
   },
   created() {

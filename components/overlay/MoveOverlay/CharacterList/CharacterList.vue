@@ -5,8 +5,8 @@
 
     <SingleCharacterView v-if="$store.state.character.selectedCharacter !== ''"/>
 
-    <MultipleCharacterView v-if="getOwnCharacters().length !== 0 && !isGM"
-                           :player-i-d="$store.state.authentication.playerID"/>
+    <MultipleCharacterView v-else-if="getCharactersByPlayerID(currentPlayer).length !== 0 && !isGM"
+                           :player-i-d="currentPlayer"/>
 
     <GMCharacterView v-else-if="isGM"/>
 
@@ -17,22 +17,12 @@
 import SingleCharacterView from "@/components/overlay/MoveOverlay/CharacterList/SingleCharacterView";
 import MultipleCharacterView from "@/components/overlay/MoveOverlay/CharacterList/MutlitpleCharacterView"
 import GMCharacterView from "@/components/overlay/MoveOverlay/CharacterList/GMCharacterView";
+import {getCharactersByPlayerID} from "@/plugins/utils/characterHelper";
 
 export default {
   components: {GMCharacterView, SingleCharacterView, MultipleCharacterView},
   methods: {
-    getOwnCharacters() {
-
-      let ownCharacter = [];
-      for (let charater of this.$store.state.character.characters) {
-        for (let player of charater.players) {
-          if (player.id === this.$store.state.authentication.playerID) {
-            ownCharacter.push(charater);
-          }
-        }
-      }
-      return ownCharacter;
-    }
+    getCharactersByPlayerID,
   },
   computed: {
     allCharacters() {
@@ -40,6 +30,9 @@ export default {
     },
     isGM() {
       return this.$store.state.authentication.gm;
+    },
+    currentPlayer() {
+      return this.$store.state.authentication.playerID
     }
   }
 }

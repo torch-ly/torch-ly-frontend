@@ -20,7 +20,6 @@ export function getAuthID() {
 export const mutations = {
   setPlayer(state, player) {
     if (player !== null) {
-      console.log(1)
       state.playerID = player.id;
       state.name = player.name;
       state.gm = player.gm;
