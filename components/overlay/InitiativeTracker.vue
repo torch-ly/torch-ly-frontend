@@ -44,6 +44,7 @@
 <script>
 import draggable from "vuedraggable";
 import devices from "@/enums/devices";
+import {getCharacterByID} from "@/plugins/utils/characterHelper";
 
 export default {
   components: {draggable},
@@ -85,14 +86,7 @@ export default {
     this.fullList &= this.gm;
   },
   methods: {
-    getCharacterByID(id) {
-      for (let character of this.characters) {
-        if (character.id === id) {
-          return character;
-        }
-      }
-      return {};
-    },
+    getCharacterByID,
     marginClass() {
       let a = {};
       a[this.$store.state.config.device === devices.DEFAULT ? "mr-64" : ""] = true;

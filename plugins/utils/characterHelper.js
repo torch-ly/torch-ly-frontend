@@ -9,3 +9,12 @@ export function getCharactersByPlayerID(id) {
   }
   return playerCharacters;
 }
+
+export function getCharacterByID(id) {
+  for (let character of this.$store.state.characters.characters) {
+    if (character.id === id) {
+      return character;
+    }
+  }
+  return {};
+}

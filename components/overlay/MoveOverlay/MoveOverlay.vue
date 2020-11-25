@@ -54,44 +54,44 @@ export default {
     dropdownChange(e) {
       clearTransformerNodes();
       stage.batchDraw();
-        this.$store.commit("manu/setLayer", e.target.value);
-      },
-      openTokenPopup() {
-        this.$root.$emit("openCharacterPopup");
-      },
-      openBackgroundPopup() {
-        this.$root.$emit('openImagePopup');
-      },
-      openBackgroundLayerPopup() {
-        this.$root.$emit('openBackgroundLayerPopup');
-      }
+      this.$store.commit("manu/setLayer", e.target.value);
     },
-    watch: {
-      gm(gm) {
-        if (!gm) {
-          this.$store.commit("manu/setLayer", "Token");
-          clearTransformerNodes();
-        }
-      }
+    openTokenPopup() {
+      this.$root.$emit("openCharacterPopup");
     },
-    computed: {
-      currentLayer() {
-        return this.$store.state.manu.layer;
-      },
-      gm() {
-        return this.$store.state.authentication.gm;
+    openBackgroundPopup() {
+      this.$root.$emit('openImagePopup');
+    },
+    openBackgroundLayerPopup() {
+      this.$root.$emit('openBackgroundLayerPopup');
+    }
+  },
+  watch: {
+    gm(gm) {
+      if (!gm) {
+        this.$store.commit("manu/setLayer", "Token");
+        clearTransformerNodes();
       }
     }
+  },
+  computed: {
+    currentLayer() {
+      return this.$store.state.manu.layer;
+    },
+    gm() {
+      return this.$store.state.authentication.gm;
+    }
   }
+}
 </script>
 <style scoped lang="scss">
 @import "../../../assets/css/scheme";
 
-  .input {
-    @apply text-black mt-4 ml-2 w-16 p-1 rounded;
-  }
+.input {
+  @apply text-black mt-4 ml-2 w-16 p-1 rounded;
+}
 
-  .input-narrow {
-    @apply text-black mt-4 ml-2 w-3 rounded;
-  }
+.input-narrow {
+  @apply text-black mt-4 ml-2 w-3 rounded;
+}
 </style>
