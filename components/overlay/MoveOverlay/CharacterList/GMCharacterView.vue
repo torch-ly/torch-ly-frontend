@@ -100,7 +100,6 @@ export default {
 				active: oldArray.length > 0 ? oldArray[oldArray.length - 1] : false,
 				charactersOnStage: this.allCharacters.filter((character) => character.players.length === 0).length
 			});
-			console.log(this.players);
 		}
 	}
 };

@@ -9,8 +9,8 @@ export function getPlayer() {
                 me {id name gm}
             }`
 	})
-	.then(({data}) => store.commit("authentication/setPlayer", data.me))
-	.catch(logError);
+		.then(({data}) => store.commit("authentication/setPlayer", data.me))
+		.catch(logError);
 }
 
 export function getAllPlayers() {
@@ -20,6 +20,6 @@ export function getAllPlayers() {
                 allPlayers {id name gm}
             }`
 	})
-	.then(({data}) => store.commit("players/setPlayers", data.allPlayers))
-	.catch(logError);
+		.then(({data}) => store.commit("players/setPlayers", data.allPlayers))
+		.catch(logError);
 }

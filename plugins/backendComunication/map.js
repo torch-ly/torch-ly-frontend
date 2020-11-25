@@ -50,8 +50,8 @@ export function getBackgroundLayerNames() {
                 getMaps { name selected }
             }`
 	})
-	.then(({data}) => store.commit("backgroundLayerNames/setLayers", data.getMaps))
-	.catch(logError);
+		.then(({data}) => store.commit("backgroundLayerNames/setLayers", data.getMaps))
+		.catch(logError);
 }
 
 export function loadBackground() {
@@ -62,10 +62,10 @@ export function loadBackground() {
             }
 		`
 	})
-	.then(({data}) => {
-		setBackgroundObjects(data.getBackgroundLayer.layer);
-	})
-	.catch(logError);
+		.then(({data}) => {
+			setBackgroundObjects(data.getBackgroundLayer.layer);
+		})
+		.catch(logError);
 }
 
 export function subscribeBackgroundLayer() {

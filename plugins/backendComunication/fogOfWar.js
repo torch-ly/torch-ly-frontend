@@ -22,8 +22,8 @@ export function getFogOfWar() {
                 getFogOfWar { polygons }
             }`
 	})
-	.then(({data}) => recieveSyncronize(data.getFogOfWar.polygons))
-	.catch(logError);
+		.then(({data}) => recieveSyncronize(data.getFogOfWar.polygons))
+		.catch(logError);
 }
 
 export function subscribeFogOfWar() {

@@ -30,8 +30,7 @@ export default {
 		}
 	},
 	methods: {
-		updateGMProperty(id) {
-			console.log(id);
+		updateGMProperty() {
 		}
 	}
 };

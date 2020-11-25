@@ -10,10 +10,10 @@ export function getInitiative() {
             }
 		`
 	})
-	.then(({data}) => {
-		store.commit("character/setInitiativeOrder", data.getInitiative.order);
-	})
-	.catch(logError);
+		.then(({data}) => {
+			store.commit("character/setInitiativeOrder", data.getInitiative.order);
+		})
+		.catch(logError);
 }
 
 export function setInitiative() {

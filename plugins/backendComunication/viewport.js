@@ -11,17 +11,17 @@ export function getViewport() {
                 getViewport {matrix}
             }`
 	})
-	.then(({data}) => {
-		if (store.state.config.device === devices.TV || store.state.config.followDMScreen) {
-			let matrix = data.getViewport;
-			stage.scale(matrix.scale);
-			stage.x(matrix.x);
-			stage.y(matrix.y);
-			updateGrid();
-			stage.batchDraw();
-		}
-	})
-	.catch(logError);
+		.then(({data}) => {
+			if (store.state.config.device === devices.TV || store.state.config.followDMScreen) {
+				let matrix = data.getViewport;
+				stage.scale(matrix.scale);
+				stage.x(matrix.x);
+				stage.y(matrix.y);
+				updateGrid();
+				stage.batchDraw();
+			}
+		})
+		.catch(logError);
 }
 
 export function setViewport() {
