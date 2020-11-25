@@ -15,17 +15,19 @@
       </div>
     </AdvancedOptions>
 
-    <ToggleBox
-      title="Circle measure"
-      v-bind:checked.sync="measure.circular"
-      v-on:update:checked="$event ? setTool(measureTools.circle) : setTool(measureTools.line)"
-    />
+    <form>
+      <ToggleBox
+        title="Circle measure"
+        name="measureTool"
+        v-on:update:checked="$event ? setTool(measureTools.circle) : setTool(measureTools.line)"
+      />
 
-    <ToggleBox
-      title="Cone measure"
-      v-bind:checked.sync="measure.cone"
-      v-on:update:checked="$event ? setTool(measureTools.cone) : setTool(measureTools.line)"
-    />
+      <ToggleBox
+        title="Cone measure"
+        name="measureTool"
+        v-on:update:checked="$event ? setTool(measureTools.cone) : setTool(measureTools.line)"
+      />
+    </form>
 
     <button class="submit-button active:submit-button-active mt-2" v-show="savableMeasureToolActive"
             @click="saveMeasureAsPainting">Save as drawing
@@ -49,11 +51,7 @@ export default {
       tools,
       measureTools,
       boxSize: this.$store.state.manu.measureDetails.boxSize,
-      unitEnding: this.$store.state.manu.measureDetails.unitEnding,
-      measure: {
-        circular: false,
-        cone: false
-      }
+      unitEnding: this.$store.state.manu.measureDetails.unitEnding
     }
   },
   computed: {
@@ -66,21 +64,6 @@ export default {
     },
     savableMeasureToolActive() {
       return (this.$store.state.manu.measureTool === measureTools.circle || this.$store.state.manu.measureTool === measureTools.cone);
-    }
-  },
-  watch: {
-    measureTool(e) {
-
-      //TODO optimize this code
-
-      if (e === measureTools.circle) {
-        this.measure.circular = true;
-        this.measure.cone = false;
-      } else if (e === measureTools.cone) {
-        this.measure.circular = false;
-        this.measure.cone = true;
-      }
-
     }
   },
   methods: {

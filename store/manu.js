@@ -61,6 +61,7 @@ export const mutations = {
 export const actions = {
   setTool({commit, state}, tool) {
     clearTransformerNodes();
+    console.log(drawTools, tool)
     if (JSON.stringify(drawTools).includes(tool)) {
       commit("setTool", tools.draw);
       commit("setMeasureTool", null);

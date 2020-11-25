@@ -19,21 +19,19 @@
     <hr class="my-4">
 
     <div class="flex flex-col">
-      <div class="flex flex-row mt-2">
-        <label class="switch">
-          <input type="checkbox" @change="onShapeSnapToGridSwitch" v-model="snapToGrid">
-          <span class="slider round"></span>
-        </label>
-        <div class="flex items-center ml-2">Snap Shapes To Grid</div>
-      </div>
 
-      <div class="flex flex-row mt-2">
+      <ToggleBox
+        title="Snap Shapes To Grid"
+        v-on:update:checked="$store.commit('manu/setDrawingObjectSnapToGrid', $event)"
+      />
+
+      <!--div class="flex flex-row mt-2">
         <label class="switch">
           <input type="checkbox" @change="onRectangleSwitch" v-model="rectangle">
           <span class="slider round"></span>
         </label>
         <div class="flex items-center ml-2">Rectangle</div>
-      </div>
+      </div
 
       <div class="flex flex-row mt-2">
         <label class="switch">
@@ -43,11 +41,26 @@
         <div class="flex items-center ml-2">Circle</div>
       </div>
 
+      -->
+
+      <ToggleBox
+        title="Rectangle"
+        v-bind:checked.sync="forms.rectangle"
+        v-on:update:checked="$event ? setTool(drawTools.rectangle) : setTool(drawTools.pen)"
+      />
+
+      <ToggleBox
+        title="Circle"
+        v-bind:checked.sync="forms.circle"
+        v-on:update:checked="$event ? setTool(drawTools.circle) : setTool(drawTools.pen)"
+      />
+
     </div>
   </div>
 </template>
 <script>
 import BrushSelector from "./BrushSelector";
+import ToggleBox from "@/components/gui-components/ToggleBox";
 import {mapActions} from 'vuex';
 import tools from '@/enums/tools/tools';
 import {clearAllDrawings} from "@/plugins/backendComunication/drawing";
@@ -59,45 +72,26 @@ export default {
       tools,
       drawTools,
       erasing: false,
-      snapToGrid: false,
-      rectangle: false,
-      circle: false
+      forms: {
+        rectangle: false,
+        circle: false
+      }
     }
   },
   components: {
-    BrushSelector
+    BrushSelector,
+    ToggleBox
   },
   methods: {
     ...mapActions({
       setTool: "manu/setTool"
     }),
     clearAllDrawings,
-    onShapeSnapToGridSwitch() {
-      if (this.$store.state.manu.freeDrawing.snapToGrid) {
-        this.$store.commit("manu/setDrawingObjectSnapToGrid", false);
-      } else {
-        this.$store.commit("manu/setDrawingObjectSnapToGrid", true);
-      }
-    },
     onEraserSwitch() {
-      if (this.currentTool !== this.drawTools.eraser) {
-        this.setTool(this.drawTools.eraser);
+      if (this.currentTool !== drawTools.eraser) {
+        this.setTool(drawTools.eraser);
       } else {
-        this.setTool(this.drawTools.pen);
-      }
-    },
-    onRectangleSwitch() {
-      if (this.currentTool !== this.drawTools.rectangle) {
-        this.setTool(this.drawTools.rectangle);
-      } else {
-        this.setTool(this.drawTools.pen);
-      }
-    },
-    onCircleSwitch() {
-      if (this.currentTool !== this.drawTools.circle) {
-        this.setTool(this.drawTools.circle);
-      } else {
-        this.setTool(this.drawTools.pen);
+        this.setTool(drawTools.pen);
       }
     }
   },
@@ -107,28 +101,22 @@ export default {
     },
     currentTool() {
       return this.$store.state.manu["drawTool"];
-    },
-    snapToGridActive() {
-      return this.$store.state.manu.freeDrawing.snapToGrid;
     }
   },
   watch: {
-    currentTool() {
-      this.erasing = false;
-      this.rectangle = false;
-      this.circle = false;
+    currentTool(e) {
 
-      if (this.currentTool == this.tools.eraser) {
-        this.erasing = true;
+      //TODO clean up this code
+      console.log(e)
+      if (e === drawTools.rectangle) {
+        this.forms.circle = false;
+        this.forms.rectangle = true;
+      } else if (e === drawTools.circle) {
+        this.forms.rectangle = false;
+        this.forms.circle = true;
       }
-      if (this.currentTool == this.tools.rectangle) {
-        this.rectangle = true;
-      } else if (this.currentTool == this.tools.circle) {
-        this.circle = true;
-      }
-    },
-    snapToGridActive() {
-      this.snapToGrid = this.snapToGridActive;
+
+
     }
   }
 }

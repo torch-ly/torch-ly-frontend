@@ -1,8 +1,12 @@
 <template>
   <div class="flex flex-row mt-2">
     <div class="flex items-center">
-      <label class="switch">
-        <input type="checkbox" v-model="value">
+      <label class="switch" @mousedown="onMouseDown" @click.prevent>
+        <input
+          ref="input"
+          :type="name ? 'radio' : 'checkbox'"
+          :name="name"
+        >
         <span class="slider round" :class="{'inverted' : inverted}"></span>
       </label>
     </div>
@@ -14,35 +18,31 @@
 export default {
   data() {
     return {
-      value: this.checked
+      value: false
     }
   },
   props: {
-    checked: {
-      type: Boolean,
-      default: false
-    },
     title: {
       type: String
     },
     inverted: {
       type: Boolean,
       default: false,
-    }
-  },
-  watch: {
-    value() {
-      this.$emit('update:checked', this.value);
     },
-    checked() {
-      this.value = this.checked;
+    name: {
+      type: String
     }
   },
-  created() {
-    //this.$emit('update:value', this.value);
+  methods: {
+    onMouseDown($event) {
+      $event.preventDefault();
+      this.$refs.input.checked = !this.$refs.input.checked;
+      this.$emit("update:checked", this.$refs.input.checked)
+    }
   }
 }
 </script>
+
 <style lang="scss" scoped>
 
 /* The switch - the box around the slider */
