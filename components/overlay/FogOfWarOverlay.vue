@@ -60,21 +60,21 @@ import {
 import ToggleBox from "@/components/gui-components/ToggleBox";
 
 export default {
-  components: {ToggleBox},
-  data() {
-    return {
-      deleteMode: false
-    };
-  },
-  methods: {
-    syncronize,
-    setSnapToGrid,
-    resetFogOfWar,
-    setTransparent,
-    InsertPolygon,
-    DeletePolygon,
-    setInsert
-  }
+	components: {ToggleBox},
+	data() {
+		return {
+			deleteMode: false
+		};
+	},
+	methods: {
+		syncronize,
+		setSnapToGrid,
+		resetFogOfWar,
+		setTransparent,
+		InsertPolygon,
+		DeletePolygon,
+		setInsert
+	}
 };
 </script>
 <style lang="scss" scoped>

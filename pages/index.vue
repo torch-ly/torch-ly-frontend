@@ -1,35 +1,35 @@
 <template>
   <div>
-    <Table v-if="device !== devices.MOBILE"/>
+    <Table v-if="device !== devices.MOBILE" />
 
-    <Login v-if="device !== devices.TV"/>
+    <Login v-if="device !== devices.TV" />
 
-    <Settings v-if="device !== devices.TV"/>
+    <Settings v-if="device !== devices.TV" />
 
-    <FullscreenNotification class="hidden"/>
+    <FullscreenNotification class="hidden" />
 
-    <InitiativeTracker v-if="device !== devices.MOBILE"/>
-    <Overlay v-if="device === devices.DEFAULT"/>
+    <InitiativeTracker v-if="device !== devices.MOBILE" />
+    <Overlay v-if="device === devices.DEFAULT" />
 
-    <FloatingButtons v-if="device === devices.DEFAULT"/>
-    <FloatingInfos v-if="device === devices.DEFAULT"/>
+    <FloatingButtons v-if="device === devices.DEFAULT" />
+    <FloatingInfos v-if="device === devices.DEFAULT" />
 
-    <AddCharacter v-if="device === devices.DEFAULT"/>
-    <AddImage v-if="device === devices.DEFAULT"/>
-    <SelectBackgroundLayer v-if="device === devices.DEFAULT"/>
-    <AddPlayersToCharacter v-if="device === devices.DEFAULT"/>
-    <AddCharacterConditions v-if="device === devices.DEFAULT"/>
-    <MobileMovement v-if="device === devices.MOBILE"/>
+    <AddCharacter v-if="device === devices.DEFAULT" />
+    <AddImage v-if="device === devices.DEFAULT" />
+    <SelectBackgroundLayer v-if="device === devices.DEFAULT" />
+    <AddPlayersToCharacter v-if="device === devices.DEFAULT" />
+    <AddCharacterConditions v-if="device === devices.DEFAULT" />
+    <MobileMovement v-if="device === devices.MOBILE" />
 
     <div
-        v-show="visible"
-        class="w-full h-full fixed top-0 left-0 bg-gray-700 flex justify-center items-center select-none"
-        :class="{'animate__animated animate__fadeOutDown animate__fast' : fadeOut}"
+      v-show="visible"
+      class="w-full h-full fixed top-0 left-0 bg-gray-700 flex justify-center items-center select-none"
+      :class="{'animate__animated animate__fadeOutDown animate__fast' : fadeOut}"
     >
       <span class="font-10xl font-bold text-accent">t<img
-          src="/icon-resized.png"
-          class="inline-block h-auto w-16 -mt-6 mx-1"
-          :class="{'mirrored' : mirrored}"
+        src="/icon-resized.png"
+        class="inline-block h-auto w-16 -mt-6 mx-1"
+        :class="{'mirrored' : mirrored}"
       >rch.ly</span>
     </div>
   </div>
@@ -52,51 +52,51 @@ import AddPlayersToCharacter from "@/components/popups/AddPlayersToCharacter";
 import AddCharacterConditions from "@/components/popups/AddCharacterConditions";
 
 export default {
-  components: {
-    AddCharacterConditions,
-    AddPlayersToCharacter,
-    Overlay,
-    Table,
-    FullscreenNotification,
-    Settings,
-    InitiativeTracker,
-    FloatingButtons,
-    FloatingInfos,
-    AddImage,
-    AddCharacter,
-    MobileMovement,
-    Login,
-    SelectBackgroundLayer
-  },
-  data() {
-    return {
-      mirrored: false,
-      fadeOut: false,
-      visible: true,
-      devices: devices,
-    };
-  },
-  computed: {
-    device() {
-      return this.$store.state.config.device;
-    }
-  },
-  mounted() {
-    if (process.env.NODE_ENV === "development") {
-      this.visible = false;
-      return;
-    }
+	components: {
+		AddCharacterConditions,
+		AddPlayersToCharacter,
+		Overlay,
+		Table,
+		FullscreenNotification,
+		Settings,
+		InitiativeTracker,
+		FloatingButtons,
+		FloatingInfos,
+		AddImage,
+		AddCharacter,
+		MobileMovement,
+		Login,
+		SelectBackgroundLayer
+	},
+	data() {
+		return {
+			mirrored: false,
+			fadeOut: false,
+			visible: true,
+			devices: devices,
+		};
+	},
+	computed: {
+		device() {
+			return this.$store.state.config.device;
+		}
+	},
+	mounted() {
+		if (process.env.NODE_ENV === "development") {
+			this.visible = false;
+			return;
+		}
 
-    let self = this;
-    let interval = setInterval(() => self.mirrored = !self.mirrored, 100);
-    setTimeout(() => {
-      self.fadeOut = true;
-    }, 2000);
-    setTimeout(() => {
-      clearInterval(interval);
-      self.visible = false;
-    }, 2500);
-  }
+		let self = this;
+		let interval = setInterval(() => self.mirrored = !self.mirrored, 100);
+		setTimeout(() => {
+			self.fadeOut = true;
+		}, 2000);
+		setTimeout(() => {
+			clearInterval(interval);
+			self.visible = false;
+		}, 2500);
+	}
 };
 </script>
 <style>

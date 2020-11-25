@@ -28,35 +28,35 @@
 </template>
 <script>
 export default {
-  data() {
-    return {
-      url: "",
-      uploading: false
-    };
-  },
-  computed: {
-    imageUrl() {
-      return "https://" + process.env.IMAGE_SERVER + this.url;
-    }
-  },
-  methods: {
-    submit() {
-      this.uploading = true;
+	data() {
+		return {
+			url: "",
+			uploading: false
+		};
+	},
+	computed: {
+		imageUrl() {
+			return "https://" + process.env.IMAGE_SERVER + this.url;
+		}
+	},
+	methods: {
+		submit() {
+			this.uploading = true;
 
-      let image = document.getElementById("image-file").files[0];
-      let formData = new FormData();
+			let image = document.getElementById("image-file").files[0];
+			let formData = new FormData();
 
-      formData.append("image", image);
-      fetch("https://" + process.env.IMAGE_SERVER + "/upload", {method: "POST", body: formData})
-        .then(response => response.text())
-        .then(data => {
-          this.url = data;
-          this.uploading = false;
-          this.$emit("upload-success", this.imageUrl);
-        })
-        .catch(console.error);
-    }
-  }
+			formData.append("image", image);
+			fetch("https://" + process.env.IMAGE_SERVER + "/upload", {method: "POST", body: formData})
+				.then(response => response.text())
+				.then(data => {
+					this.url = data;
+					this.uploading = false;
+					this.$emit("upload-success", this.imageUrl);
+				})
+				.catch(console.error);
+		}
+	}
 };
 </script>
 <style scoped lang="scss">

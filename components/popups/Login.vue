@@ -1,18 +1,18 @@
 <template>
   <div
-      v-show="active"
-      class="fixed w-screen h-screen top-0 left-0 md:flex justify-center items-center z-40 overflow-hidden"
+    v-show="active"
+    class="fixed w-screen h-screen top-0 left-0 md:flex justify-center items-center z-40 overflow-hidden"
   >
     <div
-        class="w-full bg-primary md:w-1/2 relative md:rounded p-8 md:m-4 text-white shadow-2xl border-accent-light md:border-2"
+      class="w-full bg-primary md:w-1/2 relative md:rounded p-8 md:m-4 text-white shadow-2xl border-accent-light md:border-2"
     >
       <div
-          class="p-3 absolute top-0 right-0 mt-4 mr-4 hidden md:block"
-          @click="active = false"
+        class="p-3 absolute top-0 right-0 mt-4 mr-4 hidden md:block"
+        @click="active = false"
       >
         <fa
-            icon="times"
-            class="text-white text-xl"
+          icon="times"
+          class="text-white text-xl"
         />
       </div>
 
@@ -30,19 +30,19 @@
 
       <form @submit.prevent="$refs.link.click()">
         <input
-            v-model="authID"
-            class="input-field mb-4"
-            type="password"
-            autofocus
-            placeholder="Authentifizierungs-ID"
-            @keyup.enter="$refs.link.click()"
+          v-model="authID"
+          class="input-field mb-4"
+          type="password"
+          autofocus
+          placeholder="Authentifizierungs-ID"
+          @keyup.enter="$refs.link.click()"
         >
       </form>
       <a
-          v-if="authID"
-          ref="link"
-          class="block animate__animated animate__fadeInDown submit-button active:submit-button-active"
-          :href="'/?authID=' + authID"
+        v-if="authID"
+        ref="link"
+        class="block animate__animated animate__fadeInDown submit-button active:submit-button-active"
+        :href="'/?authID=' + authID"
       >Login</a>
     </div>
   </div>
@@ -50,16 +50,16 @@
 <script>
 
 export default {
-  data() {
-    return {
-      authID: "",
-      active: false
-    };
-  },
-  mounted() {
-    let self = this;
-    this.$root.$on("login", () => self.active = true);
-  }
+	data() {
+		return {
+			authID: "",
+			active: false
+		};
+	},
+	mounted() {
+		let self = this;
+		this.$root.$on("login", () => self.active = true);
+	}
 };
 </script>
 <style lang="scss">

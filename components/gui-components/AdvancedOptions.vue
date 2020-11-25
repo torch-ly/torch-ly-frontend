@@ -22,27 +22,27 @@
     </div>
 
     <!-- advanced options shown when active is true -->
-    <slot v-if="active"/>
+    <slot v-if="active" />
   </div>
 </template>
 <script>
 export default {
-  props: {
-    title: {
-      type: String,
-      default: "Advanced"
-    }
-  },
-  data() {
-    return {
-      active: false
-    };
-  },
-  methods: {
-    toggleActive() {
-      this.active = !this.active;
-    }
-  }
+	props: {
+		title: {
+			type: String,
+			default: "Advanced"
+		}
+	},
+	data() {
+		return {
+			active: false
+		};
+	},
+	methods: {
+		toggleActive() {
+			this.active = !this.active;
+		}
+	}
 };
 </script>
 <style scoped lang="scss">

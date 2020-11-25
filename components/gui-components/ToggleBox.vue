@@ -26,36 +26,36 @@
 </template>
 <script>
 export default {
-  props: {
-    title: {
-      type: String,
-      default: ""
-    },
-    inverted: {
-      type: Boolean,
-      default: false,
-    },
-    name: {
-      type: String,
-      default: null
-    },
-    checked: {
-      type: Boolean,
-      default: false
-    }
-  },
-  data() {
-    return {
-      value: false
-    };
-  },
-  methods: {
-    onMouseDown($event) {
-      $event.preventDefault();
-      this.$refs.input.checked = !this.$refs.input.checked;
-      this.$emit("update:checked", this.$refs.input.checked);
-    }
-  }
+	props: {
+		title: {
+			type: String,
+			default: ""
+		},
+		inverted: {
+			type: Boolean,
+			default: false,
+		},
+		name: {
+			type: String,
+			default: null
+		},
+		checked: {
+			type: Boolean,
+			default: false
+		}
+	},
+	data() {
+		return {
+			value: false
+		};
+	},
+	methods: {
+		onMouseDown($event) {
+			$event.preventDefault();
+			this.$refs.input.checked = !this.$refs.input.checked;
+			this.$emit("update:checked", this.$refs.input.checked);
+		}
+	}
 };
 </script>
 

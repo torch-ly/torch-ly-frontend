@@ -63,51 +63,51 @@ import {saveAsDrawing} from "~/logic/stage/layers/measure/circleMeasure";
 import ToggleBox from "@/components/gui-components/ToggleBox";
 
 export default {
-  components: {AdvancedOptions, ToggleBox},
-  data() {
-    return {
-      tools,
-      measureTools,
-      boxSize: this.$store.state.manu.measureDetails.boxSize,
-      unitEnding: this.$store.state.manu.measureDetails.unitEnding
-    };
-  },
-  computed: {
-    getLength() {
-      let measureDetails = this.$store.state.manu.measureDetails;
-      return measureDetails.length * measureDetails.boxSize + " " + measureDetails.unitEnding;
-    },
-    measureTool() {
-      return this.$store.state.manu.measureTool;
-    },
-    savableMeasureToolActive() {
-      return (this.$store.state.manu.measureTool === measureTools.circle || this.$store.state.manu.measureTool === measureTools.cone);
-    }
-  },
-  methods: {
-    ...mapActions({
-      setTool: "manu/setTool"
-    }),
-    submitUnitChange() {
-      this.$store.commit("manu/setMeasureDetails", {
-        boxSize: this.boxSize,
-        unitEnding: this.unitEnding
-      });
-    },
-    restoreDefault() {
-      this.boxSize = 5;
-      this.unitEnding = "ft";
-      this.$store.commit("manu/setMeasureDetails", {
-        boxSize: 5,
-        unitEnding: "ft"
-      });
-    },
-    saveMeasureAsPainting() {
-      if (this.$store.state.manu.measureTool === measureTools.circle) {
-        saveAsDrawing();
-      }
-    }
-  }
+	components: {AdvancedOptions, ToggleBox},
+	data() {
+		return {
+			tools,
+			measureTools,
+			boxSize: this.$store.state.manu.measureDetails.boxSize,
+			unitEnding: this.$store.state.manu.measureDetails.unitEnding
+		};
+	},
+	computed: {
+		getLength() {
+			let measureDetails = this.$store.state.manu.measureDetails;
+			return measureDetails.length * measureDetails.boxSize + " " + measureDetails.unitEnding;
+		},
+		measureTool() {
+			return this.$store.state.manu.measureTool;
+		},
+		savableMeasureToolActive() {
+			return (this.$store.state.manu.measureTool === measureTools.circle || this.$store.state.manu.measureTool === measureTools.cone);
+		}
+	},
+	methods: {
+		...mapActions({
+			setTool: "manu/setTool"
+		}),
+		submitUnitChange() {
+			this.$store.commit("manu/setMeasureDetails", {
+				boxSize: this.boxSize,
+				unitEnding: this.unitEnding
+			});
+		},
+		restoreDefault() {
+			this.boxSize = 5;
+			this.unitEnding = "ft";
+			this.$store.commit("manu/setMeasureDetails", {
+				boxSize: 5,
+				unitEnding: "ft"
+			});
+		},
+		saveMeasureAsPainting() {
+			if (this.$store.state.manu.measureTool === measureTools.circle) {
+				saveAsDrawing();
+			}
+		}
+	}
 };
 </script>
 <style scoped lang="scss">

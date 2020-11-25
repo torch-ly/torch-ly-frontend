@@ -69,91 +69,91 @@ import {getMonsters} from "@/plugins/backendComunication/monster";
 import {toggleLayer} from "@/logic/hotkey";
 
 export default {
-  data() {
-    return {
-      monsters: [],
-      noMonsters: true,
-      monsterDetailsActive: false,
-      searchTerm: "",
-    };
-  },
-  async fetch() {
+	data() {
+		return {
+			monsters: [],
+			noMonsters: true,
+			monsterDetailsActive: false,
+			searchTerm: "",
+		};
+	},
+	async fetch() {
 
-    this.monsters = JSON.parse((await getMonsters()).data.getMonsters).map(a => {
-      this.noMonsters = false;
+		this.monsters = JSON.parse((await getMonsters()).data.getMonsters).map(a => {
+			this.noMonsters = false;
 
-      return {
-        ...a,
-        visible: true,
-        details: false
-      };
-    });
-  },
-  computed: {
-    monstersActive() {
-      return this.$store.state.manu.monsters;
-    }
-  },
-  watch: {
-    monstersActive(value) {
-      if (value)
-        this.$nextTick(() => this.$refs.input.focus());
-    }
-  },
-  methods: {
-    drag(e, monster) {
-      e.dataTransfer.setData("monster", JSON.stringify(monster));
-      e.dataTransfer.setData("imgUrl", "https://5e.tools/img/" + monster.source + "/" + monster.name + ".png");
-    },
-    atChange(e) {
-      if (e.key === "b" && e.ctrlKey)
-        toggleLayer();
+			return {
+				...a,
+				visible: true,
+				details: false
+			};
+		});
+	},
+	computed: {
+		monstersActive() {
+			return this.$store.state.manu.monsters;
+		}
+	},
+	watch: {
+		monstersActive(value) {
+			if (value)
+				this.$nextTick(() => this.$refs.input.focus());
+		}
+	},
+	methods: {
+		drag(e, monster) {
+			e.dataTransfer.setData("monster", JSON.stringify(monster));
+			e.dataTransfer.setData("imgUrl", "https://5e.tools/img/" + monster.source + "/" + monster.name + ".png");
+		},
+		atChange(e) {
+			if (e.key === "b" && e.ctrlKey)
+				toggleLayer();
 
-      if (e.key.length > 1 && e.key !== "Backspace")
-        return;
+			if (e.key.length > 1 && e.key !== "Backspace")
+				return;
 
-      let monsters = false;
+			let monsters = false;
 
-      this.monsters = this.monsters.map(m => {
-        let visible = m.name.toUpperCase().includes(this.searchTerm.toUpperCase());
-        m.visible = visible;
-        monsters |= visible;
-        return m;
-      });
+			this.monsters = this.monsters.map(m => {
+				let visible = m.name.toUpperCase().includes(this.searchTerm.toUpperCase());
+				m.visible = visible;
+				monsters |= visible;
+				return m;
+			});
 
-      this.noMonsters = !monsters;
-    },
-    monsterUrl(name) {
-      return "https://www.dndbeyond.com/monsters/" + name.replace(/ /g, "-").replace(/"/g, "");
-    },
-    expandMonster(monster) {
-      if (monster.details) {
-        monster.details = false;
-        this.monsterDetailsActive = false;
-      } else {
-        if (this.monsterDetailsActive) {
-          for (let creature of this.monsters) {
-            if (creature.details) {
-              creature.details = false;
-              break;
-            }
-          }
-        }
-        monster.details = true;
-        this.monsterDetailsActive = true;
-      }
-    },
-    generateHPString(monster) {
-      if (!Object.prototype.hasOwnProperty.call(monster, "hp"))
-        return "";
+			this.noMonsters = !monsters;
+		},
+		monsterUrl(name) {
+			return "https://www.dndbeyond.com/monsters/" + name.replace(/ /g, "-").replace(/"/g, "");
+		},
+		expandMonster(monster) {
+			if (monster.details) {
+				monster.details = false;
+				this.monsterDetailsActive = false;
+			} else {
+				if (this.monsterDetailsActive) {
+					for (let creature of this.monsters) {
+						if (creature.details) {
+							creature.details = false;
+							break;
+						}
+					}
+				}
+				monster.details = true;
+				this.monsterDetailsActive = true;
+			}
+		},
+		generateHPString(monster) {
+			if (!Object.prototype.hasOwnProperty.call(monster, "hp"))
+				return "";
 
-      if (Object.prototype.hasOwnProperty.call(monster, "formula")) {
-        return "Hit Points " + monster.hp.formula + " (" + monster.hp.average + ")";
-      } else {
-        return "Hit Points " + monster.hp.special;
-      }
-    }
-  }
+			if (Object.prototype.hasOwnProperty.call(monster, "formula")) {
+				return "Hit Points " + monster.hp.formula + " (" + monster.hp.average + ")";
+			} else {
+				return "Hit Points " + monster.hp.special;
+			}
+		}
+	}
 };
 </script>
 <style lang="scss">

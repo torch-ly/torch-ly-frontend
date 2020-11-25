@@ -27,11 +27,11 @@ import {store} from "@/logic/stage/main";
 import MobileMovementCard from "./MobileMovementCard";
 
 export default {
-  components: {MobileMovementCard},
-  computed: {
-    ownCharacters() {
-      return store.state.character.characters.filter(c => c.players.filter(p => p.id === store.state.authentication.playerID).length > 0);
-    }
-  }
+	components: {MobileMovementCard},
+	computed: {
+		ownCharacters() {
+			return store.state.character.characters.filter(c => c.players.filter(p => p.id === store.state.authentication.playerID).length > 0);
+		}
+	}
 };
 </script>

@@ -127,36 +127,36 @@ import measureTools from "~/enums/tools/measureTools";
 import Popper from "vue-popperjs";
 
 export default {
-  components: {Popper},
-  data: () => {
-    return {
-      tools,
-      drawTools,
-      measureTools,
-      popperOptions: {
-        placement: "right",
-        modifiers: {offset: {offset: "0,10px"}}
-      }
-    };
-  },
-  computed: {
-    ...mapState({
-      currentTool: state => state.manu.currentTool
-    })
-  },
-  methods: {
-    ...mapActions({
-      setTool: "manu/setTool"
-    }),
-    saveClick() {
-      setTimeout(() => {
-        saveBackgroundLayer();
-      }, 0);
-    },
-    currentLayerIs(layer) {
-      return this.$store.state.manu.layer === layer;
-    }
-  }
+	components: {Popper},
+	data: () => {
+		return {
+			tools,
+			drawTools,
+			measureTools,
+			popperOptions: {
+				placement: "right",
+				modifiers: {offset: {offset: "0,10px"}}
+			}
+		};
+	},
+	computed: {
+		...mapState({
+			currentTool: state => state.manu.currentTool
+		})
+	},
+	methods: {
+		...mapActions({
+			setTool: "manu/setTool"
+		}),
+		saveClick() {
+			setTimeout(() => {
+				saveBackgroundLayer();
+			}, 0);
+		},
+		currentLayerIs(layer) {
+			return this.$store.state.manu.layer === layer;
+		}
+	}
 };
 </script>
 <style scoped lang="scss">
