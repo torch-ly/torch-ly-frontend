@@ -4,24 +4,24 @@ import {manageTransformerLayer} from "../layerManager";
 export let layer;
 
 export function draw(drawable) {
-  layer.add(drawable);
-  layer.batchDraw();
+	layer.add(drawable);
+	layer.batchDraw();
 }
 
 export function updateDraw() {
-  layer.batchDraw();
+	layer.batchDraw();
 }
 
 export function setLayer(pLayer) {
-  layer = pLayer;
-  init();
+	layer = pLayer;
+	init();
 }
 
 export function clearLayer() {
-  layer.clear();
-  for (let children of layer.children) {
-    children.remove();
-  }
-  manageTransformerLayer();
-  layer.batchDraw();
+	layer.clear();
+	for (let children of layer.children) {
+		children.remove();
+	}
+	manageTransformerLayer();
+	layer.batchDraw();
 }

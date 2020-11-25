@@ -1,16 +1,36 @@
 <template>
   <div>
-    <div v-for="player in players">
-      <div v-if="player.charactersOnStage > 0" class="border rounded p-2 mb-2">
-        <div class="flex flex-row justify-between select-none" @click="player.active = !player.active">
+    <div
+        v-for="player in players"
+        :key="player.key"
+    >
+      <div
+          v-if="player.charactersOnStage > 0"
+          class="border rounded p-2 mb-2"
+      >
+        <div
+            class="flex flex-row justify-between select-none"
+            @click="player.active = !player.active"
+        >
           <div>{{ player.object.name }}</div>
           <div class="w-1/5 flex flex-row justify-between items-center">
             {{ player.charactersOnStage }}
-            <fa v-if="!player.active" icon="caret-right" class="active-icon"></fa>
-            <fa v-else icon="caret-down" class="active-icon"></fa>
+            <fa
+                v-if="!player.active"
+                icon="caret-right"
+                class="active-icon"
+            />
+            <fa
+                v-else
+                icon="caret-down"
+                class="active-icon"
+            />
           </div>
         </div>
-        <MultipleCharacterView v-if="player.active" :player-i-d="player.object.id"/>
+        <MultipleCharacterView
+            v-if="player.active"
+            :player-i-d="player.object.id"
+        />
       </div>
     </div>
   </div>
@@ -24,7 +44,26 @@ export default {
   data() {
     return {
       players: []
+    };
+  },
+  computed: {
+    allPlayers() {
+      return this.$store.state.players.players;
+    },
+    allCharacters() {
+      return this.$store.state.character.characters;
     }
+  },
+  watch: {
+    allPlayers() {
+      this.generatePlayerArray();
+    },
+    allCharacters() {
+      this.generatePlayerArray();
+    }
+  },
+  created() {
+    this.generatePlayerArray();
   },
   methods: {
     getCharactersByPlayerID,
@@ -49,7 +88,7 @@ export default {
           object: player,
           active: wasActiveBeforeReset,
           charactersOnStage: this.getCharactersByPlayerID(player.id).length,
-        })
+        });
       }
 
       // characters without players
@@ -60,30 +99,11 @@ export default {
         },
         active: oldArray.length > 0 ? oldArray[oldArray.length - 1] : false,
         charactersOnStage: this.allCharacters.filter((character) => character.players.length === 0).length
-      })
-
-    }
-  },
-  created() {
-    this.generatePlayerArray();
-  },
-  computed: {
-    allPlayers() {
-      return this.$store.state.players.players;
-    },
-    allCharacters() {
-      return this.$store.state.character.characters;
-    }
-  },
-  watch: {
-    allPlayers() {
-      this.generatePlayerArray();
-    },
-    allCharacters() {
-      this.generatePlayerArray();
+      });
+      console.log(this.players);
     }
   }
-}
+};
 </script>
 <style scoped>
 .active-icon {

@@ -2,11 +2,9 @@
   <nuxt />
 </template>
 <script>
-  import "animate.css/animate.min.css";
+import "animate.css/animate.min.css";
 
-  export default {
-
-  }
+export default {};
 </script>
 <style lang="scss">
 html {

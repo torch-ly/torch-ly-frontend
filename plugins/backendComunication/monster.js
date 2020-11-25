@@ -2,14 +2,14 @@ import {apolloClient, logError} from "~/plugins/backendComunication/backendComun
 import gql from "graphql-tag";
 
 export async function getMonsters() {
-  try {
-    return await apolloClient.query({
-      query: gql`
-        {
-          getMonsters
-        }`
-    });
-  } catch {
-    logError();
-  }
+	try {
+		return await apolloClient.query({
+			query: gql`
+                {
+                    getMonsters
+                }`
+		});
+	} catch {
+		logError();
+	}
 }

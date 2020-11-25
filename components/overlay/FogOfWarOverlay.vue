@@ -1,31 +1,50 @@
 <template>
   <div>
-
     <ToggleBox
       title="Insert / Delete"
       inverted
-      v-on:update:checked="setInsert(!$event); deleteMode = $event"
+      @update:checked="setInsert(!$event); deleteMode = $event"
     />
 
-    <button v-if="deleteMode" class="submit-button active:submit-button-active mt-2" @click="DeletePolygon">Delete
+    <button
+      v-if="deleteMode"
+      class="submit-button active:submit-button-active mt-2"
+      @click="DeletePolygon"
+    >
+      Delete
     </button>
-    <button v-else class="submit-button active:submit-button-active mt-2" @click="InsertPolygon">Insert</button>
+    <button
+      v-else
+      class="submit-button active:submit-button-active mt-2"
+      @click="InsertPolygon"
+    >
+      Insert
+    </button>
 
-    <button class="submit-button active:submit-button-active mt-2" @click="syncronize">Syncronize FogOfWar</button>
+    <button
+      class="submit-button active:submit-button-active mt-2"
+      @click="syncronize"
+    >
+      Syncronize FogOfWar
+    </button>
 
     <ToggleBox
       title="Snap to Grid"
-      v-on:update:checked="setSnapToGrid($event)"
+      @update:checked="setSnapToGrid($event)"
     />
 
-    <button class="submit-button active:submit-button-active mt-2" @click="resetFogOfWar">Clear FogOfWar</button>
+    <button
+      class="submit-button active:submit-button-active mt-2"
+      @click="resetFogOfWar"
+    >
+      Clear FogOfWar
+    </button>
 
     <ToggleBox
       title="See Through Fog Of war"
       checked
-      v-on:update:checked="setTransparent($event)"
+      @update:checked="setTransparent($event)"
     />
-
   </div>
 </template>
 <script>
@@ -45,7 +64,7 @@ export default {
   data() {
     return {
       deleteMode: false
-    }
+    };
   },
   methods: {
     syncronize,
@@ -56,7 +75,7 @@ export default {
     DeletePolygon,
     setInsert
   }
-}
+};
 </script>
 <style lang="scss" scoped>
 @import "assets/css/scheme";

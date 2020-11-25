@@ -1,9 +1,18 @@
 <template>
-  <PopupContainer ref="popupContainer" title="Add Player to Character">
-    <div v-for="player in players">
+  <PopupContainer
+      ref="popupContainer"
+      title="Add Player to Character"
+  >
+    <div
+        v-for="player in players"
+        :key="player.key"
+    >
       <div class="flex flex-row text-white">
         <div class="flex justify-center items-center">
-          <input type="checkbox" v-model="player.active">
+          <input
+              v-model="player.active"
+              type="checkbox"
+          >
         </div>
         <div class="ml-2">
           {{ player.player.name }}
@@ -11,8 +20,12 @@
       </div>
     </div>
 
-    <div class="submit-button active:submit-button-active my-2" @click="savePlayers()">Save</div>
-
+    <div
+        class="submit-button active:submit-button-active my-2"
+        @click="savePlayers()"
+    >
+      Save
+    </div>
   </PopupContainer>
 </template>
 <script>
@@ -26,10 +39,10 @@ export default {
     return {
       character: null,
       players: []
-    }
+    };
   },
   mounted() {
-    this.$root.$on("openPlayerCharacterPopup", (character) => {
+    this.$root.$on("open-player-character-popup", (character) => {
       this.$refs.popupContainer.active = true;
       this.character = character;
 
@@ -51,21 +64,21 @@ export default {
           this.players.push({
             player,
             active: false
-          })
+          });
         }
       }
     });
-    this.$root.$on("closePlayerCharacterPopup", () => {
+    this.$root.$on("close-player-character-popup", () => {
       this.$refs.popupContainer.active = false;
     });
   },
   methods: {
     savePlayers() {
       setCharacterPlayers(this.character.id, this.players.filter((player) => player.active).map((player) => player.player.id));
-      this.$root.$emit("closePlayerCharacterPopup");
+      this.$root.$emit("close-player-character-popup");
     }
   }
-}
+};
 </script>
 <style scoped lang="scss">
 @import "assets/css/scheme";

@@ -7,40 +7,40 @@ import tools from "@/enums/tools/tools";
 
 // toggle layer
 hotkeys("command+b,ctrl+b", () => {
-  toggleLayer();
+	toggleLayer();
 });
 
 export function toggleLayer() {
-  store.commit("manu/setTool", tools.move);
+	store.commit("manu/setTool", tools.move);
 
-  if (store.state.manu.layer === "Background" || !store.state.authentication.gm) {
-    store.commit("manu/setLayer", "Token");
-  } else {
-    store.commit("manu/setLayer", "Background");
-  }
+	if (store.state.manu.layer === "Background" || !store.state.authentication.gm) {
+		store.commit("manu/setLayer", "Token");
+	} else {
+		store.commit("manu/setLayer", "Background");
+	}
 }
 
 // Open Monster search
 hotkeys("command+m,ctrl+m", () => {
-  store.commit("manu/setMonsters");
+	store.commit("manu/setMonsters");
 });
 
 // Save Background Layer
 hotkeys("command+s,ctrl+s", (event) => {
-  if (store.state.manu.layer !== "Background")
-    return;
+	if (store.state.manu.layer !== "Background")
+		return;
 
-  saveBackgroundLayer();
-  event.preventDefault();
+	saveBackgroundLayer();
+	event.preventDefault();
 });
 
 hotkeys("Delete,Backspace", () => {
-  deleteSelectedDrawingObjects();
+	deleteSelectedDrawingObjects();
 });
 
 hotkeys("esc", clearTransformerNodes);
 
 hotkeys("command+f,ctrl+f", (event) => {
-  event.preventDefault();
-  setViewport();
+	event.preventDefault();
+	setViewport();
 });

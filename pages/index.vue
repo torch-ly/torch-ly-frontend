@@ -6,7 +6,7 @@
 
     <Settings v-if="device !== devices.TV"/>
 
-    <FullscreenNotification class="hidden" />
+    <FullscreenNotification class="hidden"/>
 
     <InitiativeTracker v-if="device !== devices.MOBILE"/>
     <Overlay v-if="device === devices.DEFAULT"/>
@@ -21,10 +21,16 @@
     <AddCharacterConditions v-if="device === devices.DEFAULT"/>
     <MobileMovement v-if="device === devices.MOBILE"/>
 
-    <div class="w-full h-full fixed top-0 left-0 bg-gray-700 flex justify-center items-center select-none"
-         v-show="visible" :class="{'animate__animated animate__fadeOutDown animate__fast' : fadeOut}">
-      <span class="font-10xl font-bold text-accent">t<img src="/icon-resized.png"
-                                                          class="inline-block h-auto w-16 -mt-6 mx-1" :class="{'mirrored' : mirrored}">rch.ly</span>
+    <div
+        v-show="visible"
+        class="w-full h-full fixed top-0 left-0 bg-gray-700 flex justify-center items-center select-none"
+        :class="{'animate__animated animate__fadeOutDown animate__fast' : fadeOut}"
+    >
+      <span class="font-10xl font-bold text-accent">t<img
+          src="/icon-resized.png"
+          class="inline-block h-auto w-16 -mt-6 mx-1"
+          :class="{'mirrored' : mirrored}"
+      >rch.ly</span>
     </div>
   </div>
 </template>
@@ -35,7 +41,6 @@ import FloatingButtons from "../components/FloatingButtons";
 import FloatingInfos from "../components/FloatingInfos";
 import AddImage from "@/components/popups/AddImage";
 import AddCharacter from "@/components/popups/AddCharacter";
-import BrushSelector from "@/components/overlay/PaintOverlay/BrushSelector";
 import MobileMovement from "@/components/MobileMovement";
 import Login from "@/components/popups/Login";
 import SelectBackgroundLayer from "@/components/popups/SelectBackgroundLayer";
@@ -59,7 +64,6 @@ export default {
     FloatingInfos,
     AddImage,
     AddCharacter,
-    BrushSelector,
     MobileMovement,
     Login,
     SelectBackgroundLayer
@@ -70,7 +74,7 @@ export default {
       fadeOut: false,
       visible: true,
       devices: devices,
-    }
+    };
   },
   computed: {
     device() {
@@ -93,7 +97,7 @@ export default {
       self.visible = false;
     }, 2500);
   }
-}
+};
 </script>
 <style>
   .font-10xl {

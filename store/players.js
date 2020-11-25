@@ -1,9 +1,9 @@
 export const state = () => ({
-  players: []
+	players: []
 });
 
 export const mutations = {
-  setPlayers(state, player) {
-    state.players = player;
-  }
+	setPlayers(state, player) {
+		state.players = player;
+	}
 };

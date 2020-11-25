@@ -1,6 +1,11 @@
 <template>
   <div>
-    <div id="container" @contextmenu="$event.preventDefault()" @drop.prevent="drop" @dragover.prevent=""></div>
+    <div
+      id="container"
+      @contextmenu="$event.preventDefault()"
+      @drop.prevent="drop"
+      @dragover.prevent=""
+    />
   </div>
 </template>
 
@@ -16,7 +21,7 @@ export default {
     let width = window.innerWidth;
     let height = window.innerHeight;
     let stage = new Konva.Stage({
-      container: 'container',
+      container: "container",
       width: width,
       height: height,
       draggable: true
@@ -25,7 +30,7 @@ export default {
   },
   methods: {
     drop(e) {
-      let monster = JSON.parse(e.dataTransfer.getData("monster"))
+      let monster = JSON.parse(e.dataTransfer.getData("monster"));
       let imgUrl = e.dataTransfer.getData("imgUrl");
       let size;
 
@@ -34,21 +39,21 @@ export default {
       let p = getRelativePointerPosition(stage);
 
       switch (monster.size) {
-        case 'L':
-          size = 2;
-          break;
-        case 'H':
-          size = 3;
-          break;
-        case 'G':
-          size = 4;
-          break;
-        default:
-          size = 1;
+      case "L":
+        size = 2;
+        break;
+      case "H":
+        size = 3;
+        break;
+      case "G":
+        size = 4;
+        break;
+      default:
+        size = 1;
       }
 
       let ac = 0;
-      if (monster.hasOwnProperty("ac")) {
+      if (Object.prototype.hasOwnProperty.call(monster, "ac")) {
         if (monster.ac.length > 0 && monster.ac[0].ac) {
           ac = monster.ac[0].ac;
         } else {
@@ -68,7 +73,7 @@ export default {
         },
         player: [this.$store.state.authentication.playerID],
         details: {
-          hp: monster.hasOwnProperty("hp") && monster.hp.hasOwnProperty("average") ? monster.hp.average : 0,
+          hp: Object.prototype.hasOwnProperty.call(monster, "hp") && Object.prototype.hasOwnProperty.call(monster, "average") ? monster.hp.average : 0,
           ac: ac,
           notes: ""
         }
@@ -77,5 +82,5 @@ export default {
       addCharacter(character);
     }
   }
-}
+};
 </script>

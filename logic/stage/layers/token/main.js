@@ -6,23 +6,23 @@ export let layer;
 export let out;
 
 export function draw(drawables) {
-  layer.clear();
-  for (let children of layer.children) {
-    children.remove();
-  }
+	layer.clear();
+	for (let children of layer.children) {
+		children.remove();
+	}
 
-  manageTransformerLayer();
+	manageTransformerLayer();
 
-  drawables.forEach(drawable => layer.add(drawable));
-  stage.draw();
+	drawables.forEach(drawable => layer.add(drawable));
+	stage.draw();
 }
 
 export function setLayer(pLayer) {
-  layer = pLayer;
-  init();
-  layer.clearBeforeDraw(true);
+	layer = pLayer;
+	init();
+	layer.clearBeforeDraw(true);
 }
 
 export function setOut(pOut) {
-  out = pOut;
+	out = pOut;
 }

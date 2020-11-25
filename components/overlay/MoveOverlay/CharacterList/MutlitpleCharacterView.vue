@@ -1,11 +1,23 @@
 <template>
   <div>
-    <div v-for="character in getCharactersByPlayerID(currentPlayer)">
-      <div class="w-full flex flex-column my-4 justify-center items-center" @click="selectToken(character)">
-        <img class="w-20 h-20 block" draggable="false" v-bind:src="character.token">
-        <div class="w-2/3 flex-col ml-2 pl-2 border-l-2 text-lg py-2"><span
-          class="font-bold block"
-          :class="{'text-red-500' : characterStore.hoverOverCharacter === character.id}">{{ character.name }}</span>
+    <div
+        v-for="character in getCharactersByPlayerID(playerID)"
+        :key="character.key"
+    >
+      <div
+          class="w-full flex flex-column my-4 justify-center items-center"
+          @click="selectToken(character)"
+      >
+        <img
+            class="w-20 h-20 block"
+            draggable="false"
+            :src="character.token"
+        >
+        <div class="w-2/3 flex-col ml-2 pl-2 border-l-2 text-lg py-2">
+          <span
+              class="font-bold block"
+              :class="{'text-red-500' : $store.state.character.hoverOverCharacter === character.id}"
+          >{{ character.name }}</span>
           <span class="block">{{ getPlayerNames(character) }}</span>
         </div>
       </div>
@@ -17,7 +29,12 @@ import {selectToken} from "@/logic/stage/functions/transformer/transformer";
 import {getCharactersByPlayerID} from "@/plugins/utils/characterHelper";
 
 export default {
-  props: ['playerID'],
+  props: {
+    playerID: {
+      type: String,
+      default: null
+    }
+  },
   methods: {
     getCharactersByPlayerID,
     selectToken,
@@ -34,17 +51,6 @@ export default {
 
       return out;
     }
-  },
-  computed: {
-    characterStore() {
-      return this.$store.state.character;
-    },
-    charactersInStore() {
-      return this.characterStore.characters;
-    },
-    currentPlayer() {
-      return this.$store.state.authentication.playerID
-    }
   }
-}
+};
 </script>

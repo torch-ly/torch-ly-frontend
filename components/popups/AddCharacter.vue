@@ -1,25 +1,63 @@
 <template>
-  <PopupContainer ref="popupContainer" title="Add Character">
+  <PopupContainer
+      ref="popupContainer"
+      title="Add Character"
+  >
     <form @submit.prevent="newCharacter">
-
-      <input type="text" name="name" class="input-field mb-4" placeholder="Name" v-model="character.name">
-      <input type="text" name="token" class="input-field mb-4" placeholder="Token-URL" v-model="character.token">
+      <input
+          v-model="character.name"
+          type="text"
+          name="name"
+          class="input-field mb-4"
+          placeholder="Name"
+      >
+      <input
+          v-model="character.token"
+          type="text"
+          name="token"
+          class="input-field mb-4"
+          placeholder="Token-URL"
+      >
 
 
       <AdvancedOptions>
-        <input type="text" name="sheet" class="input-field mb-4" placeholder="Character-Sheet-URL"
-               v-model="character.sheet">
+        <input
+            v-model="character.sheet"
+            type="text"
+            name="sheet"
+            class="input-field mb-4"
+            placeholder="Character-Sheet-URL"
+        >
 
-        <input type="number" name="xValue" class="input-field mb-4" placeholder="X-Value"
-               v-model="character.pos.point.x">
+        <input
+            v-model="character.pos.point.x"
+            type="number"
+            name="xValue"
+            class="input-field mb-4"
+            placeholder="X-Value"
+        >
 
-        <input type="number" name="yValue" class="input-field mb-4" placeholder="Y-Value"
-               v-model="character.pos.point.y">
+        <input
+            v-model="character.pos.point.y"
+            type="number"
+            name="yValue"
+            class="input-field mb-4"
+            placeholder="Y-Value"
+        >
 
-        <input type="number" name="size" class="input-field mb-4" placeholder="Size" v-model="character.pos.size">
+        <input
+            v-model="character.pos.size"
+            type="number"
+            name="size"
+            class="input-field mb-4"
+            placeholder="Size"
+        >
       </AdvancedOptions>
 
-      <input type="submit" class="submit-button active:submit-button-active mt-2">
+      <input
+          type="submit"
+          class="submit-button active:submit-button-active mt-2"
+      >
     </form>
   </PopupContainer>
 </template>
@@ -41,36 +79,36 @@ export default {
           point: {}
         },
         sheet: "",
-          visible: false
-        }
+        visible: false
       }
-    },
-    mounted() {
-      this.$root.$on("openCharacterPopup", () => {
-        this.$refs.popupContainer.active = true;
+    };
+  },
+  mounted() {
+    this.$root.$on("open-character-popup", () => {
+      this.$refs.popupContainer.active = true;
+    });
+    this.$root.$on("close-character-popup", () => {
+      this.$refs.popupContainer.active = false;
+    });
+  },
+  methods: {
+    newCharacter() {
+      if (this.character.token == "")
+        return;
+
+      addCharacter({
+        name: this.character.name,
+        token: this.character.token,
+        pos: this.character.pos,
+        sheet: this.character.sheet,
+        visible: this.character.visible,
+        player: [store.state.authentication.playerID]
       });
-      this.$root.$on("closeCharacterPopup", () => {
-        this.$refs.popupContainer.active = false;
-      })
+
+      this.$root.$emit("close-character-popup");
     },
-    methods: {
-      newCharacter() {
-        if (this.character.token == "")
-          return;
-
-        addCharacter({
-          name: this.character.name,
-          token: this.character.token,
-          pos: this.character.pos,
-          sheet: this.character.sheet,
-          visible: this.character.visible,
-          player: [store.state.authentication.playerID]
-        });
-
-        this.$root.$emit("closeCharacterPopup");
-      },
-    }
   }
+};
 </script>
 
 <style scoped lang="scss">
