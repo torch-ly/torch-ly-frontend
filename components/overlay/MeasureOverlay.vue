@@ -15,19 +15,17 @@
       </div>
     </AdvancedOptions>
 
-    <form>
-      <ToggleBox
-        title="Circle measure"
-        name="measureTool"
-        v-on:update:checked="$event ? setTool(measureTools.circle) : setTool(measureTools.line)"
-      />
+    <ToggleBox
+      title="Circle measure"
+      name="measureTool"
+      v-on:update:checked="$event ? setTool(measureTools.circle) : setTool(measureTools.line)"
+    />
 
-      <ToggleBox
-        title="Cone measure"
-        name="measureTool"
-        v-on:update:checked="$event ? setTool(measureTools.cone) : setTool(measureTools.line)"
-      />
-    </form>
+    <ToggleBox
+      title="Cone measure"
+      name="measureTool"
+      v-on:update:checked="$event ? setTool(measureTools.cone) : setTool(measureTools.line)"
+    />
 
     <button class="submit-button active:submit-button-active mt-2" v-show="savableMeasureToolActive"
             @click="saveMeasureAsPainting">Save as drawing
