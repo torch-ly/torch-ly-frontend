@@ -74,9 +74,9 @@ export function syncronize() {
   setFogOfWar([pPolygons, ununionizable]);
 }
 
-export function toggleTransparent(){
-  transparent = !transparent;
-  for(let poly of polygons){
+export function setTransparent(value) {
+  transparent = value;
+  for (let poly of polygons) {
     poly.fill(transparent ? "rgba(0,0,0,0.13)" : "#000000");
   }
   layer.batchDraw();
@@ -112,8 +112,9 @@ export function recieveSyncronize(p_polygons) {
 }
 
 //frontend toggle
-//toggle insert / delete mode
-export function toggleInsert() {
+//set insert = true / delete mode = false
+export function setInsert(value) {
+  console.log(value)
   currentPolygon = []
 
   if (nextPolygon != null) {
@@ -121,11 +122,11 @@ export function toggleInsert() {
   }
 
   layer.batchDraw();
-  insert = !insert;
+  insert = value;
 }
 
-//toggle snapToGrid mode
-export function toggleSnapToGrid() {
+//set snapToGrid mode
+export function setSnapToGrid(value) {
   currentPolygon = []
 
   if (nextPolygon != null) {
@@ -133,7 +134,7 @@ export function toggleSnapToGrid() {
   }
 
   layer.batchDraw();
-  snapToGrid = !snapToGrid;
+  snapToGrid = value;
 }
 
 export function resetFogOfWar() {

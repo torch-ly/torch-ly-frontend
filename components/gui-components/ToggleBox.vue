@@ -6,6 +6,7 @@
           ref="input"
           :type="name ? 'radio' : 'checkbox'"
           :name="name"
+          :checked="checked"
         >
         <span class="slider round" :class="{'inverted' : inverted}"></span>
       </label>
@@ -31,6 +32,10 @@ export default {
     },
     name: {
       type: String
+    },
+    checked: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {

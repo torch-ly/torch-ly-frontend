@@ -1,38 +1,30 @@
 <template>
   <div>
 
-    <div class="flex flex-row">
-      <label class="switch" @click="toggleClick">
-        <input type="checkbox" v-model="deleteMode">
-        <span class="slider round"></span>
-      </label>
-      <div class="flex items-center ml-2">Insert / Delete</div>
-    </div>
+    <ToggleBox
+      title="Insert / Delete"
+      inverted
+      v-on:update:checked="setInsert(!$event); deleteMode = $event"
+    />
 
-    <button class="submit-button active:submit-button-active mt-2" @click="inputClick">{{ insertButtonText }}</button>
+    <button v-if="deleteMode" class="submit-button active:submit-button-active mt-2" @click="DeletePolygon">Delete
+    </button>
+    <button v-else class="submit-button active:submit-button-active mt-2" @click="InsertPolygon">Insert</button>
 
     <button class="submit-button active:submit-button-active mt-2" @click="syncronize">Syncronize FogOfWar</button>
 
-    <div class="flex flex-row mt-2">
-      <label class="switch">
-        <input type="checkbox" @change="toggleSnapToGrid" value="false">
-        <span class="slider round"></span>
-      </label>
-      <div class="flex items-center ml-2">Snap to Grid</div>
-    </div>
+    <ToggleBox
+      title="Snap to Grid"
+      v-on:update:checked="setSnapToGrid($event)"
+    />
 
     <button class="submit-button active:submit-button-active mt-2" @click="resetFogOfWar">Clear FogOfWar</button>
 
-    <div class="flex flex-row mt-2">
-      <div class="flex items-center">
-        <label class="switch">
-          <input type="checkbox" @change="toggleTransparent" checked>
-          <span class="slider round"></span>
-        </label>
-      </div>
-
-      <div class="flex items-center ml-2 text-center">See Through Fog Of war</div>
-    </div>
+    <ToggleBox
+      title="See Through Fog Of war"
+      checked
+      v-on:update:checked="setTransparent($event)"
+    />
 
   </div>
 </template>
@@ -41,106 +33,31 @@ import {
   DeletePolygon,
   InsertPolygon,
   resetFogOfWar,
-  syncronize,
-  toggleInsert,
-  toggleSnapToGrid,
-  toggleTransparent
+  setInsert,
+  setSnapToGrid,
+  setTransparent,
+  syncronize
 } from "../../logic/stage/layers/fogofwar/main";
+import ToggleBox from "@/components/gui-components/ToggleBox";
 
 export default {
+  components: {ToggleBox},
   data() {
     return {
-      deleteMode: false,
-      inToggle: false,
+      deleteMode: false
     }
   },
   methods: {
     syncronize,
-    toggleSnapToGrid,
+    setSnapToGrid,
     resetFogOfWar,
-    toggleTransparent,
-    inputClick() {
-      !this.deleteMode ? InsertPolygon() : DeletePolygon()
-    },
-    toggleClick() {
-      if (this.inToggle) {
-        this.inToggle = false;
-      } else {
-        toggleInsert();
-        this.inToggle = true;
-      }
-    },
-  },
-  computed: {
-    insertButtonText() {
-      return (this.deleteMode ? "Delete" : "Insert");
-    }
+    setTransparent,
+    InsertPolygon,
+    DeletePolygon,
+    setInsert
   }
 }
 </script>
 <style lang="scss" scoped>
 @import "assets/css/scheme";
-
-/* The switch - the box around the slider */
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 50px;
-  height: 28px;
-}
-
-/* Hide default HTML checkbox */
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-/* The slider */
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #20880a;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
-
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 24px;
-  width: 24px;
-  left: 3px;
-  bottom: 2px;
-  background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
-
-input:checked + .slider {
-  background-color: #f32121;
-}
-
-input:focus + .slider {
-  box-shadow: 0 0 1px #f32121;
-}
-
-input:checked + .slider:before {
-  -webkit-transform: translateX(19px);
-  -ms-transform: translateX(19px);
-  transform: translateX(19px);
-}
-
-/* Rounded sliders */
-.slider.round {
-  border-radius: 34px;
-}
-
-.slider.round:before {
-  border-radius: 50%;
-}
 </style>
