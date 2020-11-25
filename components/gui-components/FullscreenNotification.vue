@@ -1,6 +1,7 @@
 <template>
   <div
-      class="fixed top-0 w-screen md:p-4 flex z-10 justify-center items-center animate__animated animate__animated animate__fadeInDown">
+      class="fixed top-0 w-screen md:p-4 flex z-10 justify-center items-center animate__animated animate__animated animate__fadeInDown"
+  >
     <transition leave-active-class="animate__animated animate__fadeOutUp">
       <button
           v-if="visible"

@@ -6,7 +6,8 @@
         :options="popperOptions"
       >
         <div
-          class="w-56 text-center bg-red-300 uppercase text-white text-sm p-1 rounded font-bold  animate__animated animate__fadeIn animate__fast">
+          class="w-56 text-center bg-red-300 uppercase text-white text-sm p-1 rounded font-bold  animate__animated animate__fadeIn animate__fast"
+        >
           Edit Map / Tokens (CTRL + B)
         </div>
 
@@ -24,7 +25,8 @@
         :options="popperOptions"
       >
         <div
-          class="w-48 text-center bg-red-300 uppercase text-white text-sm p-1 rounded font-bold  animate__animated animate__fadeIn animate__fast">
+          class="w-48 text-center bg-red-300 uppercase text-white text-sm p-1 rounded font-bold  animate__animated animate__fadeIn animate__fast"
+        >
           Paint Mode
         </div>
 
@@ -42,7 +44,8 @@
         :options="popperOptions"
       >
         <div
-          class="w-48 text-center bg-red-300 uppercase text-white text-sm p-1 rounded font-bold  animate__animated animate__fadeIn animate__fast">
+          class="w-48 text-center bg-red-300 uppercase text-white text-sm p-1 rounded font-bold  animate__animated animate__fadeIn animate__fast"
+        >
           Measure Tool
         </div>
 
@@ -60,7 +63,8 @@
         :options="popperOptions"
       >
         <div
-          class="w-48 text-center bg-red-300 uppercase text-white text-sm p-1 rounded font-bold  animate__animated animate__fadeIn animate__fast">
+          class="w-48 text-center bg-red-300 uppercase text-white text-sm p-1 rounded font-bold  animate__animated animate__fadeIn animate__fast"
+        >
           Fog of War
         </div>
 
@@ -79,7 +83,8 @@
         :options="popperOptions"
       >
         <div
-          class="w-48 text-center bg-red-300 uppercase text-white text-sm p-1 rounded font-bold  animate__animated animate__fadeIn animate__fast">
+          class="w-48 text-center bg-red-300 uppercase text-white text-sm p-1 rounded font-bold  animate__animated animate__fadeIn animate__fast"
+        >
           Library (CTRL + M)
         </div>
 
@@ -97,7 +102,8 @@
         :options="popperOptions"
       >
         <div
-          class="w-48 text-center bg-red-300 uppercase text-white text-sm p-1 rounded font-bold  animate__animated animate__fadeIn animate__fast">
+          class="w-48 text-center bg-red-300 uppercase text-white text-sm p-1 rounded font-bold  animate__animated animate__fadeIn animate__fast"
+        >
           Save Map (CTRL + S)
         </div>
 
