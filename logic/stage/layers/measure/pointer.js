@@ -2,6 +2,7 @@ import {layer} from "@/logic/stage/layers/measure/main";
 import {stage} from "@/logic/stage/main";
 import {pointToPos} from "@/plugins/backendComunication/pointer";
 import {getRelativePointerPosition} from "@/logic/stage/functions/layerFunctions";
+import Konva from "konva";
 
 export function pointTo(x, y, color) {
   let pointer = new Konva.Circle({
@@ -17,7 +18,7 @@ export function pointTo(x, y, color) {
 
   let scale = 1;
 
-  let anim = new Konva.Animation(function (frame) {
+  let anim = new Konva.Animation(function () {
 
     if (scale >= 100) {
       anim.stop();
@@ -32,5 +33,5 @@ export function pointTo(x, y, color) {
 }
 
 export function enablePointer() {
-  stage.on('dblclick', (e) => pointToPos(parseInt(getRelativePointerPosition(stage).x), parseInt(getRelativePointerPosition(stage).y), "green"))
+  stage.on("dblclick", () => pointToPos(parseInt(getRelativePointerPosition(stage).x), parseInt(getRelativePointerPosition(stage).y), "green"));
 }

@@ -4,6 +4,7 @@ import {moveTokenByArrows} from "./functions/objectFunctions";
 import {initDrawingStoreWatch} from "@/logic/tools";
 import {enablePointer} from "@/logic/stage/layers/measure/pointer";
 import {addSelectionRect} from "@/logic/stage/functions/transformer/selector";
+import Konva from "konva";
 
 export let stage = null;
 export let stageWidth = 0;
@@ -13,7 +14,7 @@ export let store = {};
 
 export default function (context) {
   store = context.store;
-  initDrawingStoreWatch()
+  initDrawingStoreWatch();
 }
 
 export function main(pStage, width, height) {

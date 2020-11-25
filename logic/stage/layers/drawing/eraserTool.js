@@ -1,15 +1,14 @@
-import {stage, store} from '@/logic/stage/main';
-import {getRelativePointerPosition} from '@/logic/stage/functions/layerFunctions';
-import Konva from 'konva';
+import {stage, store} from "@/logic/stage/main";
+import {getRelativePointerPosition} from "@/logic/stage/functions/layerFunctions";
+import Konva from "konva";
 
-import {layer} from '@/logic/stage/layers/drawing/main';
+import {layer} from "@/logic/stage/layers/drawing/main";
 import {removeDrawing} from "@/plugins/backendComunication/drawing";
 
 let eraserRect;
 
 export default function () {
   let isDrawing = false; // currently drawing a line
-  let currentLine; // currently drawn line
 
   stage.batchDraw();
 
@@ -17,12 +16,12 @@ export default function () {
     visible: true,
     width: store.state.manu.freeDrawing.strokeWidth * 10,
     height: store.state.manu.freeDrawing.strokeWidth * 10,
-    stroke: 'black'
+    stroke: "black"
   });
 
   layer.add(eraserRect);
 
-  stage.on('mousedown touchstart', () => {
+  stage.on("mousedown touchstart", () => {
     destroyIntersectingObjects();
     // Start drawing
     isDrawing = true;
@@ -38,7 +37,7 @@ export default function () {
     layer.batchDraw();
   });
 
-  stage.on('mousemove touchmove', () => {
+  stage.on("mousemove touchmove", () => {
     let pos = getRelativePointerPosition(stage);
     eraserRect.position({
       x: pos.x - eraserRect.width() / 2,
@@ -54,12 +53,12 @@ export default function () {
 
   });
 
-  stage.on('mouseup touchend', () => {
+  stage.on("mouseup touchend", () => {
     // End drawing
     isDrawing = false;
   });
 
-  stage.on('touchstart', (e) => {
+  stage.on("touchstart", (e) => {
     try {
       if (e.evt.touches[0].touchType == "direct") {
         stage.draggable(true);
@@ -68,7 +67,7 @@ export default function () {
     }
   });
 
-  stage.on('touchend', () => {
+  stage.on("touchend", () => {
     stage.draggable(false);
   });
 
@@ -86,7 +85,7 @@ function destroyIntersectingObjects() {
 }
 
 function destroyIntersectingLines(object) {
-  let points = object.points()
+  let points = object.points();
   for (let i = 0; i < points.length - 2; i += 2) {
     if (lineCrossesEraser([{x: points[i], y: points[i + 1]}, {x: points[i + 2], y: points[i + 3]}])) {
       removeDrawing(object.objectID);

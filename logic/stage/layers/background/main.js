@@ -8,7 +8,7 @@ export function draw(drawable) {
   layer.batchDraw();
 }
 
-export function updateDraw(){
+export function updateDraw() {
   layer.batchDraw();
 }
 
@@ -17,7 +17,7 @@ export function setLayer(pLayer) {
   init();
 }
 
-export function clearLayer(){
+export function clearLayer() {
   layer.clear();
   for (let children of layer.children) {
     children.remove();

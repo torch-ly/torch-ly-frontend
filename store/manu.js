@@ -1,4 +1,4 @@
-import tools from '@/enums/tools/tools';
+import tools from "@/enums/tools/tools";
 import {clearTransformerNodes} from "../logic/stage/functions/transformer/transformer";
 import drawTools from "@/enums/tools/drawTools";
 import measureTools from "@/enums/tools/measureTools";
@@ -22,7 +22,7 @@ export const state = () => ({
     unitEnding: "ft",
     boxSize: "5"
   }
-})
+});
 
 export const mutations = {
   setTool(state, tool) {
@@ -48,7 +48,7 @@ export const mutations = {
   },
   setMeasureDetails(state, detail) {
     state.measureDetails.unitEnding = detail.unitEnding;
-    state.measureDetails.boxSize = detail.boxSize
+    state.measureDetails.boxSize = detail.boxSize;
   },
   setDrawingStrokeWidth(state, width) {
     state.freeDrawing.strokeWidth = parseInt(width);
@@ -56,12 +56,12 @@ export const mutations = {
   setMonsters(state) {
     state.currentTool = tools.monsters;
   }
-}
+};
 
 export const actions = {
-  setTool({commit, state}, tool) {
+  setTool({commit}, tool) {
     clearTransformerNodes();
-    console.log(drawTools, tool)
+    console.log(drawTools, tool);
     if (JSON.stringify(drawTools).includes(tool)) {
       commit("setTool", tools.draw);
       commit("setMeasureTool", null);
@@ -76,4 +76,4 @@ export const actions = {
       commit("setTool", tool);
     }
   },
-}
+};

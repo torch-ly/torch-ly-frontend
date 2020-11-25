@@ -5,4 +5,4 @@ export default {
   measure: "MEASURE_TOOL",
   fogOfWar: "FOGOFWAR_TOOL",
   monsters: "MONSTERS_TOOL"
-}
+};

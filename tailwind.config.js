@@ -32,15 +32,15 @@ module.exports = {
         "10": "2.5rem",
       },
       transitionProperty: {
-        'height': 'height',
+        "height": "height",
       }
     }
   },
   variants: {
-    borderWidth: ['responsive', "hover", "active"],
+    borderWidth: ["responsive", "hover", "active"],
     margin: ["responsive", "last"],
   },
   purge: {
-    content: ['./**/*.vue'],
+    content: ["./**/*.vue"],
   },
-}
+};

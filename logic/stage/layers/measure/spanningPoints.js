@@ -2,6 +2,7 @@ import {stage, store} from "~/logic/stage/main";
 import {layer} from "~/logic/stage/layers/measure/main";
 import {blockSnapSize} from "~/logic/stage/layers/grid/main";
 import {getRelativePointerPosition} from "~/logic/stage/functions/layerFunctions";
+import Konva from "konva";
 
 export let circle1, circle2;
 export let offsetX, offsetY;
@@ -16,8 +17,8 @@ export function addSpanningPoints(measureObject, pUpdateMeasureObject) {
 
   measureArrow = new Konva.Arrow({
     strokeWidth: 3,
-    fill: '#4a5568',
-    stroke: '#4a5568',
+    fill: "#4a5568",
+    stroke: "#4a5568",
     pointerLength: 20,
     pointerWidth: 20,
     points: [],
@@ -47,25 +48,25 @@ export function addSpanningPoints(measureObject, pUpdateMeasureObject) {
     }
   });
 
-  stage.on('mouseup touchend', () => {
+  stage.on("mouseup touchend", () => {
     if (circle1 && !circle2 && Math.max(Math.abs(measureArrow.points()[0] - getSnapPos().x),
       Math.abs(measureArrow.points()[1] - getSnapPos().y)) / blockSnapSize > 0) {
       addSecondCircle();
     }
-  })
+  });
 }
 
 export function disableSpanningPoints() {
   try {
-    circle1.destroy()
+    circle1.destroy();
   } catch (e) {
   }
   try {
-    circle2.destroy()
+    circle2.destroy();
   } catch (e) {
   }
   try {
-    measureArrow.destroy()
+    measureArrow.destroy();
   } catch (e) {
   }
 
@@ -84,15 +85,15 @@ function addFirstCircle() {
     x: getSnapPos().x,
     y: getSnapPos().y,
     radius: 20,
-    fill: '#4a5568',
-    stroke: 'black',
+    fill: "#4a5568",
+    stroke: "black",
     draggable: true
   });
 
   measureArrow.points([circle1.x(), circle1.y()]);
 
-  circle1.on('dragmove', changeCircle1);
-  circle1.on('dragend', snapCircle1);
+  circle1.on("dragmove", changeCircle1);
+  circle1.on("dragend", snapCircle1);
 
   layer.add(circle1);
 }
@@ -102,8 +103,8 @@ function addSecondCircle() {
     x: getSnapPos().x,
     y: getSnapPos().y,
     radius: 20,
-    fill: '#4a5568',
-    stroke: 'black',
+    fill: "#4a5568",
+    stroke: "black",
     draggable: true
   });
 
@@ -113,8 +114,8 @@ function addSecondCircle() {
 
   layer.add(circle2);
 
-  circle2.on('dragmove', changeCircle2);
-  circle2.on('dragend', snapCircle2);
+  circle2.on("dragmove", changeCircle2);
+  circle2.on("dragend", snapCircle2);
 
   updateMeasureObject();
 
@@ -144,7 +145,7 @@ function getSnapPos() {
   return {
     x: blockSnapSize * Math.round(getRelativePointerPosition(stage).x / blockSnapSize),
     y: blockSnapSize * Math.round(getRelativePointerPosition(stage).y / blockSnapSize)
-  }
+  };
 }
 
 function changeCircle1() {

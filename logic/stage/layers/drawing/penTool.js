@@ -1,9 +1,9 @@
-import {createCircle, createRect} from '@/logic/stage/layers/drawing/drawShapes';
-import {stage, store} from '@/logic/stage/main';
-import {getRelativePointerPosition} from '@/logic/stage/functions/layerFunctions';
-import Konva from 'konva';
+import {createCircle, createRect} from "@/logic/stage/layers/drawing/drawShapes";
+import {stage, store} from "@/logic/stage/main";
+import {getRelativePointerPosition} from "@/logic/stage/functions/layerFunctions";
+import Konva from "konva";
 
-import {layer} from '@/logic/stage/layers/drawing/main';
+import {layer} from "@/logic/stage/layers/drawing/main";
 import {addDrawing} from "@/plugins/backendComunication/drawing";
 
 export default function () {
@@ -15,7 +15,7 @@ export default function () {
 
   layer.batchDraw();
 
-  stage.on('mousedown touchstart', (e) => {
+  stage.on("mousedown touchstart", (e) => {
     try {
       if (e.evt.touches[0].touchType == "direct") {
         return;
@@ -32,7 +32,7 @@ export default function () {
       stroke: store.state.manu.freeDrawing.color,
       strokeWidth: (store.state.manu.erase ? store.state.manu.freeDrawing.strokeWidth * 10 : store.state.manu.freeDrawing.strokeWidth),
       points: [pos.x, pos.y],
-      globalCompositeOperation: 'source-over',
+      globalCompositeOperation: "source-over",
       listening: false
     });
 
@@ -41,7 +41,7 @@ export default function () {
     layer.batchDraw();
   });
 
-  stage.on('mousemove touchmove', () => {
+  stage.on("mousemove touchmove", () => {
     layer.batchDraw();
 
     if (!isDrawing)
@@ -56,20 +56,20 @@ export default function () {
     layer.batchDraw();
   });
 
-  stage.on('mouseup touchend', () => {
+  stage.on("mouseup touchend", () => {
     // End drawing
     isDrawing = false;
     addDrawing({
       stroke: currentLine.stroke(),
       strokeWidth: currentLine.strokeWidth(),
       points: currentLine.points(),
-      type: 'Line'
+      type: "Line"
     });
     currentLine.points([]);
     layer.batchDraw();
   });
 
-  stage.on('touchstart', (e) => {
+  stage.on("touchstart", (e) => {
     try {
       if (e.evt.touches[0].touchType == "direct") {
         stage.draggable(true);
@@ -78,7 +78,7 @@ export default function () {
     }
   });
 
-  stage.on('touchend', () => {
+  stage.on("touchend", () => {
     stage.draggable(false);
   });
 }
@@ -87,9 +87,9 @@ export function addDrawingObject(object) {
   if (object.type === "Line") {
     let line = new Konva.Line({
       ...object,
-      globalCompositeOperation: 'source-over',
+      globalCompositeOperation: "source-over",
       listening: false
-    })
+    });
     line.objectID = object._id;
 
     layer.add(line);

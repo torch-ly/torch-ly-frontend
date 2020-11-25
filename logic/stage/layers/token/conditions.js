@@ -22,7 +22,7 @@ export function loadConditionImages(parent, parentPos, activeConditionList) {
 
       draw(out);
 
-      updateConditionImagePosition(parent.conditions, parentPos)
+      updateConditionImagePosition(parent.conditions, parentPos);
     };
     imageObj.src = conditions[activeConditionList[i]];
   }
@@ -41,7 +41,7 @@ export function updateConditionImagePosition(conditions, parentPos) {
 
 export function removeConditionImages(character) {
   for (let condition of character.conditions) {
-    setOut(out.filter(object => object.conditionName != condition.conditionName))
+    setOut(out.filter(object => object.conditionName != condition.conditionName));
     condition.destroy();
   }
 }

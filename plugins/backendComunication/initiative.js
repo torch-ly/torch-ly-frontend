@@ -32,11 +32,11 @@ export function setInitiative() {
 export function addToInitiative(id, value) {
   apolloClient.mutate({
     mutation: gql`
-    mutation addInitiative($id: String!, $value: Int!) {
-      addToInitiative(id: $id, value: $value) {
-        order
+      mutation addInitiative($id: String!, $value: Int!) {
+        addToInitiative(id: $id, value: $value) {
+          order
+        }
       }
-    }
     `,
     variables: {
       id, value

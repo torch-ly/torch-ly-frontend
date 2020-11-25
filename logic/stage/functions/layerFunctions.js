@@ -6,7 +6,7 @@ export function addSnapToGridListener(objects) {
     if (object.characterID != null)
       continue;
 
-    object.on('dragend transformend', (e) => {
+    object.on("dragend transformend", () => {
       if (object.snapToGrid) {
         snapToGrid(object);
       }
@@ -19,8 +19,8 @@ export function snapToGrid(object) {
   let rot = object.rotation();
   object.rotation(0);
 
-  let x = object.hasOwnProperty("attrs") ? object.attrs.x : object.x();
-  let y = object.hasOwnProperty("attrs") ? object.attrs.y : object.y();
+  let x = Object.prototype.hasOwnProperty.call(object, "attrs") ? object.attrs.x : object.x();
+  let y = Object.prototype.hasOwnProperty.call(object, "attrs") ? object.attrs.y : object.y();
 
   object.position({
     x: Math.round(x / blockSnapSize) * blockSnapSize,

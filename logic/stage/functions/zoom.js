@@ -2,7 +2,7 @@ import {stage} from "../main";
 import {updateGrid} from "@/logic/stage/layers/grid/main";
 
 export function enableZoom() {
-  stage.on('wheel', (e) => {
+  stage.on("wheel", (e) => {
     if (!stage.draggable())
       return;
 
@@ -18,7 +18,7 @@ export function enableZoom() {
   let lastCenter = null;
   let lastDist = 0;
 
-  stage.on('touchmove', function (e) {
+  stage.on("touchmove", function (e) {
     e.evt.preventDefault();
 
     if (!stage.draggable())
@@ -83,7 +83,7 @@ export function enableZoom() {
     }
   });
 
-  stage.on('touchend', function () {
+  stage.on("touchend", function () {
     lastDist = 0;
     lastCenter = null;
   });

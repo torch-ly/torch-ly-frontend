@@ -1,4 +1,4 @@
-export let layer
+export let layer;
 
 export function setDrawLayer(pLayer) {
   layer = pLayer;

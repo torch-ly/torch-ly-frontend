@@ -11,7 +11,7 @@ export function updateCharacterAttrs(character) {
     if (oldCharacter.characterID === character.id) {
       // There is an existing old Character
 
-      oldCharacter.rotation(0)
+      oldCharacter.rotation(0);
       oldCharacter.offsetX(0);
       oldCharacter.offsetY(0);
 

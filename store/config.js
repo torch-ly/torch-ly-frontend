@@ -5,7 +5,7 @@ export const state = () => ({
   device: getDevice(),
   followDMScreen: false, //TODO implement to config page
   backendURL: getBackendUrl()
-})
+});
 
 if (getDevice() !== devices.MOBILE)
   setThemeColor();
@@ -24,7 +24,7 @@ export function getBackendUrl() {
 function getDevice() {
   if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))
     return devices.MOBILE;
-  else if (getParameters().hasOwnProperty("tv"))
+  else if (Object.prototype.hasOwnProperty.call(getParameters(), "tv"))
     return devices.TV;
   else
     return devices.DEFAULT;
@@ -34,4 +34,4 @@ export const mutations = {
   setDevice(state, device) {
     state.device = device;
   }
-}
+};

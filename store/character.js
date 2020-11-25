@@ -5,7 +5,7 @@ export const state = () => ({
   initiative: [],
   hoverOverCharacter: "",
   selectedCharacter: "",
-})
+});
 
 export const mutations = {
   loadCharacters(state, characters) {
@@ -49,4 +49,4 @@ export const mutations = {
   setSelectedCharacter(state, characterID) {
     state.selectedCharacter = characterID;
   }
-}
+};

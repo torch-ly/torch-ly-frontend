@@ -28,7 +28,7 @@ export function init() {
   stage.add(token);
   stage.add(freeDrawing);
   stage.add(fogofwar);
-  stage.add(measure)
+  stage.add(measure);
 
   createTransformer();
   manageTransformerLayer();

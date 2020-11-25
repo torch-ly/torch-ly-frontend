@@ -94,7 +94,7 @@ export function subscribeClearAllDrawings() {
       }
     `
   }).subscribe({
-    next({data}) {
+    next() {
       clearDrawing();
     }
   });

@@ -1,6 +1,6 @@
 
 export default {
-  mode: 'spa',
+  mode: "spa",
 
   env: {
     IMAGE_SERVER: process.env.IMAGE_SERVER,
@@ -10,21 +10,21 @@ export default {
   ** Headers of the page
   */
   head: {
-    title: process.env.npm_package_name || '',
+    title: process.env.npm_package_name || "",
     meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
+      {charset: "utf-8"},
+      {name: "viewport", content: "width=device-width, initial-scale=1"},
+      {hid: "description", name: "description", content: process.env.npm_package_description || ""}
     ],
     link: [
-      {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'}
+      {rel: "icon", type: "image/x-icon", href: "/favicon.ico"}
     ]
   },
 
   /*
   ** Customize the progress-bar color
   */
-  loading: {color: '#fff'},
+  loading: {color: "#fff"},
 
   pwa: {
     meta: {
@@ -32,7 +32,7 @@ export default {
       nativeUI: true
     },
     manifest: {
-      lang: 'de',
+      lang: "de",
       name: "torch.ly",
       short_name: "torch.ly",
       background_color: "#eae2b7",
@@ -53,9 +53,9 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    'logic/stage/main.js',
-    'plugins/backendComunication/backendComunication.js',
-    'logic/hotkey.js'
+    "logic/stage/main.js",
+    "plugins/backendComunication/backendComunication.js",
+    "logic/hotkey.js"
   ],
 
   /*
@@ -63,7 +63,7 @@ export default {
   */
   buildModules: [
     // Doc: https://github.com/nuxt-community/nuxt-tailwindcss
-    '@nuxtjs/tailwindcss',
+    "@nuxtjs/tailwindcss",
   ],
 
   /*
@@ -71,22 +71,22 @@ export default {
   */
   modules: [
     // Doc: https://github.com/nuxt-community/dotenv-module
-    '@nuxtjs/dotenv',
-    '@nuxtjs/axios',
-    '@nuxtjs/pwa',
-    ['nuxt-fontawesome', {
-      component: 'fa',
+    "@nuxtjs/dotenv",
+    "@nuxtjs/axios",
+    "@nuxtjs/pwa",
+    ["nuxt-fontawesome", {
+      component: "fa",
       imports: [
         {
-          set: '@fortawesome/free-solid-svg-icons',
-          icons: ['fas']
+          set: "@fortawesome/free-solid-svg-icons",
+          icons: ["fas"]
         },
       ]
     }]
   ],
 
   server: {
-    host: '0.0.0.0',
+    host: "0.0.0.0",
   },
 
   /*
@@ -96,7 +96,10 @@ export default {
     /*
     ** You can extend webpack config here
     */
+
+    /*
     extend(config, ctx) {
     }
+    */
   }
-}
+};

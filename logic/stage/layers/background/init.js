@@ -13,9 +13,9 @@ export function init() {
   clearLayer();
 
   for (let drawing of backgroundObjects) {
-    if (drawing.type === 'rect') {
+    if (drawing.type === "rect") {
       loadRect(drawing);
-    } else if (drawing.type === 'img') {
+    } else if (drawing.type === "img") {
       loadImage(drawing);
     }
   }
@@ -76,7 +76,7 @@ export function loadObject(object, snapToGrid) {
 
   object.removeElement = () => {
     object.destroy();
-  }
+  };
 
   draw(object);
 }

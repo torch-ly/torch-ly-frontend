@@ -33,8 +33,7 @@ export function addCharacter(character) {
     character.pos.point.y = parseInt(character.pos.point.y);
   }
 
-  if (character.pos.size == undefined) {
-  } else {
+  if (character.pos.size != undefined) {
     character.pos.size = parseInt(character.pos.size);
   }
 

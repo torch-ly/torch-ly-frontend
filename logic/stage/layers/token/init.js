@@ -12,7 +12,7 @@ import {loadConditionImages, updateConditionImagePosition} from "@/logic/stage/l
 
 export function init() {
 
-  setOut([])
+  setOut([]);
 
   let characters = store.state.character.characters;
 
@@ -27,7 +27,7 @@ export function loadImage(character) {
 
   imageObj.onerror = () => {
     imageObj.src = "/no-image.jpg";
-  }
+  };
 
   imageObj.onload = function () {
     let image = new Konva.Image({
@@ -46,33 +46,33 @@ export function loadImage(character) {
 
     image.snapToGrid = true;
     image.characterID = character.id;
-    image.on('dragend', e => {
+    image.on("dragend", () => {
       setCharacterPosition(image.characterID, {
         x: Math.round((image.x() - image.width() / 2) / blockSnapSize),
         y: Math.round((image.y() - image.height() / 2) / blockSnapSize)
-      })
+      });
     });
 
     image.conditions = [];
     loadConditionImages(image, {x: image.x(), y: image.y(), width: image.width()}, character.conditions || []);
 
-    image.on('dragmove', () => {
+    image.on("dragmove", () => {
       updateConditionImagePosition(image.conditions, {
         x: image.x(),
         y: image.y(),
         width: image.width()
       }, character.conditions || []);
-    })
+    });
 
     image.removeElement = () => {
-      removeCharacter(image.characterID)
-    }
+      removeCharacter(image.characterID);
+    };
 
-    image.on('mouseenter', () => {
+    image.on("mouseenter", () => {
       store.commit("character/setHoverOverCharacter", image.characterID);
     });
 
-    image.on('mouseleave', () => {
+    image.on("mouseleave", () => {
       store.commit("character/setHoverOverCharacter", null);
     });
 

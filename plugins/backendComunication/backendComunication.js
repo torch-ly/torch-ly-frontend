@@ -47,7 +47,7 @@ const defaultOptions = {
     fetchPolicy: "no-cache",
     errorPolicy: "all",
   },
-}
+};
 
 export const apolloClient = new ApolloClient({
   cache,
@@ -92,6 +92,6 @@ function loadTable() {
 }
 
 export function logError(err) {
-  console.error(err)
-  store.commit("errors/addError", "GraphQL Error")
+  console.error(err);
+  store.commit("errors/addError", "GraphQL Error");
 }

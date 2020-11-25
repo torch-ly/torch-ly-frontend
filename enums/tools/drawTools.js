@@ -3,4 +3,4 @@ export default {
   eraser: "ERASER_DRAW_TOOL",
   circle: "CIRCLE_DRAW_TOOL",
   rectangle: "RECTANGLE_DRAW_TOOL",
-}
+};

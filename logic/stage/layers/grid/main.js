@@ -22,7 +22,7 @@ export function draw(pLayer) {
   checkShapes();
   layer.batchDraw();
 
-  stage.on('dragend', () => {
+  stage.on("dragend", () => {
     updateGrid();
   });
 }
@@ -50,20 +50,20 @@ function checkShapes() {
   for (let x = startX; x < endX; x += blockSnapSize) {
     clone = line.clone({
       points: [x, startY, x, endY]
-    })
+    });
     clone.perfectDrawEnabled(false);
     clone.shadowForStrokeEnabled(false);
-    clone.transformsEnabled('position');
+    clone.transformsEnabled("position");
     layer.add(clone);
   }
 
   for (let y = startY; y < endY; y += blockSnapSize) {
     clone = line.clone({
       points: [startX, y, endX, y]
-    })
+    });
     clone.perfectDrawEnabled(false);
     clone.shadowForStrokeEnabled(false);
-    clone.transformsEnabled('position');
+    clone.transformsEnabled("position");
     layer.add(clone);
   }
 }

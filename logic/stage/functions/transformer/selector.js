@@ -2,7 +2,7 @@ import {stage} from "@/logic/stage/main";
 import {setNodesToTransformer, transformerLayer as layer} from "@/logic/stage/functions/transformer/transformer";
 import {getRelativePointerPosition} from "@/logic/stage/functions/layerFunctions";
 import {manageTransformerLayer} from "@/logic/stage/layers/layerManager";
-import {Transformer} from "konva";
+import Konva, {Transformer} from "konva";
 
 let selectionRectangle;
 
@@ -10,13 +10,13 @@ export function addSelectionRect() {
   manageTransformerLayer();
 
   selectionRectangle = new Konva.Rect({
-    fill: 'rgba(0,0,255,0.5)',
+    fill: "rgba(0,0,255,0.5)",
     visible: false,
     id: "selectionRect"
   });
 
   let x1, y1, x2, y2;
-  stage.on('mousedown', (e) => {
+  stage.on("mousedown", (e) => {
     // do nothing if we mousedown on eny shape
     if (e.evt.button !== 2) {
       return;
@@ -35,7 +35,7 @@ export function addSelectionRect() {
     layer.draw();
   });
 
-  stage.on('mousemove', () => {
+  stage.on("mousemove", () => {
     // no nothing if we didn't start selection
     if (!selectionRectangle.visible()) {
       return;
@@ -52,7 +52,7 @@ export function addSelectionRect() {
     layer.batchDraw();
   });
 
-  stage.on('mouseup', () => {
+  stage.on("mouseup", () => {
     // no nothing if we didn't start selection
     if (!selectionRectangle.visible()) {
       return;
@@ -64,7 +64,7 @@ export function addSelectionRect() {
       layer.batchDraw();
     });
 
-    let shapes = layer.children.filter((obj) => !(obj instanceof Transformer) && obj.id() != "selectionRect")
+    let shapes = layer.children.filter((obj) => !(obj instanceof Transformer) && obj.id() != "selectionRect");
     let box = selectionRectangle.getClientRect();
     let selected = shapes.filter((shape) =>
       Konva.Util.haveIntersection(box, shape.getClientRect())

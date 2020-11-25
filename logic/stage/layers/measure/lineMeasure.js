@@ -2,6 +2,7 @@ import {stage, store} from "../../main";
 import {getRelativePointerPosition} from "../../functions/layerFunctions";
 import {blockSnapSize} from "../grid/main";
 import {layer} from "@/logic/stage/layers/measure/main";
+import Konva from "konva";
 
 let arrow;
 let start = {x: 0, y: 0};
@@ -13,11 +14,11 @@ let circle = new Konva.Circle({
   y: 0,
   visible: true,
   radius: 20,
-  fill: '#4a5568'
+  fill: "#4a5568"
 });
 
 export function startLineMeasure() {
-  stage.on("mousedown touchstart", (e) => {
+  stage.on("mousedown touchstart", () => {
     stage.draggable(false);
 
     lengthSoFar = length();
@@ -30,16 +31,16 @@ export function startLineMeasure() {
       points: [start.x, start.y, start.x, start.y],
       pointerLength: 20,
       pointerWidth: 20,
-      fill: '#4a5568',
-      stroke: '#4a5568',
+      fill: "#4a5568",
+      stroke: "#4a5568",
       strokeWidth: 4,
     });
     arrow.currentlyDrawing = true;
     layer.add(arrow);
-    layer.add(circle)
-  })
+    layer.add(circle);
+  });
 
-  stage.on("mousemove touchmove", (e) => {
+  stage.on("mousemove touchmove", () => {
     if (arrow == null)
       return;
 
@@ -53,7 +54,7 @@ export function startLineMeasure() {
           x: calculateSnapToGrid(getRelativePointerPosition(stage)).x,
           y: calculateSnapToGrid(getRelativePointerPosition(stage)).y,
           visible: true
-        })
+        });
       } else {
         arrow.points([start.x, start.y, calculateSnapToGrid(getRelativePointerPosition(stage)).x, calculateSnapToGrid(getRelativePointerPosition(stage)).y]);
         arrow.visible(true);
@@ -62,7 +63,7 @@ export function startLineMeasure() {
     }
 
     layer.batchDraw();
-  })
+  });
 
   stage.on("mouseup touchend", (e) => {
     if (e.evt.button === 2 || newTouchCorner) {
@@ -73,7 +74,7 @@ export function startLineMeasure() {
     arrow = null;
     layer.removeChildren();
     layer.batchDraw();
-  })
+  });
 
   stage.on("touchstart", (e) => {
     let touch1 = e.evt.touches[0];
@@ -82,7 +83,7 @@ export function startLineMeasure() {
     if (touch1 && touch2) {
       newTouchCorner = true;
     }
-  })
+  });
 }
 
 function calculateSnapToGrid(pos) {

@@ -10,13 +10,13 @@ export function createRect() {
   let start = {x: 0, y: 0};
 
   let selectionRectangle = new Konva.Rect({
-    fill: 'rgba(0,0,255,0.5)',
+    fill: "rgba(0,0,255,0.5)",
     visible: false
   });
   layer.add(selectionRectangle);
 
   let x1, y1, x2, y2;
-  stage.on('mousedown touchstart', (e) => {
+  stage.on("mousedown touchstart", () => {
     if (store.state.manu.drawTool !== drawTools.rectangle)
       return;
 
@@ -46,7 +46,7 @@ export function createRect() {
     layer.draw();
   });
 
-  stage.on('mousemove touchmove', () => {
+  stage.on("mousemove touchmove", () => {
     // no nothing if we didn't start selection
     if (!selectionRectangle.visible()) {
       return;
@@ -69,7 +69,7 @@ export function createRect() {
     layer.batchDraw();
   });
 
-  stage.on('mouseup touchend', () => {
+  stage.on("mouseup touchend", () => {
     // no nothing if we didn't start selection
     if (!selectionRectangle.visible()) {
       return;
@@ -112,8 +112,8 @@ export function createCircle() {
 
   let selectionArrow = new Konva.Arrow({
     strokeWidth: 3,
-    fill: 'black',
-    stroke: 'black',
+    fill: "black",
+    stroke: "black",
     pointerLength: 20,
     pointerWidth: 20,
     visible: false,
@@ -122,7 +122,7 @@ export function createCircle() {
 
   layer.add(selectionArrow);
 
-  stage.on('mousedown touchstart', () => {
+  stage.on("mousedown touchstart", () => {
     if (store.state.manu.drawTool !== drawTools.circle)
       return;
 
@@ -138,7 +138,7 @@ export function createCircle() {
     layer.draw();
   });
 
-  stage.on('mousemove touchmove', () => {
+  stage.on("mousemove touchmove", () => {
     if (!selectionArrow.visible()) {
       return;
     }
@@ -155,7 +155,7 @@ export function createCircle() {
     layer.batchDraw();
   });
 
-  stage.on('mouseup touchend', () => {
+  stage.on("mouseup touchend", () => {
     if (!selectionArrow.visible()) {
       return;
     }
@@ -182,7 +182,7 @@ export function createCircle() {
     });
 
     layer.batchDraw();
-  })
+  });
 }
 
 function calculateSnapToGrid(object) {
