@@ -1,0 +1,80 @@
+{
+    "env": {
+        "browser": true,
+        "node": true,
+        "es2021": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:vue/recommended"
+        // "plugin:vue/essential"
+    ],
+    "parserOptions": {
+        "ecmaVersion": 12,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "vue"
+    ],
+    "rules": {
+        "indent": [
+            "error",
+            "tab"
+        ],
+        "linebreak-style": [
+            "error",
+            "unix"
+        ],
+        "quotes": [
+            "error",
+            "double"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ],
+        "no-empty": [
+          "error",
+          { "allowEmptyCatch": true }
+        ],
+        "no-console": [
+            "error",
+            { "allow": ["warn", "error"] }
+        ],
+        "curly": [
+            "error",
+            "multi"
+        ],
+        "no-var": "error",
+        "eqeqeq": [
+            "error",
+            "always",
+            {"null": "ignore"}
+        ],
+        "guard-for-in": "error",
+        "yoda": "error",
+        "array-bracket-spacing": ["error", "always"],
+        "block-spacing": "error",
+        "brace-style": "error",
+        "space-infix-ops": "error",
+        "spaced-comment": [
+            "error",
+            "always",
+            {
+                "exceptions": ["-", "+", "*"]
+            }
+        ],
+        "no-duplicate-imports": "error"
+    },
+    "overrides": [
+        {
+            "files": ["sw.js"],
+            "rules": {
+                "no-unused-vars": "off",
+                "semi": "off",
+                "indent": "off",
+                "quotes": "off"
+            }
+        }
+    ]
+}
