@@ -115,7 +115,6 @@ export function recieveSyncronize(p_polygons) {
 //frontend toggle
 //set insert = true / delete mode = false
 export function setInsert(value) {
-	console.log(value);
 	currentPolygon = [];
 
 	if (nextPolygon != null) {
@@ -225,7 +224,6 @@ export function InsertPolygon() {
 			for (let k = 0; k < cords.length - 1; k++) {
 				currentPolygon.push(cords[k]);
 			}
-			console.log("DELETE");
 			DeletePolygon();
 		}
 	}
@@ -375,9 +373,9 @@ export function DeletePolygon() {
 			ununionizable.push(polygons[polygons.length - 1].id());
 		}
 	} catch (e) {
-		console.log("Error in overlap");
-		console.log(e);
-		console.log(e.stack.replace("///", "\n"));
+		console.error("Error in overlap");
+		console.error(e);
+		console.error(e.stack.replace("///", "\n"));
 		return;
 	}
 	//delete all polygons inside removing polygon

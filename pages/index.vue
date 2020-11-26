@@ -100,16 +100,16 @@ export default {
 };
 </script>
 <style>
-  .font-10xl {
-    font-size: 6rem;
-  }
+.font-10xl {
+  font-size: 6rem;
+}
 
-  .mirrored {
-    -moz-transform:    scaleX(-1); /* Gecko */
-    -o-transform:      scaleX(-1); /* Opera */
-    -webkit-transform: scaleX(-1); /* Webkit */
-    transform:         scaleX(-1); /* Standard */
+.mirrored {
+  -moz-transform: scaleX(-1); /* Gecko */
+  -o-transform: scaleX(-1); /* Opera */
+  -webkit-transform: scaleX(-1); /* Webkit */
+  transform: scaleX(-1); /* Standard */
 
-    filter: FlipH;                 /* IE 6/7/8 */
-  }
+  filter: FlipH; /* IE 6/7/8 */
+}
 </style>

@@ -49,10 +49,10 @@
 import PopupContainer from "../gui-components/PopupContainer";
 import {store} from "../../logic/stage/main";
 import {
-  addMap,
-  getBackgroundLayerNames,
-  removeMap,
-  setBackgroundLayerName
+	addMap,
+	getBackgroundLayerNames,
+	removeMap,
+	setBackgroundLayerName
 } from "../../plugins/backendComunication/map";
 
 export default {
