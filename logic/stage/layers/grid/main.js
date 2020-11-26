@@ -40,9 +40,9 @@ function checkShapes() {
 	let startY = Math.floor((topLeftCorner.y - stage.height() * 0.2 * Math.pow(stage.scaleY(), -1)) / blockSnapSize) * blockSnapSize;
 	let endY = Math.floor((topLeftCorner.y + stage.height() * 1.2 * Math.pow(stage.scaleY(), -1)) / blockSnapSize) * blockSnapSize;
 
-	if (Math.pow(stage.scaleX(), -1) > 10) {
+	if (Math.pow(stage.scaleX(), -1) > 10) 
 		return;
-	}
+	
 
 
 	let clone;

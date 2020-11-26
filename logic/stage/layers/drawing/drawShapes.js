@@ -33,11 +33,11 @@ export function createRect() {
 		}
 
 
-		if (store.state.manu.freeDrawing.snapToGrid) {
+		if (store.state.manu.freeDrawing.snapToGrid)
 			start = calculateSnapToGrid(getRelativePointerPosition(stage));
-		} else {
+		else
 			start = getRelativePointerPosition(stage);
-		}
+
 
 		selectionRectangle.visible(true);
 		selectionRectangle.width(0);
@@ -48,9 +48,9 @@ export function createRect() {
 
 	stage.on("mousemove touchmove", () => {
 		// no nothing if we didn't start selection
-		if (!selectionRectangle.visible()) {
+		if (!selectionRectangle.visible())
 			return;
-		}
+
 
 		if (store.state.manu.freeDrawing.snapToGrid) {
 			x2 = calculateSnapToGrid(getRelativePointerPosition(stage)).x;
@@ -71,9 +71,9 @@ export function createRect() {
 
 	stage.on("mouseup touchend", () => {
 		// no nothing if we didn't start selection
-		if (!selectionRectangle.visible()) {
+		if (!selectionRectangle.visible())
 			return;
-		}
+
 
 		let width, height;
 		if (store.state.manu.freeDrawing.snapToGrid) {
@@ -126,11 +126,11 @@ export function createCircle() {
 		if (store.state.manu.drawTool !== drawTools.circle)
 			return;
 
-		if (store.state.manu.freeDrawing.snapToGrid) {
+		if (store.state.manu.freeDrawing.snapToGrid)
 			start = calculateSnapToGrid(getRelativePointerPosition(stage));
-		} else {
+		else
 			start = getRelativePointerPosition(stage);
-		}
+
 
 		selectionArrow.visible(true);
 		selectionArrow.moveToTop();
@@ -139,16 +139,16 @@ export function createCircle() {
 	});
 
 	stage.on("mousemove touchmove", () => {
-		if (!selectionArrow.visible()) {
+		if (!selectionArrow.visible())
 			return;
-		}
+
 
 		let end = {};
-		if (store.state.manu.freeDrawing.snapToGrid) {
+		if (store.state.manu.freeDrawing.snapToGrid)
 			end = calculateSnapToGrid(getRelativePointerPosition(stage));
-		} else {
+		else
 			end = getRelativePointerPosition(stage);
-		}
+
 
 		selectionArrow.points([start.x, start.y, end.x, end.y]);
 
@@ -156,16 +156,16 @@ export function createCircle() {
 	});
 
 	stage.on("mouseup touchend", () => {
-		if (!selectionArrow.visible()) {
+		if (!selectionArrow.visible())
 			return;
-		}
+
 
 		let end = {};
-		if (store.state.manu.freeDrawing.snapToGrid) {
+		if (store.state.manu.freeDrawing.snapToGrid)
 			end = calculateSnapToGrid(getRelativePointerPosition(stage));
-		} else {
+		else
 			end = getRelativePointerPosition(stage);
-		}
+
 
 		addDrawing({
 			x: start.x,

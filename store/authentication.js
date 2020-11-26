@@ -11,9 +11,9 @@ export const state = () => ({
 
 export function getAuthID() {
 	let authID = getParameters().authID || localStorage["torch-ly-user"];
-	if (authID) {
+	if (authID)
 		localStorage["torch-ly-user"] = authID;
-	}
+
 	return authID;
 }
 
@@ -33,17 +33,17 @@ export const mutations = {
 	},
 	setAuthID(state, authID) {
 		state.authID = authID;
-		if (authID == "") {
+		if (authID == "")
 			delete localStorage["torch-ly-user"];
-		} else {
+		else
 			localStorage["torch-ly-user"] = authID;
-		}
+
 	},
 	setGM(state, value) {
-		if (state.canActivateGM) {
+		if (state.canActivateGM)
 			state.gm = value;
-		} else {
+		else
 			logError("Invalid attempt to change GM property");
-		}
+
 	}
 };

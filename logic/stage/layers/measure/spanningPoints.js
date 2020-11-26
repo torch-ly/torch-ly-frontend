@@ -28,11 +28,11 @@ export function addSpanningPoints(measureObject, pUpdateMeasureObject) {
 	layer.add(measureArrow);
 
 	stage.on("mousedown touchstart", () => {
-		if (!circle1) {
+		if (!circle1)
 			addFirstCircle();
-		} else if (!circle2) {
+		else if (!circle2)
 			addSecondCircle();
-		}
+
 		layer.batchDraw();
 	});
 
@@ -50,9 +50,9 @@ export function addSpanningPoints(measureObject, pUpdateMeasureObject) {
 
 	stage.on("mouseup touchend", () => {
 		if (circle1 && !circle2 && Math.max(Math.abs(measureArrow.points()[0] - getSnapPos().x),
-			Math.abs(measureArrow.points()[1] - getSnapPos().y)) / blockSnapSize > 0) {
+			Math.abs(measureArrow.points()[1] - getSnapPos().y)) / blockSnapSize > 0)
 			addSecondCircle();
-		}
+
 	});
 }
 

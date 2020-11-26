@@ -7,9 +7,9 @@ export let out;
 
 export function draw(drawables) {
 	layer.clear();
-	for (let children of layer.children) {
+	for (let children of layer.children) 
 		children.remove();
-	}
+	
 
 	manageTransformerLayer();
 

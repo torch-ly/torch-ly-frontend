@@ -90,11 +90,11 @@ export function loadImage(character) {
 
 
 export function removeKonvaCharacter(characterID) {
-	for (let i = 0; i < out.length; i++) {
+	for (let i = 0; i < out.length; i++)
 		if (out[i].characterID == characterID) {
 			out.splice(i, 1);
 			draw(out);
 			return;
 		}
-	}
+
 }

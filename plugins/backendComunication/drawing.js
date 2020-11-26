@@ -51,9 +51,9 @@ export function getAllDrawingObjects() {
 	})
 		.then(({data}) => {
 			let objects = data.getAllDrawingObjects;
-			for (let object of objects) {
+			for (let object of objects) 
 				addDrawingObject(object);
-			}
+			
 		})
 		.catch(logError);
 }

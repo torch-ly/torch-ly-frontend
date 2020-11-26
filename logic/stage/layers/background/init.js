@@ -12,13 +12,13 @@ export function init() {
 
 	clearLayer();
 
-	for (let drawing of backgroundObjects) {
-		if (drawing.type === "rect") {
+	for (let drawing of backgroundObjects)
+		if (drawing.type === "rect")
 			loadRect(drawing);
-		} else if (drawing.type === "img") {
+		else if (drawing.type === "img")
 			loadImage(drawing);
-		}
-	}
+
+
 }
 
 export function updateJSON() {
@@ -33,7 +33,7 @@ export function updateJSON() {
 		let rotation = object.rotation();
 		object.rotation(0);
 
-		if (object instanceof Rect) {
+		if (object instanceof Rect)
 			backgroundObjects.push({
 				"pos": {
 					"x": object.x(),
@@ -47,7 +47,7 @@ export function updateJSON() {
 				"rotation": rotation
 			});
 
-		} else if (object instanceof KonvaImage) {
+		else if (object instanceof KonvaImage)
 
 			backgroundObjects.push({
 				"pos": {
@@ -62,7 +62,7 @@ export function updateJSON() {
 				"rotation": rotation
 			});
 
-		}
+
 	}
 	if (!backgroundChanged)
 		backgroundChanged = (oldBackgroundObjects != backgroundObjects);

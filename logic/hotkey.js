@@ -13,11 +13,11 @@ hotkeys("command+b,ctrl+b", () => {
 export function toggleLayer() {
 	store.commit("manu/setTool", tools.move);
 
-	if (store.state.manu.layer === "Background" || !store.state.authentication.gm) {
+	if (store.state.manu.layer === "Background" || !store.state.authentication.gm)
 		store.commit("manu/setLayer", "Token");
-	} else {
+	else
 		store.commit("manu/setLayer", "Background");
-	}
+
 }
 
 // Open Monster search

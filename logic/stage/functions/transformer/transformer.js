@@ -36,9 +36,9 @@ export function setNodesToTransformer(nodes) {
 	if (nodes.length === 1) {
 		if (nodes[0].characterID != null) {
 			store.commit("character/setSelectedCharacter", nodes[0].characterID);
-			for (let condition of nodes[0].conditions) {
+			for (let condition of nodes[0].conditions)
 				condition.moveToTop();
-			}
+
 		}
 
 		setMoveObjectByArrow(nodes[0]);
@@ -66,24 +66,24 @@ export function addTransformerToLayer(layer) {
 
 export function addTransformerClickListener(object) {
 	stage.on("click tap", (e) => {
-		if (store.state.manu.currentTool !== tools.move || e.evt.button === 2) {
+		if (store.state.manu.currentTool !== tools.move || e.evt.button === 2)
 			return;
-		}
+
 		manageTransformerLayer();
 
-		if (!Array.from(transformerLayer.children).includes(e.target)) {
+		if (!Array.from(transformerLayer.children).includes(e.target))
 			clearTransformerNodes();
-		} else if (Array.from(transformerLayer.children).includes(object) && store.state.manu.currentTool == tools.DEFAULT) { //is this object the target && is the object in the current layer of selection
+		else if (Array.from(transformerLayer.children).includes(object) && store.state.manu.currentTool == tools.DEFAULT) { //is this object the target && is the object in the current layer of selection
 
 			// do we pressed shift or ctrl?
 			const metaPressed = e.evt.shiftKey || e.evt.ctrlKey || e.evt.metaKey;
 			const isSelected = transformer.nodes().indexOf(e.target) >= 0;
 
-			if (!metaPressed && !isSelected) {
+			if (!metaPressed && !isSelected)
 				// if no key pressed and the node is not selected
 				// select just one
 				setNodesToTransformer([e.target]);
-			} else if (metaPressed && isSelected) {
+			else if (metaPressed && isSelected) {
 				// if we pressed keys and node was selected
 				// we need to remove it from selection:
 				const nodes = transformer.nodes().slice(); // use slice to have new copy of array
@@ -102,11 +102,11 @@ export function addTransformerClickListener(object) {
 
 export function selectToken(characterSelection) {
 	manageTransformerLayer();
-	for (let character of transformerLayer.children.filter(char => char instanceof KonvaImage)) {
-		if (character.characterID == characterSelection.id) {
+	for (let character of transformerLayer.children.filter(char => char instanceof KonvaImage))
+		if (character.characterID == characterSelection.id)
 			setNodesToTransformer([character]);
-		}
-	}
+
+
 	transformerLayer.batchDraw();
 }
 

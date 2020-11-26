@@ -7,7 +7,7 @@ import {loadImage} from "@/logic/stage/layers/token/init";
 export function updateCharacterAttrs(character) {
 	let oldCharacters = layer.children.filter(child => child instanceof KonvaImage);
 
-	for (let oldCharacter of oldCharacters) {
+	for (let oldCharacter of oldCharacters) 
 		if (oldCharacter.characterID === character.id) {
 			// There is an existing old Character
 
@@ -43,7 +43,7 @@ export function updateCharacterAttrs(character) {
 
 			return;
 		}
-	}
+	
 
 	// The character is new
 	loadImage(character);

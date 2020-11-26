@@ -8,11 +8,11 @@ export function enableZoom() {
 
 		let scaleBy = 0.95;
 		e.evt.preventDefault();
-		if (e.evt.deltaY > 0) {
+		if (e.evt.deltaY > 0)
 			zoomByScale(scaleBy);
-		} else {
+		else
 			zoomByScale(1 + (1 - scaleBy));
-		}
+
 	});
 
 	let lastCenter = null;
@@ -30,9 +30,9 @@ export function enableZoom() {
 		if (touch1 && touch2) {
 			// if the stage was under Konva's drag&drop
 			// we need to stop it, and implement our own pan logic with two pointers
-			if (stage.isDragging()) {
+			if (stage.isDragging())
 				stage.stopDrag();
-			}
+
 
 			let p1 = {
 				x: touch1.clientX,
@@ -51,9 +51,9 @@ export function enableZoom() {
 
 			let dist = getDistance(p1, p2);
 
-			if (!lastDist) {
+			if (!lastDist)
 				lastDist = dist;
-			}
+
 
 			// local coordinates of center point
 			let pointTo = {

@@ -7,9 +7,9 @@ export function addSnapToGridListener(objects) {
 			continue;
 
 		object.on("dragend transformend", () => {
-			if (object.snapToGrid) {
+			if (object.snapToGrid) 
 				snapToGrid(object);
-			}
+			
 		});
 	}
 }

@@ -19,9 +19,9 @@ export function setLayer(pLayer) {
 
 export function clearLayer() {
 	layer.clear();
-	for (let children of layer.children) {
+	for (let children of layer.children) 
 		children.remove();
-	}
+	
 	manageTransformerLayer();
 	layer.batchDraw();
 }

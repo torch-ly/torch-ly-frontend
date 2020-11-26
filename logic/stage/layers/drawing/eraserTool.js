@@ -60,9 +60,9 @@ export default function () {
 
 	stage.on("touchstart", (e) => {
 		try {
-			if (e.evt.touches[0].touchType == "direct") {
+			if (e.evt.touches[0].touchType == "direct")
 				stage.draggable(true);
-			}
+
 		} catch (e) {
 		}
 	});
@@ -75,22 +75,22 @@ export default function () {
 
 function destroyIntersectingObjects() {
 
-	for (let object of layer.children) {
-		if (object instanceof Konva.Line) {
+	for (let object of layer.children)
+		if (object instanceof Konva.Line)
 			destroyIntersectingLines(object);
-		} else if (object instanceof Konva.Circle) {
+		else if (object instanceof Konva.Circle)
 			destroyIntersectingCircle(object);
-		}
-	}
+
+
 }
 
 function destroyIntersectingLines(object) {
 	let points = object.points();
-	for (let i = 0; i < points.length - 2; i += 2) {
-		if (lineCrossesEraser([{x: points[i], y: points[i + 1]}, {x: points[i + 2], y: points[i + 3]}])) {
+	for (let i = 0; i < points.length - 2; i += 2)
+		if (lineCrossesEraser([{x: points[i], y: points[i + 1]}, {x: points[i + 2], y: points[i + 3]}]))
 			removeDrawing(object.objectID);
-		}
-	}
+
+
 }
 
 function destroyIntersectingCircle(object) {
@@ -98,9 +98,9 @@ function destroyIntersectingCircle(object) {
 
 	let distance = Math.sqrt(Math.pow(object.x() - pos.x, 2) + Math.pow(object.y() - pos.y, 2));
 
-	if (Math.abs(distance - object.radius()) < (eraserRect.width() * 3 / 4)) {
+	if (Math.abs(distance - object.radius()) < (eraserRect.width() * 3 / 4))
 		removeDrawing(object.objectID);
-	}
+
 }
 
 export function removeEraser() {
@@ -123,32 +123,30 @@ function lineCrossesEraser(points) {
 	];
 
 	for (let i = 0; i < 2; i++) {
-		if (points[i].y <= rectTop) {
+		if (points[i].y <= rectTop)
 			square[i][0] = 1;
-		} else if (points[i].y >= rectBottom) {
+		else if (points[i].y >= rectBottom)
 			square[i][1] = 1;
-		}
 
-		if (points[i].x <= rectLeft) {
+
+		if (points[i].x <= rectLeft)
 			square[i][3] = 1;
-		} else if (points[i].x >= rectRight) {
+		else if (points[i].x >= rectRight)
 			square[i][2] = 1;
-		}
+
 	}
 
-	if (JSON.stringify(square[0]) === JSON.stringify(square[1])) {
-		if (JSON.stringify(square[0]) === JSON.stringify([0, 0, 0, 0])) {
+	if (JSON.stringify(square[0]) === JSON.stringify(square[1]))
+		if (JSON.stringify(square[0]) === JSON.stringify([0, 0, 0, 0]))
 			return true;
-		} else {
+		else
 			return false;
-		}
-	}
 
-	for (let i = 0; i < 4; i++) {
-		if (square[0][i] === square[1][i] && square[0][i] === 1) {
+
+	for (let i = 0; i < 4; i++)
+		if (square[0][i] === square[1][i] && square[0][i] === 1)
 			return false;
-		}
-	}
+
 
 	return true;
 }

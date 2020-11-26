@@ -46,7 +46,7 @@ export function startLineMeasure() {
 
 		length();
 
-		if (arrow.currentlyDrawing) {
+		if (arrow.currentlyDrawing) 
 
 			if (store.state.manu.measureDetails.length === 0) {
 				arrow.visible(false);
@@ -60,7 +60,7 @@ export function startLineMeasure() {
 				arrow.visible(true);
 				circle.visible(false);
 			}
-		}
+		
 
 		layer.batchDraw();
 	});
@@ -80,9 +80,9 @@ export function startLineMeasure() {
 		let touch1 = e.evt.touches[0];
 		let touch2 = e.evt.touches[1];
 
-		if (touch1 && touch2) {
+		if (touch1 && touch2) 
 			newTouchCorner = true;
-		}
+		
 	});
 }
 
