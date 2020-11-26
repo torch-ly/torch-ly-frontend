@@ -41,13 +41,13 @@ export function updateConditionImagePosition(conditions, parentPos) {
 
 export function removeConditionImages(character) {
 	for (let condition of character.conditions) {
-		setOut(out.filter(object => object.conditionName != condition.conditionName));
+		setOut(out.filter(object => object.conditionName !== condition.conditionName));
 		condition.destroy();
 	}
 }
 
 export function updateConditionImages(characterID, conditions) {
-	let konvaCharacter = layer.children.filter(img => img.characterID == characterID)[0];
+	let konvaCharacter = layer.children.filter(img => img.characterID === characterID)[0];
 	removeConditionImages(konvaCharacter);
 	loadConditionImages(konvaCharacter, {
 		x: konvaCharacter.x(),

@@ -21,19 +21,19 @@ export function setCharacterAttrs(id, rot, size) {
 }
 
 export function addCharacter(character) {
-	if (character.pos.point.x == undefined)
+	if (character.pos.point.x == null)
 		character.pos.point.x = 0;
 	else
 		character.pos.point.x = parseInt(character.pos.point.x);
 
 
-	if (character.pos.point.y == undefined)
+	if (character.pos.point.y == null)
 		character.pos.point.y = 0;
 	else
 		character.pos.point.y = parseInt(character.pos.point.y);
 
 
-	if (character.pos.size != undefined)
+	if (character.pos.size != null)
 		character.pos.size = parseInt(character.pos.size);
 
 

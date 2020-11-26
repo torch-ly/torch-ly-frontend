@@ -47,9 +47,9 @@ export function init() {
 }
 
 export function manageTransformerLayer() {
-	if (store.state.manu.layer == "Background")
+	if (store.state.manu.layer === "Background")
 		addTransformerToLayer(background);
-	else if (store.state.manu.layer == "Token")
+	else if (store.state.manu.layer === "Token")
 		addTransformerToLayer(token);
 
 }

@@ -28,7 +28,7 @@ export function startLineMeasure() {
 		start = calculateSnapToGrid(getRelativePointerPosition(stage));
 
 		arrow = new Konva.Arrow({
-			points: [start.x, start.y, start.x, start.y],
+			points: [ start.x, start.y, start.x, start.y ],
 			pointerLength: 20,
 			pointerWidth: 20,
 			fill: "#4a5568",
@@ -56,7 +56,7 @@ export function startLineMeasure() {
 					visible: true
 				});
 			} else {
-				arrow.points([start.x, start.y, calculateSnapToGrid(getRelativePointerPosition(stage)).x, calculateSnapToGrid(getRelativePointerPosition(stage)).y]);
+				arrow.points([ start.x, start.y, calculateSnapToGrid(getRelativePointerPosition(stage)).x, calculateSnapToGrid(getRelativePointerPosition(stage)).y ]);
 				arrow.visible(true);
 				circle.visible(false);
 			}

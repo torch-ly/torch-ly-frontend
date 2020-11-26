@@ -150,7 +150,7 @@ export function createCircle() {
 			end = getRelativePointerPosition(stage);
 
 
-		selectionArrow.points([start.x, start.y, end.x, end.y]);
+		selectionArrow.points([ start.x, start.y, end.x, end.y ]);
 
 		layer.batchDraw();
 	});

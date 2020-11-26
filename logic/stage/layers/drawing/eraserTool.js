@@ -60,7 +60,7 @@ export default function () {
 
 	stage.on("touchstart", (e) => {
 		try {
-			if (e.evt.touches[0].touchType == "direct")
+			if (e.evt.touches[0].touchType === "direct")
 				stage.draggable(true);
 
 		} catch (e) {
@@ -87,7 +87,7 @@ function destroyIntersectingObjects() {
 function destroyIntersectingLines(object) {
 	let points = object.points();
 	for (let i = 0; i < points.length - 2; i += 2)
-		if (lineCrossesEraser([{x: points[i], y: points[i + 1]}, {x: points[i + 2], y: points[i + 3]}]))
+		if (lineCrossesEraser([ {x: points[i], y: points[i + 1]}, {x: points[i + 2], y: points[i + 3]} ]))
 			removeDrawing(object.objectID);
 
 
@@ -118,8 +118,8 @@ function lineCrossesEraser(points) {
 	let rectRight = eraserRect.x() + eraserRect.width();
 
 	let square = [
-		[0, 0, 0, 0],
-		[0, 0, 0, 0]
+		[ 0, 0, 0, 0 ],
+		[ 0, 0, 0, 0 ]
 	];
 
 	for (let i = 0; i < 2; i++) {
@@ -137,7 +137,7 @@ function lineCrossesEraser(points) {
 	}
 
 	if (JSON.stringify(square[0]) === JSON.stringify(square[1]))
-		if (JSON.stringify(square[0]) === JSON.stringify([0, 0, 0, 0]))
+		if (JSON.stringify(square[0]) === JSON.stringify([ 0, 0, 0, 0 ]))
 			return true;
 		else
 			return false;

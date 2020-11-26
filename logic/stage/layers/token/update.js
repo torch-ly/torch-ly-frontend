@@ -31,7 +31,7 @@ export function updateCharacterAttrs(character) {
 
 			oldCharacter.rotation(character.pos.rot);
 
-			/*updateConditionImagePosition(oldCharacter.conditions, {
+			/* updateConditionImagePosition(oldCharacter.conditions, {
         x: oldCharacter.x(),
         y: oldCharacter.y(),
         width: oldCharacter.width()

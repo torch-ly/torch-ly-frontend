@@ -37,10 +37,10 @@ module.exports = {
 		}
 	},
 	variants: {
-		borderWidth: ["responsive", "hover", "active"],
-		margin: ["responsive", "last"],
+		borderWidth: [ "responsive", "hover", "active" ],
+		margin: [ "responsive", "last" ],
 	},
 	purge: {
-		content: ["./**/*.vue"],
+		content: [ "./**/*.vue" ],
 	},
 };

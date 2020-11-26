@@ -3,7 +3,7 @@ import devices from "@/enums/devices";
 
 export const state = () => ({
 	device: getDevice(),
-	followDMScreen: false, //TODO implement to config page
+	followDMScreen: false, // TODO implement to config page
 	backendURL: getBackendUrl()
 });
 

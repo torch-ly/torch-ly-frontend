@@ -17,9 +17,9 @@ export default function () {
 
 	stage.on("mousedown touchstart", (e) => {
 		try {
-			if (e.evt.touches[0].touchType == "direct") 
+			if (e.evt.touches[0].touchType === "direct")
 				return;
-			
+
 		} catch (e) {
 		}
 
@@ -31,7 +31,7 @@ export default function () {
 		currentLine = new Konva.Line({
 			stroke: store.state.manu.freeDrawing.color,
 			strokeWidth: (store.state.manu.erase ? store.state.manu.freeDrawing.strokeWidth * 10 : store.state.manu.freeDrawing.strokeWidth),
-			points: [pos.x, pos.y],
+			points: [ pos.x, pos.y ],
 			globalCompositeOperation: "source-over",
 			listening: false
 		});
@@ -49,7 +49,7 @@ export default function () {
 
 		// If drawing, add new point to the current line object
 		let pos = getRelativePointerPosition(stage);
-		let newPoints = currentLine.points().concat([pos.x, pos.y]);
+		let newPoints = currentLine.points().concat([ pos.x, pos.y ]);
 
 		currentLine.points(newPoints);
 
@@ -71,9 +71,9 @@ export default function () {
 
 	stage.on("touchstart", (e) => {
 		try {
-			if (e.evt.touches[0].touchType == "direct") 
+			if (e.evt.touches[0].touchType === "direct")
 				stage.draggable(true);
-			
+
 		} catch (e) {
 		}
 	});
@@ -109,7 +109,7 @@ export function addDrawingObject(object) {
 
 export function removeDrawingObject(objectID) {
 	try {
-		layer.children.filter(object => object.objectID == objectID)[0].destroy();
+		layer.children.filter(object => object.objectID === objectID)[0].destroy();
 		layer.batchDraw();
 	} catch (e) {
 	}

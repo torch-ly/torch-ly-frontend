@@ -38,7 +38,7 @@ export function addSpanningPoints(measureObject, pUpdateMeasureObject) {
 
 	stage.on("mousemove touchmove", () => {
 		if (circle1 && !circle2) {
-			measureArrow.points([circle1.x(), circle1.y(), getSnapPos().x, getSnapPos().y]);
+			measureArrow.points([ circle1.x(), circle1.y(), getSnapPos().x, getSnapPos().y ]);
 			store.commit("manu/setMeasureLength", Math.max(Math.abs(measureArrow.points()[0] - measureArrow.points()[2]),
 				Math.abs(measureArrow.points()[1] - measureArrow.points()[3])) / blockSnapSize);
 			layer.batchDraw();
@@ -90,7 +90,7 @@ function addFirstCircle() {
 		draggable: true
 	});
 
-	measureArrow.points([circle1.x(), circle1.y()]);
+	measureArrow.points([ circle1.x(), circle1.y() ]);
 
 	circle1.on("dragmove", changeCircle1);
 	circle1.on("dragend", snapCircle1);
@@ -108,7 +108,7 @@ function addSecondCircle() {
 		draggable: true
 	});
 
-	measureArrow.points([circle1.x(), circle1.y(), circle2.x(), circle2.y()]);
+	measureArrow.points([ circle1.x(), circle1.y(), circle2.x(), circle2.y() ]);
 
 	updateOffset();
 

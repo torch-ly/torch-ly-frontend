@@ -65,14 +65,14 @@ export function updateJSON() {
 
 	}
 	if (!backgroundChanged)
-		backgroundChanged = (oldBackgroundObjects != backgroundObjects);
+		backgroundChanged = (oldBackgroundObjects !== backgroundObjects);
 }
 
 export function loadObject(object, snapToGrid) {
 	object.snapToGrid = snapToGrid;
 
 	addTransformerClickListener(object);
-	addSnapToGridListener([object]);
+	addSnapToGridListener([ object ]);
 
 	object.removeElement = () => {
 		object.destroy();

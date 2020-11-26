@@ -78,7 +78,7 @@ export function loadImage(character) {
 
 		addTransformerClickListener(image);
 
-		addSnapToGridListener([image]);
+		addSnapToGridListener([ image ]);
 
 		addTransformationListener(image);
 
@@ -91,7 +91,7 @@ export function loadImage(character) {
 
 export function removeKonvaCharacter(characterID) {
 	for (let i = 0; i < out.length; i++)
-		if (out[i].characterID == characterID) {
+		if (out[i].characterID === characterID) {
 			out.splice(i, 1);
 			draw(out);
 			return;

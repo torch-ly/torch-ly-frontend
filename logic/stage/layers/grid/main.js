@@ -12,7 +12,7 @@ export function draw(pLayer) {
 	line = new Konva.Line({
 		points: [],
 		stroke: "rgba(190,190,190,0.8)",
-		dash: [2, 10],
+		dash: [ 2, 10 ],
 		lineCap: "round",
 		strokeWidth: 2,
 		listening: false
@@ -49,7 +49,7 @@ function checkShapes() {
 
 	for (let x = startX; x < endX; x += blockSnapSize) {
 		clone = line.clone({
-			points: [x, startY, x, endY]
+			points: [ x, startY, x, endY ]
 		});
 		clone.perfectDrawEnabled(false);
 		clone.shadowForStrokeEnabled(false);
@@ -59,7 +59,7 @@ function checkShapes() {
 
 	for (let y = startY; y < endY; y += blockSnapSize) {
 		clone = line.clone({
-			points: [startX, y, endX, y]
+			points: [ startX, y, endX, y ]
 		});
 		clone.perfectDrawEnabled(false);
 		clone.shadowForStrokeEnabled(false);

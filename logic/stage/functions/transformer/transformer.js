@@ -14,7 +14,7 @@ export function createTransformer() {
 	transformer = new Konva.Transformer({
 		nodes: [],
 		visible: true,
-		rotationSnaps: [0, 90, 180, 270],
+		rotationSnaps: [ 0, 90, 180, 270 ],
 		rotationSnapTolerance: 10,
 		name: "transformer"
 	});
@@ -73,7 +73,7 @@ export function addTransformerClickListener(object) {
 
 		if (!Array.from(transformerLayer.children).includes(e.target))
 			clearTransformerNodes();
-		else if (Array.from(transformerLayer.children).includes(object) && store.state.manu.currentTool == tools.DEFAULT) { //is this object the target && is the object in the current layer of selection
+		else if (Array.from(transformerLayer.children).includes(object) && store.state.manu.currentTool === tools.DEFAULT) { // is this object the target && is the object in the current layer of selection
 
 			// do we pressed shift or ctrl?
 			const metaPressed = e.evt.shiftKey || e.evt.ctrlKey || e.evt.metaKey;
@@ -82,7 +82,7 @@ export function addTransformerClickListener(object) {
 			if (!metaPressed && !isSelected)
 				// if no key pressed and the node is not selected
 				// select just one
-				setNodesToTransformer([e.target]);
+				setNodesToTransformer([ e.target ]);
 			else if (metaPressed && isSelected) {
 				// if we pressed keys and node was selected
 				// we need to remove it from selection:
@@ -92,7 +92,7 @@ export function addTransformerClickListener(object) {
 				setNodesToTransformer(nodes);
 			} else if (metaPressed && !isSelected) {
 				// add the node into selection
-				const nodes = transformer.nodes().concat([e.target]);
+				const nodes = transformer.nodes().concat([ e.target ]);
 				setNodesToTransformer(nodes);
 			}
 		}
@@ -103,8 +103,8 @@ export function addTransformerClickListener(object) {
 export function selectToken(characterSelection) {
 	manageTransformerLayer();
 	for (let character of transformerLayer.children.filter(char => char instanceof KonvaImage))
-		if (character.characterID == characterSelection.id)
-			setNodesToTransformer([character]);
+		if (character.characterID === characterSelection.id)
+			setNodesToTransformer([ character ]);
 
 
 	transformerLayer.batchDraw();

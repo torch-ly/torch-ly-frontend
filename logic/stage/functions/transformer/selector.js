@@ -18,9 +18,9 @@ export function addSelectionRect() {
 	let x1, y1, x2, y2;
 	stage.on("mousedown", (e) => {
 		// do nothing if we mousedown on eny shape
-		if (e.evt.button !== 2) 
+		if (e.evt.button !== 2)
 			return;
-		
+
 
 		layer.add(selectionRectangle);
 
@@ -37,9 +37,9 @@ export function addSelectionRect() {
 
 	stage.on("mousemove", () => {
 		// no nothing if we didn't start selection
-		if (!selectionRectangle.visible()) 
+		if (!selectionRectangle.visible())
 			return;
-		
+
 		x2 = getRelativePointerPosition(stage).x;
 		y2 = getRelativePointerPosition(stage).y;
 
@@ -54,9 +54,9 @@ export function addSelectionRect() {
 
 	stage.on("mouseup", () => {
 		// no nothing if we didn't start selection
-		if (!selectionRectangle.visible()) 
+		if (!selectionRectangle.visible())
 			return;
-		
+
 		// update visibility in timeout, so we can check it in click event
 		setTimeout(() => {
 			selectionRectangle.visible(false);
@@ -64,7 +64,7 @@ export function addSelectionRect() {
 			layer.batchDraw();
 		});
 
-		let shapes = layer.children.filter((obj) => !(obj instanceof Transformer) && obj.id() != "selectionRect");
+		let shapes = layer.children.filter((obj) => !(obj instanceof Transformer) && obj.id() !== "selectionRect");
 		let box = selectionRectangle.getClientRect();
 		let selected = shapes.filter((shape) =>
 			Konva.Util.haveIntersection(box, shape.getClientRect())

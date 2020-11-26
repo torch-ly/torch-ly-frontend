@@ -33,7 +33,7 @@ export const mutations = {
 	},
 	setAuthID(state, authID) {
 		state.authID = authID;
-		if (authID == "")
+		if (authID === "")
 			delete localStorage["torch-ly-user"];
 		else
 			localStorage["torch-ly-user"] = authID;

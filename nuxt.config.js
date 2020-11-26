@@ -74,15 +74,15 @@ export default {
 		"@nuxtjs/dotenv",
 		"@nuxtjs/axios",
 		"@nuxtjs/pwa",
-		["nuxt-fontawesome", {
+		[ "nuxt-fontawesome", {
 			component: "fa",
 			imports: [
 				{
 					set: "@fortawesome/free-solid-svg-icons",
-					icons: ["fas"]
+					icons: [ "fas" ]
 				},
 			]
-		}]
+		} ]
 	],
 
 	server: {
