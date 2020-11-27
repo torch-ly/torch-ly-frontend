@@ -12,8 +12,8 @@ export function roll(dice) {
 
 export function dice_initialize() {
 	canvas = $t.id("canvas");
-	canvas.style.width = window.innerWidth - 1 + "px";
-	canvas.style.height = window.innerHeight - 1 + "px";
+	canvas.style.width = "100%";
+	canvas.style.height = "100%";
 
 	$t.dice.use_true_random = false;
 
@@ -22,8 +22,8 @@ export function dice_initialize() {
 	box.animate_selector = false;
 
 	$t.bind(window, "resize", function() {
-		canvas.style.width = window.innerWidth - 1 + "px";
-		canvas.style.height = window.innerHeight - 1 + "px";
+		canvas.style.width = "100%";
+		canvas.style.height = "100%";
 		box.reinit(canvas, { w: 500, h: 300 });
 	});
 

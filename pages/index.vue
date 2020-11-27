@@ -1,7 +1,15 @@
 <template>
 	<div>
-		<Table v-if="device !== devices.MOBILE" />
-		<Dice class="fixed top-0 left-0 h-screen w-screen" />
+		<div class="flex flex-row fixed top-0 left-0 h-screen w-screen justify-end">
+			<div class="flex-grow relative">
+				<Table
+					v-if="device !== devices.MOBILE"
+					class="absolute top-0 left-0 h-full w-full"
+				/>
+				<Dice class="absolute top-0 left-0 h-full w-full" />
+			</div>
+			<Overlay v-if="device === devices.DEFAULT" />
+		</div>
 
 
 		<Login v-if="device !== devices.TV" />
@@ -11,7 +19,6 @@
 		<FullscreenNotification class="hidden" />
 
 		<InitiativeTracker v-if="device !== devices.MOBILE" />
-		<Overlay v-if="device === devices.DEFAULT" />
 
 		<FloatingButtons v-if="device === devices.DEFAULT" />
 		<FloatingInfos v-if="device === devices.DEFAULT" />

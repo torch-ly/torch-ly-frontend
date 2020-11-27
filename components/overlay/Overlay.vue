@@ -1,6 +1,6 @@
 <template>
 	<div
-		class="h-screen fixed top-0 right-0 bg-gray-700 w-64 animate__animated animate__fadeInRight text-white overflow-y-auto"
+		class="h-screen bg-gray-700 w-64 animate__animated animate__fadeInRight text-white overflow-y-auto"
 	>
 		<MoveOverlay
 			v-show="currentTool === tools.move"
