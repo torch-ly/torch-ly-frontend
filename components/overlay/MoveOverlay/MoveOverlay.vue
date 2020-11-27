@@ -54,6 +54,7 @@
 import {clearTransformerNodes} from "../../../logic/stage/functions/transformer/transformer";
 import {stage} from "../../../logic/stage/main";
 import CharacterList from "./CharacterList/CharacterList";
+import {roll} from "@/logic/dice/main";
 
 export default {
 	components: {CharacterList},
@@ -92,7 +93,8 @@ export default {
 		},
 		openBackgroundLayerPopup() {
 			this.$root.$emit("open-background-layer-popup");
-		}
+		},
+		roll
 	}
 };
 </script>

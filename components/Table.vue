@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div id="table-div">
 		<div
 			id="container"
 			@contextmenu="$event.preventDefault()"
@@ -18,8 +18,8 @@ import {blockSnapSize} from "~/logic/stage/layers/grid/main";
 
 export default {
 	mounted() {
-		let width = window.innerWidth;
-		let height = window.innerHeight;
+		let width = document.getElementById("table-div").offsetWidth;
+		let height = document.getElementById("table-div").offsetHeight;
 		let stage = new Konva.Stage({
 			container: "container",
 			width: width,

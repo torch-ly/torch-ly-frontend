@@ -55,7 +55,9 @@ export default {
 	plugins: [
 		"logic/stage/main.js",
 		"plugins/backendComunication/backendComunication.js",
-		"logic/hotkey.js"
+		"logic/hotkey.js",
+		"logic/dice/teal.js",
+		"logic/dice/dice.js"
 	],
 
 	/*

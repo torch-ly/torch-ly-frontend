@@ -1,6 +1,16 @@
 <template>
 	<div>
-		<Table v-if="device !== devices.MOBILE" />
+		<div class="flex flex-row fixed top-0 left-0 h-screen w-screen justify-end">
+			<div class="flex-grow relative">
+				<Table
+					v-if="device !== devices.MOBILE"
+					class="absolute top-0 left-0 h-full w-full"
+				/>
+				<Dice class="absolute top-0 left-0 h-full w-full" />
+			</div>
+			<Overlay v-if="device === devices.DEFAULT" />
+		</div>
+
 
 		<Login v-if="device !== devices.TV" />
 
@@ -9,7 +19,6 @@
 		<FullscreenNotification class="hidden" />
 
 		<InitiativeTracker v-if="device !== devices.MOBILE" />
-		<Overlay v-if="device === devices.DEFAULT" />
 
 		<FloatingButtons v-if="device === devices.DEFAULT" />
 		<FloatingInfos v-if="device === devices.DEFAULT" />
@@ -50,9 +59,11 @@ import FullscreenNotification from "@/components/gui-components/FullscreenNotifi
 import Settings from "@/components/settings/Settings";
 import AddPlayersToCharacter from "@/components/popups/AddPlayersToCharacter";
 import AddCharacterConditions from "@/components/popups/AddCharacterConditions";
+import Dice from "@/components/Dice";
 
 export default {
 	components: {
+		Dice,
 		AddCharacterConditions,
 		AddPlayersToCharacter,
 		Overlay,
