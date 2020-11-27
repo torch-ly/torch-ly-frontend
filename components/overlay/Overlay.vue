@@ -43,7 +43,6 @@ export default {
 	},
 	data() {
 		return {
-			layerButtonAcive: false,
 			tools
 		};
 	},
@@ -54,14 +53,6 @@ export default {
 		...mapState({
 			currentTool: state => state.manu.currentTool
 		})
-	},
-	methods: {
-		dropdownChange(e) {
-			this.$store.commit("manu/setLayer", e.target.value);
-		},
-		clickErase() {
-			this.$store.commit("manu/setErase");
-		}
 	}
 };
 </script>
