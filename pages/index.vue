@@ -1,6 +1,8 @@
 <template>
 	<div>
 		<Table v-if="device !== devices.MOBILE" />
+		<Dice class="fixed top-0 left-0 h-screen w-screen" />
+
 
 		<Login v-if="device !== devices.TV" />
 
@@ -50,9 +52,11 @@ import FullscreenNotification from "@/components/gui-components/FullscreenNotifi
 import Settings from "@/components/settings/Settings";
 import AddPlayersToCharacter from "@/components/popups/AddPlayersToCharacter";
 import AddCharacterConditions from "@/components/popups/AddCharacterConditions";
+import Dice from "@/components/Dice";
 
 export default {
 	components: {
+		Dice,
 		AddCharacterConditions,
 		AddPlayersToCharacter,
 		Overlay,
