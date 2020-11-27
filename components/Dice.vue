@@ -12,7 +12,7 @@ import {clearBox, dice_initialize, roll} from "@/logic/dice/main";
 export default {
 	data() {
 		return {
-			diceActive: true
+			diceActive: false
 		};
 	},
 	computed: {
