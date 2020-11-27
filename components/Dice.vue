@@ -12,7 +12,7 @@ import {clearBox, dice_initialize, roll} from "@/logic/dice/main";
 export default {
 	data() {
 		return {
-			diceActive: false
+			diceActive: true
 		};
 	},
 	computed: {
@@ -31,6 +31,7 @@ export default {
 	},
 	mounted() {
 		dice_initialize(document.body);
+		this.diceActive = false;
 	},
 	methods: {
 		disableDice() {
