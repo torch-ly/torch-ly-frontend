@@ -1,10 +1,10 @@
-export let layer
+export let layer;
 
 export function setDrawLayer(pLayer) {
-  layer = pLayer;
+	layer = pLayer;
 }
 
 export function clearDrawing() {
-  layer.destroyChildren();
-  layer.batchDraw();
+	layer.destroyChildren();
+	layer.batchDraw();
 }

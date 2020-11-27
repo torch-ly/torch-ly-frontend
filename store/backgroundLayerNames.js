@@ -1,10 +1,10 @@
 export const state = () => ({
-  layers: null
-})
+	layers: null
+});
 
 export const mutations = {
-  setLayers(state, layers) {
-    state.layers = layers;
-  }
-}
+	setLayers(state, layers) {
+		state.layers = layers;
+	}
+};
 

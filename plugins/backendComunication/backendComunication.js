@@ -12,10 +12,10 @@ import {getInitiative, subscribeInitiative} from "@/plugins/backendComunication/
 import {getAllPlayers} from "@/plugins/backendComunication/player";
 import {subscribeRemoveCharacter} from "@/plugins/backendComunication/characters";
 import {
-  getAllDrawingObjects,
-  subscribeClearAllDrawings,
-  subscribeDrawing,
-  subscribeRemoveDrawing
+	getAllDrawingObjects,
+	subscribeClearAllDrawings,
+	subscribeDrawing,
+	subscribeRemoveDrawing
 } from "@/plugins/backendComunication/drawing";
 import {getBackendUrl} from "@/store/config";
 import {getAuthID} from "@/store/authentication";
@@ -28,70 +28,70 @@ let store = {};
 let authID = getAuthID();
 
 const client = new SubscriptionClient(GRAPHQL_ENDPOINT, {
-  reconnect: true,
-  connectionParams: {
-    authID: authID
-  },
-  connectionCallback: error => error && logError("WS connection error: ", error.message) // ToDo: catch in snackbar
+	reconnect: true,
+	connectionParams: {
+		authID: authID
+	},
+	connectionCallback: error => error && logError("WS connection error: ", error.message) // ToDo: catch in snackbar
 });
 
 const cache = new InMemoryCache();
 const link = new WebSocketLink(client);
 
 const defaultOptions = {
-  watchQuery: {
-    fetchPolicy: "no-cache",
-    errorPolicy: "ignore",
-  },
-  query: {
-    fetchPolicy: "no-cache",
-    errorPolicy: "all",
-  },
-}
+	watchQuery: {
+		fetchPolicy: "no-cache",
+		errorPolicy: "ignore",
+	},
+	query: {
+		fetchPolicy: "no-cache",
+		errorPolicy: "all",
+	},
+};
 
 export const apolloClient = new ApolloClient({
-  cache,
-  link,
-  defaultOptions
+	cache,
+	link,
+	defaultOptions
 });
 
 export default async function (context) {
-  store = context.store;
+	store = context.store;
 
-  getPlayer();
-  getAllPlayers();
+	getPlayer();
+	getAllPlayers();
 
-  loadCharacters();
-  subscribeCharacter();
-  subscribeRemoveCharacter();
+	loadCharacters();
+	subscribeCharacter();
+	subscribeRemoveCharacter();
 
-  getAllDrawingObjects();
-  subscribeDrawing();
-  subscribeRemoveDrawing();
-  subscribeClearAllDrawings();
+	getAllDrawingObjects();
+	subscribeDrawing();
+	subscribeRemoveDrawing();
+	subscribeClearAllDrawings();
 
-  updatePointTo();
+	updatePointTo();
 
-  if (store.state.config.device !== devices.MOBILE)
-    loadTable();
+	if (store.state.config.device !== devices.MOBILE)
+		loadTable();
 }
 
 function loadTable() {
-  loadBackground();
-  subscribeBackgroundLayer();
-  getBackgroundLayerNames();
+	loadBackground();
+	subscribeBackgroundLayer();
+	getBackgroundLayerNames();
 
-  getFogOfWar();
-  subscribeFogOfWar();
+	getFogOfWar();
+	subscribeFogOfWar();
 
-  getViewport();
-  subscribeViewport();
+	getViewport();
+	subscribeViewport();
 
-  getInitiative();
-  subscribeInitiative();
+	getInitiative();
+	subscribeInitiative();
 }
 
 export function logError(err) {
-  console.error(err)
-  store.commit("errors/addError", "GraphQL Error")
+	console.error(err);
+	store.commit("errors/addError", "GraphQL Error");
 }

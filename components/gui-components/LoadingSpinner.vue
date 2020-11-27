@@ -1,15 +1,15 @@
 <template>
-  <div class="lds-dual-ring"></div>
+	<div class="lds-dual-ring" />
 </template>
 <style scoped lang="scss">
-  .lds-dual-ring {
-    display: block;
-    width: 4rem;
-    height: 4rem;
-  }
+.lds-dual-ring {
+  display: block;
+  width: 4rem;
+  height: 4rem;
+}
 
-  .lds-dual-ring:after {
-    content: " ";
+.lds-dual-ring:after {
+  content: " ";
     display: block;
     width: 3rem;
     height: 3rem;

@@ -16,40 +16,40 @@ let measure;
 let fogofwar;
 
 export function init() {
-  background = new Konva.Layer();
-  grid = new Konva.Layer();
-  token = new Konva.Layer();
-  freeDrawing = new Konva.Layer();
-  fogofwar = new Konva.Layer();
-  measure = new Konva.Layer();
+	background = new Konva.Layer();
+	grid = new Konva.Layer();
+	token = new Konva.Layer();
+	freeDrawing = new Konva.Layer();
+	fogofwar = new Konva.Layer();
+	measure = new Konva.Layer();
 
-  stage.add(background);
-  stage.add(grid);
-  stage.add(token);
-  stage.add(freeDrawing);
-  stage.add(fogofwar);
-  stage.add(measure)
+	stage.add(background);
+	stage.add(grid);
+	stage.add(token);
+	stage.add(freeDrawing);
+	stage.add(fogofwar);
+	stage.add(measure);
 
-  createTransformer();
-  manageTransformerLayer();
+	createTransformer();
+	manageTransformerLayer();
 
-  drawBackground(background);
+	drawBackground(background);
 
-  drawGrid(grid);
+	drawGrid(grid);
 
-  drawToken(token);
+	drawToken(token);
 
-  setDrawLayer(freeDrawing);
+	setDrawLayer(freeDrawing);
 
-  setFogOfWarLayer(fogofwar);
+	setFogOfWarLayer(fogofwar);
 
-  drawMeasure(measure);
+	drawMeasure(measure);
 }
 
 export function manageTransformerLayer() {
-  if (store.state.manu.layer == "Background") {
-    addTransformerToLayer(background);
-  } else if (store.state.manu.layer == "Token") {
-    addTransformerToLayer(token);
-  }
+	if (store.state.manu.layer === "Background")
+		addTransformerToLayer(background);
+	else if (store.state.manu.layer === "Token")
+		addTransformerToLayer(token);
+
 }

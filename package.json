@@ -46,6 +46,8 @@
   },
   "devDependencies": {
     "@nuxt/types": "^0.7.9",
-    "@nuxtjs/tailwindcss": "^1.0.0"
+    "@nuxtjs/tailwindcss": "^1.0.0",
+    "eslint": "^7.14.0",
+    "eslint-plugin-vue": "^7.1.0"
   }
 }

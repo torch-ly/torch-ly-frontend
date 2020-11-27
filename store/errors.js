@@ -1,9 +1,9 @@
 export const state = () => ({
-  errors: new Set([])
-})
+	errors: new Set([])
+});
 
 export const mutations = {
-  addError(state, error) {
-    state.errors.add(error);
-  }
-}
+	addError(state, error) {
+		state.errors.add(error);
+	}
+};
