@@ -1,28 +1,28 @@
 <template>
-  <div class="flex flex-row mt-2">
-    <div class="flex items-center">
-      <label
-        class="switch"
-        @mousedown="onMouseDown"
-        @click.prevent
-      >
-        <input
-          ref="input"
-          :type="name ? 'radio' : 'checkbox'"
-          :name="name"
-          :checked="checked"
-        >
-        <span
-          class="slider round"
-          :class="{'inverted' : inverted}"
-        />
-      </label>
-    </div>
+	<div class="flex flex-row mt-2">
+		<div class="flex items-center">
+			<label
+				class="switch"
+				@mousedown="onMouseDown"
+				@click.prevent
+			>
+				<input
+					ref="input"
+					:type="name ? 'radio' : 'checkbox'"
+					:name="name"
+					:checked="checked"
+				>
+				<span
+					class="slider round"
+					:class="{'inverted' : inverted}"
+				/>
+			</label>
+		</div>
 
-    <div class="flex items-center ml-2 text-center">
-      {{ title }}
-    </div>
-  </div>
+		<div class="flex items-center ml-2 text-center">
+			{{ title }}
+		</div>
+	</div>
 </template>
 <script>
 export default {

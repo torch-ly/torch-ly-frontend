@@ -1,39 +1,39 @@
 <template>
-  <div>
-    <div
-      v-for="player in players"
-      :key="player.key"
-    >
-      <div
-        v-if="player.charactersOnStage > 0"
-        class="border rounded p-2 mb-2"
-      >
-        <div
-          class="flex flex-row justify-between select-none"
-          @click="player.active = !player.active"
-        >
-          <div>{{ player.object.name }}</div>
-          <div class="w-1/5 flex flex-row justify-between items-center">
-            {{ player.charactersOnStage }}
-            <fa
-              v-if="!player.active"
-              icon="caret-right"
-              class="active-icon"
-            />
-            <fa
-              v-else
-              icon="caret-down"
-              class="active-icon"
-            />
-          </div>
-        </div>
-        <MultipleCharacterView
-          v-if="player.active"
-          :player-i-d="player.object.id"
-        />
-      </div>
-    </div>
-  </div>
+	<div>
+		<div
+			v-for="player in players"
+			:key="player.key"
+		>
+			<div
+				v-if="player.charactersOnStage > 0"
+				class="border rounded p-2 mb-2"
+			>
+				<div
+					class="flex flex-row justify-between select-none"
+					@click="player.active = !player.active"
+				>
+					<div>{{ player.object.name }}</div>
+					<div class="w-1/5 flex flex-row justify-between items-center">
+						{{ player.charactersOnStage }}
+						<fa
+							v-if="!player.active"
+							icon="caret-right"
+							class="active-icon"
+						/>
+						<fa
+							v-else
+							icon="caret-down"
+							class="active-icon"
+						/>
+					</div>
+				</div>
+				<MultipleCharacterView
+					v-if="player.active"
+					:player-i-d="player.object.id"
+				/>
+			</div>
+		</div>
+	</div>
 </template>
 <script>
 import MultipleCharacterView from "@/components/overlay/MoveOverlay/CharacterList/MutlitpleCharacterView";
@@ -69,20 +69,20 @@ export default {
 		getCharactersByPlayerID,
 		generatePlayerArray() {
 
-			if (this.allPlayers == undefined)
+			if (this.allPlayers == null)
 				return;
 
-			let oldArray = [...this.players];
+			let oldArray = [ ...this.players ];
 			this.players = [];
 
 			for (let player of this.allPlayers) {
 
 				let wasActiveBeforeReset;
-				if (JSON.parse(JSON.stringify(oldArray.filter((char) => char.object.id === player.id))).length > 0) {
+				if (JSON.parse(JSON.stringify(oldArray.filter((char) => char.object.id === player.id))).length > 0)
 					wasActiveBeforeReset = JSON.parse(JSON.stringify(oldArray.filter((char) => char.object.id === player.id)))[0].active;
-				} else {
+				else
 					wasActiveBeforeReset = false;
-				}
+
 
 				this.players.push({
 					object: player,

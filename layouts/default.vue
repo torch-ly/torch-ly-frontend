@@ -1,5 +1,5 @@
 <template>
-  <nuxt />
+	<nuxt />
 </template>
 <script>
 import "animate.css/animate.min.css";

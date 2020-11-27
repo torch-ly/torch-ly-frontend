@@ -1,40 +1,40 @@
 <template>
-  <PopupContainer
-    ref="popupContainer"
-    title="Add Character"
-  >
-    <div class="grid grid-flow-row grid-cols-4 grid-rows-3 gap-4">
-      <div
-        v-for="condition in conditions"
-        :key="condition.key"
-        @click="activateCondition(condition.key)"
-      >
-        <div class="mb-2 text-white font-bold select-none">
-          {{ condition.name }}
-        </div>
-        <div class="flex flex-row">
-          <div class="flex justify-center items-center">
-            <input
-              v-model="condition.active"
-              type="checkbox"
-            >
-          </div>
-          <img
-            :src="condition.src"
-            width="50"
-            height="50"
-            class="ml-4"
-          >
-        </div>
-      </div>
-    </div>
-    <div
-      class="submit-button active:submit-button-active mt-5"
-      @click="saveConditions"
-    >
-      Save
-    </div>
-  </PopupContainer>
+	<PopupContainer
+		ref="popupContainer"
+		title="Add Character"
+	>
+		<div class="grid grid-flow-row grid-cols-4 grid-rows-3 gap-4">
+			<div
+				v-for="condition in conditions"
+				:key="condition.key"
+				@click="activateCondition(condition.key)"
+			>
+				<div class="mb-2 text-white font-bold select-none">
+					{{ condition.name }}
+				</div>
+				<div class="flex flex-row">
+					<div class="flex justify-center items-center">
+						<input
+							v-model="condition.active"
+							type="checkbox"
+						>
+					</div>
+					<img
+						:src="condition.src"
+						width="50"
+						height="50"
+						class="ml-4"
+					>
+				</div>
+			</div>
+		</div>
+		<div
+			class="submit-button active:submit-button-active mt-5"
+			@click="saveConditions"
+		>
+			Save
+		</div>
+	</PopupContainer>
 </template>
 
 <script>
@@ -66,34 +66,35 @@ export default {
 			this.conditions = [];
 			for (let condition of Object.keys(conditions)) {
 				let isActive = false;
-				for (let con of this.character.conditions) {
-					if (con == condition) {
+				for (let con of this.character.conditions) 
+					if (con === condition) {
 						isActive = true;
 						break;
 					}
-				}
-				if (isActive) { // character has this condition
+				
+
+				if (isActive)  // character has this condition
 					this.conditions.push({
 						src: conditions[condition],
 						name: condition,
 						active: true
 					});
-				} else {
+				else
 					this.conditions.push({
 						src: conditions[condition],
 						name: condition,
 						active: false
 					});
-				}
+
 			}
 		},
 		saveConditions() {
 			let activeConditions = [];
-			for (let condition of this.conditions) {
-				if (condition.active) {
+			for (let condition of this.conditions) 
+				if (condition.active)
 					activeConditions.push(condition.name);
-				}
-			}
+			
+
 
 			setCharacterConditions(this.character.id, activeConditions);
 			this.$root.$emit("close-character-conditions-popup");

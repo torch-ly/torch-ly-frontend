@@ -61,19 +61,44 @@
             "error",
             "always",
             {
-                "exceptions": ["-", "+", "*"]
+                "exceptions": [
+                    "-",
+                    "+",
+                    "*"
+                ]
             }
         ],
-        "no-duplicate-imports": "error"
+        "no-duplicate-imports": "error",
+        "vue/html-indent": [
+            "error",
+            "tab",
+            {
+                "attribute": 1,
+                "baseIndent": 1,
+                "closeBracket": 0,
+                "alignAttributesVertically": true,
+                "ignores": []
+            }
+        ]
     },
     "overrides": [
         {
-            "files": ["sw.js"],
+            "files": [
+                "sw.js"
+            ],
             "rules": {
                 "no-unused-vars": "off",
                 "semi": "off",
                 "indent": "off",
                 "quotes": "off"
+            }
+        },
+        {
+            "files": [
+                ".vue"
+            ],
+            "rules": {
+                "eqeqeq": "error"
             }
         }
     ]

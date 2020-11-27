@@ -1,16 +1,16 @@
 <template>
-  <div>
-    <div class="hr mb-4" />
+	<div>
+		<div class="hr mb-4" />
 
-    <SingleCharacterView v-if="$store.state.character.selectedCharacter !== ''" />
+		<SingleCharacterView v-if="$store.state.character.selectedCharacter !== ''" />
 
-    <MultipleCharacterView
-      v-else-if="getCharactersByPlayerID(currentPlayer).length !== 0 && !isGM"
-      :player-i-d="currentPlayer"
-    />
+		<MultipleCharacterView
+			v-else-if="getCharactersByPlayerID(currentPlayer).length !== 0 && !isGM"
+			:player-i-d="currentPlayer"
+		/>
 
-    <GMCharacterView v-else-if="isGM" />
-  </div>
+		<GMCharacterView v-else-if="isGM" />
+	</div>
 </template>
 
 <script>
@@ -22,9 +22,6 @@ import {getCharactersByPlayerID} from "@/plugins/utils/characterHelper";
 export default {
 	components: {GMCharacterView, SingleCharacterView, MultipleCharacterView},
 	computed: {
-		allCharacters() {
-			return this.$store.state.character.characters;
-		},
 		isGM() {
 			return this.$store.state.authentication.gm;
 		},

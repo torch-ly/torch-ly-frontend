@@ -1,12 +1,12 @@
 <template>
-  <div>
-    <div
-      id="container"
-      @contextmenu="$event.preventDefault()"
-      @drop.prevent="drop"
-      @dragover.prevent=""
-    />
-  </div>
+	<div>
+		<div
+			id="container"
+			@contextmenu="$event.preventDefault()"
+			@drop.prevent="drop"
+			@dragover.prevent=""
+		/>
+	</div>
 </template>
 
 <script>
@@ -53,13 +53,12 @@ export default {
 			}
 
 			let ac = 0;
-			if (Object.prototype.hasOwnProperty.call(monster, "ac")) {
-				if (monster.ac.length > 0 && monster.ac[0].ac) {
+			if (Object.prototype.hasOwnProperty.call(monster, "ac"))
+				if (monster.ac.length > 0 && monster.ac[0].ac)
 					ac = monster.ac[0].ac;
-				} else {
+				else
 					ac = monster.ac;
-				}
-			}
+
 
 			let character = {
 				name: monster.name,
@@ -71,7 +70,7 @@ export default {
 					},
 					size
 				},
-				player: [this.$store.state.authentication.playerID],
+				player: [ this.$store.state.authentication.playerID ],
 				details: {
 					hp: Object.prototype.hasOwnProperty.call(monster, "hp") && Object.prototype.hasOwnProperty.call(monster, "average") ? monster.hp.average : 0,
 					ac: ac,

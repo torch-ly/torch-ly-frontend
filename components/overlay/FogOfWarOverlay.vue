@@ -1,61 +1,61 @@
 <template>
-  <div>
-    <ToggleBox
-      title="Insert / Delete"
-      inverted
-      @update:checked="setInsert(!$event); deleteMode = $event"
-    />
+	<div>
+		<ToggleBox
+			title="Insert / Delete"
+			inverted
+			@update:checked="setInsert(!$event); deleteMode = $event"
+		/>
 
-    <button
-      v-if="deleteMode"
-      class="submit-button active:submit-button-active mt-2"
-      @click="DeletePolygon"
-    >
-      Delete
-    </button>
-    <button
-      v-else
-      class="submit-button active:submit-button-active mt-2"
-      @click="InsertPolygon"
-    >
-      Insert
-    </button>
+		<button
+			v-if="deleteMode"
+			class="submit-button active:submit-button-active mt-2"
+			@click="DeletePolygon"
+		>
+			Delete
+		</button>
+		<button
+			v-else
+			class="submit-button active:submit-button-active mt-2"
+			@click="InsertPolygon"
+		>
+			Insert
+		</button>
 
-    <button
-      class="submit-button active:submit-button-active mt-2"
-      @click="syncronize"
-    >
-      Syncronize FogOfWar
-    </button>
+		<button
+			class="submit-button active:submit-button-active mt-2"
+			@click="syncronize"
+		>
+			Syncronize FogOfWar
+		</button>
 
-    <ToggleBox
-      title="Snap to Grid"
-      @update:checked="setSnapToGrid($event)"
-    />
+		<ToggleBox
+			title="Snap to Grid"
+			@update:checked="setSnapToGrid($event)"
+		/>
 
-    <button
-      class="submit-button active:submit-button-active mt-2"
-      @click="resetFogOfWar"
-    >
-      Clear FogOfWar
-    </button>
+		<button
+			class="submit-button active:submit-button-active mt-2"
+			@click="resetFogOfWar"
+		>
+			Clear FogOfWar
+		</button>
 
-    <ToggleBox
-      title="See Through Fog Of war"
-      checked
-      @update:checked="setTransparent($event)"
-    />
-  </div>
+		<ToggleBox
+			title="See Through Fog Of war"
+			checked
+			@update:checked="setTransparent($event)"
+		/>
+	</div>
 </template>
 <script>
 import {
-  DeletePolygon,
-  InsertPolygon,
-  resetFogOfWar,
-  setInsert,
-  setSnapToGrid,
-  setTransparent,
-  syncronize
+	DeletePolygon,
+	InsertPolygon,
+	resetFogOfWar,
+	setInsert,
+	setSnapToGrid,
+	setTransparent,
+	syncronize
 } from "../../logic/stage/layers/fogofwar/main";
 import ToggleBox from "@/components/gui-components/ToggleBox";
 
