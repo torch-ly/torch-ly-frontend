@@ -48,9 +48,6 @@
 				Select Map
 			</button>
 		</div>
-		<button @click="$store.commit('dice/roll', '2d20')">
-			Roll
-		</button>
 	</div>
 </template>
 <script>
