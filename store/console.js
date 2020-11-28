@@ -14,16 +14,20 @@ export const mutations = {
 	},
 	openConsolePopup(state, value) {
 		state.openConsolePopup = value;
+	},
+	clearConsole(state) {
+		console.log(state);
+		state.log = [];
 	}
 };
 
 export const actions = {
 	execute({commit}, command) {
-		commit("executeCommand", command);
 		commit("addLog", {
 			type: "command",
 			value: command
 		});
+		commit("executeCommand", command);
 	},
 	addToLog({commit}, data) {
 		commit("addLog", {
