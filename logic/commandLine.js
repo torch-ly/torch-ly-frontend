@@ -37,6 +37,17 @@ function parameterHelper(command) {
 
 }
 
+function bindParameterToFunction(parameters, func, ...args) {
+	if (!args.length)
+		args.push("default");
+
+	for (let arg of args)
+		if (Object.prototype.hasOwnProperty.call(parameters, arg))
+			for (let param of parameters[arg])
+				func(param);
+
+}
+
 function roll(parameters) {
 	store.commit("dice/roll", parameters.default.reduce((a, b) => a + "+" + b));
 }
