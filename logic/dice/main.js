@@ -1,6 +1,7 @@
 "use strict";
 
 import {$t} from "@/logic/dice/teal";
+import {store} from "@/logic/stage/main";
 
 export let box;
 
@@ -41,7 +42,14 @@ function before_roll(vectors, notation, callback) {
 
 function after_roll(notation, result) {
 
-	console.info(notation, result);
+	store.dispatch("console/addToLog", {
+		type: "roll-response",
+		log: JSON.stringify(result)
+			.replace("[", "")
+			.replace("]", "")
+	});
+
+	console.info(1, notation, JSON.parse(JSON.stringify(result)));
 }
 
 function parse_notation(notation) {

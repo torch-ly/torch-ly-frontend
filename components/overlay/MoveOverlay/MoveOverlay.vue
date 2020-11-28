@@ -1,54 +1,55 @@
 <template>
-	<div>
-		<!-- Drop down for layer selection -->
-		<select
-			v-if="gm"
-			ref="layerdropdown"
-			:value="currentLayer"
-			class="dropdown"
-			@input="dropdownChange"
-			@load="dropdownChange"
-		>
-			<option>Background</option>
-			<option>Token</option>
-		</select>
+    <div>
+        <!-- Drop down for layer selection -->
+        <select
+            v-if="gm"
+            ref="layerdropdown"
+            :value="currentLayer"
+            class="dropdown"
+            @input="dropdownChange"
+            @load="dropdownChange"
+        >
+            <option>Background</option>
+            <option>Token</option>
+        </select>
 
-		<div
-			v-if="gm"
-			class="hr"
-		/>
+        <div
+            v-if="gm"
+            class="hr"
+        />
 
-		<div v-if="currentLayer === 'Token'">
-			<!-- Button for adding Character-->
-			<button
-				class="submit-button active:submit-button-active mb-4 mt-4"
-				@click="openTokenPopup"
-			>
-				Add Character
-			</button>
+        <div v-if="currentLayer === 'Token'">
+            <!-- Button for adding Character-->
+            <button
+                class="submit-button active:submit-button-active mb-4 mt-4"
+                @click="openTokenPopup"
+            >
+                Add Character
+            </button>
 
-			<CharacterList />
-		</div>
+            <CharacterList />
 
-		<!-- Input fields to change attributes of objects in background layer (only active if background layer is selected) -->
-		<div v-if="currentLayer === 'Background'">
-			<button
-				class="submit-button active:submit-button-active mt-4"
-				@click="openBackgroundPopup"
-			>
-				Add Shape or Image
-			</button>
+        </div>
 
-			<div class="hr mt-4" />
+        <!-- Input fields to change attributes of objects in background layer (only active if background layer is selected) -->
+        <div v-if="currentLayer === 'Background'">
+            <button
+                class="submit-button active:submit-button-active mt-4"
+                @click="openBackgroundPopup"
+            >
+                Add Shape or Image
+            </button>
 
-			<button
-				class="submit-button active:submit-button-active mb-4 mt-4"
-				@click="openBackgroundLayerPopup"
-			>
-				Select Map
-			</button>
-		</div>
-	</div>
+            <div class="hr mt-4" />
+
+            <button
+                class="submit-button active:submit-button-active mb-4 mt-4"
+                @click="openBackgroundLayerPopup"
+            >
+                Select Map
+            </button>
+        </div>
+    </div>
 </template>
 <script>
 import {clearTransformerNodes} from "../../../logic/stage/functions/transformer/transformer";

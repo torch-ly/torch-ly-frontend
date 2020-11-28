@@ -1,12 +1,12 @@
 <template>
-	<div id="table-div">
-		<div
-			id="container"
-			@contextmenu="$event.preventDefault()"
-			@drop.prevent="drop"
-			@dragover.prevent=""
-		/>
-	</div>
+    <div id="table-div">
+        <div
+            id="container"
+            @contextmenu="$event.preventDefault()"
+            @drop.prevent="drop"
+            @dragover.prevent=""
+        />
+    </div>
 </template>
 
 <script>

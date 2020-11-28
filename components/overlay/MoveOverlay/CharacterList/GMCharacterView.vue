@@ -1,39 +1,39 @@
 <template>
-	<div>
-		<div
-			v-for="player in players"
-			:key="player.key"
-		>
-			<div
-				v-if="player.charactersOnStage > 0"
-				class="border rounded p-2 mb-2"
-			>
-				<div
-					class="flex flex-row justify-between select-none"
-					@click="player.active = !player.active"
-				>
-					<div>{{ player.object.name }}</div>
-					<div class="w-1/5 flex flex-row justify-between items-center">
-						{{ player.charactersOnStage }}
-						<fa
-							v-if="!player.active"
-							icon="caret-right"
-							class="active-icon"
-						/>
-						<fa
-							v-else
-							icon="caret-down"
-							class="active-icon"
-						/>
-					</div>
-				</div>
-				<MultipleCharacterView
-					v-if="player.active"
-					:player-i-d="player.object.id"
-				/>
-			</div>
-		</div>
-	</div>
+    <div>
+        <div
+            v-for="player in players"
+            :key="player.key"
+        >
+            <div
+                v-if="player.charactersOnStage > 0"
+                class="border rounded p-2 mb-2"
+            >
+                <div
+                    class="flex flex-row justify-between select-none"
+                    @click="player.active = !player.active"
+                >
+                    <div>{{ player.object.name }}</div>
+                    <div class="w-1/5 flex flex-row justify-between items-center">
+                        {{ player.charactersOnStage }}
+                        <fa
+                            v-if="!player.active"
+                            icon="caret-right"
+                            class="active-icon"
+                        />
+                        <fa
+                            v-else
+                            icon="caret-down"
+                            class="active-icon"
+                        />
+                    </div>
+                </div>
+                <MultipleCharacterView
+                    v-if="player.active"
+                    :player-i-d="player.object.id"
+                />
+            </div>
+        </div>
+    </div>
 </template>
 <script>
 import MultipleCharacterView from "@/components/overlay/MoveOverlay/CharacterList/MutlitpleCharacterView";

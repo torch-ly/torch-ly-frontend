@@ -1,29 +1,29 @@
 <template>
-	<div>
-		<div
-			class="text-white select-none"
-			@click="toggleActive"
-		>
-			<!-- title which uses default value when not provided -->
-			<h3 class="text-lg text-bold mb-2 inline-block">
-				{{ title }}
-			</h3>
+    <div>
+        <div
+            class="text-white select-none"
+            @click="toggleActive"
+        >
+            <!-- title which uses default value when not provided -->
+            <h3 class="text-lg text-bold mb-2 inline-block">
+                {{ title }}
+            </h3>
 
-			<fa
-				v-if="!active"
-				icon="caret-right"
-				class="advanced-icon"
-			/>
-			<fa
-				v-else
-				icon="caret-down"
-				class="advanced-icon"
-			/>
-		</div>
+            <fa
+                v-if="!active"
+                icon="caret-right"
+                class="advanced-icon"
+            />
+            <fa
+                v-else
+                icon="caret-down"
+                class="advanced-icon"
+            />
+        </div>
 
-		<!-- advanced options shown when active is true -->
-		<slot v-if="active" />
-	</div>
+        <!-- advanced options shown when active is true -->
+        <slot v-if="active" />
+    </div>
 </template>
 <script>
 export default {

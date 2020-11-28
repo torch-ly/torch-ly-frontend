@@ -1,38 +1,38 @@
 <template>
-	<div class="bg-primary text-white  mb-0 rounded-lg shadow-lg h-auto">
-		<div class="w-full flex flex-column justify-center">
-			<img
-				class="w-48 h-48 p-4 mr-0"
-				:src="character.token"
-			>
-			<p class="p-4 flex text-lg md:text-xl items-center text-left">
-				{{ character.name }}
-			</p>
-		</div>
+    <div class="bg-primary text-white  mb-0 rounded-lg shadow-lg h-auto">
+        <div class="w-full flex flex-column justify-center">
+            <img
+                class="w-48 h-48 p-4 mr-0"
+                :src="character.token"
+            >
+            <p class="p-4 flex text-lg md:text-xl items-center text-left">
+                {{ character.name }}
+            </p>
+        </div>
 
-		<div class="grid gap-3 grid-cols-3 text-center p-3">
-			<!-- Create arrows for movement-control -->
-			<div
-				v-for="arrow in arrows"
-				:key="arrow.id"
-				class="flex justify-center items-center hover:bg-accent active:bg-accent rounded-full h-12"
-				@click="click(arrow.id, character)"
-			>
-				<fa
-					v-if="arrow.id !== 4"
-					:icon="arrow"
-					class="text-white text-3xl w-4 h-4"
-					:class="{'rotate-45': [0,2,6,8].includes(arrow.id)}"
-				/>
+        <div class="grid gap-3 grid-cols-3 text-center p-3">
+            <!-- Create arrows for movement-control -->
+            <div
+                v-for="arrow in arrows"
+                :key="arrow.id"
+                class="flex justify-center items-center hover:bg-accent active:bg-accent rounded-full h-12"
+                @click="click(arrow.id, character)"
+            >
+                <fa
+                    v-if="arrow.id !== 4"
+                    :icon="arrow"
+                    class="text-white text-3xl w-4 h-4"
+                    :class="{'rotate-45': [0,2,6,8].includes(arrow.id)}"
+                />
 
-				<div v-else>
-					<p class="text-2xl select-none">
-						{{ displacement }}
-					</p>
-				</div>
-			</div>
-		</div>
-	</div>
+                <div v-else>
+                    <p class="text-2xl select-none">
+                        {{ displacement }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 <script>
 import {setCharacterPosition} from "@/plugins/backendComunication/characters";
