@@ -34,13 +34,17 @@ hotkeys("command+s,ctrl+s", (event) => {
 	event.preventDefault();
 });
 
-hotkeys("Delete,Backspace", () => {
-	deleteSelectedDrawingObjects();
-});
+hotkeys("Delete,Backspace", deleteSelectedDrawingObjects);
 
 hotkeys("esc", clearTransformerNodes);
 
 hotkeys("command+f,ctrl+f", (event) => {
 	event.preventDefault();
 	setViewport();
+});
+
+
+// open console
+hotkeys("command+space,ctrl+space", () => {
+	store.commit("console/openConsolePopup", true);
 });

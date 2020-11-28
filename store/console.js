@@ -1,7 +1,8 @@
 import {parseCommand} from "@/logic/commandLine";
 
 export const state = () => ({
-	log: []
+	log: [],
+	openConsolePopup: false,
 });
 
 export const mutations = {
@@ -10,6 +11,9 @@ export const mutations = {
 	},
 	addLog(state, log) {
 		state.log.push(log);
+	},
+	openConsolePopup(state, value) {
+		state.openConsolePopup = value;
 	}
 };
 

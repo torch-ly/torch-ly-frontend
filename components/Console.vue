@@ -1,19 +1,23 @@
 <template>
 	<div>
-
-		<div>
+		<div class="bg-white text-black rounded-top">
 			<div
 				v-for="log in consoleLog"
 				:key="log.key"
 			>
-				<div :class="{'text-right' : log.type !== 'command'}">{{log.value}}</div>
+				<div
+					class="px-2"
+					:class="{'text-right' : log.type !== 'command'}"
+				>
+					{{ log.value }}
+				</div>
 			</div>
 		</div>
 
-		<div class="flex bg-white rounded p-1">
+		<div class="flex bg-white rounded-bottom p-1">
 			<input
-				class="text-black flex-grow outline-none"
 				v-model="command"
+				class="text-black flex-grow outline-none"
 				type="text"
 				placeholder="Command input"
 				@keypress.enter="execute"
@@ -36,6 +40,11 @@ export default {
 			command: ""
 		};
 	},
+	computed: {
+		consoleLog() {
+			return this.$store.state.console.log;
+		}
+	},
 	methods: {
 		...mapActions({
 			executeCommand: "console/execute"
@@ -45,10 +54,5 @@ export default {
 			this.command = "";
 		}
 	},
-	computed: {
-		consoleLog() {
-			return this.$store.state.console.log;
-		}
-	}
 };
 </script>

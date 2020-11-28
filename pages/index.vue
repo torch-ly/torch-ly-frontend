@@ -28,6 +28,7 @@
 		<SelectBackgroundLayer v-if="device === devices.DEFAULT" />
 		<AddPlayersToCharacter v-if="device === devices.DEFAULT" />
 		<AddCharacterConditions v-if="device === devices.DEFAULT" />
+		<ConsolePopup />
 		<MobileMovement v-if="device === devices.MOBILE" />
 
 		<div
@@ -60,9 +61,11 @@ import Settings from "@/components/settings/Settings";
 import AddPlayersToCharacter from "@/components/popups/AddPlayersToCharacter";
 import AddCharacterConditions from "@/components/popups/AddCharacterConditions";
 import Dice from "@/components/Dice";
+import ConsolePopup from "@/components/popups/ConsolePopup";
 
 export default {
 	components: {
+		ConsolePopup,
 		Dice,
 		AddCharacterConditions,
 		AddPlayersToCharacter,
