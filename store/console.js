@@ -16,7 +16,6 @@ export const mutations = {
 		state.openConsolePopup = value;
 	},
 	clearConsole(state) {
-		console.log(state);
 		state.log = [];
 	}
 };

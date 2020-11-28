@@ -28,7 +28,6 @@
             </button>
 
             <CharacterList />
-
         </div>
 
         <!-- Input fields to change attributes of objects in background layer (only active if background layer is selected) -->

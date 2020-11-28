@@ -1,6 +1,6 @@
 <template>
     <div class="bg-background min-h-screen overflow-scroll">
-        <h1 class="text-center text-black mb-4 mt-8 text-2xl font-bold">
+        <h1 class="text-center text-black mb-4 mt-8 text-2xl font-bold select-none">
             Character overview of {{ $store.state.authentication.name }}
         </h1>
 

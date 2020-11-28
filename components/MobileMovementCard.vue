@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-primary text-white  mb-0 rounded-lg shadow-lg h-auto">
+    <div class="bg-primary text-white  mb-0 rounded-lg shadow-lg h-auto select-none noDoubleTapZoom">
         <div class="w-full flex flex-column justify-center">
             <img
                 class="w-48 h-48 p-4 mr-0"
@@ -13,16 +13,16 @@
         <div class="grid gap-3 grid-cols-3 text-center p-3">
             <!-- Create arrows for movement-control -->
             <div
-                v-for="arrow in arrows"
+                v-for="(arrow, index) in arrows"
                 :key="arrow.id"
                 class="flex justify-center items-center hover:bg-accent active:bg-accent rounded-full h-12"
-                @click="click(arrow.id, character)"
+                @click="click(index, character)"
             >
                 <fa
-                    v-if="arrow.id !== 4"
+                    v-if="index !== 4"
                     :icon="arrow"
                     class="text-white text-3xl w-4 h-4"
-                    :class="{'rotate-45': [0,2,6,8].includes(arrow.id)}"
+                    :class="{'rotate-45': [0,2,6,8].includes(index)}"
                 />
 
                 <div v-else>
@@ -122,6 +122,7 @@ export default {
 				this.moves.push(index);
 
 			this.displacement = this.moves.length * 5;
+
 		},
 	}
 };
@@ -130,4 +131,8 @@ export default {
 .rotate-45 {
   transform: rotate(45deg);
 }
+.noDoubleTapZoom {
+	touch-action: manipulation;
+}
+
 </style>

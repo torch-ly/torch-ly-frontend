@@ -1,14 +1,14 @@
 <template>
     <div>
-        <div class="flex flex-row fixed top-0 left-0 h-screen w-screen justify-end">
+        <div
+            v-if="device === devices.DEFAULT"
+            class="flex flex-row fixed top-0 left-0 h-screen w-screen justify-end"
+        >
             <div class="flex-grow relative">
-                <Table
-                    v-if="device !== devices.MOBILE"
-                    class="absolute top-0 left-0 h-full w-full"
-                />
+                <Table class="absolute top-0 left-0 h-full w-full" />
                 <Dice class="absolute top-0 left-0 h-full w-full" />
             </div>
-            <Overlay v-if="device === devices.DEFAULT" />
+            <Overlay />
         </div>
 
 
@@ -30,7 +30,6 @@
         <AddCharacterConditions v-if="device === devices.DEFAULT" />
         <ConsolePopup />
         <MobileMovement v-if="device === devices.MOBILE" />
-
         <div
             v-show="visible"
             class="w-full h-full fixed top-0 left-0 bg-gray-700 flex justify-center items-center select-none"
@@ -115,15 +114,20 @@ export default {
 </script>
 <style>
 .font-10xl {
-  font-size: 6rem;
+	font-size: 6rem;
 }
 
 .mirrored {
-  -moz-transform: scaleX(-1); /* Gecko */
-  -o-transform: scaleX(-1); /* Opera */
-  -webkit-transform: scaleX(-1); /* Webkit */
-  transform: scaleX(-1); /* Standard */
+	-moz-transform: scaleX(-1); /* Gecko */
+	-o-transform: scaleX(-1); /* Opera */
+	-webkit-transform: scaleX(-1); /* Webkit */
+	transform: scaleX(-1); /* Standard */
 
-  filter: FlipH; /* IE 6/7/8 */
+	filter: FlipH; /* IE 6/7/8 */
 }
+
+body {
+	touch-action: manipulation;
+}
+
 </style>
