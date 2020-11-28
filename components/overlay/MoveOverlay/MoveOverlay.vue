@@ -29,7 +29,6 @@
 
             <CharacterList />
 
-            <Console />
         </div>
 
         <!-- Input fields to change attributes of objects in background layer (only active if background layer is selected) -->
@@ -57,10 +56,9 @@ import {clearTransformerNodes} from "../../../logic/stage/functions/transformer/
 import {stage} from "../../../logic/stage/main";
 import CharacterList from "./CharacterList/CharacterList";
 import {roll} from "@/logic/dice/main";
-import Console from "@/components/Console";
 
 export default {
-	components: {CharacterList, Console},
+	components: {CharacterList},
 	data() {
 		return {
 			tokens: []
