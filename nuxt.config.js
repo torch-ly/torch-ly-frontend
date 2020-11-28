@@ -58,7 +58,7 @@ export default {
 		"logic/hotkey.js",
 		"logic/dice/teal.js",
 		"logic/dice/dice.js",
-		"logic/commandLine.js"
+		"logic/commandLine/commandLine.js"
 	],
 
 	/*

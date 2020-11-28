@@ -1,23 +1,11 @@
-import {store} from "@/logic/stage/main";
-
-export function parseCommand(command) {
-
-	command = command.toLocaleString();
-
-	commandPattern(command, roll, "/roll", "/r" );
-
-	commandPattern(command, () => store.commit("console/clearConsole"), "/clear" );
-
-}
-
-function commandPattern(command, func, ...args) {
+export function commandPattern(command, func, ...args) {
 	for (let arg of args)
 		if (command.startsWith(arg + " ") || command === arg)
 			func(parameterHelper(command.replace(arg + " ", "")));
 
 }
 
-function parameterHelper(command) {
+export function parameterHelper(command) {
 	let parameters = {};
 	let lastCommand = "default";
 
@@ -25,8 +13,11 @@ function parameterHelper(command) {
 		if (part.charAt(0) === "-")
 			if (part.charAt(1) === "-")
 				lastCommand = part.substring(2);
-			else
+
+			else if (part.length === 2)
 				lastCommand = part.substring(1);
+			else
+				console.error("Unknown parameter type \"" + part + "\". Please use --help to get help with this command.");
 
 		else if (!parameters[lastCommand])
 			parameters[lastCommand] = [ part ];
@@ -37,18 +28,11 @@ function parameterHelper(command) {
 
 }
 
-function bindParameterToFunction(parameters, func, ...args) {
+export function bindParameterToFunction(parameters, func, ...args) {
 	if (!args.length)
 		args.push("default");
 
 	for (let arg of args)
 		if (Object.prototype.hasOwnProperty.call(parameters, arg))
-			for (let param of parameters[arg])
-				func(param);
-
+			func(parameters[arg]);
 }
-
-function roll(parameters) {
-	store.commit("dice/roll", parameters.default.reduce((a, b) => a + "+" + b));
-}
-

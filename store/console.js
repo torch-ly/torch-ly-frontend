@@ -1,4 +1,4 @@
-import {parseCommand} from "@/logic/commandLine";
+import {parseCommand} from "@/logic/commandLine/commandLine";
 
 export const state = () => ({
 	log: [],
