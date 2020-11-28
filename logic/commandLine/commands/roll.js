@@ -9,6 +9,8 @@ export function roll(parameters) {
 
 	bindParameterToFunction(parameters, disadvantage, "d", "disadvantage");
 
+	bindParameterToFunction(parameters, help, "h", "help");
+
 }
 
 function _default(parameters) {
@@ -21,4 +23,11 @@ function advantage() {
 
 function disadvantage() {
 	console.warn("Disadvantage is currently not supported.");
+}
+
+function help() {
+	store.dispatch("console/addToLog", {
+		type: "help",
+		log: "/roll [number]d[sides]. Use -a or -d to use advantage or disadvantage (currently not supported)"
+	});
 }

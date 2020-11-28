@@ -11,12 +11,13 @@ export function parameterHelper(command) {
 
 	for (let part of command.split(" "))
 		if (part.charAt(0) === "-")
-			if (part.charAt(1) === "-")
+			if (part.charAt(1) === "-") {
 				lastCommand = part.substring(2);
-
-			else if (part.length === 2)
+				parameters[lastCommand] = [];
+			} else if (part.length === 2) {
 				lastCommand = part.substring(1);
-			else
+				parameters[lastCommand] = [];
+			} else
 				console.error("Unknown parameter type \"" + part + "\". Please use --help to get help with this command.");
 
 		else if (!parameters[lastCommand])
