@@ -70,7 +70,7 @@
         "no-duplicate-imports": "error",
         "vue/html-indent": [
             "error",
-            "tab",
+            4,
             {
                 "attribute": 1,
                 "baseIndent": 1,

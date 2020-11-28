@@ -1,75 +1,75 @@
 <template>
-	<div
-		v-if="initiative.length > 0"
-		class="fixed top-0 right-0 text-white p-6 bg-gray-800 bg-opacity-50 h-fit max-h-screen rounded-bl animate__animated animate__fadeInRight"
-		:class="marginClass()"
-	>
-		<div
-			class="container block transition-height duration-500 overflow-hidden"
-			:style="{'--height': initiative.length * 14 / 4 + 'rem'}"
-			:class="{'h-28-important' : !fullList}"
-		>
-			<draggable
-				v-model="newInitiative"
-				class="select-none"
-				tag="ul"
-				v-bind="dragOptions"
-				@start="drag = true"
-				@end="drag = false"
-			>
-				<transition-group
-					v-if="characters.length > 0"
-					type="transition"
-					:name="!drag ? 'flip-list' : null"
-				>
-					<li
-						v-for="(init, index) in newInitiative"
-						:key="init.id"
-						class="mb-4 flex flex-row justify-between items-center"
-						:class="{'text-lg' : index === 0}"
-					>
-						<div class="flex flex-row items-center w-auto">
-							<img
-								:src="getCharacterByID(init.id).token"
-								class="w-10 h-10 mr-2"
-							>
-							<span class="block font-bold max-h-10">{{ getCharacterByID(init.id).name }}</span>
-						</div>
-						<div class="ml-2">
-							{{ init.value }}
-						</div>
-					</li>
-				</transition-group>
-			</draggable>
-		</div>
+    <div
+        v-if="initiative.length > 0"
+        class="fixed top-0 right-0 text-white p-6 bg-gray-800 bg-opacity-50 h-fit max-h-screen rounded-bl animate__animated animate__fadeInRight"
+        :class="marginClass()"
+    >
+        <div
+            class="container block transition-height duration-500 overflow-hidden"
+            :style="{'--height': initiative.length * 14 / 4 + 'rem'}"
+            :class="{'h-28-important' : !fullList}"
+        >
+            <draggable
+                v-model="newInitiative"
+                class="select-none"
+                tag="ul"
+                v-bind="dragOptions"
+                @start="drag = true"
+                @end="drag = false"
+            >
+                <transition-group
+                    v-if="characters.length > 0"
+                    type="transition"
+                    :name="!drag ? 'flip-list' : null"
+                >
+                    <li
+                        v-for="(init, index) in newInitiative"
+                        :key="init.id"
+                        class="mb-4 flex flex-row justify-between items-center"
+                        :class="{'text-lg' : index === 0}"
+                    >
+                        <div class="flex flex-row items-center w-auto">
+                            <img
+                                :src="getCharacterByID(init.id).token"
+                                class="w-10 h-10 mr-2"
+                            >
+                            <span class="block font-bold max-h-10">{{ getCharacterByID(init.id).name }}</span>
+                        </div>
+                        <div class="ml-2">
+                            {{ init.value }}
+                        </div>
+                    </li>
+                </transition-group>
+            </draggable>
+        </div>
 
-		<div class="flex flex-end justify-between flex-row-reverse text-3xl">
-			<fa
-				icon="angle-up"
-				class="block icon transition duration-500 transform"
-				:class="{'rotate-180' : !fullList}"
-				@click="fullList = !fullList"
-			/>
-			<fa
-				icon="trash"
-				class="block text-2xl icon"
-				:class="buttonVisibility()"
-				@click="$store.commit('character/setInitiativeOrder', [])"
-			/>
-			<fa
-				icon="arrow-right"
-				class="block icon"
-				:class="buttonVisibility()"
-				@click="$store.commit('character/nextTurn')"
-			/>
-			<fa
-				icon="sort"
-				class="block text-2xl icon"
-				:class="buttonVisibility()"
-				@click="$store.commit('character/orderInitiative')"
-			/>
-		</div>
-	</div>
+        <div class="flex flex-end justify-between flex-row-reverse text-3xl">
+            <fa
+                icon="angle-up"
+                class="block icon transition duration-500 transform"
+                :class="{'rotate-180' : !fullList}"
+                @click="fullList = !fullList"
+            />
+            <fa
+                icon="trash"
+                class="block text-2xl icon"
+                :class="buttonVisibility()"
+                @click="$store.commit('character/setInitiativeOrder', [])"
+            />
+            <fa
+                icon="arrow-right"
+                class="block icon"
+                :class="buttonVisibility()"
+                @click="$store.commit('character/nextTurn')"
+            />
+            <fa
+                icon="sort"
+                class="block text-2xl icon"
+                :class="buttonVisibility()"
+                @click="$store.commit('character/orderInitiative')"
+            />
+        </div>
+    </div>
 </template>
 <script>
 import draggable from "vuedraggable";

@@ -1,48 +1,48 @@
 <template>
-	<PopupContainer
-		ref="popupContainer"
-		title="Select Map"
-		class="select-none"
-	>
-		<div
-			v-for="layer of layerNames"
-			:key="layer.key"
-			class="p-4 text-white text-lg hover:bg-primary-light rounded flex justify-between flex-row"
-			@click="layerSelection(layer)"
-		>
-			{{ layer.name }}
-			<div v-if="layer.selected">
-				<fa
-					icon="check"
-					class="w-4"
-				/>
-			</div>
-			<div
-				v-else
-				@click.stop="removeLayer(layer)"
-			>
-				<fa
-					icon="trash"
-					:class="{'text-accent': layerToRemove === layer}"
-					class="w-4"
-				/>
-			</div>
-		</div>
-		<div class="w-full flex flex-row justify-between items-center h-10 p-4 mt-4">
-			<div class="w-11/12 inline-block">
-				<input
-					v-model="newLayerName"
-					placeholder="Map Name"
-					class="input-field"
-				>
-			</div>
-			<fa
-				icon="plus"
-				class="text-white inline-block hover:text-accent w-4"
-				@click="addLayer"
-			/>
-		</div>
-	</PopupContainer>
+    <PopupContainer
+        ref="popupContainer"
+        title="Select Map"
+        class="select-none"
+    >
+        <div
+            v-for="layer of layerNames"
+            :key="layer.key"
+            class="p-4 text-white text-lg hover:bg-primary-light rounded flex justify-between flex-row"
+            @click="layerSelection(layer)"
+        >
+            {{ layer.name }}
+            <div v-if="layer.selected">
+                <fa
+                    icon="check"
+                    class="w-4"
+                />
+            </div>
+            <div
+                v-else
+                @click.stop="removeLayer(layer)"
+            >
+                <fa
+                    icon="trash"
+                    :class="{'text-accent': layerToRemove === layer}"
+                    class="w-4"
+                />
+            </div>
+        </div>
+        <div class="w-full flex flex-row justify-between items-center h-10 p-4 mt-4">
+            <div class="w-11/12 inline-block">
+                <input
+                    v-model="newLayerName"
+                    placeholder="Map Name"
+                    class="input-field"
+                >
+            </div>
+            <fa
+                icon="plus"
+                class="text-white inline-block hover:text-accent w-4"
+                @click="addLayer"
+            />
+        </div>
+    </PopupContainer>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 <template>
-	<div class="lds-dual-ring" />
+    <div class="lds-dual-ring" />
 </template>
 <style scoped lang="scss">
 .lds-dual-ring {

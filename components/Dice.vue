@@ -1,10 +1,10 @@
 <template>
-	<div
-		v-show="diceActive"
-		@click="disableDice"
-	>
-		<div id="canvas" />
-	</div>
+    <div
+        v-show="diceActive"
+        @click="disableDice"
+    >
+        <div id="canvas" />
+    </div>
 </template>
 <script>
 import {clearBox, dice_initialize, roll} from "@/logic/dice/main";

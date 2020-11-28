@@ -1,10 +1,10 @@
 <template>
-	<PopupContainer
-		ref="popupContainer"
-		title="Console"
-	>
-		<Console />
-	</PopupContainer>
+    <PopupContainer
+        ref="popupContainer"
+        title="Console"
+    >
+        <Console />
+    </PopupContainer>
 </template>
 <script>
 import PopupContainer from "../gui-components/PopupContainer";

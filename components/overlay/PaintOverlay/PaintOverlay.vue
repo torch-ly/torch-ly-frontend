@@ -1,43 +1,43 @@
 <template>
-	<div>
-		<BrushSelector />
+    <div>
+        <BrushSelector />
 
-		<hr class="my-4">
+        <hr class="my-4">
 
-		<ToggleBox
-			title="Eraser"
-			name="brush"
-			@update:checked="$event ? setTool(drawTools.eraser) : setTool(drawTools.pen)"
-		/>
+        <ToggleBox
+            title="Eraser"
+            name="brush"
+            @update:checked="$event ? setTool(drawTools.eraser) : setTool(drawTools.pen)"
+        />
 
-		<button
-			class="submit-button active:submit-button-active mt-2"
-			@click="clearAllDrawings"
-		>
-			Clear all
-		</button>
+        <button
+            class="submit-button active:submit-button-active mt-2"
+            @click="clearAllDrawings"
+        >
+            Clear all
+        </button>
 
-		<hr class="my-4">
+        <hr class="my-4">
 
-		<div class="flex flex-col">
-			<ToggleBox
-				title="Snap Shapes To Grid"
-				@update:checked="$store.commit('manu/setDrawingObjectSnapToGrid', $event)"
-			/>
+        <div class="flex flex-col">
+            <ToggleBox
+                title="Snap Shapes To Grid"
+                @update:checked="$store.commit('manu/setDrawingObjectSnapToGrid', $event)"
+            />
 
-			<ToggleBox
-				title="Rectangle"
-				name="brush"
-				@update:checked="$event ? setTool(drawTools.rectangle) : setTool(drawTools.pen)"
-			/>
+            <ToggleBox
+                title="Rectangle"
+                name="brush"
+                @update:checked="$event ? setTool(drawTools.rectangle) : setTool(drawTools.pen)"
+            />
 
-			<ToggleBox
-				title="Circle"
-				name="brush"
-				@update:checked="$event ? setTool(drawTools.circle) : setTool(drawTools.pen)"
-			/>
-		</div>
-	</div>
+            <ToggleBox
+                title="Circle"
+                name="brush"
+                @update:checked="$event ? setTool(drawTools.circle) : setTool(drawTools.pen)"
+            />
+        </div>
+    </div>
 </template>
 <script>
 import BrushSelector from "./BrushSelector";

@@ -1,57 +1,57 @@
 <template>
-	<div>
-		<!-- Shows length of last measurement -->
-		<p class="text-lg font-bold mb-4">
-			Length: {{ getLength }}
-		</p>
+    <div>
+        <!-- Shows length of last measurement -->
+        <p class="text-lg font-bold mb-4">
+            Length: {{ getLength }}
+        </p>
 
-		<!-- Options for changing units and size per square -->
-		<AdvancedOptions>
-			<input
-				v-model="boxSize"
-				type="number"
-				class="input-field"
-				@change="submitUnitChange"
-			>
+        <!-- Options for changing units and size per square -->
+        <AdvancedOptions>
+            <input
+                v-model="boxSize"
+                type="number"
+                class="input-field"
+                @change="submitUnitChange"
+            >
 
-			<input
-				v-model="unitEnding"
-				type="text"
-				class="input-field mt-2"
-				@change="submitUnitChange"
-			>
+            <input
+                v-model="unitEnding"
+                type="text"
+                class="input-field mt-2"
+                @change="submitUnitChange"
+            >
 
-			<div
-				class="p-2 mt-2"
-				@click="restoreDefault"
-			>
-				<fa
-					icon="undo"
-					class="mx-auto block"
-				/>
-			</div>
-		</AdvancedOptions>
+            <div
+                class="p-2 mt-2"
+                @click="restoreDefault"
+            >
+                <fa
+                    icon="undo"
+                    class="mx-auto block"
+                />
+            </div>
+        </AdvancedOptions>
 
-		<ToggleBox
-			title="Circle measure"
-			name="measureTool"
-			@update:checked="$event ? setTool(measureTools.circle) : setTool(measureTools.line)"
-		/>
+        <ToggleBox
+            title="Circle measure"
+            name="measureTool"
+            @update:checked="$event ? setTool(measureTools.circle) : setTool(measureTools.line)"
+        />
 
-		<ToggleBox
-			title="Cone measure"
-			name="measureTool"
-			@update:checked="$event ? setTool(measureTools.cone) : setTool(measureTools.line)"
-		/>
+        <ToggleBox
+            title="Cone measure"
+            name="measureTool"
+            @update:checked="$event ? setTool(measureTools.cone) : setTool(measureTools.line)"
+        />
 
-		<button
-			v-show="savableMeasureToolActive"
-			class="submit-button active:submit-button-active mt-2"
-			@click="saveMeasureAsPainting"
-		>
-			Save as drawing
-		</button>
-	</div>
+        <button
+            v-show="savableMeasureToolActive"
+            class="submit-button active:submit-button-active mt-2"
+            @click="saveMeasureAsPainting"
+        >
+            Save as drawing
+        </button>
+    </div>
 </template>
 
 <script>

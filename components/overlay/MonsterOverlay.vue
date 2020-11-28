@@ -1,68 +1,68 @@
 <template>
-	<div class="relative h-screen">
-		<div class="w-full absolute p-6 bg-gray-700">
-			<input
-				ref="input"
-				v-model="searchTerm"
-				class="w-full input-field"
-				placeholder="Search..."
-				autofocus
-				@keyup="atChange"
-			>
-		</div>
+    <div class="relative h-screen">
+        <div class="w-full absolute p-6 bg-gray-700">
+            <input
+                ref="input"
+                v-model="searchTerm"
+                class="w-full input-field"
+                placeholder="Search..."
+                autofocus
+                @keyup="atChange"
+            >
+        </div>
 
-		<div
-			v-if="!noMonsters"
-			class="h-full w-full pt-24"
-		>
-			<div class="block w-full h-full overflow-auto px-6">
-				<div
-					v-for="monster in monsters"
-					v-show="monster.visible"
-					:key="monster.key"
-					class="overflow-auto my-2 mx-1"
-				>
-					<div class="flex justify-between">
-						<a
-							:href="monsterUrl(monster.name)"
-							target="_blank"
-							:title="monster.name"
-							draggable="true"
-							@dragstart="drag($event, monster)"
-						>{{ monster.name }}</a>
-						<!--fa icon="angle-down"></fa-->
-						<div
-							class="select-none px-2 py-1"
-							@click="expandMonster(monster)"
-						>
-							<div
-								class="transition duration-200 transform "
-								:class="{'-rotate-90' : !monster.details}"
-							>
-								▼
-							</div>
-						</div>
-					</div>
-					<div
-						v-if="monster.details"
-						class="bg-gray-600 p-1 rounded animate__animated animate__fadeInDown animate__faster"
-					>
-						{{ generateHPString(monster) }}
-					</div>
-				</div>
-			</div>
-		</div>
+        <div
+            v-if="!noMonsters"
+            class="h-full w-full pt-24"
+        >
+            <div class="block w-full h-full overflow-auto px-6">
+                <div
+                    v-for="monster in monsters"
+                    v-show="monster.visible"
+                    :key="monster.key"
+                    class="overflow-auto my-2 mx-1"
+                >
+                    <div class="flex justify-between">
+                        <a
+                            :href="monsterUrl(monster.name)"
+                            target="_blank"
+                            :title="monster.name"
+                            draggable="true"
+                            @dragstart="drag($event, monster)"
+                        >{{ monster.name }}</a>
+                        <!--fa icon="angle-down"></fa-->
+                        <div
+                            class="select-none px-2 py-1"
+                            @click="expandMonster(monster)"
+                        >
+                            <div
+                                class="transition duration-200 transform "
+                                :class="{'-rotate-90' : !monster.details}"
+                            >
+                                ▼
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        v-if="monster.details"
+                        class="bg-gray-600 p-1 rounded animate__animated animate__fadeInDown animate__faster"
+                    >
+                        {{ generateHPString(monster) }}
+                    </div>
+                </div>
+            </div>
+        </div>
 
-		<div
-			v-else
-			class="flex justify-center items-center p-6 pt-24"
-		>
-			<p class="font-xl font-bold text-center">
-				Hm - wo sind die Monster hin...?
-			</p>
-			<!--fa icon="monster"></fa-->
-		</div>
-	</div>
+        <div
+            v-else
+            class="flex justify-center items-center p-6 pt-24"
+        >
+            <p class="font-xl font-bold text-center">
+                Hm - wo sind die Monster hin...?
+            </p>
+            <!--fa icon="monster"></fa-->
+        </div>
+    </div>
 </template>
 <script>
 import {getMonsters} from "@/plugins/backendComunication/monster";

@@ -1,30 +1,30 @@
 <template>
-	<div>
-		<form
-			v-if="url.length === 0"
-			class="flex flex-row text-white"
-			@submit.prevent="submit"
-		>
-			<input
-				id="image-file"
-				type="file"
-				name="image"
-				class="w-2/3 mt-1"
-			>
-			<input
-				type="submit"
-				class="bg-accent-light p-2 font-bold rounded text-center select-none w-1/3"
-				:disabled="uploading"
-				value="Upload Image"
-			>
-		</form>
-		<a
-			v-else
-			:href="imageUrl"
-			target="_blank"
-			class="text-lg mx-auto block text-white text-center font-bold italic"
-		>{{ url }}</a>
-	</div>
+    <div>
+        <form
+            v-if="url.length === 0"
+            class="flex flex-row text-white"
+            @submit.prevent="submit"
+        >
+            <input
+                id="image-file"
+                type="file"
+                name="image"
+                class="w-2/3 mt-1"
+            >
+            <input
+                type="submit"
+                class="bg-accent-light p-2 font-bold rounded text-center select-none w-1/3"
+                :disabled="uploading"
+                value="Upload Image"
+            >
+        </form>
+        <a
+            v-else
+            :href="imageUrl"
+            target="_blank"
+            class="text-lg mx-auto block text-white text-center font-bold italic"
+        >{{ url }}</a>
+    </div>
 </template>
 <script>
 export default {
