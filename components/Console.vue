@@ -6,7 +6,7 @@
 				v-for="log in consoleLog"
 				:key="log.key"
 			>
-				<div :class="{'text-left' : log.type !== 'command'}">{{log.value}}</div>
+				<div :class="{'text-right' : log.type !== 'command'}">{{log.value}}</div>
 			</div>
 		</div>
 

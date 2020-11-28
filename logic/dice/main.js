@@ -42,9 +42,14 @@ function before_roll(vectors, notation, callback) {
 
 function after_roll(notation, result) {
 
-	store.dispatch("console/addToLog", {type: "roll-response", log: JSON.stringify(result)});
+	store.dispatch("console/addToLog", {
+		type: "roll-response",
+		log: JSON.stringify(result)
+			.replace("[", "")
+			.replace("]", "")
+	});
 
-	console.info(notation, JSON.parse(JSON.stringify(result)));
+	console.info(1, notation, JSON.parse(JSON.stringify(result)));
 }
 
 function parse_notation(notation) {

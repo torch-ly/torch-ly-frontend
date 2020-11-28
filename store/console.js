@@ -22,7 +22,6 @@ export const actions = {
 		});
 	},
 	addToLog({commit}, data) {
-		console.log(data.type, data.log);
 		commit("addLog", {
 			type: data.type,
 			value: data.log
