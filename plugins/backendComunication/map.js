@@ -1,6 +1,5 @@
 import {apolloClient, logError} from "~/plugins/backendComunication/backendComunication";
 import {setBackgroundObjects} from "~/logic/stage/layers/background/init";
-import {clearTransformerNodes} from "@/logic/stage/functions/transformer/transformer";
 import gql from "graphql-tag";
 import {store} from "~/logic/stage/main";
 
@@ -76,9 +75,8 @@ export function subscribeBackgroundLayer() {
             }
 		`
 	}).subscribe({
-		next({data}) {
-			clearTransformerNodes();
-			setBackgroundObjects(data.updateBackgroundLayer.layer);
+		next() {
+			location.reload();
 		}
 	});
 }
