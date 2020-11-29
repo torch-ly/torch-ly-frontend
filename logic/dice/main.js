@@ -3,7 +3,7 @@
 import {$t} from "@/logic/dice/teal";
 import {store} from "@/logic/stage/main";
 
-export let box;
+export let box, query;
 
 let canvas;
 
@@ -42,17 +42,38 @@ function before_roll(vectors, notation, callback) {
 
 function after_roll(notation, result) {
 
+	let out = [];
+
+	let index = 0;
+
+	for (let element of query.split("+"))
+		if (element.charAt(0) === "a" || element.charAt(0) === "m")
+			out.push({
+				type: element.charAt(0),
+				value: [ result[ index++ ], result[ index++ ] ]
+			});
+		else
+			out.push({
+				type: "n",
+				value: [ result[ index++ ] ]
+			});
+
 	store.dispatch("console/addToLog", {
 		type: "roll-response",
-		log: JSON.stringify(result)
-			.replace("[", "")
-			.replace("]", "")
+		log: JSON.stringify(out)
 	});
 
-	console.info(1, notation, JSON.parse(JSON.stringify(result)));
 }
 
 function parse_notation(notation) {
+
+	query = notation;
+
+	const regex = /(?<type>[a,m])1d(?<sides>\d+)/gm;
+	const subst = "$<type>1d$<sides>+1d$<sides>+";
+
+	notation = notation.replace(regex, subst);
+
 	let dice_types = [ "d4", "d6", "d8", "d10", "d12", "d20", "d100" ];
 	let no = notation.split("@");
 	let dr0 = /\s*(\d*)([a-z]+)(\d+)(\s*(\+|-)\s*(\d+)){0,1}\s*(\+|$)/gi;
