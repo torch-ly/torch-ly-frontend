@@ -65,6 +65,24 @@
                 <div
                     class="w-48 text-center bg-red-300 uppercase text-white text-sm p-1 rounded font-bold  animate__animated animate__fadeIn animate__fast"
                 >
+                    Dice Popup
+                </div>
+
+                <fa
+                    slot="reference"
+                    icon="dice-d20"
+                    class="button active:border-2"
+                    @click="$root.$emit('open-dice-popup');"
+                />
+            </popper>
+
+            <popper
+                trigger="hover"
+                :options="popperOptions"
+            >
+                <div
+                    class="w-48 text-center bg-red-300 uppercase text-white text-sm p-1 rounded font-bold  animate__animated animate__fadeIn animate__fast"
+                >
                     Fog of War
                 </div>
 

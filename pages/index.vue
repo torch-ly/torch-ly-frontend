@@ -29,6 +29,7 @@
         <AddPlayersToCharacter v-if="device === devices.DEFAULT" />
         <AddCharacterConditions v-if="device === devices.DEFAULT" />
         <ConsolePopup />
+        <DicePopup />
         <MobileMovement v-if="device === devices.MOBILE" />
         <div
             v-show="visible"
@@ -61,9 +62,11 @@ import AddPlayersToCharacter from "@/components/popups/AddPlayersToCharacter";
 import AddCharacterConditions from "@/components/popups/AddCharacterConditions";
 import Dice from "@/components/Dice";
 import ConsolePopup from "@/components/popups/ConsolePopup";
+import DicePopup from "@/components/popups/DicePopup";
 
 export default {
 	components: {
+		DicePopup,
 		ConsolePopup,
 		Dice,
 		AddCharacterConditions,
