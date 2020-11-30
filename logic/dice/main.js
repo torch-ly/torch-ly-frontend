@@ -47,16 +47,30 @@ function after_roll(notation, result) {
 	let index = 0;
 
 	for (let element of query.split("+"))
-		if (element.charAt(0) === "a" || element.charAt(0) === "m")
-			out.push({
-				type: element.charAt(0),
-				value: [ result[ index++ ], result[ index++ ] ]
-			});
-		else
-			out.push({
-				type: "n",
-				value: [ result[ index++ ] ]
-			});
+		if (!element.includes("1d100")) // the d100 is managed within the d10
+			if (element.charAt(0) === "a" || element.charAt(0) === "m")
+				if (element.charAt(1) === "z") { // dice is a d100 with advantage
+					out.push({
+						type: element.charAt(0),
+						value: [ [ result[ index], result[ index + 2 ] ],
+							[ result[ index + 1 ], result[ index + 3 ] ] ]
+					});
+					index += 4;
+				} else
+					out.push({ // dice has advantage
+						type: element.charAt(0),
+						value: [ result[ index++ ], result[ index++ ] ]
+					});
+			else if (element.charAt(0) === "z")
+				out.push({	// dice is a d100
+					type: "n",
+					value: [ result[ index++ ] , result[ index++ ] ]
+				});
+			else
+				out.push({ // dice is nether a d100 nor has advantage
+					type: "n",
+					value: [ result[ index++ ] ]
+				});
 
 	store.dispatch("console/addToLog", {
 		type: "roll-response",
@@ -67,12 +81,20 @@ function after_roll(notation, result) {
 
 function parse_notation(notation) {
 
+	// interpret 1d100 as 1d10 + 1d100
+
+	const regex_d100 = /(?<adv>a)?1d100/gm;
+	const subst_d100 = "$<adv>z1d10+$<adv>1d100";
+
+	notation = notation.replace(regex_d100, subst_d100);
+
 	query = notation;
 
-	const regex = /(?<type>[a,m])1d(?<sides>\d+)/gm;
-	const subst = "$<type>1d$<sides>+1d$<sides>+";
+	// advantage and disadvantage
+	const regex_adv = /(?<type>[a,m])(?<z>z?)1d(?<sides>\d+)/gm;
+	const subst_adv = "$<type>$<z>1d$<sides>+1d$<sides>";
 
-	notation = notation.replace(regex, subst);
+	notation = notation.replace(regex_adv, subst_adv);
 
 	let dice_types = [ "d4", "d6", "d8", "d10", "d12", "d20", "d100" ];
 	let no = notation.split("@");
