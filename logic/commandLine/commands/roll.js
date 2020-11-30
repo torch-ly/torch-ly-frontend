@@ -19,7 +19,11 @@ export function roll(parameters) {
 }
 
 function _default(parameters) {
-	diceQuery += parameters.reduce((a, b) => a + "+" + b);
+	for (let param of parameters)
+		diceQuery += ("1d" + param.split("d")[1] + "+").repeat(parseInt(param));
+
+	if (diceQuery.charAt(diceQuery.length - 1) === "+")
+		diceQuery = diceQuery.substring(0, diceQuery.length - 1);
 }
 
 function advantage(parameters) {
