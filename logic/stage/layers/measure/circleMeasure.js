@@ -40,7 +40,7 @@ function updateMeasure() {
 }
 
 export function saveAsDrawing() {
-	if (measureCircle != null) 
+	if (measureCircle != null)
 		addDrawing({
 			x: measureCircle.x(),
 			y: measureCircle.y(),
@@ -49,7 +49,7 @@ export function saveAsDrawing() {
 			strokeWidth: 4,
 			type: "Circle"
 		});
-	
+
 }
 
 export function disableCircleMeasure() {

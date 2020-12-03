@@ -59,7 +59,8 @@ import AdvancedOptions from "../gui-components/AdvancedOptions";
 import measureTools from "@/enums/tools/measureTools";
 import {mapActions} from "vuex";
 import tools from "@/enums/tools/tools";
-import {saveAsDrawing} from "~/logic/stage/layers/measure/circleMeasure";
+import {saveAsDrawing as drawCircle} from "~/logic/stage/layers/measure/circleMeasure";
+import {saveAsDrawing as drawCone} from "@/logic/stage/layers/measure/coneMeasure";
 import ToggleBox from "@/components/gui-components/ToggleBox";
 
 export default {
@@ -104,8 +105,9 @@ export default {
 		},
 		saveMeasureAsPainting() {
 			if (this.$store.state.manu.measureTool === measureTools.circle)
-				saveAsDrawing();
-
+				drawCircle();
+			else if (this.$store.state.manu.measureTool === measureTools.cone)
+				drawCone();
 		}
 	}
 };

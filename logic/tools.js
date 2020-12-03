@@ -9,6 +9,7 @@ import {enableZoom} from "@/logic/stage/functions/zoom";
 import drawTools from "@/enums/tools/drawTools";
 import measureTools from "@/enums/tools/measureTools";
 import {disableCircleMeasure, startCircleMeasure} from "@/logic/stage/layers/measure/circleMeasure";
+import {disableConeMeasure, startConeMeasure} from "@/logic/stage/layers/measure/coneMeasure";
 import {enablePointer} from "@/logic/stage/layers/measure/pointer";
 import {addSelectionRect} from "@/logic/stage/functions/transformer/selector";
 
@@ -72,6 +73,7 @@ function measureToolChanged(tool) {
 		startCircleMeasure();
 		break;
 	case measureTools.cone:
+		startConeMeasure();
 		break;
 	}
 }
@@ -118,4 +120,7 @@ export function stopAllTools() {
 
 	// Remove Circle Measure objects
 	disableCircleMeasure();
+
+	// Remove Cone Measure objects
+	disableConeMeasure();
 }
