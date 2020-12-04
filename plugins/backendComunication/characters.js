@@ -36,6 +36,8 @@ export function addCharacter(character) {
 	if (character.pos.size != null)
 		character.pos.size = parseInt(character.pos.size);
 
+	if (character.details == null)
+		character.details = {};
 
 	apolloClient.mutate({
 		mutation: gql`
