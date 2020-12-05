@@ -39,6 +39,8 @@ export function addCharacter(character) {
 	if (character.details == null)
 		character.details = {};
 
+	console.info("Add Character: ", character);
+
 	apolloClient.mutate({
 		mutation: gql`
             mutation addNewCharacter($name: String, $token: URL!, $pos: PositionSquareInput!, $sheet: URL, $visible: Boolean, $players: [String!]!){
