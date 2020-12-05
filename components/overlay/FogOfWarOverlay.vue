@@ -2,7 +2,6 @@
     <div>
         <ToggleBox
             title="Insert / Delete"
-            inverted
             @update:checked="setInsert(!$event); deleteMode = $event"
         />
 
@@ -42,7 +41,6 @@
 
         <ToggleBox
             title="See Through Fog Of war"
-            checked
             @update:checked="setTransparent($event)"
         />
     </div>
