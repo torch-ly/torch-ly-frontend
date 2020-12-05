@@ -5,9 +5,9 @@
     >
         <div class="grid grid-flow-row grid-cols-4 grid-rows-3 gap-4">
             <div
-                v-for="condition in conditions"
+                v-for="(condition, index) in conditions"
                 :key="condition.key"
-                @click="activateCondition(condition.key)"
+                @click="activateCondition(index)"
             >
                 <div class="mb-2 text-white font-bold select-none">
                     {{ condition.name }}
@@ -21,9 +21,7 @@
                     </div>
                     <img
                         :src="condition.src"
-                        width="50"
-                        height="50"
-                        class="ml-4"
+                        class="ml-4 w-12 h-12"
                     >
                 </div>
             </div>
@@ -66,12 +64,12 @@ export default {
 			this.conditions = [];
 			for (let condition of Object.keys(conditions)) {
 				let isActive = false;
-				for (let con of this.character.conditions) 
+				for (let con of this.character.conditions)
 					if (con === condition) {
 						isActive = true;
 						break;
 					}
-				
+
 
 				if (isActive)  // character has this condition
 					this.conditions.push({
@@ -90,10 +88,10 @@ export default {
 		},
 		saveConditions() {
 			let activeConditions = [];
-			for (let condition of this.conditions) 
+			for (let condition of this.conditions)
 				if (condition.active)
 					activeConditions.push(condition.name);
-			
+
 
 
 			setCharacterConditions(this.character.id, activeConditions);
