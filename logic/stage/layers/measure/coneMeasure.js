@@ -39,7 +39,7 @@ function updateMeasure() {
 	let x2 = circle2.x() + (-0.5 * rotatedVector.x);
 	let y2 = circle2.y() + (-0.5 * rotatedVector.y);
 
-	measureTriangle.points([ x1, y1, circle1.x(), circle1.y(), x2, y2 , x1, y1]);
+	measureTriangle.points([ x1, y1, circle1.x(), circle1.y(), x2, y2 , x1, y1 ]);
 
 	let length = Math.sqrt(Math.pow(circle1.x() - circle2.x(), 2) + Math.pow(circle1.y() - circle2.y(), 2));
 
