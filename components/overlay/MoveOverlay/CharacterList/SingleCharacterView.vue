@@ -183,7 +183,7 @@ export default {
 				}
 
 
-			this.showStats = (!this.gm || this.selectedCharacter.players.map(player => player.id).includes(this.playerID));
+			this.showStats = (this.isGM || this.selectedCharacter.players.map(player => player.id).includes(this.playerID));
 		}
 	}
 
