@@ -159,22 +159,26 @@ export default {
 	},
 	methods: {
 		addObject() {
-			if (this.inputs.type === "Image")
-				loadImage({
-					"pos": {
-						"x": parseInt(this.inputs.x || "0"),
-						"y": parseInt(this.inputs.y || "0"),
-						"width": parseInt(this.inputs.width || "120"),
-						"height": parseInt(this.inputs.height || "120"),
-					},
-					"draggable": true,
-					"snapToGrid": this.inputs.snapToGrid,
-					"type": "rect",
-					"src": this.inputs.url,
-					"rotation": parseInt(this.inputs.rotation || "0"),
-					"color": this.inputs.color,
-				});
-			else
+			if (this.inputs.type === "Image") {
+				let image = new Image();
+				image.onload = () => {
+					loadImage({
+						"pos": {
+							"x": parseInt(this.inputs.x || "0"),
+							"y": parseInt(this.inputs.y || "0"),
+							"width": parseInt(this.inputs.width || image.width + ""),
+							"height": parseInt(this.inputs.height || image.height + ""),
+						},
+						"draggable": true,
+						"snapToGrid": this.inputs.snapToGrid,
+						"type": "rect",
+						"src": this.inputs.url,
+						"rotation": parseInt(this.inputs.rotation || "0"),
+						"color": this.inputs.color,
+					});
+				};
+				image.src = this.inputs.url;
+			} else
 				loadRect({
 					"pos": {
 						"x": parseInt(this.inputs.x || "0"),
@@ -198,15 +202,3 @@ export default {
 <style scoped lang="scss">
   @import "assets/css/scheme";
 </style>
-{
-"pos": {
-"x": object.x(),
-"y": object.y(),
-"width": object.width() * object.getTransform().getMatrix()[0],
-"height": object.height() * object.getTransform().getMatrix()[3]
-},
-"snapToGrid": object.snapToGrid,
-"type": "rect",
-"color": object.fill(),
-"rotation": object.rotation()
-}
