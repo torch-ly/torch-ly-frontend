@@ -36,15 +36,10 @@ export function addCharacter(character) {
 	if (character.pos.size != null)
 		character.pos.size = parseInt(character.pos.size);
 
-	if (character.details == null)
-		character.details = {};
-
-	console.info("Add Character: ", character);
-
 	apolloClient.mutate({
 		mutation: gql`
-            mutation addNewCharacter($name: String, $token: URL!, $pos: PositionSquareInput!, $sheet: URL, $visible: Boolean, $players: [String!]!){
-                addCharacter(name:$name, token:$token, pos:$pos, sheet:$sheet, visible:$visible, players:$players) {id}
+            mutation addNewCharacter($name: String, $token: URL!, $pos: PositionSquareInput!, $sheet: URL, $visible: Boolean, $players: [String!]!, $details: JSON){
+                addCharacter(name:$name, token:$token, pos:$pos, sheet:$sheet, visible:$visible, players:$players, details:$details) {id}
             }
 		`,
 		variables: {
@@ -54,7 +49,7 @@ export function addCharacter(character) {
 			sheet: character.sheet !== "" ? character.sheet : null,
 			visible: character.visible,
 			players: character.player,
-			// details: character.details
+			details: character.details
 		}
 	}).catch(logError);
 }
