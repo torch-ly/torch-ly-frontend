@@ -72,7 +72,7 @@ export default {
 				},
 				player: [ this.$store.state.authentication.playerID ],
 				details: {
-					hp: Object.prototype.hasOwnProperty.call(monster, "hp") && Object.prototype.hasOwnProperty.call(monster, "average") ? monster.hp.average : 0,
+					hp: Object.prototype.hasOwnProperty.call(monster, "hp") && Object.prototype.hasOwnProperty.call(monster.hp, "average") ? monster.hp.average : 0,
 					ac: ac,
 					notes: ""
 				}
