@@ -21,7 +21,7 @@
     <div class="flex rounded-bottom">
       <input
         v-model="command"
-        class="text-black flex-grow outline-none bg-white rounded p-2"
+        class="text-black flex-grow outline-none bg-white rounded p-2 font-mono"
         type="text"
         placeholder="Command input"
         @keypress.enter="execute"
@@ -30,7 +30,7 @@
         class="flex justify-center items-center bg-white rounded text-black pr-1 ml-2 w-16"
         @click="execute"
       >
-        <fa icon="arrow-right"/>
+        <fa icon="arrow-right w-4"/>
       </button>
     </div>
   </div>
