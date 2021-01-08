@@ -30,7 +30,7 @@
         class="flex justify-center items-center bg-white rounded text-black pr-1 ml-2 w-16"
         @click="execute"
       >
-        <fa icon="arrow-right w-4"/>
+        <fa icon="arrow-right" class="w-4"/>
       </button>
     </div>
   </div>
