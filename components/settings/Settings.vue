@@ -36,6 +36,14 @@
                 </button>
             </div>
 
+            <div class="block mt-20">
+                <input
+                    v-model="activeWheel"
+                    type="checkbox"
+                >
+                <span>Scroll wheel enabled</span>
+            </div>
+
             <h1 class="title mt-20">
                 User information
             </h1>
@@ -61,14 +69,12 @@
                 </h1>
 
                 <div class="text-lg mt-6">
-                    <div class="flex flex-row">
-                        <span>Activate GM mode:</span>
-                        <div class="flex flex-center items-center ml-2">
-                            <input
-                                v-model="gm"
-                                type="checkbox"
-                            >
-                        </div>
+                    <div class="block mt-6">
+                        <input
+                            v-model="gm"
+                            type="checkbox"
+                        >
+                        <span>Activate GM mode</span>
                     </div>
 
                     <!-- under development
@@ -96,7 +102,15 @@ export default {
 			set(value) {
 				this.$store.commit("authentication/setGM", value);
 			}
-		}
+		},
+  activeWheel: {
+	  get() {
+		  return this.$store.state.config.zoomWheelEnabled;
+	  },
+	  set(value) {
+		  this.$store.commit("config/setZoomWheelSetting", value);
+	  }
+  }
 	},
 	watch: {
 		backendURL() {

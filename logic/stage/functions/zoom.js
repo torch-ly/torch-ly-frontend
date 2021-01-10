@@ -1,9 +1,9 @@
-import {stage} from "../main";
+import {stage, store} from "../main";
 import {updateGrid} from "@/logic/stage/layers/grid/main";
 
 export function enableZoom() {
 	stage.on("wheel", (e) => {
-		if (!stage.draggable())
+		if (!stage.draggable() || !store.state.config.zoomWheelEnabled)
 			return;
 
 		let scaleBy = 0.95;
@@ -89,12 +89,14 @@ export function enableZoom() {
 	});
 }
 
-function zoomByScale(scaleFactor) {
+export function zoomByScale(scaleFactor) {
 	let oldScale = stage.scaleX();
 
 	let pointer = stage.getPointerPosition();
 
 	let newScale = oldScale * scaleFactor;
+
+	store.commit("manu/setZoomFactor", newScale);
 
 	let mousePointTo = {
 		x: (pointer.x - stage.x()) / oldScale,
@@ -110,6 +112,35 @@ function zoomByScale(scaleFactor) {
 		x: pointer.x - mousePointTo.x * newScale,
 		y: pointer.y - mousePointTo.y * newScale,
 	};
+
+	stage.position(newPos);
+
+	updateGrid();
+	stage.batchDraw();
+}
+
+export function resetZoom() {
+	let oldScale = stage.scaleX();
+
+	let pointer = stage.getPointerPosition();
+
+	store.commit("manu/setZoomFactor", 1);
+
+	let mousePointTo = {
+		x: (pointer.x - stage.x()) / oldScale,
+		y: (pointer.y - stage.y()) / oldScale,
+	};
+
+	stage.scale({
+		x: 1,
+		y: 1
+	});
+
+	let newPos = {
+		x: pointer.x - mousePointTo.x,
+		y: pointer.y - mousePointTo.y,
+	};
+
 	stage.position(newPos);
 
 	updateGrid();

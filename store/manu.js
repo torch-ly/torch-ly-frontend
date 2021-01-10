@@ -21,7 +21,9 @@ export const state = () => ({
 		length: 0,
 		unitEnding: "ft",
 		boxSize: "5"
-	}
+	},
+
+	zoomFactor: 1
 });
 
 export const mutations = {
@@ -55,6 +57,9 @@ export const mutations = {
 	},
 	setMonsters(state) {
 		state.currentTool = tools.monsters;
+	},
+	setZoomFactor(state, factor) {
+		state.zoomFactor = factor;
 	}
 };
 

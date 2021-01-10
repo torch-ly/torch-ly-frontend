@@ -7,6 +7,7 @@
             <div class="flex-grow relative">
                 <Table class="absolute top-0 left-0 h-full w-full" />
                 <Dice class="absolute top-0 left-0 h-full w-full" />
+                <ZoomOverlay class="absolute top-0 right-0 "/>
             </div>
             <Overlay />
         </div>
@@ -63,9 +64,11 @@ import AddCharacterConditions from "@/components/popups/AddCharacterConditions";
 import Dice from "@/components/Dice";
 import ConsolePopup from "@/components/popups/ConsolePopup";
 import DicePopup from "@/components/popups/DicePopup";
+import ZoomOverlay from "@/components/overlay/ZoomOverlay";
 
 export default {
 	components: {
+	 ZoomOverlay,
 		DicePopup,
 		ConsolePopup,
 		Dice,

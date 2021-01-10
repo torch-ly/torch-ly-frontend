@@ -4,7 +4,8 @@ import devices from "@/enums/devices";
 export const state = () => ({
 	device: getDevice(),
 	followDMScreen: false, // TODO implement to config page
-	backendURL: getBackendUrl()
+	backendURL: getBackendUrl(),
+	zoomWheelEnabled: true
 });
 
 if (getDevice() !== devices.MOBILE)
@@ -33,5 +34,8 @@ function getDevice() {
 export const mutations = {
 	setDevice(state, device) {
 		state.device = device;
+	},
+	setZoomWheelSetting(state, value) {
+		state.zoomWheelEnabled = value;
 	}
 };
