@@ -12,7 +12,22 @@
           :class="{'text-right' : !line.command, 'bg-blue-100': line.command}"
           :key="log.key">
           <span v-if="line.command">» {{line.value}}</span>
-          <span v-else-if="line.type === 'roll-response'">{{JSON.parse(line.value).map(a => a.value).join(', ')}}</span>
+          <span v-else-if="line.type === 'roll-response'">
+              <span
+                  v-for="roll in JSON.parse(line.value)"
+                  :key="roll.key"
+              >
+                  <span v-if="roll.type === 'n'" class="ml-2">{{roll.value}}</span>
+                  <span v-else-if="roll.type === 'a'" class="block ml-2">
+                      <span :class="{'text-green-500' : roll.value[0] >= roll.value[1]}">{{ roll.value[0] }}</span>
+                      <span :class="{'text-green-500' : roll.value[0] <= roll.value[1]}">{{ roll.value[1] }}</span>
+                  </span>
+                  <span v-else-if="roll.type === 'm'" class="block ml-2">
+                      <span :class="{'text-red-500' : roll.value[0] >= roll.value[1]}">{{ roll.value[0] }}</span>
+                      <span :class="{'text-red-500' : roll.value[0] <= roll.value[1]}">{{ roll.value[1] }}</span>
+                  </span>
+              </span>
+          </span>
           <span v-else>{{line.value}}</span>
         </div>
       </div>
@@ -36,7 +51,7 @@
   </div>
 </template>
 <script>
-import { mapActions } from "vuex";
+import {mapActions} from "vuex";
 
 export default {
   data() {
