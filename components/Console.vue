@@ -23,12 +23,15 @@
                       <span :class="{'text-green-500' : roll.value[0] <= roll.value[1]}">{{ roll.value[1] }}</span>
                   </span>
                   <span v-else-if="roll.type === 'm'" class="block ml-2">
-                      <span :class="{'text-red-500' : roll.value[0] >= roll.value[1]}">{{ roll.value[0] }}</span>
-                      <span :class="{'text-red-500' : roll.value[0] <= roll.value[1]}">{{ roll.value[1] }}</span>
+                      <span :class="{'text-red-500' : roll.value[0] <= roll.value[1]}">{{ roll.value[0] }}</span>
+                      <span :class="{'text-red-500' : roll.value[0] >= roll.value[1]}">{{ roll.value[1] }}</span>
                   </span>
               </span>
+              <span class="block">
+                  = {{calculateSum(JSON.parse(line.value))}}
+              </span>
           </span>
-          <span v-else>{{line.value}}</span>
+          <span v-else>= {{line.value}}</span>
         </div>
       </div>
     </div>
@@ -86,6 +89,18 @@ export default {
     execute() {
       this.executeCommand(this.command);
       this.command = "";
+    },
+    calculateSum(array) {
+    	 let sum = 0;
+    	 for (let obj of array) {
+    	 	 if (obj.type === "n")
+    	 	 	 sum += obj.value;
+    	 	 else if (obj.type === "a")
+    	 	 	 sum += Math.max(obj.value[0], obj.value[1]);
+    	 	 else
+    	 	 	 sum += Math.min(obj.value[0], obj.value[1]);
+      }
+    	 return sum;
     }
   },
 };
