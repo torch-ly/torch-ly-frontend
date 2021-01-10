@@ -72,9 +72,26 @@ function after_roll(notation, result) {
 					value: [ result[ index++ ] ]
 				});
 
+
+	let outCopy = [ ...out ];
+	for (let i = 0; i < out.length; i++)
+		if (out[i].type === "n")  // without a oder d
+			if (out[i].value.length === 2)  // is d100
+				outCopy[i].value = (out[i].value[0] + out[i].value[1]) % 100;
+			else  // is not d100
+				outCopy[i].value = out[i].value[0];
+
+		else if (out[i].value[0].length === 2)  // is with a or d and d100
+			outCopy[i].value = [
+				(out[i].value[0][0] + out[i].value[0][1]) % 100,
+				(out[i].value[1][0] + out[i].value[1][1]) % 100,
+			];
+	// else case is already correct
+
+	console.log(outCopy);
 	store.dispatch("console/addToLog", {
 		type: "roll-response",
-		log: JSON.stringify(out)
+		log: JSON.stringify(outCopy)
 	});
 
 }
@@ -83,7 +100,7 @@ function parse_notation(notation) {
 
 	// interpret 1d100 as 1d10 + 1d100
 
-	const regex_d100 = /(?<adv>a)?1d100/gm;
+	const regex_d100 = /(?<adv>[a,m])?1d100/gm;
 	const subst_d100 = "$<adv>z1d10+$<adv>1d100";
 
 	notation = notation.replace(regex_d100, subst_d100);
