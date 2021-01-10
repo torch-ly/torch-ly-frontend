@@ -281,7 +281,7 @@ var dice_body_material;
 		specular: 0x172022,
 		color: 0xf0f0f0,
 		shininess: 40,
-		shading: THREE.FlatShading,
+		flatShading: THREE.FlatShading,
 	};
 	this.label_color = '#aaaaaa';
 	this.dice_color = '#202020';
@@ -460,7 +460,7 @@ var dice_body_material;
 		this.light.shadow.camera.far = mw * 5;
 		this.light.shadow.camera.fov = 50;
 		this.light.shadow.bias = 0.001;
-		this.light.shadowDarkness = 1.1;
+		// this.light.shadowDarkness = 1.1;
 		this.light.shadow.mapSize.width = 1024;
 		this.light.shadow.mapSize.height = 1024;
 		this.scene.add(this.light);
