@@ -456,13 +456,13 @@ var dice_body_material;
 		this.light.target.position.set(0, 0, 0);
 		this.light.distance = mw * 5;
 		this.light.castShadow = true;
-		this.light.shadowCameraNear = mw / 10;
-		this.light.shadowCameraFar = mw * 5;
-		this.light.shadowCameraFov = 50;
-		this.light.shadowBias = 0.001;
+		this.light.shadow.camera.near = mw / 10;
+		this.light.shadow.camera.far = mw * 5;
+		this.light.shadow.camera.fov = 50;
+		this.light.shadow.bias = 0.001;
 		this.light.shadowDarkness = 1.1;
-		this.light.shadowMapWidth = 1024;
-		this.light.shadowMapHeight = 1024;
+		this.light.shadow.mapSize.width = 1024;
+		this.light.shadow.mapSize.height = 1024;
 		this.scene.add(this.light);
 
 		//if (this.desk) this.scene.remove(this.desk);
@@ -519,7 +519,6 @@ var dice_body_material;
 	}
 
 	this.dice_box.prototype.create_dice = function(type, pos, velocity, angle, axis) {
-		console.log(type);
 		var dice = that['create_' + type]();
 		dice.castShadow = true;
 		dice.dice_type = type;
@@ -651,7 +650,6 @@ var dice_body_material;
 	}
 
 	this.dice_box.prototype.prepare_dices_for_roll = function(vectors) {
-		console.log(vectors);
 		this.clear();
 		this.iteration = 0;
 		for (var i in vectors) {

@@ -88,7 +88,6 @@ function after_roll(notation, result) {
 			];
 	// else case is already correct
 
-	console.log(outCopy);
 	store.dispatch("console/addToLog", {
 		type: "roll-response",
 		log: JSON.stringify(outCopy)
