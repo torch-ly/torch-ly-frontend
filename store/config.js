@@ -5,7 +5,7 @@ export const state = () => ({
 	device: getDevice(),
 	followDMScreen: false, // TODO implement to config page
 	backendURL: getBackendUrl(),
-	zoomWheelEnabled: true
+	zoomWheelEnabled: localStorage.getItem("zoomWheelEnabled") || true
 });
 
 if (getDevice() !== devices.MOBILE)
@@ -36,6 +36,7 @@ export const mutations = {
 		state.device = device;
 	},
 	setZoomWheelSetting(state, value) {
+		localStorage.setItem("zoomWheelEnabled", value);
 		state.zoomWheelEnabled = value;
 	}
 };
