@@ -7,7 +7,7 @@
             <div class="flex-grow relative">
                 <Table class="absolute top-0 left-0 h-full w-full" />
                 <Dice class="absolute top-0 left-0 h-full w-full" />
-                <ZoomOverlay class="absolute top-0 right-0 "/>
+                <ZoomOverlay class="absolute bottom-0 right-0 "/>
             </div>
             <Overlay />
         </div>
