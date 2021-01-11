@@ -1,13 +1,13 @@
 <template>
     <div class="flex flex-col m-4 text-white">
         <div class="h-8 w-8 bg-gray-700 rounded flex items-center justify-center" @click="zoomUp">
-            <fa class="h-full w-full" icon="plus" />
+            <fa class="h-full w-full p-1" icon="plus" />
         </div>
         <div class="h-8 w-8 flex items-center justify-center" @click="resetZoom">
             <span class="text-black select-none">{{zoomFactor}}</span>
         </div>
         <div class="h-8 w-8 bg-gray-700 rounded flex items-center justify-center" @click="zoomDown">
-            <fa class="h-full w-full" icon="minus" />
+            <fa class="h-full w-full p-1" icon="minus" />
         </div>
     </div>
 </template>
