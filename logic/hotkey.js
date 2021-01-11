@@ -4,6 +4,7 @@ import {saveBackgroundLayer} from "~/logic/stage/layers/background/init";
 import {clearTransformerNodes, deleteSelectedDrawingObjects} from "@/logic/stage/functions/transformer/transformer";
 import {setViewport} from "~/plugins/backendComunication/viewport";
 import tools from "@/enums/tools/tools";
+import {zoomByScale} from "@/logic/stage/functions/zoom";
 
 // toggle layer
 hotkeys("command+b,ctrl+b", () => {
@@ -43,8 +44,12 @@ hotkeys("command+f,ctrl+f", (event) => {
 	setViewport();
 });
 
-
 // open console
 hotkeys("command+space,ctrl+space", () => {
 	store.commit("console/openConsolePopup", true);
 });
+
+hotkeys("command+e,ctrl+e", () => zoomByScale(0.95));
+
+hotkeys("command+shift+e,ctrl+shift+e", () => zoomByScale(1.05));
+
