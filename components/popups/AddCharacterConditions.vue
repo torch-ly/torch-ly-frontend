@@ -1,7 +1,7 @@
 <template>
     <PopupContainer
         ref="popupContainer"
-        title="Add Character"
+        title="Add Conditions"
     >
         <div class="grid grid-flow-row grid-cols-4 grid-rows-3 gap-4">
             <div
