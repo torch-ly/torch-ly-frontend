@@ -39,6 +39,9 @@ module.exports = {
 	variants: {
 		borderWidth: [ "responsive", "hover", "active" ],
 		margin: [ "responsive", "last" ],
+    extend: {
+      borderRadius: ["first"]
+    }
 	},
 	purge: {
 		content: [ "./**/*.vue" ],
