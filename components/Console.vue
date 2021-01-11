@@ -28,10 +28,10 @@
                   </span>
               </span>
               <span class="block">
-                  = {{calculateSum(JSON.parse(line.value))}}
+                  Sum = {{calculateSum(JSON.parse(line.value))}}
               </span>
           </span>
-          <span v-else>= {{line.value}}</span>
+          <span v-else>{{line.value}}</span>
         </div>
       </div>
     </div>
