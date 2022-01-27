@@ -40,7 +40,7 @@
     "nuxt-fontawesome": "^0.4.0",
     "sass-loader": "^8.0.2",
     "subscriptions-transport-ws": "^0.9.17",
-    "three": "^0.123.0",
+    "three": "^0.137.0",
     "turf-difference": "^3.0.12",
     "turf-overlaps": "^1.0.3",
     "turf-union": "^3.0.12",
